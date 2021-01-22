@@ -1,25 +1,49 @@
 import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Counter from './Counter.js'// 카운터를 표시해줄 컴포넌트 호출
+import Trial from './Trial.js'
+class App extends Component {
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  constructor(props) {
+    super(props);
+    this.state = {
+      number: 0,
+      trialList: []
+    };
+  }
+
+  handleIncrease = () => {
+    const { number, trialList } = this.state;
+    this.setState({
+      number: number + 1
+    });
+  }
+
+  handleDecrease = () => {
+    const { number, trialList } = this.state;
+    this.setState({
+      number: number - 1
+    });
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img
+          src={logo} className="App-logo" alt="logo" />
+          <Counter
+            handleIncrease={this.handleIncrease}
+            handleDecrease={this.handleDecrease}
+            number={this.state.number}
+          />
+          <Trial
+            trialList={this.state.trialList}
+          />
+        </header>
+      </div>
+    );
+  }
 }
-
 export default App;
