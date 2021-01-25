@@ -13,13 +13,13 @@ class App extends Component {
           <nav>
             <ul>
               <li>
-                <Link to="/">Home</Link>
+                <Link to="/">승혁</Link>
               </li>
               <li>
-                <Link to="/about">About</Link>
+                <Link to="/about">준희</Link>
               </li>
               <li>
-                <Link to="/user">User</Link>
+                <Link to="/user">민준</Link>
               </li>
             </ul>
           </nav>
