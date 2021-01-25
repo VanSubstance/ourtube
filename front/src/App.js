@@ -1,48 +1,34 @@
-import logo from './logo.svg';
 import React, { Component } from 'react';
 import './App.css';
-import Counter from './Counter.js'// 카운터를 표시해줄 컴포넌트 호출
-import Trial from './Trial.js'
+
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Home, About, User } from './Yang';
+
 class App extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      number: 0,
-      trialList: []
-    };
-  }
-
-  handleIncrease = () => {
-    const { number, trialList } = this.state;
-    this.setState({
-      number: number + 1
-    });
-  }
-
-  handleDecrease = () => {
-    const { number, trialList } = this.state;
-    this.setState({
-      number: number - 1
-    });
-  }
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img
-          src={logo} className="App-logo" alt="logo" />
-          <Counter
-            handleIncrease={this.handleIncrease}
-            handleDecrease={this.handleDecrease}
-            number={this.state.number}
-          />
-          <Trial
-            trialList={this.state.trialList}
-          />
-        </header>
-      </div>
+      <Router>
+        <div>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/about">About</Link>
+              </li>
+              <li>
+                <Link to="/user">User</Link>
+              </li>
+            </ul>
+          </nav>
+
+          <Route exact path='/' component={Home}/>
+          <Route path='/about' component={About}/>
+          <Route path='/user' component={User}/>
+        </div>
+      </Router>
     );
   }
 }
