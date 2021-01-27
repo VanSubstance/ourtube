@@ -1,0 +1,4 @@
+react-chartjs-2
+axios
+chart.js
+cors

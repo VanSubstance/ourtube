@@ -3,8 +3,9 @@ class Trial extends Component {
     render() {
         return (
             <ul className = "trial">
-                <li>연습</li>
-                <li>연습</li>
+                {this.props.items.map((item) => (
+                    <li>{item.name} | {item.address}</li>
+                ))}
             </ul>
         );
     }

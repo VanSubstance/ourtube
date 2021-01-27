@@ -1,16 +1,45 @@
-import React, { Component } from 'react';
-import logo from '../logo.svg';
-import Counter from '../Counter.js';
-import Trial from '../Trial.js';
+import React, { Component, useState } from 'react';
+import axios, * as others from "axios";
+
+import Counter from '../Practices/Counter.js';
+import Trial from '../Practices/Trial.js';
+import ListPrac from '../Practices/listPrac.js';
 
 class Home extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            number: 0,
-            trialList: []
-        };
+    }
+
+    state = {
+        ip: "http://222.232.15.205:8012",
+        massage: "",
+        setMassage: "",
+        number: 0,
+        trialList: ["1", "2", "3", "4"],
+        datas: []
+    };
+
+    getData = async () => {
+        const { datas } = this.state;
+        const result = await axios.get('https://jsonplaceholder.typicode.com/users');
+        console.log(result.data);
+        result.data.map((item) => {
+            console.log(item);
+        });
+        this.setState({
+            datas : result.data
+        });
+
+    }
+
+    getRandomNumber = () => {
+        const { trialList } = this.state;
+        var rands = trialList.map(Math.random);
+        console.log(rands);
+        this.setState ( {
+            trialList: rands
+        })
     }
 
     handleIncrease = () => {
@@ -30,19 +59,25 @@ class Home extends Component {
     render() {
 
         return (
-            <div className="App">
-                <header className="App-header">
-                    <img
-                        src={logo} className="App-logo" alt="logo" />
+            <div>
+                <header>
                     <Counter
                         handleIncrease={this.handleIncrease}
                         handleDecrease={this.handleDecrease}
                         number={this.state.number}
                     />
                     <Trial
-                        trialList={this.state.trialList}
+                        items={this.state.datas}
                     />
                 </header>
+                <button onClick={this.getData}> Trial </button>
+                <button onClick={this.getRandomNumber}> 난수 생성 </button>
+                <ListPrac
+                    items={this.state.trialList}>
+                </ListPrac>
+                <p>
+                    Trial: {this.state.result}
+                </p>
             </div>
         );
     }
