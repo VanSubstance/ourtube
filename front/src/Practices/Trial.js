@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 class Trial extends Component {
+    state = {};
     render() {
         return (
-            <ul className = "trial">
-                {this.props.items.map((item) => (
-                    <li>{item.name} | {item.address}</li>
-                ))}
+            <ul className="trial">
+                {
+                    this.props.items.foreach((value, index) => {
+                        return (
+                        <li>{value}</li>
+                        );
+                    })
+                }
             </ul>
         );
     }
