@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
 
 class About extends Component {
+
+    RandomInput = () => {
+
+    } 
+
+
+
     render() {
         return (
             <div>
@@ -11,7 +18,14 @@ class About extends Component {
                         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                         datasets: [{
                             label: 'test',
-                            data: [12, 19, 3, 5, 2, 3],
+                            data: [
+                                Math.floor(Math.random()*100),
+                                Math.floor(Math.random()*100),
+                                Math.floor(Math.random()*100),
+                                Math.floor(Math.random()*100),
+                                Math.floor(Math.random()*100),
+                                Math.floor(Math.random()*100)
+                            ],
                             backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)',
                                 'rgba(54, 162, 235, 0.2)',
@@ -32,7 +46,7 @@ class About extends Component {
                         }]
                     }}
                     height = {400}
-                    width = {600}
+                    width = {400}
                     options={{
                         maintainAspectRatio: false,
                         scales: {
@@ -44,8 +58,12 @@ class About extends Component {
                         }
                     }}
                 />
+                <button>
+                    test
+                </button>
                 
         </div>
+        
 
 
         );

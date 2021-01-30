@@ -52,7 +52,7 @@ class Home extends Component {
 
     getRandomNumber = () => {
         const { trialList } = this.state;
-        var rands = trialList.map(Math.random);
+        var rands = trialList.concat(Math.floor(Math.random()*100));
         console.log(rands);
         this.setState({
             trialList: rands
