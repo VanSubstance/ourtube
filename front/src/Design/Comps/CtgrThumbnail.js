@@ -14,7 +14,7 @@ class CtgrThumbnail extends Component {
         return (
             <div 
                 className = "CtgrThumbnail"
-                style={this.state.ex01}>
+                style = {this.state.ex01}>
                     카테고리
             </div>
         );

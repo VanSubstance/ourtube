@@ -17,11 +17,9 @@ class MainPage extends Component {
                 <SearchModule searchType = "트렌드">
 
                 </SearchModule>
-
                 <SearchModule searchType = "올타임">
                     
                 </SearchModule>
-
             </div>
         );
     }

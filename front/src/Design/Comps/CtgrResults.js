@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper';
 import 'swiper/components/navigation/navigation.scss'; 
 import 'swiper/components/pagination/pagination.scss';
+import 'swiper/swiper.scss';
 
 import CtgrThumbnail from './CtgrThumbnail';
 
@@ -17,13 +18,22 @@ class CtgrResults extends Component {
             <div>
                 <Swiper
                     spaceBetween={50}
-                    slidesPerView={1}
+                    slidesPerView={3}
+                    direction = {'horizontal'}
                     onSlideChange={() => console.log('slide change')}
                     navigation 
                     pagination={{ clickable: true }} 
-                    loop={true}
 
                 >
+                    <SwiperSlide>
+                        <CtgrThumbnail></CtgrThumbnail>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <CtgrThumbnail></CtgrThumbnail>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <CtgrThumbnail></CtgrThumbnail>
+                    </SwiperSlide>
                     <SwiperSlide>
                         <CtgrThumbnail></CtgrThumbnail>
                     </SwiperSlide>
