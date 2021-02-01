@@ -21,7 +21,8 @@ class CtgrResults extends Component {
                     slidesPerView={3}
                     direction = {'horizontal'}
                     onSlideChange={() => console.log('slide change')}
-                    navigation 
+                    navigation
+                    loop = {true} 
                     pagination={{ clickable: true }} 
 
                 >
