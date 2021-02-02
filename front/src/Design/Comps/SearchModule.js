@@ -15,9 +15,9 @@ class SearchModule extends Component {
             display: "inline",
         },
         logo: {
-            width: "40px",
+            width: "80px",
             height: "40px",
-            background: "blue",
+            background: "red",
             color: "white",
             display: "inline",
         }
@@ -33,7 +33,7 @@ class SearchModule extends Component {
                     {this.props.searchType} 
                 </div>
                 <div style = {this.state.searchBar}> 검색어 </div>
-                <div style = {this.state.logo}> 검색 </div>
+                <button style = {this.state.logo}> 검색 </button>
                 <CtgrResults>
 
                 </CtgrResults>
