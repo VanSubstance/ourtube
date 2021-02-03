@@ -28,7 +28,6 @@ class CtgrResults extends Component {
 
                 >
                     {this.state.seq.map((element) => (
-                        console.log(element),
                         <SwiperSlide>
                             <CtgrThumbnail
                                 seq={element}>
