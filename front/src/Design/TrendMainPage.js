@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { RankList } from './Comps';
 
 class TrendMainPage extends Component {
 
@@ -16,6 +17,9 @@ class TrendMainPage extends Component {
             console.log("SearchPage opened."),
             <div>
                 <p>{this.props.searchType} 페이지</p>
+                <RankList>
+
+                </RankList>
                 <div
                     style={this.state.chart}>
                     <p> 바 그래프: 좋아요 싫어요 비율 </p>
