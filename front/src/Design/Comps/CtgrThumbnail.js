@@ -15,8 +15,9 @@ class CtgrThumbnail extends Component {
             <div 
                 className = "CtgrThumbnail"
                 style = {this.state.ex01}>
-                    <p>카테고리 </p>
+                    <p>키워드 </p>
                     <p>{this.props.seq}</p>
+                    <button>자세히 보기</button>
             </div>
         );
     }

@@ -14,6 +14,17 @@ class CtgrResults extends Component {
         seq: [0, 1, 2, 3, 4, 5],
     }
 
+    componentDidMount () {
+        this.setState({
+            seq: [this.props.selectedCtgr + "0", 
+            this.props.selectedCtgr + "1", 
+            this.props.selectedCtgr + "2", 
+            this.props.selectedCtgr + "3", 
+            this.props.selectedCtgr + "4", 
+            this.props.selectedCtgr + "5"]
+        })
+    }
+
     render() {
         return (
             <div>

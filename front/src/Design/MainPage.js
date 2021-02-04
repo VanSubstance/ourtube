@@ -14,11 +14,8 @@ class MainPage extends Component {
     render () {
         return (
             <div>
-                <SearchModule searchType = "트렌드">
+                <SearchModule>
 
-                </SearchModule>
-                <SearchModule searchType = "올타임">
-                    
                 </SearchModule>
             </div>
         );

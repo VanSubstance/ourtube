@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Home, About, User } from '../Yang';
-import { MainPage, TrendMainPage, AlltimeMainPage } from './';
+import { MainPage, TrendMainPage, AlltimeMainPage, TrendResultPage, AlltimeResultPage } from './';
 
 class App extends Component {
 
@@ -14,15 +14,24 @@ class App extends Component {
           <Route path='/about' component={About} />
           <Route path='/user' component={User} />
           <Route exact path='/' component={MainPage} />
+
           <Route
-            exact path = '/trend'
-            render = {() => <TrendMainPage searchType = "트렌드"></TrendMainPage>}>
+            exact path='/trend'
+            render={() => <TrendMainPage searchType="트렌드"></TrendMainPage>}>
           </Route>
           <Route
-            exact path = '/alltime'
-            render = {() => <AlltimeMainPage searchType = "올타임"></AlltimeMainPage>}>
+            exact path='/alltime'
+            render={() => <AlltimeMainPage searchType="올타임"></AlltimeMainPage>}>
           </Route>
-          
+
+          <Route
+            exact path='/trend/:ctgr'
+            component = {TrendResultPage}>
+          </Route>
+          <Route
+            exact path='/alltime/:ctgr'
+            component = {AlltimeResultPage}>
+          </Route>
         </div>
       </Router>
     );
