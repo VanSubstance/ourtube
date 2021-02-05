@@ -14,8 +14,25 @@ class RankList extends Component {
         seq: [0, 1, 2, 3, 4, 5, 6, 7],
         style: {
             width: "800px",
-            height: "400px",
+            height: "200px",
         }
+    }
+    componentDidMount () {
+        this.refreshResults(this.props.newCtgr)
+    }
+    /**
+     * ------------------------------------------------------------------------------> 김종규
+     * 키워드 리스트 새로고침
+     */
+    refreshResults = (newCtgr) => {
+        this.setState({
+            seq: [newCtgr + "0", 
+            newCtgr + "1", 
+            newCtgr + "2", 
+            newCtgr + "3", 
+            newCtgr + "4", 
+            newCtgr + "5"]
+        });
     }
 
     render() {

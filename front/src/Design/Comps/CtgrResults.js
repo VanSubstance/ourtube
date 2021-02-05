@@ -23,7 +23,6 @@ class CtgrResults extends Component {
      * 키워드 리스트 새로고침
      */
     refreshResults = (newCtgr) => {
-        console.log("Refresh keywords: " + newCtgr);
         this.setState({
             seq: [newCtgr + "0", 
             newCtgr + "1", 

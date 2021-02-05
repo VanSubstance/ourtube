@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import CtgrResults from './CtgrResults';
+import { CtgrResults } from './Comps';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 
-class SearchModule extends Component {
+class MainPageSimple extends Component {
 
     state = {
         currentType: "트렌드",
@@ -27,7 +27,6 @@ class SearchModule extends Component {
             color: "white",
             display: "inline",
         },
-
     }
 
     getValues = () => {
@@ -40,7 +39,7 @@ class SearchModule extends Component {
      * 트렌드 <-> 올타임
      * 변경 시 해당 타입에 따른 카테고리 호출
      * 카테고리 1번째 자동 선택
-     * */ 
+     * */
     changeType = () => {
         var target = "";
         var color = "green";
@@ -75,7 +74,6 @@ class SearchModule extends Component {
         this.setState({
             selectedCtgr: element
         });
-        console.log("Select ctgr: " + element);
         this.refs.CtgrResults.refreshResults(element);
     }
 
@@ -111,6 +109,22 @@ class SearchModule extends Component {
                 <button style={this.state.logo}> 검색 </button>
 
                 {
+                    this.state.currentType === "트렌드"
+                        ? (
+                            <Link
+                                to="/trend"
+                                style={this.state.logo}
+                            >자세히 보기</Link>
+                        )
+                        : (
+                            <Link
+                                to="/alltime"
+                                style={this.state.logo}
+                            >자세히 보기</Link>
+                        )
+                }
+
+                {
                     // 
                     this.state.searchType === "트렌드"
                         ? (
@@ -121,7 +135,7 @@ class SearchModule extends Component {
                                             <Chip
                                                 label={element}
                                                 clickable
-                                                component = "button"
+                                                component="button"
                                                 onClick={() => this.selectCtgr(element)}>
                                             </Chip>
                                         );
@@ -138,7 +152,7 @@ class SearchModule extends Component {
                                             <Chip
                                                 label={element}
                                                 clickable
-                                                component = "button"
+                                                component="button"
                                                 onClick={() => this.selectCtgr(element)}>
                                             </Chip>
                                         );
@@ -148,13 +162,13 @@ class SearchModule extends Component {
                         )
                 }
                 <CtgrResults
-                    ref = "CtgrResults"
-                    >
-        
+                    ref="CtgrResults"
+                >
+
                 </CtgrResults>
             </div>
         );
     }
 }
 
-export default SearchModule;
+export default MainPageSimple;

@@ -1,9 +1,31 @@
 import React, { Component } from 'react';
 import { RankList } from './Comps';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Chip from '@material-ui/core/Chip';
+import Paper from '@material-ui/core/Paper';
 
 class TrendMainPage extends Component {
 
     state = {
+        selectedCtgr: "",
+        ctgrs: ["카테고리 예시 1", "카테고리 예시 2", "예시 3", "예시 4", "카테고리 예시 5"],
+        outside: {
+            margin: "100px",
+            background: "#DEDEDE",
+        },
+        searchBar: {
+            width: "180px",
+            height: "40px",
+            background: "#c8c8c8",
+            display: "inline",
+        },
+        logo: {
+            width: "80px",
+            height: "40px",
+            background: "red",
+            color: "white",
+            display: "inline",
+        },
         chart: {
             width: "200px",
             height: "100px",
@@ -12,12 +34,59 @@ class TrendMainPage extends Component {
             margin: "100 100 100 100",
         }
     }
+    getValues = () => {
+        this.setState({
+            searchType: this.props.searchType,
+        })
+    }
+    componentDidMount() {
+        this.getValues();
+        this.selectCtgr(this.state.ctgrs[0]);
+    }
+    /**
+     * ------------------------------------------------------------------------------> 김종규
+     * 카테고리 선택
+     * 해당 카테고리에 따른 키워드 리스트 새로고침
+     */
+    selectCtgr = (element) => {
+        this.setState({
+            selectedCtgr: element
+        });
+        this.refs.CtgrResults.refreshResults(element);
+    }
+
     render() {
         return (
             console.log("SearchPage opened."),
-            <div>
-                <p>{this.props.searchType} 페이지</p>
-                <RankList>
+            <div
+                className="SearchModule"
+                style={this.state.outside}>
+                <Link to="/">메인으로</Link>
+                <br></br>
+                <div
+                    style={this.state.logo}>
+                    트렌드
+                            </div>
+
+                <div style={this.state.searchBar}> 검색하고자 하는 카테고리 </div>
+                <button style={this.state.logo}> 검색 </button>
+
+                <Paper>
+                    {
+                        this.state.ctgrs.map((element) => {
+                            return (
+                                <Chip
+                                    label={element}
+                                    clickable
+                                    component="button"
+                                    onClick={() => this.selectCtgr(element)}>
+                                </Chip>
+                            );
+                        })
+                    }
+                </Paper>
+                
+                <RankList ref="CtgrResults">
 
                 </RankList>
                 <div
@@ -29,17 +98,17 @@ class TrendMainPage extends Component {
                     style={this.state.chart}>
                     <p> 선 그래프: 월별 순위 변동 </p>
                 </div>
-                
+
                 <div
                     style={this.state.chart}>
                     <p> 선 그래프: 키워드 관련 동영상 신규 조회수 </p>
                 </div>
-                
+
                 <div
                     style={this.state.chart}>
                     <p> 선 그래프: 키워드 관련 신규 동영상 개수 </p>
                 </div>
-                
+
                 <div
                     style={this.state.chart}>
                     <p> 선 그래프: 키워드 관련 동영상 신규 조회수 </p>

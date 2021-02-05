@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Home, About, User } from '../Yang';
-import { MainPage, TrendMainPage, AlltimeMainPage, TrendResultPage, AlltimeResultPage } from './';
+import { MainPageSimple, TrendMainPage, AlltimeMainPage, TrendResultPage, AlltimeResultPage } from './';
 
 class App extends Component {
 
@@ -13,7 +13,7 @@ class App extends Component {
           <Route exact path='/home' component={Home} />
           <Route path='/about' component={About} />
           <Route path='/user' component={User} />
-          <Route exact path='/' component={MainPage} />
+          <Route exact path='/' component={MainPageSimple} />
 
           <Route
             exact path='/trend'
