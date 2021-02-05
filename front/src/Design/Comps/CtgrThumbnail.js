@@ -4,7 +4,7 @@ class CtgrThumbnail extends Component {
     
     state = {
         ex01: {
-            width: "100px",
+            width: "200px",
             height: "100px",
             background: "#000000",
             color: "#FFFFFF",

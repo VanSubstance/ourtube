@@ -29,11 +29,18 @@ class SearchModule extends Component {
         },
 
     }
+
     getValues = () => {
         this.setState({
             searchType: this.props.searchType,
         })
     }
+    /** 
+     * ------------------------------------------------------------------------------> 김종규
+     * 트렌드 <-> 올타임
+     * 변경 시 해당 타입에 따른 카테고리 호출
+     * 카테고리 1번째 자동 선택
+     * */ 
     changeType = () => {
         var target = "";
         var color = "green";
@@ -48,6 +55,7 @@ class SearchModule extends Component {
             ctgrss = ["트렌드 1", "트렌드 2", "트렌드 3", "트렌드 4", "트렌드 5"];
         }
         this.setState({
+            ctgrs: ctgrss,
             currentType: target,
             logo: {
                 width: "80px",
@@ -58,16 +66,22 @@ class SearchModule extends Component {
             },
         })
     }
+    /**
+     * ------------------------------------------------------------------------------> 김종규
+     * 카테고리 선택
+     * 해당 카테고리에 따른 키워드 리스트 새로고침
+     */
     selectCtgr = (element) => {
-        this.state.selectedCtgr = element;
-        console.log(this.state.selectedCtgr);
+        this.setState({
+            selectedCtgr: element
+        });
+        console.log("Select ctgr: " + element);
+        this.refs.CtgrResults.refreshResults(element);
     }
 
     componentDidMount() {
         this.getValues();
-        this.setState({
-            selectedCtgr: this.state.ctgrs[0]
-        });
+        this.selectCtgr(this.state.ctgrs[0]);
     }
 
     render() {
@@ -134,7 +148,8 @@ class SearchModule extends Component {
                         )
                 }
                 <CtgrResults
-                    func = {this.state.selectedCtgr}>
+                    ref = "CtgrResults"
+                    >
         
                 </CtgrResults>
             </div>

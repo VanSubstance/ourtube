@@ -15,14 +15,23 @@ class CtgrResults extends Component {
     }
 
     componentDidMount () {
+        this.refreshResults(this.props.newCtgr)
+    }
+
+    /**
+     * ------------------------------------------------------------------------------> 김종규
+     * 키워드 리스트 새로고침
+     */
+    refreshResults = (newCtgr) => {
+        console.log("Refresh keywords: " + newCtgr);
         this.setState({
-            seq: [this.props.selectedCtgr + "0", 
-            this.props.selectedCtgr + "1", 
-            this.props.selectedCtgr + "2", 
-            this.props.selectedCtgr + "3", 
-            this.props.selectedCtgr + "4", 
-            this.props.selectedCtgr + "5"]
-        })
+            seq: [newCtgr + "0", 
+            newCtgr + "1", 
+            newCtgr + "2", 
+            newCtgr + "3", 
+            newCtgr + "4", 
+            newCtgr + "5"]
+        });
     }
 
     render() {
