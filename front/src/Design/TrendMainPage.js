@@ -6,7 +6,14 @@ import Paper from '@material-ui/core/Paper';
 
 class TrendMainPage extends Component {
 
+    constructor (props) {
+        super(props);
+        console.log("TrendMainPage 생성");
+        console.log(this.props.location);
+    }
+
     state = {
+        searchVal: "",
         selectedCtgr: "",
         ctgrs: ["카테고리 예시 1", "카테고리 예시 2", "예시 3", "예시 4", "카테고리 예시 5"],
         outside: {
@@ -34,14 +41,24 @@ class TrendMainPage extends Component {
             margin: "100 100 100 100",
         }
     }
-    getValues = () => {
+    componentDidMount() {
+        this.selectCtgr(this.state.ctgrs[0]);
+    }
+    searchTracker = (track) => {
         this.setState({
-            searchType: this.props.searchType,
+            searchVal: track.target.value
         })
     }
-    componentDidMount() {
-        this.getValues();
-        this.selectCtgr(this.state.ctgrs[0]);
+    searchCtgr = () => {
+        this.setState({
+            ctgrs: [
+                this.state.searchVal + "1",
+                this.state.searchVal + "2",
+                this.state.searchVal + "3",
+                this.state.searchVal + "4",
+                this.state.searchVal + "5",
+            ]
+        })
     }
     /**
      * ------------------------------------------------------------------------------> 김종규
@@ -68,8 +85,8 @@ class TrendMainPage extends Component {
                     트렌드
                             </div>
 
-                <div style={this.state.searchBar}> 검색하고자 하는 카테고리 </div>
-                <button style={this.state.logo}> 검색 </button>
+                <input style={this.state.searchBar} type="text" onChange={this.searchTracker} />
+                <button style={this.state.logo} onClick={this.searchCtgr}> 검색 </button>
 
                 <Paper>
                     {
@@ -85,7 +102,7 @@ class TrendMainPage extends Component {
                         })
                     }
                 </Paper>
-                
+
                 <RankList ref="CtgrResults">
 
                 </RankList>

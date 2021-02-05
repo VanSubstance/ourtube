@@ -34,14 +34,24 @@ class AlltimeMainPage extends Component {
             margin: "100 100 100 100",
         }
     }
-    getValues = () => {
+    componentDidMount() {
+        this.selectCtgr(this.state.ctgrs[0]);
+    }
+    searchTracker = (track) => {
         this.setState({
-            searchType: this.props.searchType,
+            searchVal: track.target.value
         })
     }
-    componentDidMount() {
-        this.getValues();
-        this.selectCtgr(this.state.ctgrs[0]);
+    searchCtgr = () => {
+        this.setState({
+            ctgrs: [
+                this.state.searchVal + "1",
+                this.state.searchVal + "2",
+                this.state.searchVal + "3",
+                this.state.searchVal + "4",
+                this.state.searchVal + "5",
+            ]
+        })
     }
     /**
      * ------------------------------------------------------------------------------> 김종규
@@ -67,9 +77,8 @@ class AlltimeMainPage extends Component {
                     올타임
                         </div>
 
-                <div style={this.state.searchBar}> 검색하고자 하는 카테고리 </div>
-                <button style={this.state.logo}> 검색 </button>
-
+                <input style={this.state.searchBar} type="text" onChange={this.searchTracker} />
+                <button style={this.state.logo} onClick={this.searchCtgr}> 검색 </button>
                 <Paper>
                     {
                         this.state.ctgrs.map((element) => {

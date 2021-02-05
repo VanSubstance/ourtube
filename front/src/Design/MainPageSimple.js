@@ -8,6 +8,7 @@ class MainPageSimple extends Component {
 
     state = {
         currentType: "트렌드",
+        searchVal: "",
         selectedCtgr: "",
         ctgrs: ["카테고리 예시 1", "카테고리 예시 2", "예시 3", "예시 4", "카테고리 예시 5"],
         outside: {
@@ -16,9 +17,10 @@ class MainPageSimple extends Component {
         },
         searchBar: {
             width: "180px",
-            height: "40px",
-            background: "#c8c8c8",
+            height: "20px",
+            background: "white",
             display: "inline",
+            margin: "20px",
         },
         logo: {
             width: "80px",
@@ -35,7 +37,6 @@ class MainPageSimple extends Component {
         })
     }
     /** 
-     * ------------------------------------------------------------------------------> 김종규
      * 트렌드 <-> 올타임
      * 변경 시 해당 타입에 따른 카테고리 호출
      * 카테고리 1번째 자동 선택
@@ -43,18 +44,15 @@ class MainPageSimple extends Component {
     changeType = () => {
         var target = "";
         var color = "green";
-        var ctgrss = ["트렌드 1", "트렌드 2", "트렌드 3", "트렌드 4", "트렌드 5"];
         if (this.state.currentType == "트렌드") {
             target = "올타임";
             color = "green";
-            ctgrss = ["올타임 1", "올타임 2", "올타임 3", "올타임 4", "올타임 5"];
         } else {
             target = "트렌드";
             color = "red";
-            ctgrss = ["트렌드 1", "트렌드 2", "트렌드 3", "트렌드 4", "트렌드 5"];
         }
         this.setState({
-            ctgrs: ctgrss,
+            searchVal: "",
             currentType: target,
             logo: {
                 width: "80px",
@@ -63,7 +61,8 @@ class MainPageSimple extends Component {
                 color: "white",
                 display: "inline",
             },
-        })
+        });
+        this.searchCtgr();
     }
     /**
      * ------------------------------------------------------------------------------> 김종규
@@ -80,6 +79,28 @@ class MainPageSimple extends Component {
     componentDidMount() {
         this.getValues();
         this.selectCtgr(this.state.ctgrs[0]);
+    }
+
+    searchTracker = (track) => {
+        this.setState({
+            searchVal: track.target.value
+        })
+    }
+    /**
+     * ------------------------------------------------------------------------------> 김종규
+     * 카테고리 검색 
+     * 검색 결과 반환
+     */
+    searchCtgr = () => {
+        this.setState({
+            ctgrs: [
+                this.state.searchVal + "1",
+                this.state.searchVal + "2",
+                this.state.searchVal + "3",
+                this.state.searchVal + "4",
+                this.state.searchVal + "5",
+            ]
+        })
     }
 
     render() {
@@ -105,15 +126,20 @@ class MainPageSimple extends Component {
                         )
                 }
 
-                <div style={this.state.searchBar}> 검색하고자 하는 카테고리 </div>
-                <button style={this.state.logo}> 검색 </button>
+                <input style={this.state.searchBar} type="text" onChange={this.searchTracker} />
+                <button style={this.state.logo} onClick={this.searchCtgr}> 검색 </button>
 
                 {
                     this.state.currentType === "트렌드"
                         ? (
                             <Link
-                                to="/trend"
                                 style={this.state.logo}
+                                to={{
+                                    pathname: "/trend",
+                                    state: {
+                                        searchVal: this.state.searchVal
+                                    }
+                                }}
                             >자세히 보기</Link>
                         )
                         : (
