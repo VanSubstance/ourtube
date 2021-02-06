@@ -57,8 +57,10 @@ class TrendMainPage extends Component {
                 this.state.searchVal + "3",
                 this.state.searchVal + "4",
                 this.state.searchVal + "5",
-            ]
+            ],
+            selectedCtgr: this.state.searchVal + "1",
         })
+        this.refs.CtgrResults.refreshResults(this.state.searchVal + "1");
     }
     /**
      * ------------------------------------------------------------------------------> 김종규
