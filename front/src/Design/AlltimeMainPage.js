@@ -142,6 +142,7 @@ class AlltimeMainPage extends Component {
                             scales: {
                                 yAxes: [{
                                     ticks: {
+                                        max: 100,
                                         beginAtZero: true
                                 }
                             }]
@@ -199,6 +200,7 @@ class AlltimeMainPage extends Component {
                             scales: {
                                 yAxes: [{
                                     ticks: {
+                                        max: 100,
                                         beginAtZero: true
                                 }
                             }]
@@ -241,6 +243,7 @@ class AlltimeMainPage extends Component {
                             scales: {
                                 yAxes: [{
                                     ticks: {
+                                        max: 100,
                                         beginAtZero: true
                                 }
                             }]
@@ -285,6 +288,7 @@ class AlltimeMainPage extends Component {
                             scales: {
                                 yAxes: [{
                                     ticks: {
+                                        max: 100,
                                         beginAtZero: true
                                 }
                             }]
@@ -329,6 +333,7 @@ class AlltimeMainPage extends Component {
                             scales: {
                                 yAxes: [{
                                     ticks: {
+                                        max: 100,
                                         beginAtZero: true
                                 }
                             }]
