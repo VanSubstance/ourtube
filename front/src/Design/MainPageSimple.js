@@ -147,7 +147,12 @@ class MainPageSimple extends Component {
                         )
                         : (
                             <Link
-                                to="/alltime"
+                                to={{
+                                    pathname: "/alltime",
+                                    state: {
+                                        searchVal: this.state.searchVal
+                                    }
+                                }}
                                 style={this.state.logo}
                             >자세히 보기</Link>
                         )

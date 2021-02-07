@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { RankList } from './Comps';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class AlltimeMainPage extends Component {
 
     state = {
+        searchVal: "",
         selectedCtgr: "",
         ctgrs: ["카테고리 예시 1", "카테고리 예시 2", "예시 3", "예시 4", "카테고리 예시 5"],
         outside: {
@@ -35,6 +36,14 @@ class AlltimeMainPage extends Component {
         }
     }
     componentDidMount() {
+        if (this.props.searchVal != undefined) {
+            console.log("searchVal is " + this.props.searchVal);
+            this.state.searchVal = this.props.searchVal;
+        } else {
+            console.log("searchVal is " + this.props.searchVal);
+            this.state.searchVal = "기본값";
+        }
+        this.searchCtgr();
         this.selectCtgr(this.state.ctgrs[0]);
     }
     searchTracker = (track) => {
@@ -42,17 +51,19 @@ class AlltimeMainPage extends Component {
             searchVal: track.target.value
         })
     }
+    /**
+     * ------------------------------------------------------------------------------> 김종규
+     * 현재 입력되어있는 searchVal로 카테고리 검색
+     */
     searchCtgr = () => {
-        this.setState({
-            ctgrs: [
-                this.state.searchVal + "1",
-                this.state.searchVal + "2",
-                this.state.searchVal + "3",
-                this.state.searchVal + "4",
-                this.state.searchVal + "5",
-            ],
-            selectedCtgr: this.state.searchVal + "1",
-        })
+        this.state.ctgrs = [
+            this.state.searchVal + "1",
+            this.state.searchVal + "2",
+            this.state.searchVal + "3",
+            this.state.searchVal + "4",
+            this.state.searchVal + "5",
+        ];
+        this.state.selectedCtgr = this.state.searchVal + "1";
         this.refs.CtgrResults.refreshResults(this.state.searchVal + "1");
     }
     /**
@@ -77,10 +88,11 @@ class AlltimeMainPage extends Component {
                 <div
                     style={this.state.logo}>
                     올타임
-                        </div>
+                            </div>
 
                 <input style={this.state.searchBar} type="text" onChange={this.searchTracker} />
                 <button style={this.state.logo} onClick={this.searchCtgr}> 검색 </button>
+
                 <Paper>
                     {
                         this.state.ctgrs.map((element) => {

@@ -6,12 +6,6 @@ import Paper from '@material-ui/core/Paper';
 
 class TrendMainPage extends Component {
 
-    constructor (props) {
-        super(props);
-        console.log("TrendMainPage 생성");
-        console.log(this.props.location);
-    }
-
     state = {
         searchVal: "",
         selectedCtgr: "",
@@ -42,6 +36,14 @@ class TrendMainPage extends Component {
         }
     }
     componentDidMount() {
+        if (this.props.searchVal != undefined) {
+            console.log("searchVal is " + this.props.searchVal);
+            this.state.searchVal = this.props.searchVal;
+        } else {
+            console.log("searchVal is " + this.props.searchVal);
+            this.state.searchVal = "기본값";
+        }
+        this.searchCtgr();
         this.selectCtgr(this.state.ctgrs[0]);
     }
     searchTracker = (track) => {
@@ -49,17 +51,19 @@ class TrendMainPage extends Component {
             searchVal: track.target.value
         })
     }
+    /**
+     * ------------------------------------------------------------------------------> 김종규
+     * 현재 입력되어있는 searchVal로 카테고리 검색
+     */
     searchCtgr = () => {
-        this.setState({
-            ctgrs: [
-                this.state.searchVal + "1",
-                this.state.searchVal + "2",
-                this.state.searchVal + "3",
-                this.state.searchVal + "4",
-                this.state.searchVal + "5",
-            ],
-            selectedCtgr: this.state.searchVal + "1",
-        })
+        this.state.ctgrs = [
+            this.state.searchVal + "1",
+            this.state.searchVal + "2",
+            this.state.searchVal + "3",
+            this.state.searchVal + "4",
+            this.state.searchVal + "5",
+        ];
+        this.state.selectedCtgr = this.state.searchVal + "1";
         this.refs.CtgrResults.refreshResults(this.state.searchVal + "1");
     }
     /**
@@ -76,7 +80,6 @@ class TrendMainPage extends Component {
 
     render() {
         return (
-            console.log("SearchPage opened."),
             <div
                 className="SearchModule"
                 style={this.state.outside}>

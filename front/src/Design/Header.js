@@ -17,11 +17,11 @@ class App extends Component {
 
           <Route
             exact path='/trend'
-            render={() => <TrendMainPage searchType="트렌드"></TrendMainPage>}>
+            render={({location}) => <TrendMainPage searchType="트렌드" searchVal = {location.state.searchVal}></TrendMainPage>}>
           </Route>
           <Route
             exact path='/alltime'
-            render={() => <AlltimeMainPage searchType="올타임"></AlltimeMainPage>}>
+            render={({location}) => <AlltimeMainPage searchType="올타임" searchVal = {location.state.searchVal}></AlltimeMainPage>}>
           </Route>
 
           <Route
