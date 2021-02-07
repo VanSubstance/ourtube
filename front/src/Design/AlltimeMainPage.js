@@ -35,6 +35,7 @@ class AlltimeMainPage extends Component {
             color: "#000000",
             border: "3px solid red",
             margin: "100 100 100 100",
+            padding: '60px'
             
         }
     }
@@ -209,16 +210,131 @@ class AlltimeMainPage extends Component {
                 <div
                     style={this.state.chart}>
                     <p> 선 그래프: 키워드 관련 동영상 신규 조회수 </p>
+                    <Line 
+                        data = {{
+                            labels: ['test1','test2','test3','test4','test5'],
+                            datasets: [{
+                                label: 'test',
+                                data: [
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),                                    
+                                ],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                                                       
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)'                                    
+                                ],
+                                borderWidth: 1
+                            }]                            
+                        }}
+                        options={{
+                            maintainAspectRatio: false,
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                }
+                            }]
+                        }
+                    }}
+                    />
                 </div>
 
                 <div
                     style={this.state.chart}>
                     <p> 선 그래프: 키워드 관련 신규 동영상 개수 </p>
+                    <Line 
+                        data = {{
+                            labels: ['test1','test2','test3','test4','test5'],
+                            datasets: [{
+                                label: 'test',
+                                data: [
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100)
+                                   
+                                ],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                                                       
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    
+                                ],
+                                borderWidth: 1
+                            }]                            
+                        }}
+                        options={{
+                            maintainAspectRatio: false,
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                }
+                            }]
+                        }
+                    }}
+                    />
                 </div>
 
                 <div
                     style={this.state.chart}>
                     <p> 선 그래프: 키워드 관련 동영상 신규 조회수 </p>
+                    <Line 
+                        data = {{
+                            labels: ['test1','test2','test3','test4','test5'],
+                            datasets: [{
+                                label: 'test',
+                                data: [
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100)
+                                    
+                                ],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                                                       
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    
+                                ],
+                                borderWidth: 1
+                            }]                            
+                        }}
+                        options={{
+                            maintainAspectRatio: false,
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                }
+                            }]
+                        }
+                    }}
+                    />
                 </div>
             </div>
         );
