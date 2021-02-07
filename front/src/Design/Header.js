@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Home, About, User } from '../Yang';
 import { MainPageSimple, TrendMainPage, AlltimeMainPage, TrendResultPage, AlltimeResultPage } from './';
+import {CtgrResults, RankList} from './Comps';
 
 class App extends Component {
 

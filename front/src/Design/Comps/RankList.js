@@ -11,13 +11,13 @@ SwiperCore.use([Navigation, Pagination, Autoplay]);
 class RankList extends Component {
 
     state = {
-        seq: [0, 1, 2, 3, 4, 5, 6, 7],
+        keywords: [0, 1, 2, 3, 4, 5, 6, 7],
         style: {
             width: "800px",
             height: "200px",
         }
     }
-    componentDidMount () {
+    componentDidMount() {
         this.refreshResults(this.props.newCtgr)
     }
     /**
@@ -25,22 +25,37 @@ class RankList extends Component {
      * 키워드 리스트 새로고침
      */
     refreshResults = (newCtgr) => {
-        this.setState({
-            seq: [newCtgr + "0", 
-            newCtgr + "1", 
-            newCtgr + "2", 
-            newCtgr + "3", 
-            newCtgr + "4", 
-            newCtgr + "5"]
-        });
+        this.state.keywords = [newCtgr + "0", 
+        newCtgr + "1", 
+        newCtgr + "2", 
+        newCtgr + "3", 
+        newCtgr + "4", 
+        newCtgr + "5"];
+        this.renderLists();
+    }
+
+    renderLists = () => {
+        return (
+            this.state.keywords.map((element) => (
+                console.log(element),
+                <SwiperSlide>
+                    <RankListItem
+                        type = {this.props.type}
+                        keyword={element}>
+
+                    </RankListItem>
+                </SwiperSlide>
+            )
+            )
+        );
     }
 
     render() {
         return (
             <div>
-                <p>랭크 리스트</p>
+                <p>{this.props.type} 랭크 리스트</p>
                 <Swiper
-                    style = {this.state.style}
+                    style={this.state.style}
                     spaceBetween={50}
                     slidesPerView={5}
                     direction={'vertical'}
@@ -48,15 +63,7 @@ class RankList extends Component {
                     pagination={{ clickable: true }}
 
                 >
-                    {this.state.seq.map((element) => (
-                        <SwiperSlide>
-                            <RankListItem
-                                seq={element}>
-
-                            </RankListItem>
-                        </SwiperSlide>
-                    )
-                    )}
+                    {this.renderLists()}
                 </Swiper>
             </div>
         );

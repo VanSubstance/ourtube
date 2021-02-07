@@ -47,23 +47,23 @@ class TrendMainPage extends Component {
         this.selectCtgr(this.state.ctgrs[0]);
     }
     searchTracker = (track) => {
-        this.setState({
-            searchVal: track.target.value
-        })
+        this.state.searchVal = track.target.value;
     }
     /**
      * ------------------------------------------------------------------------------> 김종규
      * 현재 입력되어있는 searchVal로 카테고리 검색
      */
     searchCtgr = () => {
-        this.state.ctgrs = [
-            this.state.searchVal + "1",
-            this.state.searchVal + "2",
-            this.state.searchVal + "3",
-            this.state.searchVal + "4",
-            this.state.searchVal + "5",
-        ];
-        this.state.selectedCtgr = this.state.searchVal + "1";
+        this.setState({
+            ctgrs: [
+                this.state.searchVal + "1",
+                this.state.searchVal + "2",
+                this.state.searchVal + "3",
+                this.state.searchVal + "4",
+                this.state.searchVal + "5",
+            ],
+            selectedCtgr: this.state.searchVal + "1",
+        })
         this.refs.CtgrResults.refreshResults(this.state.searchVal + "1");
     }
     /**
@@ -108,7 +108,7 @@ class TrendMainPage extends Component {
                     }
                 </Paper>
 
-                <RankList ref="CtgrResults">
+                <RankList type = "트렌드" ref="CtgrResults">
 
                 </RankList>
                 <div
