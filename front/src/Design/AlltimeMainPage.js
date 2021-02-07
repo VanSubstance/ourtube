@@ -3,6 +3,7 @@ import { RankList } from './Comps';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
+import {Bar, Line} from 'react-chartjs-2';
 
 class AlltimeMainPage extends Component {
 
@@ -28,11 +29,13 @@ class AlltimeMainPage extends Component {
             display: "inline",
         },
         chart: {
-            width: "200px",
-            height: "100px",
-            background: "#000000",
-            color: "#FFFFFF",
+            width: "300px",
+            height: "300px",
+            background: "#FFFFFF",
+            color: "#000000",
+            border: "3px solid red",
             margin: "100 100 100 100",
+            
         }
     }
     componentDidMount() {
@@ -113,12 +116,94 @@ class AlltimeMainPage extends Component {
                 </RankList>
                 <div
                     style={this.state.chart}>
-                    <p> 바 그래프: 좋아요 싫어요 비율 </p>
+                    <Bar 
+                        data = {{
+                            labels: ['좋아요', '싫어요'],
+                            datasets: [{
+                                label: 'test',
+                                data: [
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100)
+                                ],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)'
+                                ],
+                                borderWidth: 1
+                            }]                            
+                        }}                        
+                        options={{
+                            maintainAspectRatio: false,
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                }
+                            }]
+                        }
+                    }}
+                    />
                 </div>
 
                 <div
                     style={this.state.chart}>
                     <p> 선 그래프: 월별 순위 변동 </p>
+                    <Line 
+                        data = {{
+                            labels: ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST'
+                                    , 'SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'],
+                            datasets: [{
+                                label: 'test',
+                                data: [
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100),
+                                    Math.floor(Math.random()*100)
+                                ],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                                                       
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)'
+                                ],
+                                borderWidth: 1
+                            }]                            
+                        }}
+                        options={{
+                            maintainAspectRatio: false,
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                }
+                            }]
+                        }
+                    }}
+                    />
                 </div>
 
                 <div
