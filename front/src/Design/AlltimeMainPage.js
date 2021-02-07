@@ -111,7 +111,7 @@ class AlltimeMainPage extends Component {
                     }
                 </Paper>
 
-                <RankList ref="CtgrResults">
+                <RankList type = "올타임" ref="CtgrResults">
 
                 </RankList>
                 <div

@@ -73,7 +73,6 @@ class MainPageSimple extends Component {
         this.setState({
             selectedCtgr: element
         });
-        console.log("Refresh Keywords")
         this.refs.CtgrResults.refreshResults(element);
     }
 
@@ -196,6 +195,7 @@ class MainPageSimple extends Component {
                         )
                 }
                 <CtgrResults
+                    type = {this.state.currentType}
                     ref="CtgrResults"
                 >
 
