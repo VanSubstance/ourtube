@@ -37,9 +37,43 @@ class AlltimeMainPage extends Component {
             margin: "100 100 100 100",
             padding: '60px'
             
+        },
+        options: {
+            barLikes: {
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        stacked: true
+                    }],
+                    yAxes: [{
+                        stacked: true,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+
+        },
+        datasets: {
+            barLikes: {
+                datasets: [
+                    {
+                        label: "싫어요",
+                        data: [7, 14],
+                        backgroundColor: "#ff3399"
+                    },
+                    {
+                        label: "좋아요",
+                        data: [35, 22],
+                        backgroundColor: "#00cc99"
+                    }
+                ],
+                labels: ['라벨 1', '라벨 2']
+            }
         }
     }
-    componentDidMount() {
+    componentWillMount() {
         if (this.props.searchVal != undefined) {
             console.log("searchVal is " + this.props.searchVal);
             this.state.searchVal = this.props.searchVal;
@@ -47,14 +81,75 @@ class AlltimeMainPage extends Component {
             console.log("searchVal is " + this.props.searchVal);
             this.state.searchVal = "기본값";
         }
-        this.searchCtgr();
-        this.selectCtgr(this.state.ctgrs[0]);
+        this.setState({
+            ctgrs: [
+                this.state.searchVal + "1",
+                this.state.searchVal + "2",
+                this.state.searchVal + "3",
+                this.state.searchVal + "4",
+                this.state.searchVal + "5",
+            ],
+            selectedCtgr: this.state.searchVal + "1",
+        });
     }
+    componentDidMount() {
+        this.searchCtgr();
+    }
+
+    // 카테고리의 데이터를 가져오는 함수
+    getDatasetFromCtgr = (ctgr) => {
+        // 좋아요 막대 그래프 변수
+        var barLikes = [];
+        barLikes.like = Math.floor(Math.random()*100);
+        barLikes.hate = Math.floor(Math.random()*100);
+        return (barLikes);
+    }
+
+    // 바 그래프 데이터 가져오는 함수
+    getDatasets = () => {
+        const {datasets, ctgrs} = this.state;
+        var dataLikes = [];
+        var dataHates = [];
+        ctgrs.forEach((value, index) => {
+            var data = this.getDatasetFromCtgr(value);
+            dataLikes.push(data.like);
+            dataHates.push(data.hate);
+        })
+        datasets.barLikes.datasets[0].data = dataHates;
+        datasets.barLikes.datasets[1].data = dataLikes;
+        datasets.barLikes.labels = ctgrs;
+    }
+
+    // 카테고리의 데이터를 가져오는 함수
+    getDatasetFromCtgr = (ctgr) => {
+        // 좋아요 막대 그래프 변수
+        var barLikes = [];
+        barLikes.like = Math.floor(Math.random()*100);
+        barLikes.hate = Math.floor(Math.random()*100);
+        return (barLikes);
+    }
+
+    // 바 그래프 데이터 가져오는 함수
+    getDatasets = () => {
+        const {datasets, ctgrs} = this.state;
+        var dataLikes = [];
+        var dataHates = [];
+        ctgrs.forEach((value, index) => {
+            var data = this.getDatasetFromCtgr(value);
+            dataLikes.push(data.like);
+            dataHates.push(data.hate);
+        })
+        datasets.barLikes.datasets[0].data = dataHates;
+        datasets.barLikes.datasets[1].data = dataLikes;
+        datasets.barLikes.labels = ctgrs;
+    }
+
     searchTracker = (track) => {
         this.setState({
             searchVal: track.target.value
         })
     }
+
     /**
      * ------------------------------------------------------------------------------> 김종규
      * 현재 입력되어있는 searchVal로 카테고리 검색
@@ -67,9 +162,11 @@ class AlltimeMainPage extends Component {
             this.state.searchVal + "4",
             this.state.searchVal + "5",
         ];
-        this.state.selectedCtgr = this.state.searchVal + "1";
-        this.refs.CtgrResults.refreshResults(this.state.searchVal + "1");
+        this.state.selectedCtgr = this.state.ctgrs[0];
+        this.selectCtgr(this.state.selectedCtgr);
+        this.getDatasets();
     }
+    
     /**
      * ------------------------------------------------------------------------------> 김종규
      * 카테고리 선택
@@ -93,10 +190,8 @@ class AlltimeMainPage extends Component {
                     style={this.state.logo}>
                     올타임
                             </div>
-
                 <input style={this.state.searchBar} type="text" onChange={this.searchTracker} />
                 <button style={this.state.logo} onClick={this.searchCtgr}> 검색 </button>
-
                 <Paper>
                     {
                         this.state.ctgrs.map((element) => {
@@ -111,43 +206,14 @@ class AlltimeMainPage extends Component {
                         })
                     }
                 </Paper>
-
                 <RankList type = "올타임" ref="CtgrResults">
 
                 </RankList>
                 <div
                     style={this.state.chart}>
                     <Bar 
-                        data = {{
-                            labels: ['좋아요', '싫어요'],
-                            datasets: [{
-                                label: 'test',
-                                data: [
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100)
-                                ],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)'
-                                ],
-                                borderColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(54, 162, 235, 1)'
-                                ],
-                                borderWidth: 1
-                            }]                            
-                        }}                        
-                        options={{
-                            maintainAspectRatio: false,
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        max: 100,
-                                        beginAtZero: true
-                                }
-                            }]
-                        }
-                    }}
+                        data = {this.state.datasets.barLikes}                        
+                        options={this.state.options.barLikes}
                     />
                 </div>
 

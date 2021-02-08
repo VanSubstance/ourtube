@@ -38,6 +38,7 @@ class TrendMainPage extends Component {
             padding: '60px'
         },
         options: {
+            // 좋아요 싫어요 막대 그래프 옵션
             barLikes: {
                 maintainAspectRatio: false,
                 scales: {
@@ -55,20 +56,24 @@ class TrendMainPage extends Component {
 
         },
         datasets: {
+            // 좋아요 싫어요 막대 그래프 변수
             barLikes: {
                 datasets: [
                     {
                         label: "싫어요",
-                        data: [7, 14],
+                        // 싫어요 데이터셋 위치
+                        data: [],
                         backgroundColor: "#ff3399"
                     },
                     {
                         label: "좋아요",
-                        data: [35, 22],
+                        // 좋아요 데이터셋 위치
+                        data: [],
                         backgroundColor: "#00cc99"
                     }
                 ],
-                labels: ['라벨 1', '라벨 2']
+                // 라벨 데이터셋 위치
+                labels: []
             }
         }
     }
@@ -128,19 +133,18 @@ class TrendMainPage extends Component {
      * 현재 입력되어있는 searchVal로 카테고리 검색
      */
     searchCtgr = () => {
-            this.setState({
-                ctgrs: [
-                    this.state.searchVal + "1",
-                    this.state.searchVal + "2",
-                    this.state.searchVal + "3",
-                    this.state.searchVal + "4",
-                    this.state.searchVal + "5",
-                ],
-                selectedCtgr: this.state.searchVal + "1",
-            });
-            this.selectCtgr(this.state.selectedCtgr);
+        this.state.ctgrs = [
+            this.state.searchVal + "1",
+            this.state.searchVal + "2",
+            this.state.searchVal + "3",
+            this.state.searchVal + "4",
+            this.state.searchVal + "5",
+        ];
+        this.state.selectedCtgr = this.state.ctgrs[0];
+        this.selectCtgr(this.state.selectedCtgr);
         this.getDatasets();
     }
+
     /**
      * ------------------------------------------------------------------------------> 김종규
      * 카테고리 선택
