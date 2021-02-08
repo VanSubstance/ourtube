@@ -160,7 +160,7 @@ class AlltimeMainPage extends Component {
         // 월별 순위 선 그래프 변수
         var lineRankPerMonth = [];
         for (var i = 0; i < 12; i ++) {
-            lineRankPerMonth.push(Math.floor(Math.random()*100));
+            lineRankPerMonth.push(Math.floor(Math.random()*20));
         }
         return ({barLikes: barLikes, lineRankPerMonth: lineRankPerMonth});
     }
