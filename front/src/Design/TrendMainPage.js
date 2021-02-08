@@ -52,7 +52,18 @@ class TrendMainPage extends Component {
                         }
                     }]
                 }
+            },
+            lineRankPerMonth: {
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            max: 100,
+                            beginAtZero: true
+                    }
+                }]
             }
+        }
 
         },
         datasets: {
@@ -74,7 +85,51 @@ class TrendMainPage extends Component {
                 ],
                 // 라벨 데이터셋 위치
                 labels: []
+            },
+            lineRankPerMonth: {
+                datasets: [
+                    {
+                        label: "test1",
+                        data: [1,2,3,4,5,6,7,8,9,10,11,12],
+                        backgroundColor: "white",
+                        borderColor: "red",
+                        borderWidth : 1
+                    },
+                    {
+                        label: "test2",
+                        data: [1,2,3,4,5,6,7,8,9,10,11,14],
+                        backgroundColor: "white",
+                        borderColor: "blue",
+                        borderWidth : 1
+                    },
+                    {
+                        label: "test3",
+                        data: [1,2,3,4,5,6,7,8,9,10,11,16],
+                        backgroundColor: "white",
+                        borderColor: "yellow",
+                        borderWidth : 1
+                    },
+                    {
+                        label: "test4",
+                        data: [1,2,3,4,5,6,7,8,9,10,11,18],
+                        backgroundColor: "white",
+                        borderColor: "orange",
+                        borderWidth : 1
+                    },
+                    {
+                        label: "test5",
+                        data: [1,2,3,4,5,6,7,8,9,10,11,20],
+                        backgroundColor: "white",
+                        borderColor: "sky",
+                        borderWidth : 1
+                    }
+
+                ],
+                labels: ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST'
+                , 'SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER']
             }
+
+            
         }
     }
     componentWillMount() {
@@ -109,7 +164,7 @@ class TrendMainPage extends Component {
         return (barLikes);
     }
 
-    // 바 그래프 데이터 가져오는 함수
+    // 데이터 가져오는 함수
     getDatasets = () => {
         const {datasets, ctgrs} = this.state;
         var dataLikes = [];
@@ -205,57 +260,8 @@ class TrendMainPage extends Component {
                     style={this.state.chart}>
                     <p> 선 그래프: 월별 순위 변동 </p>
                     <Line 
-                        data = {{
-                            labels: ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST'
-                                    , 'SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'],
-                            datasets: [{
-                                label: 'test',
-                                data: [
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100)
-                                ],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                                                       
-                                ],
-                                borderColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)'
-                                ],
-                                borderWidth: 1
-                            }]                            
-                        }}
-                        options={{
-                            maintainAspectRatio: false,
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        max: 100,
-                                        beginAtZero: true
-                                }
-                            }]
-                        }
-                    }}
+                        data = {this.state.datasets.lineRankPerMonth}
+                        options={this.state.options.lineRankPerMonth}
                     />
                 </div>
 
