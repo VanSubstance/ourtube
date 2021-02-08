@@ -52,8 +52,18 @@ class AlltimeMainPage extends Component {
                         }
                     }]
                 }
+            },
+            lineRankPerMonth: {
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            max: 100,
+                            beginAtZero: true
+                        }
+                    }]
+                }
             }
-
         },
         datasets: {
             barLikes: {
@@ -70,9 +80,52 @@ class AlltimeMainPage extends Component {
                     }
                 ],
                 labels: ['라벨 1', '라벨 2']
+            },
+            lineRankPerMonth: {
+                datasets: [
+                    {
+                        label: "test1",
+                        data: [],
+                        fill: false,
+                        borderColor: "red",
+                        borderWidth : 1
+                    },
+                    {
+                        label: "test2",
+                        data: [],
+                        fill: false,
+                        borderColor: "blue",
+                        borderWidth : 1
+                    },
+                    {
+                        label: "test3",
+                        data: [],
+                        fill: false,
+                        borderColor: "yellow",
+                        borderWidth : 1
+                    },
+                    {
+                        label: "test4",
+                        data: [],
+                        fill: false,
+                        borderColor: "orange",
+                        borderWidth : 1
+                    },
+                    {
+                        label: "test5",
+                        data: [],
+                        fill: false,
+                        borderColor: "black",
+                        borderWidth : 1
+                    }
+
+                ],
+                labels: ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST'
+                , 'SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER']
             }
         }
     }
+    // 컴포넌트 생성 직후 실행
     componentWillMount() {
         if (this.props.searchVal != undefined) {
             console.log("searchVal is " + this.props.searchVal);
@@ -92,6 +145,8 @@ class AlltimeMainPage extends Component {
             selectedCtgr: this.state.searchVal + "1",
         });
     }
+
+    // 랜더링 후 실행
     componentDidMount() {
         this.searchCtgr();
     }
@@ -102,46 +157,70 @@ class AlltimeMainPage extends Component {
         var barLikes = [];
         barLikes.like = Math.floor(Math.random()*100);
         barLikes.hate = Math.floor(Math.random()*100);
-        return (barLikes);
+        // 월별 순위 선 그래프 변수
+        var lineRankPerMonth = [];
+        for (var i = 0; i < 12; i ++) {
+            lineRankPerMonth.push(Math.floor(Math.random()*100));
+        }
+        return ({barLikes: barLikes, lineRankPerMonth: lineRankPerMonth});
     }
 
-    // 바 그래프 데이터 가져오는 함수
+    // 데이터 가져오는 함수
     getDatasets = () => {
         const {datasets, ctgrs} = this.state;
         var dataLikes = [];
         var dataHates = [];
+        var lineRankPerMonth =[];
         ctgrs.forEach((value, index) => {
             var data = this.getDatasetFromCtgr(value);
-            dataLikes.push(data.like);
-            dataHates.push(data.hate);
+            dataLikes.push(data.barLikes.like);
+            dataHates.push(data.barLikes.hate);
+            lineRankPerMonth.push(data.lineRankPerMonth);
         })
         datasets.barLikes.datasets[0].data = dataHates;
         datasets.barLikes.datasets[1].data = dataLikes;
         datasets.barLikes.labels = ctgrs;
-    }
+        for (var i = 0; i < 5; i++) {
+            datasets.lineRankPerMonth.datasets[i].data = lineRankPerMonth[i];
+            datasets.lineRankPerMonth.datasets[i].label = ctgrs[i];
+        }
 
+    }
+    
     // 카테고리의 데이터를 가져오는 함수
     getDatasetFromCtgr = (ctgr) => {
         // 좋아요 막대 그래프 변수
         var barLikes = [];
         barLikes.like = Math.floor(Math.random()*100);
         barLikes.hate = Math.floor(Math.random()*100);
-        return (barLikes);
+        // 월별 순위 선 그래프 변수
+        var lineRankPerMonth = [];
+        for (var i = 0; i < 12; i ++) {
+            lineRankPerMonth.push(Math.floor(Math.random()*100));
+        }
+        return ({barLikes: barLikes, lineRankPerMonth: lineRankPerMonth});
     }
 
-    // 바 그래프 데이터 가져오는 함수
+    // 데이터 가져오는 함수
     getDatasets = () => {
         const {datasets, ctgrs} = this.state;
         var dataLikes = [];
         var dataHates = [];
+        var lineRankPerMonth =[];
         ctgrs.forEach((value, index) => {
             var data = this.getDatasetFromCtgr(value);
-            dataLikes.push(data.like);
-            dataHates.push(data.hate);
+            dataLikes.push(data.barLikes.like);
+            dataHates.push(data.barLikes.hate);
+            lineRankPerMonth.push(data.lineRankPerMonth);
         })
         datasets.barLikes.datasets[0].data = dataHates;
         datasets.barLikes.datasets[1].data = dataLikes;
         datasets.barLikes.labels = ctgrs;
+        for (var i = 0; i < 5; i++) {
+            datasets.lineRankPerMonth.datasets[i].data = lineRankPerMonth[i];
+            datasets.lineRankPerMonth.datasets[i].label = ctgrs[i];
+        }
+
     }
 
     searchTracker = (track) => {
@@ -221,57 +300,8 @@ class AlltimeMainPage extends Component {
                     style={this.state.chart}>
                     <p> 선 그래프: 월별 순위 변동 </p>
                     <Line 
-                        data = {{
-                            labels: ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST'
-                                    , 'SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'],
-                            datasets: [{
-                                label: 'test',
-                                data: [
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100)
-                                ],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                                                       
-                                ],
-                                borderColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)'
-                                ],
-                                borderWidth: 1
-                            }]                            
-                        }}
-                        options={{
-                            maintainAspectRatio: false,
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        max: 100,
-                                        beginAtZero: true
-                                }
-                            }]
-                        }
-                    }}
+                        data = {this.state.datasets.lineRankPerMonth}
+                        options={this.state.options.lineRankPerMonth}
                     />
                 </div>
 

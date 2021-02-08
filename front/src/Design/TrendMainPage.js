@@ -90,37 +90,37 @@ class TrendMainPage extends Component {
                 datasets: [
                     {
                         label: "test1",
-                        data: [1,2,3,4,5,6,7,8,9,10,11,12],
-                        backgroundColor: "white",
+                        data: [],
+                        fill: false,
                         borderColor: "red",
                         borderWidth : 1
                     },
                     {
                         label: "test2",
-                        data: [1,2,3,4,5,6,7,8,9,10,11,14],
-                        backgroundColor: "white",
+                        data: [],
+                        fill: false,
                         borderColor: "blue",
                         borderWidth : 1
                     },
                     {
                         label: "test3",
-                        data: [1,2,3,4,5,6,7,8,9,10,11,16],
-                        backgroundColor: "white",
+                        data: [],
+                        fill: false,
                         borderColor: "yellow",
                         borderWidth : 1
                     },
                     {
                         label: "test4",
-                        data: [1,2,3,4,5,6,7,8,9,10,11,18],
-                        backgroundColor: "white",
+                        data: [],
+                        fill: false,
                         borderColor: "orange",
                         borderWidth : 1
                     },
                     {
                         label: "test5",
-                        data: [1,2,3,4,5,6,7,8,9,10,11,20],
-                        backgroundColor: "white",
-                        borderColor: "sky",
+                        data: [],
+                        fill: false,
+                        borderColor: "black",
                         borderWidth : 1
                     }
 
@@ -161,7 +161,12 @@ class TrendMainPage extends Component {
         var barLikes = [];
         barLikes.like = Math.floor(Math.random()*100);
         barLikes.hate = Math.floor(Math.random()*100);
-        return (barLikes);
+        // 월별 순위 선 그래프 변수
+        var lineRankPerMonth = [];
+        for (var i = 0; i < 12; i ++) {
+            lineRankPerMonth.push(Math.floor(Math.random()*100));
+        }
+        return ({barLikes: barLikes, lineRankPerMonth: lineRankPerMonth});
     }
 
     // 데이터 가져오는 함수
@@ -169,14 +174,21 @@ class TrendMainPage extends Component {
         const {datasets, ctgrs} = this.state;
         var dataLikes = [];
         var dataHates = [];
+        var lineRankPerMonth =[];
         ctgrs.forEach((value, index) => {
             var data = this.getDatasetFromCtgr(value);
-            dataLikes.push(data.like);
-            dataHates.push(data.hate);
+            dataLikes.push(data.barLikes.like);
+            dataHates.push(data.barLikes.hate);
+            lineRankPerMonth.push(data.lineRankPerMonth);
         })
         datasets.barLikes.datasets[0].data = dataHates;
         datasets.barLikes.datasets[1].data = dataLikes;
         datasets.barLikes.labels = ctgrs;
+        for (var i = 0; i < 5; i++) {
+            datasets.lineRankPerMonth.datasets[i].data = lineRankPerMonth[i];
+            datasets.lineRankPerMonth.datasets[i].label = ctgrs[i];
+        }
+
     }
 
     searchTracker = (track) => {
