@@ -10,7 +10,7 @@ class TrendMainPage extends Component {
     state = {
         searchVal: "",
         selectedCtgr: "",
-        ctgrs: ["카테고리 예시 1", "카테고리 예시 2", "예시 3", "예시 4", "카테고리 예시 5"],
+        ctgrs: [],
         outside: {
             margin: "100px",
             background: "#DEDEDE",
@@ -36,9 +36,43 @@ class TrendMainPage extends Component {
             border: "3px solid red",
             margin: "100 100 100 100",
             padding: '60px'
+        },
+        options: {
+            barLikes: {
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        stacked: true
+                    }],
+                    yAxes: [{
+                        stacked: true,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+
+        },
+        datasets: {
+            barLikes: {
+                datasets: [
+                    {
+                        label: "싫어요",
+                        data: [7, 14],
+                        backgroundColor: "#ff3399"
+                    },
+                    {
+                        label: "좋아요",
+                        data: [35, 22],
+                        backgroundColor: "#00cc99"
+                    }
+                ],
+                labels: ['라벨 1', '라벨 2']
+            }
         }
     }
-    componentDidMount() {
+    componentWillMount() {
         if (this.props.searchVal != undefined) {
             console.log("searchVal is " + this.props.searchVal);
             this.state.searchVal = this.props.searchVal;
@@ -46,17 +80,6 @@ class TrendMainPage extends Component {
             console.log("searchVal is " + this.props.searchVal);
             this.state.searchVal = "기본값";
         }
-        this.searchCtgr();
-        this.selectCtgr(this.state.ctgrs[0]);
-    }
-    searchTracker = (track) => {
-        this.state.searchVal = track.target.value;
-    }
-    /**
-     * ------------------------------------------------------------------------------> 김종규
-     * 현재 입력되어있는 searchVal로 카테고리 검색
-     */
-    searchCtgr = () => {
         this.setState({
             ctgrs: [
                 this.state.searchVal + "1",
@@ -66,8 +89,57 @@ class TrendMainPage extends Component {
                 this.state.searchVal + "5",
             ],
             selectedCtgr: this.state.searchVal + "1",
+        });
+    }
+    componentDidMount() {
+        this.searchCtgr();
+    }
+
+    // 카테고리의 데이터를 가져오는 함수
+    getDatasetFromCtgr = (ctgr) => {
+        // 좋아요 막대 그래프 변수
+        var barLikes = [];
+        barLikes.like = Math.floor(Math.random()*100);
+        barLikes.hate = Math.floor(Math.random()*100);
+        return (barLikes);
+    }
+
+    // 바 그래프 데이터 가져오는 함수
+    getDatasets = () => {
+        const {datasets, ctgrs} = this.state;
+        var dataLikes = [];
+        var dataHates = [];
+        ctgrs.forEach((value, index) => {
+            var data = this.getDatasetFromCtgr(value);
+            dataLikes.push(data.like);
+            dataHates.push(data.hate);
         })
-        this.refs.CtgrResults.refreshResults(this.state.searchVal + "1");
+        datasets.barLikes.datasets[0].data = dataHates;
+        datasets.barLikes.datasets[1].data = dataLikes;
+        datasets.barLikes.labels = ctgrs;
+    }
+
+    searchTracker = (track) => {
+        this.state.searchVal = track.target.value;
+    }
+
+    /**
+     * ------------------------------------------------------------------------------> 김종규
+     * 현재 입력되어있는 searchVal로 카테고리 검색
+     */
+    searchCtgr = () => {
+            this.setState({
+                ctgrs: [
+                    this.state.searchVal + "1",
+                    this.state.searchVal + "2",
+                    this.state.searchVal + "3",
+                    this.state.searchVal + "4",
+                    this.state.searchVal + "5",
+                ],
+                selectedCtgr: this.state.searchVal + "1",
+            });
+            this.selectCtgr(this.state.selectedCtgr);
+        this.getDatasets();
     }
     /**
      * ------------------------------------------------------------------------------> 김종규
@@ -99,6 +171,8 @@ class TrendMainPage extends Component {
                 <Paper>
                     {
                         this.state.ctgrs.map((element) => {
+                            console.log("체크 2: " + this.state.ctgrs);
+                            console.log("체크 2: " + element);
                             return (
                                 <Chip
                                     label={element}
@@ -118,36 +192,8 @@ class TrendMainPage extends Component {
                     style={this.state.chart}>
                     <p> 바 그래프: 좋아요 싫어요 비율 </p>
                     <Bar 
-                        data = {{
-                            labels: ['좋아요', '싫어요'],
-                            datasets: [{
-                                label: 'test',
-                                data: [
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100)
-                                ],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-                                    'rgba(54, 162, 235, 0.2)'
-                                ],
-                                borderColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(54, 162, 235, 1)'
-                                ],
-                                borderWidth: 1
-                            }]                            
-                        }}                        
-                        options={{
-                            maintainAspectRatio: false,
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        max: 100,
-                                        beginAtZero: true
-                                }
-                            }]
-                        }
-                    }}
+                        data = {this.state.datasets.barLikes}                        
+                        options={this.state.options.barLikes}
                     />
                 </div>
 

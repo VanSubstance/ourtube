@@ -37,7 +37,6 @@ class RankList extends Component {
     renderLists = () => {
         return (
             this.state.keywords.map((element) => (
-                console.log(element),
                 <SwiperSlide>
                     <RankListItem
                         type = {this.props.type}
