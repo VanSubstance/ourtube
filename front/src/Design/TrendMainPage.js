@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import { Bar, Line } from 'react-chartjs-2';
+import { withTheme } from '@material-ui/core';
 
 class TrendMainPage extends Component {
 
@@ -29,7 +30,7 @@ class TrendMainPage extends Component {
             display: "inline",
         },
         chart: {
-            width: "600px",
+            width: "80%",
             height: "300px",
             background: "#FFFFFF",
             color: "#000000",
@@ -65,7 +66,23 @@ class TrendMainPage extends Component {
                     }]
                 }
             },
-            // 새 동영상 개수 선 그래프 옵션
+            // 동영상 신규 조회수 선 그래프 옵션
+            lineNumNewViews: {
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                plugins: {
+                    datalabels: {
+                        display: false
+                    }
+                }
+            },
+            // 신규 동영상 개수 선 그래프 옵션
             lineNumNewVid: {
                 maintainAspectRatio: false,
                 scales: {
@@ -74,6 +91,8 @@ class TrendMainPage extends Component {
                             beginAtZero: true
                         }
                     }]
+                },
+                plugins: {
                 }
             }
 
@@ -141,7 +160,50 @@ class TrendMainPage extends Component {
                 labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월'
                 , '9월', '10월', '11월', '12월']
             },
-            // 새 동영상 개수 선 그래프 변수
+            // 동영상 신규 조회수 선 그래프 변수
+            lineNumNewViews: {
+                datasets: [
+                    {
+                        label: "",
+                        data: [],
+                        fill: false,
+                        borderColor: "red",
+                        borderWidth: 1
+                    },
+                    {
+                        label: "",
+                        data: [],
+                        fill: false,
+                        borderColor: "blue",
+                        borderWidth: 1
+                    },
+                    {
+                        label: "",
+                        data: [],
+                        fill: false,
+                        borderColor: "green",
+                        borderWidth: 1
+                    },
+                    {
+                        label: "",
+                        data: [],
+                        fill: false,
+                        borderColor: "orange",
+                        borderWidth: 1
+                    },
+                    {
+                        label: "",
+                        data: [],
+                        fill: false,
+                        borderColor: "purple",
+                        borderWidth: 1
+                    }
+
+                ],
+                labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월'
+                    , '9월', '10월', '11월', '12월']
+            },
+            // 신규 동영상 개수 선 그래프 변수
             lineNumNewVid: {
                 datasets: [
                     {
@@ -220,14 +282,20 @@ class TrendMainPage extends Component {
         for (var i = 0; i < 12; i++) {
             lineRankPerMonth.push(Math.floor(Math.random() * 20));
         }
+        // 동영상 조회수 선 그래프 변수
+        var lineNumNewViews = [];
+        for (var i = 0; i < 12; i++) {
+            lineNumNewViews.push(Math.floor(Math.random() * 1000));
+        }
         // 새 동영상 선 그래프 변수
         var lineNumNewVid = [];
         for (var i = 0; i < 12; i++) {
-            lineNumNewVid.push(Math.floor(Math.random() * 1000));
+            lineNumNewVid.push(Math.floor(Math.random() * 50));
         }
         return ({ 
             barLikes: barLikes, 
             lineRankPerMonth: lineRankPerMonth, 
+            lineNumNewViews: lineNumNewViews,
             lineNumNewVid: lineNumNewVid
         });
     }
@@ -238,6 +306,7 @@ class TrendMainPage extends Component {
         var dataLikes = [];
         var dataHates = [];
         var lineRankPerMonth = [];
+        var lineNumNewViews = [];
         var lineNumNewVid = [];
         // 카테고리 별 데이터 가져오기: getDatasetFromCtgr(ctgr) 불러오기
         ctgrs.forEach((value, index) => {
@@ -245,6 +314,7 @@ class TrendMainPage extends Component {
             dataLikes.push(data.barLikes.like);
             dataHates.push(data.barLikes.hate);
             lineRankPerMonth.push(data.lineRankPerMonth);
+            lineNumNewViews.push(data.lineNumNewViews);
             lineNumNewVid.push(data.lineNumNewVid);
         })
         datasets.barLikes.datasets[0].data = dataHates;
@@ -254,6 +324,9 @@ class TrendMainPage extends Component {
             // 순위 선 그래프
             datasets.lineRankPerMonth.datasets[i].data = lineRankPerMonth[i];
             datasets.lineRankPerMonth.datasets[i].label = ctgrs[i];
+            // 동영상 조회수 선 그래프
+            datasets.lineNumNewViews.datasets[i].data = lineNumNewViews[i];
+            datasets.lineNumNewViews.datasets[i].label = ctgrs[i];
             // 새 동영상 선 그래프
             datasets.lineNumNewVid.datasets[i].data = lineNumNewVid[i];
             datasets.lineNumNewVid.datasets[i].label = ctgrs[i];
@@ -349,8 +422,8 @@ class TrendMainPage extends Component {
                     style={this.state.chart}>
                     <p> 선 그래프: 카테고리 관련 동영상 신규 조회수 </p>
                     <Line
-                        data={this.state.datasets.lineNumNewVid}
-                        options={this.state.options.lineNumNewVid}
+                        data={this.state.datasets.lineNumNewViews}
+                        options={this.state.options.lineNumNewViews}
                     />
                 </div>
 
@@ -358,44 +431,8 @@ class TrendMainPage extends Component {
                     style={this.state.chart}>
                     <p> 선 그래프: 카테고리 관련 신규 동영상 개수 </p>
                     <Line
-                        data={{
-                            labels: ['test1', 'test2', 'test3', 'test4', 'test5'],
-                            datasets: [{
-                                label: 'test',
-                                data: [
-                                    Math.floor(Math.random() * 100),
-                                    Math.floor(Math.random() * 100),
-                                    Math.floor(Math.random() * 100),
-                                    Math.floor(Math.random() * 100),
-                                    Math.floor(Math.random() * 100)
-
-                                ],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-
-                                ],
-                                borderColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-
-                                ],
-                                borderWidth: 1
-                            }]
-                        }}
-                        options={{
-                            maintainAspectRatio: false,
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        max: 100,
-                                        beginAtZero: true
-                                    }
-                                }]
-                            }
-                        }}
+                        data={this.state.datasets.lineNumNewVid}
+                        options={this.state.options.lineNumNewVid}
                     />
                 </div>
 
