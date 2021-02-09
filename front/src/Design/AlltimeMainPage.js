@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import {Bar, Line} from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 class AlltimeMainPage extends Component {
 
@@ -40,26 +41,44 @@ class AlltimeMainPage extends Component {
         },
         options: {
             barLikes: {
+                
                 maintainAspectRatio: false,
                 scales: {
                     xAxes: [{
-                        stacked: true
+                        stacked: true,
+                        gridLines: {
+                            display: false
+                        }
                     }],
                     yAxes: [{
                         stacked: true,
                         ticks: {
                             beginAtZero: true
+                        },
+                        gridLines: {
+                            display: false
                         }
-                    }]
+                    }],
+                    
                 }
             },
             lineRankPerMonth: {
                 maintainAspectRatio: false,
                 scales: {
                     yAxes: [{
+                        gridLines: {
+                            display: false
+                        },
                         ticks: {
                             max: 100,
-                            beginAtZero: true
+                            beginAtZero: true,
+                            
+                        }
+                    }],
+                    xAxes: [{
+                        stacked: true,
+                        gridLines: {
+                            display: false
                         }
                     }]
                 }
@@ -67,16 +86,32 @@ class AlltimeMainPage extends Component {
         },
         datasets: {
             barLikes: {
+                
                 datasets: [
                     {
                         label: "싫어요",
                         data: [7, 14],
-                        backgroundColor: "#ff3399"
+                        backgroundColor: "#ff3399",
+                        datalabels:{
+                            color: 'white',
+                            font: 'bold',
+                            align:'center',
+                            anchor:'center'
+                        }
                     },
+                    
                     {
                         label: "좋아요",
                         data: [35, 22],
-                        backgroundColor: "#00cc99"
+                        backgroundColor: "#00cc99",
+                        datalabels:{
+                            
+                            color: 'black',
+                            font: 'bold',
+                            align:'center',
+                            anchor:'center',
+                           
+                        }
                     }
                 ],
                 labels: ['라벨 1', '라벨 2']
@@ -88,7 +123,15 @@ class AlltimeMainPage extends Component {
                         data: [],
                         fill: false,
                         borderColor: "red",
-                        borderWidth : 1
+                        borderWidth : 1,
+                        datalabels:{
+                            backgroundColor:'orange',
+                            color: 'white',
+                            font: 'bold',
+                            align:'center',
+                            anchor:'center',
+                           
+                        }
                     },
                     {
                         label: "test2",
@@ -326,7 +369,7 @@ class AlltimeMainPage extends Component {
                                     Math.floor(Math.random()*100),                                    
                                 ],
                                 backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
+                                    'white',
                                                                        
                                 ],
                                 borderColor: [
@@ -336,18 +379,37 @@ class AlltimeMainPage extends Component {
                                     'rgba(255, 99, 132, 1)',
                                     'rgba(255, 99, 132, 1)'                                    
                                 ],
-                                borderWidth: 1
+                                borderWidth: 1,
+                                datalabels:{
+                                    backgroundColor:'rgba(255, 99, 132, 1)',
+                                    color: 'white',
+                                    font: 'bold',
+                                    align:'start',
+                                    anchor:'end',
+                                    offset: -25,
+                                    borderRadius: 4
+                                   
+                                }
                             }]                            
                         }}
                         options={{
+                            
                             maintainAspectRatio: false,
                             scales: {
                                 yAxes: [{
+                                    gridLines: {
+                                        display: false
+                                    },
                                     ticks: {
                                         max: 100,
                                         beginAtZero: true
                                 }
-                            }]
+                            }],
+                                xAxes: [{
+                                    gridLines: {
+                                        display: false
+                                    }
+                                }]
                         }
                     }}
                     />
