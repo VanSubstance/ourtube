@@ -20,7 +20,7 @@ class CtgrResults extends Component {
 
     /**
      * ------------------------------------------------------------------------------> 김종규
-     * 키워드 리스트 새로고침
+     * 카테고리 리스트 새로고침
      */
     refreshResults = (newCtgr) => {
         this.state.keywords = [newCtgr + "0", 

@@ -40,6 +40,7 @@ class AlltimeMainPage extends Component {
             
         },
         options: {
+            // 좋아요 싫어요 막대 그래프 옵션
             barLikes: {
                 
                 maintainAspectRatio: false,
@@ -62,6 +63,7 @@ class AlltimeMainPage extends Component {
                     
                 }
             },
+            // 순위 선 그래프 옵션
             lineRankPerMonth: {
                 maintainAspectRatio: false,
                 scales: {
@@ -82,92 +84,128 @@ class AlltimeMainPage extends Component {
                         }
                     }]
                 }
+            },
+            // 새 동영상 개수 선 그래프 옵션
+            lineNumNewVid: {
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
             }
         },
         datasets: {
+            // 좋아요 싫어요 막대 그래프 변수
             barLikes: {
-                
                 datasets: [
                     {
                         label: "싫어요",
-                        data: [7, 14],
-                        backgroundColor: "#ff3399",
-                        datalabels:{
-                            color: 'white',
-                            font: 'bold',
-                            align:'center',
-                            anchor:'center'
-                        }
+                        // 싫어요 데이터셋 위치
+                        data: [],
+                        backgroundColor: "#ff3399"
                     },
-                    
                     {
                         label: "좋아요",
-                        data: [35, 22],
-                        backgroundColor: "#00cc99",
-                        datalabels:{
-                            
-                            color: 'black',
-                            font: 'bold',
-                            align:'center',
-                            anchor:'center',
-                           
-                        }
+                        // 좋아요 데이터셋 위치
+                        data: [],
+                        backgroundColor: "#00cc99"
                     }
                 ],
-                labels: ['라벨 1', '라벨 2']
+                // 라벨 데이터셋 위치
+                labels: []
             },
+            // 순위 선 그래프 변수
             lineRankPerMonth: {
                 datasets: [
                     {
-                        label: "test1",
+                        label: "",
                         data: [],
                         fill: false,
                         borderColor: "red",
-                        borderWidth : 1,
-                        datalabels:{
-                            backgroundColor:'orange',
-                            color: 'white',
-                            font: 'bold',
-                            align:'center',
-                            anchor:'center',
-                           
-                        }
+                        borderWidth: 1
                     },
                     {
-                        label: "test2",
+                        label: "",
                         data: [],
                         fill: false,
                         borderColor: "blue",
-                        borderWidth : 1
+                        borderWidth: 1
                     },
                     {
-                        label: "test3",
+                        label: "",
                         data: [],
                         fill: false,
-                        borderColor: "yellow",
-                        borderWidth : 1
+                        borderColor: "green",
+                        borderWidth: 1
                     },
                     {
-                        label: "test4",
+                        label: "",
                         data: [],
                         fill: false,
                         borderColor: "orange",
-                        borderWidth : 1
+                        borderWidth: 1
                     },
                     {
-                        label: "test5",
+                        label: "",
                         data: [],
                         fill: false,
-                        borderColor: "black",
-                        borderWidth : 1
+                        borderColor: "purple",
+                        borderWidth: 1
                     }
 
                 ],
-                labels: ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST'
-                , 'SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER']
+                labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월'
+                , '9월', '10월', '11월', '12월']
+            },
+            // 새 동영상 개수 선 그래프 변수
+            lineNumNewVid: {
+                datasets: [
+                    {
+                        label: "",
+                        data: [],
+                        fill: false,
+                        borderColor: "red",
+                        borderWidth: 1
+                    },
+                    {
+                        label: "",
+                        data: [],
+                        fill: false,
+                        borderColor: "blue",
+                        borderWidth: 1
+                    },
+                    {
+                        label: "",
+                        data: [],
+                        fill: false,
+                        borderColor: "green",
+                        borderWidth: 1
+                    },
+                    {
+                        label: "",
+                        data: [],
+                        fill: false,
+                        borderColor: "orange",
+                        borderWidth: 1
+                    },
+                    {
+                        label: "",
+                        data: [],
+                        fill: false,
+                        borderColor: "purple",
+                        borderWidth: 1
+                    }
+
+                ],
+                labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월'
+                    , '9월', '10월', '11월', '12월']
             }
         }
     }
+
     // 컴포넌트 생성 직후 실행
     componentWillMount() {
         if (this.props.searchVal != undefined) {
@@ -297,7 +335,7 @@ class AlltimeMainPage extends Component {
     /**
      * ------------------------------------------------------------------------------> 김종규
      * 카테고리 선택
-     * 해당 카테고리에 따른 키워드 리스트 새로고침
+     * 해당 카테고리에 따른 카테고리 리스트 새로고침
      */
     selectCtgr = (element) => {
         this.setState({
@@ -355,69 +393,16 @@ class AlltimeMainPage extends Component {
 
                 <div
                     style={this.state.chart}>
-                    <p> 선 그래프: 키워드 관련 동영상 신규 조회수 </p>
-                    <Line 
-                        data = {{
-                            labels: ['test1','test2','test3','test4','test5'],
-                            datasets: [{
-                                label: 'test',
-                                data: [
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),
-                                    Math.floor(Math.random()*100),                                    
-                                ],
-                                backgroundColor: [
-                                    'white',
-                                                                       
-                                ],
-                                borderColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)'                                    
-                                ],
-                                borderWidth: 1,
-                                datalabels:{
-                                    backgroundColor:'rgba(255, 99, 132, 1)',
-                                    color: 'white',
-                                    font: 'bold',
-                                    align:'start',
-                                    anchor:'end',
-                                    offset: -25,
-                                    borderRadius: 4
-                                   
-                                }
-                            }]                            
-                        }}
-                        options={{
-                            
-                            maintainAspectRatio: false,
-                            scales: {
-                                yAxes: [{
-                                    gridLines: {
-                                        display: false
-                                    },
-                                    ticks: {
-                                        max: 100,
-                                        beginAtZero: true
-                                }
-                            }],
-                                xAxes: [{
-                                    gridLines: {
-                                        display: false
-                                    }
-                                }]
-                        }
-                    }}
+                    <p> 선 그래프: 카테고리 관련 동영상 신규 조회수 </p>
+                    <Line
+                        data={this.state.datasets.lineNumNewVid}
+                        options={this.state.options.lineNumNewVid}
                     />
                 </div>
 
                 <div
                     style={this.state.chart}>
-                    <p> 선 그래프: 키워드 관련 신규 동영상 개수 </p>
+                    <p> 선 그래프: 카테고리 관련 신규 동영상 개수 </p>
                     <Line 
                         data = {{
                             labels: ['test1','test2','test3','test4','test5'],
@@ -462,7 +447,7 @@ class AlltimeMainPage extends Component {
 
                 <div
                     style={this.state.chart}>
-                    <p> 선 그래프: 키워드 관련 동영상 신규 조회수 </p>
+                    <p> 선 그래프: 카테고리 관련 동영상 신규 조회수 </p>
                     <Line 
                         data = {{
                             labels: ['test1','test2','test3','test4','test5'],

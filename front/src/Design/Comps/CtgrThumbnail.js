@@ -10,7 +10,7 @@ class CtgrThumbnail extends Component {
         return (
             <div 
                 className = "ctgrThumbnail">
-                    <p>{this.props.type} 키워드 : </p>
+                    <p>{this.props.type} 카테고리 : </p>
                     <p>{this.props.keyword}</p>
                     {this.props.type === "트렌드"
                     ? (
