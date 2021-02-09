@@ -35,7 +35,6 @@ class CtgrResults extends Component {
     renderLists = () => {
         return (
             this.state.keywords.map((element) => (
-                console.log("keyword: " + element),
                 <SwiperSlide>
                     <CtgrThumbnail
                         type = {this.props.type}
@@ -51,10 +50,14 @@ class CtgrResults extends Component {
         return (
             <div>
                 <Swiper
+                style = {
+                    {
+                        height: "400px",
+                    }
+                }
                     spaceBetween={50}
-                    slidesPerView={5}
+                    slidesPerView={3}
                     direction={'horizontal'}
-                    onSlideChange={() => console.log('slide change')}
                     navigation
                     loop={true}
                     pagination={{ clickable: true }}

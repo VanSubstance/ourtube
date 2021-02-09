@@ -1,22 +1,15 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import './Css/Comps.css';
 
 class CtgrThumbnail extends Component {
     
     state = {
-        ex01: {
-            width: "200px",
-            height: "100px",
-            background: "#000000",
-            color: "#FFFFFF",
-        },
     }
     render () {
         return (
             <div 
-                className = "CtgrThumbnail"
-                style = {this.state.ex01}>
-                    {console.log(this.props.keyword)}
+                className = "ctgrThumbnail">
                     <p>{this.props.type} 키워드 : </p>
                     <p>{this.props.keyword}</p>
                     {this.props.type === "트렌드"
