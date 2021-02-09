@@ -153,16 +153,21 @@ class AlltimeMainPage extends Component {
 
     // 카테고리의 데이터를 가져오는 함수
     getDatasetFromCtgr = (ctgr) => {
-        // 좋아요 막대 그래프 변수
+        // 좋아요 막대 그래프
         var barLikes = [];
         barLikes.like = Math.floor(Math.random()*100);
         barLikes.hate = Math.floor(Math.random()*100);
-        // 월별 순위 선 그래프 변수
+
+        // 월별 순위 선 그래프
         var lineRankPerMonth = [];
         for (var i = 0; i < 12; i ++) {
             lineRankPerMonth.push(Math.floor(Math.random()*20));
         }
-        return ({barLikes: barLikes, lineRankPerMonth: lineRankPerMonth});
+
+        return ({
+            barLikes: barLikes, 
+            lineRankPerMonth: lineRankPerMonth
+        });
     }
 
     // 데이터 가져오는 함수
