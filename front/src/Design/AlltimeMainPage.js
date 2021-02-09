@@ -4,10 +4,12 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import {Bar, Line} from 'react-chartjs-2';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+import 'chartjs-plugin-datalabels';
+
 
 class AlltimeMainPage extends Component {
 
+    
     state = {
         searchVal: "",
         selectedCtgr: "",
@@ -42,13 +44,12 @@ class AlltimeMainPage extends Component {
         options: {
             // 좋아요 싫어요 막대 그래프 옵션
             barLikes: {
-                
                 maintainAspectRatio: false,
                 scales: {
                     xAxes: [{
                         stacked: true,
                         gridLines: {
-                            display: false
+                            color:'white'
                         }
                     }],
                     yAxes: [{
@@ -57,7 +58,7 @@ class AlltimeMainPage extends Component {
                             beginAtZero: true
                         },
                         gridLines: {
-                            display: false
+                            color:'white'
                         }
                     }],
                     
@@ -65,11 +66,16 @@ class AlltimeMainPage extends Component {
             },
             // 순위 선 그래프 옵션
             lineRankPerMonth: {
+                elements: {
+                    line: {
+                        tension: 0 // disables bezier curves
+                    }
+                },
                 maintainAspectRatio: false,
                 scales: {
                     yAxes: [{
                         gridLines: {
-                            display: false
+                            color:'white'
                         },
                         ticks: {
                             max: 100,
@@ -80,7 +86,7 @@ class AlltimeMainPage extends Component {
                     xAxes: [{
                         stacked: true,
                         gridLines: {
-                            display: false
+                            color:'white'
                         }
                     }]
                 }
@@ -175,7 +181,8 @@ class AlltimeMainPage extends Component {
                         data: [],
                         fill: false,
                         borderColor: "blue",
-                        borderWidth: 1
+                        borderWidth : 1,
+                        
                     },
                     {
                         label: "",
@@ -388,6 +395,7 @@ class AlltimeMainPage extends Component {
                     <Line 
                         data = {this.state.datasets.lineRankPerMonth}
                         options={this.state.options.lineRankPerMonth}
+                        
                     />
                 </div>
 
