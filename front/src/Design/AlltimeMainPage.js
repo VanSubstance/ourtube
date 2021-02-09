@@ -78,9 +78,8 @@ class AlltimeMainPage extends Component {
                             color:'white'
                         },
                         ticks: {
-                            max: 100,
                             beginAtZero: true,
-                            
+                            reverse: true
                         }
                     }],
                     xAxes: [{
@@ -238,80 +237,54 @@ class AlltimeMainPage extends Component {
     componentDidMount() {
         this.searchCtgr();
     }
-
     // 카테고리의 데이터를 가져오는 함수
     getDatasetFromCtgr = (ctgr) => {
-        // 좋아요 막대 그래프
+        // 좋아요 막대 그래프 변수
         var barLikes = [];
-        barLikes.like = Math.floor(Math.random()*100);
-        barLikes.hate = Math.floor(Math.random()*100);
-
-        // 월별 순위 선 그래프
+        barLikes.like = Math.floor(Math.random() * 100);
+        barLikes.hate = Math.floor(Math.random() * 100);
+        // 월별 순위 선 그래프 변수
         var lineRankPerMonth = [];
-        for (var i = 0; i < 12; i ++) {
-            lineRankPerMonth.push(Math.floor(Math.random()*20));
+        for (var i = 0; i < 12; i++) {
+            lineRankPerMonth.push(Math.floor(Math.random() * 20));
         }
-
-        return ({
+        // 새 동영상 선 그래프 변수
+        var lineNumNewVid = [];
+        for (var i = 0; i < 12; i++) {
+            lineNumNewVid.push(Math.floor(Math.random() * 1000));
+        }
+        return ({ 
             barLikes: barLikes, 
-            lineRankPerMonth: lineRankPerMonth
+            lineRankPerMonth: lineRankPerMonth, 
+            lineNumNewVid: lineNumNewVid
         });
     }
 
     // 데이터 가져오는 함수
     getDatasets = () => {
-        const {datasets, ctgrs} = this.state;
+        const { datasets, ctgrs } = this.state;
         var dataLikes = [];
         var dataHates = [];
-        var lineRankPerMonth =[];
-        ctgrs.forEach((value, index) => {
-            var data = this.getDatasetFromCtgr(value);
-            dataLikes.push(data.barLikes.like);
-            dataHates.push(data.barLikes.hate);
-            lineRankPerMonth.push(data.lineRankPerMonth);
-        })
-        datasets.barLikes.datasets[0].data = dataHates;
-        datasets.barLikes.datasets[1].data = dataLikes;
-        datasets.barLikes.labels = ctgrs;
-        for (var i = 0; i < 5; i++) {
-            datasets.lineRankPerMonth.datasets[i].data = lineRankPerMonth[i];
-            datasets.lineRankPerMonth.datasets[i].label = ctgrs[i];
-        }
-
-    }
-    
-    // 카테고리의 데이터를 가져오는 함수
-    getDatasetFromCtgr = (ctgr) => {
-        // 좋아요 막대 그래프 변수
-        var barLikes = [];
-        barLikes.like = Math.floor(Math.random()*100);
-        barLikes.hate = Math.floor(Math.random()*100);
-        // 월별 순위 선 그래프 변수
         var lineRankPerMonth = [];
-        for (var i = 0; i < 12; i ++) {
-            lineRankPerMonth.push(Math.floor(Math.random()*100));
-        }
-        return ({barLikes: barLikes, lineRankPerMonth: lineRankPerMonth});
-    }
-
-    // 데이터 가져오는 함수
-    getDatasets = () => {
-        const {datasets, ctgrs} = this.state;
-        var dataLikes = [];
-        var dataHates = [];
-        var lineRankPerMonth =[];
+        var lineNumNewVid = [];
+        // 카테고리 별 데이터 가져오기: getDatasetFromCtgr(ctgr) 불러오기
         ctgrs.forEach((value, index) => {
             var data = this.getDatasetFromCtgr(value);
             dataLikes.push(data.barLikes.like);
             dataHates.push(data.barLikes.hate);
             lineRankPerMonth.push(data.lineRankPerMonth);
+            lineNumNewVid.push(data.lineNumNewVid);
         })
         datasets.barLikes.datasets[0].data = dataHates;
         datasets.barLikes.datasets[1].data = dataLikes;
         datasets.barLikes.labels = ctgrs;
         for (var i = 0; i < 5; i++) {
+            // 순위 선 그래프
             datasets.lineRankPerMonth.datasets[i].data = lineRankPerMonth[i];
             datasets.lineRankPerMonth.datasets[i].label = ctgrs[i];
+            // 새 동영상 선 그래프
+            datasets.lineNumNewVid.datasets[i].data = lineNumNewVid[i];
+            datasets.lineNumNewVid.datasets[i].label = ctgrs[i];
         }
 
     }
