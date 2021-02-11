@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {KeywordThumbnail} from './Comps';
+import {KeywordThumbnail, Cloud} from './Comps';
 import { Bar, Line, Radar, Pie } from 'react-chartjs-2';
 import 'chartjs-plugin-datalabels';
 
@@ -236,6 +236,10 @@ class TrendResultPage extends Component {
                 <p>
                     키워드: {this.state.keyword}
                 </p>
+                <Cloud
+                    ref = "Cloud" keyword = {this.state.keyword}>
+
+                </Cloud>
                 <KeywordThumbnail ref = "KeywordThumbnail">
 
                 </KeywordThumbnail>

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { Bar, Line, Radar } from 'react-chartjs-2';
 import './Css/Comps.css';
 
-class CtgrThumbnail extends Component {
+class CtgrItem extends Component {
     
     state = {
     }
@@ -26,4 +26,4 @@ class CtgrThumbnail extends Component {
     }
 }
 
-export default CtgrThumbnail;
+export default CtgrItem;

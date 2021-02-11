@@ -18,7 +18,7 @@ class RankList extends Component {
         }
     }
     componentDidMount() {
-        this.refreshResults(this.props.newCtgr)
+        this.refreshResults(this.props.newCtgr);
     }
     /**
      * ------------------------------------------------------------------------------> 김종규

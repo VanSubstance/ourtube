@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import { Bar, Line } from 'react-chartjs-2';
-import { withTheme } from '@material-ui/core';
 import 'chartjs-plugin-datalabels';
 
 class TrendMainPage extends Component {
@@ -321,10 +320,8 @@ class TrendMainPage extends Component {
     }
     componentWillMount() {
         if (this.props.searchVal != undefined) {
-            console.log("searchVal is " + this.props.searchVal);
             this.state.searchVal = this.props.searchVal;
         } else {
-            console.log("searchVal is " + this.props.searchVal);
             this.state.searchVal = "기본값";
         }
         this.setState({
