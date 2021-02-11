@@ -5,6 +5,7 @@ import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import { Bar, Line } from 'react-chartjs-2';
 import { withTheme } from '@material-ui/core';
+import 'chartjs-plugin-datalabels';
 
 class TrendMainPage extends Component {
 
@@ -54,7 +55,7 @@ class TrendMainPage extends Component {
                     }]
                 }
             },
-            // 순위 선 그래프 옵션
+            // 선 그래프: 월별 순위 옵션
             lineRankPerMonth: {
                 maintainAspectRatio: false,
                 scales: {
@@ -64,9 +65,27 @@ class TrendMainPage extends Component {
                             reverse: true
                         }
                     }]
+                },
+                // 선 그래프 디자인 옵션
+                elements: {
+                    line: {
+                        // 곡선률
+                        tension: 0
+                    },
+                    // 선 그래프의 포인트 옵션
+                    point:{
+                        radius: 5,
+                        backgroundColor: 'white',
+                        pointStyle:'rectRounded'
+                    }
+                },
+                plugins: {
+                    datalabels: {
+                        display: false
+                    }
                 }
             },
-            // 동영상 신규 조회수 선 그래프 옵션
+            // 선 그래프: 카테고리 관련 동영상 신규 조회수 옵션
             lineNumNewViews: {
                 maintainAspectRatio: false,
                 scales: {
@@ -76,13 +95,18 @@ class TrendMainPage extends Component {
                         }
                     }]
                 },
+                elements: {
+                    line: {
+                        tension: 0
+                    }
+                },
                 plugins: {
                     datalabels: {
                         display: false
                     }
                 }
             },
-            // 신규 동영상 개수 선 그래프 옵션
+            // 선 그래프: 카테고리 관련 신규 동영상 개수 옵션
             lineNumNewVid: {
                 maintainAspectRatio: false,
                 scales: {
@@ -92,7 +116,29 @@ class TrendMainPage extends Component {
                         }
                     }]
                 },
+                elements: {
+                    line: {
+                        tension: 0
+                    }
+                },
                 plugins: {
+                    datalabels: {
+                        display: false
+                    }
+                }
+            },
+            barNumSub: {
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        stacked: true
+                    }],
+                    yAxes: [{
+                        stacked: true,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
                 }
             }
 
@@ -125,7 +171,7 @@ class TrendMainPage extends Component {
                         data: [],
                         fill: false,
                         borderColor: "red",
-                        borderWidth: 1
+                        borderWidth: 1,
                     },
                     {
                         label: "",
@@ -245,6 +291,31 @@ class TrendMainPage extends Component {
                 ],
                 labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월'
                     , '9월', '10월', '11월', '12월']
+            },
+            //카테고리 관련 채널 구독자 수 막대 그래프 변수
+            barNumSub: {
+                datasets: [
+                    {
+                        label: "최소 구독자 수",
+                        // 최저 구독자 수 데이터셋 위치
+                        data: [],
+                        backgroundColor: "red"
+                    },
+                    {
+                        label: "평균 구독자 수",
+                        // 평균 구독자 수 데이터셋 위치
+                        data: [],
+                        backgroundColor: "orange"
+                    },
+                    {
+                        label: "최다 구독자 수",
+                        // 최고 구독자 수 데이터셋 위치
+                        data: [],
+                        backgroundColor: "yellow"
+                    }
+                ],
+                //라벨 데이터 셋 위치
+                labels: []
             }
         }
     }
@@ -292,11 +363,18 @@ class TrendMainPage extends Component {
         for (var i = 0; i < 12; i++) {
             lineNumNewVid.push(Math.floor(Math.random() * 50));
         }
+        // 구독자 수 막대 그래프 변수
+        var barNumSub = [];
+        barNumSub.mininum = Math.floor(Math.random() * 10000);
+        barNumSub.average = Math.floor(Math.random() * 10000);
+        barNumSub.maximum = Math.floor(Math.random() * 10000);
+
         return ({ 
             barLikes: barLikes, 
             lineRankPerMonth: lineRankPerMonth, 
             lineNumNewViews: lineNumNewViews,
-            lineNumNewVid: lineNumNewVid
+            lineNumNewVid: lineNumNewVid,
+            barNumSub: barNumSub
         });
     }
 
@@ -308,6 +386,10 @@ class TrendMainPage extends Component {
         var lineRankPerMonth = [];
         var lineNumNewViews = [];
         var lineNumNewVid = [];
+        var dataMin = [];
+        var dataAverage = [];
+        var dataMax = [];
+
         // 카테고리 별 데이터 가져오기: getDatasetFromCtgr(ctgr) 불러오기
         ctgrs.forEach((value, index) => {
             var data = this.getDatasetFromCtgr(value);
@@ -316,10 +398,19 @@ class TrendMainPage extends Component {
             lineRankPerMonth.push(data.lineRankPerMonth);
             lineNumNewViews.push(data.lineNumNewViews);
             lineNumNewVid.push(data.lineNumNewVid);
+            dataMin.push(data.barNumSub.mininum);
+            dataAverage.push(data.barNumSub.average);
+            dataMax.push(data.barNumSub.maximum);
         })
         datasets.barLikes.datasets[0].data = dataHates;
         datasets.barLikes.datasets[1].data = dataLikes;
         datasets.barLikes.labels = ctgrs;
+        //구독자
+        datasets.barNumSub.datasets[0].data = dataMin;
+        datasets.barNumSub.datasets[1].data = dataAverage;
+        datasets.barNumSub.datasets[2].data = dataMax;
+        datasets.barNumSub.labels = ctgrs;
+
         for (var i = 0; i < 5; i++) {
             // 순위 선 그래프
             datasets.lineRankPerMonth.datasets[i].data = lineRankPerMonth[i];
@@ -438,46 +529,10 @@ class TrendMainPage extends Component {
 
                 <div
                     style={this.state.chart}>
-                    <p> 선 그래프: 카테고리 관련 동영상 신규 조회수 </p>
-                    <Line
-                        data={{
-                            labels: ['test1', 'test2', 'test3', 'test4', 'test5'],
-                            datasets: [{
-                                label: 'test',
-                                data: [
-                                    Math.floor(Math.random() * 100),
-                                    Math.floor(Math.random() * 100),
-                                    Math.floor(Math.random() * 100),
-                                    Math.floor(Math.random() * 100),
-                                    Math.floor(Math.random() * 100)
-
-                                ],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.2)',
-
-                                ],
-                                borderColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-
-                                ],
-                                borderWidth: 1
-                            }]
-                        }}
-                        options={{
-                            maintainAspectRatio: false,
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        max: 100,
-                                        beginAtZero: true
-                                    }
-                                }]
-                            }
-                        }}
+                    <p> 막대 그래프: 카테고리 관련 채널 구독자 수 </p>
+                    <Bar
+                        data={this.state.datasets.barNumSub}
+                        options={this.state.options.barNumSub}
                     />
                 </div>
             </div>
