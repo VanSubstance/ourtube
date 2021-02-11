@@ -5,7 +5,7 @@ import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/swiper.scss';
 
-import CtgrThumbnail from './CtgrThumbnail';
+import CtgrItem from './CtgrItem';
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 class CtgrResults extends Component {
@@ -36,11 +36,11 @@ class CtgrResults extends Component {
         return (
             this.state.keywords.map((element) => (
                 <SwiperSlide>
-                    <CtgrThumbnail
+                    <CtgrItem
                         type = {this.props.type}
                         keyword={element}>
 
-                    </CtgrThumbnail>
+                    </CtgrItem>
                 </SwiperSlide>
             ))
         );
