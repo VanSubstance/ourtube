@@ -55,7 +55,7 @@ class TrendMainPage extends Component {
                     }]
                 }
             },
-            // 순위 선 그래프 옵션
+            // 선 그래프: 월별 순위 옵션
             lineRankPerMonth: {
                 maintainAspectRatio: false,
                 scales: {
@@ -65,9 +65,27 @@ class TrendMainPage extends Component {
                             reverse: true
                         }
                     }]
+                },
+                // 선 그래프 디자인 옵션
+                elements: {
+                    line: {
+                        // 곡선률
+                        tension: 0
+                    },
+                    // 선 그래프의 포인트 옵션
+                    point:{
+                        radius: 5,
+                        backgroundColor: 'white',
+                        pointStyle:'rectRounded'
+                    }
+                },
+                plugins: {
+                    datalabels: {
+                        display: false
+                    }
                 }
             },
-            // 동영상 신규 조회수 선 그래프 옵션
+            // 선 그래프: 카테고리 관련 동영상 신규 조회수 옵션
             lineNumNewViews: {
                 maintainAspectRatio: false,
                 scales: {
@@ -77,13 +95,18 @@ class TrendMainPage extends Component {
                         }
                     }]
                 },
+                elements: {
+                    line: {
+                        tension: 0
+                    }
+                },
                 plugins: {
                     datalabels: {
                         display: false
                     }
                 }
             },
-            // 신규 동영상 개수 선 그래프 옵션
+            // 선 그래프: 카테고리 관련 신규 동영상 개수 옵션
             lineNumNewVid: {
                 maintainAspectRatio: false,
                 scales: {
@@ -93,7 +116,15 @@ class TrendMainPage extends Component {
                         }
                     }]
                 },
+                elements: {
+                    line: {
+                        tension: 0
+                    }
+                },
                 plugins: {
+                    datalabels: {
+                        display: false
+                    }
                 }
             },
             barNumSub: {
@@ -140,7 +171,7 @@ class TrendMainPage extends Component {
                         data: [],
                         fill: false,
                         borderColor: "red",
-                        borderWidth: 1
+                        borderWidth: 1,
                     },
                     {
                         label: "",

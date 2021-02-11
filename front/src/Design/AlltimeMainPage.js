@@ -57,7 +57,7 @@ class AlltimeMainPage extends Component {
                     }]
                 }
             },
-            // 순위 선 그래프 옵션
+            // 선 그래프: 월별 순위 옵션
             lineRankPerMonth: {
                 maintainAspectRatio: false,
                 scales: {
@@ -67,9 +67,24 @@ class AlltimeMainPage extends Component {
                             reverse: true
                         }
                     }]
+                },
+                elements: {
+                    line: {
+                        tension: 0
+                    },
+                    point:{
+                        radius: 5,
+                        backgroundColor: 'white',
+                        pointStyle:'rectRounded'
+                    }
+                },
+                plugins: {
+                    datalabels: {
+                        display: false
+                    }
                 }
             },
-            // 동영상 신규 조회수 선 그래프 옵션
+            // 선 그래프: 카테고리 관련 동영상 신규 조회수 옵션
             lineNumNewViews: {
                 maintainAspectRatio: false,
                 scales: {
@@ -79,13 +94,18 @@ class AlltimeMainPage extends Component {
                         }
                     }]
                 },
+                elements: {
+                    line: {
+                        tension: 0
+                    }
+                },
                 plugins: {
                     datalabels: {
                         display: false
                     }
                 }
             },
-            // 신규 동영상 개수 선 그래프 옵션
+            // 선 그래프: 카테고리 관련 신규 동영상 개수 옵션
             lineNumNewVid: {
                 maintainAspectRatio: false,
                 scales: {
@@ -95,7 +115,15 @@ class AlltimeMainPage extends Component {
                         }
                     }]
                 },
+                elements: {
+                    line: {
+                        tension: 0
+                    }
+                },
                 plugins: {
+                    datalabels: {
+                        display: false
+                    }
                 }
             },
             barNumSub: {
