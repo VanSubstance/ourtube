@@ -26,11 +26,11 @@ class App extends Component {
           </Route>
 
           <Route
-            exact path='/trend/:ctgr'
+            exact path='/trend/:keyword'
             component = {TrendResultPage}>
           </Route>
           <Route
-            exact path='/alltime/:ctgr'
+            exact path='/alltime/:keyword'
             component = {AlltimeResultPage}>
           </Route>
         </div>

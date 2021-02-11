@@ -8,3 +8,13 @@
     font-family: Arial;
     text-align: center;
 }
+.keywordThumbnail {
+    width: 300px;
+    height: 150px;
+    background-color: blue;
+    border-color: red;
+    color: black;
+    margin: 10px;
+    font-family: Arial;
+    text-align: center;
+}

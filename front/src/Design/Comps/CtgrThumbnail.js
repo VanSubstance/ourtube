@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Bar, Line, Radar } from 'react-chartjs-2';
 import './Css/Comps.css';
 
 class CtgrThumbnail extends Component {
