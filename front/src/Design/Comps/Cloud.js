@@ -19,7 +19,7 @@ class RankList extends Component {
                 height: "400px",
                 float: "center"
             },
-            Cloud: {
+            CloudImg: {
                 width: "400px",
                 height: "200px",
                 float: "left",
@@ -77,7 +77,7 @@ class RankList extends Component {
             >
                 <div
                     className="CloudImg"
-                    style={this.state.style.Cloud}>
+                    style={this.state.style.CloudImg}>
                     <p>클라우드 이미지</p>
                     <p>{this.props.keyword}</p>
                 </div>
