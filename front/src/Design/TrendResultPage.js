@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {KeywordThumbnail} from './Comps';
 import { Bar, Line, Radar, Pie } from 'react-chartjs-2';
+import 'chartjs-plugin-datalabels';
 
 class TrendResultPage extends Component {
 
@@ -30,14 +31,25 @@ class TrendResultPage extends Component {
                         ticks: {
                             beginAtZero: true,
                         }
+                    }],
+                    xAxes:[{
+                        ticks: {
+                            reverse: true
+                        }
                     }]
+                },
+                plugins: {
+                    datalabels: {
+                        display: false
+                    }
                 }
             },
             // 파이 그래프: 조회수 ~ 좋아요 / 싫어요 비율
             pieLikes: {
+                maintainAspectRatio: false,
             },
             // 선 그래프: 주별 순위
-            lineRankPerMonth: {
+            lineRankPerWeek: {
                 maintainAspectRatio: false,
                 scales: {
                     yAxes: [{
@@ -45,9 +57,44 @@ class TrendResultPage extends Component {
                             beginAtZero: true,
                             reverse: true
                         }
+                    }],
+                    xAxes:[{
+                        ticks: {
+                            reverse: true
+                        }
                     }]
+                },
+                elements:{
+                    line:{
+                        tension: 0
+                    },
+                    point:{
+                        pointStyle:'rectRounded',
+                        radius: 3,
+                        backgroundColor: 'red',
+                        borderWidth:5
+                    }                   
+                },
+                plugins: {
+                    datalabels: {
+                        display: false
+                    }
                 }
             },
+            radarInfo: {
+                maintainAspectRatio: false,
+                scale: {
+                    angleLines:{
+                        display:false
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        min: 0,
+                        max: 10000,
+                        stepSize: 1000,
+                    }
+                }
+            }
         },
         datasets: {
             // 좋아요 싫어요 막대 그래프 변수
@@ -75,8 +122,7 @@ class TrendResultPage extends Component {
                     }
 
                 ],
-                labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월'
-                , '9월', '10월', '11월', '12월']
+                labels: ['1주','2주','3주','4주','5주','6주','7주','8주','9주','10주','11주','12주']
             },
             // 파이 그래프: 조회수 ~ 좋아요 / 싫어요 비율
             pieLikes: {
@@ -85,7 +131,7 @@ class TrendResultPage extends Component {
                         // 좋아요 / 싫어요 데이터셋 위치
                         label: "비율",
                         backgroundColor: ["#00cc99", "#ff3399"],
-                        data: [],
+                        data: []
                     }
                 ],
                 // 라벨 데이터셋 위치
@@ -98,13 +144,23 @@ class TrendResultPage extends Component {
                         label: "순위",
                         data: [],
                         fill: false,
-                        borderColor: "red",
-                        borderWidth: 1
+                        borderColor: "red"                        
                     },
                 ],
-                labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월'
-                , '9월', '10월', '11월', '12월']
+                labels: ['1주','2주','3주','4주','5주','6주','7주','8주','9주','10주','11주','12주']
             },
+            radarInfo: {
+                datasets: [
+                    {
+                        label: '레이더 테스트',
+                        backgroundColor: '#F6465B77',
+                        borderColor: '#F42941',
+                        borderWidth: 2,
+                        data: []
+                    }
+                ],
+                labels: ['test1','test2','test3','test4','test5']
+            }
         }
     }
 
@@ -118,6 +174,8 @@ class TrendResultPage extends Component {
         var lineView = [];
         var pieLikes = [];
         var lineRankPerWeek = [];
+        var radarInfo = [];
+
         // 평균 좋아요 / 싫어요 변수
         barLikes.push(Math.floor(Math.random() * 1000));
         barLikes.push(Math.floor(Math.random() * 400));
@@ -129,6 +187,9 @@ class TrendResultPage extends Component {
         for (var i = 0; i < 12; i++) {
             lineRankPerWeek.push(Math.floor(Math.random() * (20 - 1) + 1));
         }
+        for (var i = 0; i < 5; i++) {
+            radarInfo.push(Math.floor(Math.random() *(10000 - 2000) + 1000));
+        }
         // 평균 좋아요 / 싫어요 변수
         pieLikes.push(Math.floor(Math.random() * (10000 - 2000) + 2000));
         pieLikes.push(Math.floor(Math.random() * (5000 - 500) + 500));
@@ -139,6 +200,7 @@ class TrendResultPage extends Component {
                 lineView: lineView,
                 pieLikes: pieLikes,
                 lineRankPerWeek: lineRankPerWeek,
+                radarInfo: radarInfo
             }
         );
     }
@@ -153,6 +215,7 @@ class TrendResultPage extends Component {
         datasets.lineView.datasets[0].data = data.lineView;
         datasets.pieLikes.datasets[0].data = data.pieLikes;
         datasets.lineRankPerWeek.datasets[0].data = data.lineRankPerWeek;
+        datasets.radarInfo.datasets[0].data = data.radarInfo;
 
         // 키워드 썸네일
         this.refs.KeywordThumbnail.setThumbnailInfo();
@@ -199,6 +262,14 @@ class TrendResultPage extends Component {
                     <Line
                         data={this.state.datasets.lineRankPerWeek}
                         options={this.state.options.lineRankPerWeek}
+                    />
+                </div>
+                <div
+                    style={this.state.chart}>
+                    <p> 레이더 그래프 </p>
+                    <Radar
+                        data = {this.state.datasets.radarInfo}
+                        options = {this.state.options.radarInfo}
                     />
                 </div>
             </div>
