@@ -88,10 +88,16 @@ class TrendResultPage extends Component {
                         display:false
                     },
                     ticks: {
+                        display:false,
                         beginAtZero: true,
                         min: 0,
                         max: 10000,
                         stepSize: 1000,
+                    }
+                },
+                plugins: {
+                    datalabels: {
+                        display: false
                     }
                 }
             }
