@@ -5,22 +5,25 @@ import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/swiper.scss';
 
-import CtgrItem from './CtgrItem';
+import KeywordItemVertical from './KeywordItemVertical';
+import './Css/Comps.css';
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
-class CtgrResults extends Component {
+class KeywordList extends Component {
 
     state = {
-        keywords: [0, 1, 2, 3, 4, 5],
+        keywords: [0, 1, 2, 3, 4, 5, 6, 7],
+        style: {
+            width: "800px",
+            height: "200px",
+        }
     }
-
-    componentDidMount () {
-        this.refreshResults(this.props.newCtgr)
+    componentDidMount() {
+        this.refreshResults(this.props.newCtgr);
     }
-
     /**
      * ------------------------------------------------------------------------------> 김종규
-     * 카테고리 리스트 새로고침
+     * 키워드 리스트 새로고침
      */
     refreshResults = (newCtgr) => {
         this.state.keywords = [newCtgr + "0", 
@@ -31,35 +34,32 @@ class CtgrResults extends Component {
         newCtgr + "5"];
         this.renderLists();
     }
-    
+
     renderLists = () => {
         return (
             this.state.keywords.map((element) => (
                 <SwiperSlide>
-                    <CtgrItem
+                    <KeywordItemVertical
                         type = {this.props.type}
                         keyword={element}>
 
-                    </CtgrItem>
+                    </KeywordItemVertical>
                 </SwiperSlide>
-            ))
+            )
+            )
         );
     }
 
     render() {
         return (
             <div>
+                <p>{this.props.type} 내 선택한 카테고리 내 키워드 순위 리스트</p>
                 <Swiper
-                style = {
-                    {
-                        height: "400px",
-                    }
-                }
-                    spaceBetween={50}
-                    slidesPerView={3}
-                    direction={'horizontal'}
-                    navigation
-                    loop={true}
+                    className= "keywordListVertical"
+                    spaceBetween={100}
+                    slidesPerView={5}
+                    direction={'vertical'}
+                    onSlideChange={() => console.log('slide change')}
                     pagination={{ clickable: true }}
 
                 >
@@ -70,4 +70,4 @@ class CtgrResults extends Component {
     }
 }
 
-export default CtgrResults;
+export default KeywordList;

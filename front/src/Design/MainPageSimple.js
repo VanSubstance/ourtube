@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CtgrResults } from './Comps';
+import { KeywordList } from './Comps';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
@@ -194,12 +194,12 @@ class MainPageSimple extends Component {
                             </Paper>
                         )
                 }
-                <CtgrResults
+                <KeywordList
                     type = {this.state.currentType}
                     ref="CtgrResults"
                 >
 
-                </CtgrResults>
+                </KeywordList>
             </div>
         );
     }

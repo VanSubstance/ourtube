@@ -5,10 +5,11 @@ import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/swiper.scss';
 
-import RankListItem from './RankListItem';
+import KeywordItemVertical from './KeywordItemVertical';
+import './Css/Comps.css';
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
-class RankList extends Component {
+class KeywordList extends Component {
 
     state = {
         keywords: [0, 1, 2, 3, 4, 5, 6, 7],
@@ -38,11 +39,11 @@ class RankList extends Component {
         return (
             this.state.keywords.map((element) => (
                 <SwiperSlide>
-                    <RankListItem
+                    <KeywordItemVertical
                         type = {this.props.type}
                         keyword={element}>
 
-                    </RankListItem>
+                    </KeywordItemVertical>
                 </SwiperSlide>
             )
             )
@@ -52,10 +53,10 @@ class RankList extends Component {
     render() {
         return (
             <div>
-                <p>{this.props.type} 랭크 리스트</p>
+                <p>{this.props.type} 내 선택한 카테고리 내 키워드 순위 리스트</p>
                 <Swiper
-                    style={this.state.style}
-                    spaceBetween={50}
+                    className= "keywordListVertical"
+                    spaceBetween={100}
                     slidesPerView={5}
                     direction={'vertical'}
                     onSlideChange={() => console.log('slide change')}
@@ -69,4 +70,4 @@ class RankList extends Component {
     }
 }
 
-export default RankList;
+export default KeywordList;
