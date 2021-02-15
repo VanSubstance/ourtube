@@ -15,13 +15,6 @@ class MainPageSimple extends Component {
         outside: {
             margin: "100px",
             background: "#DEDEDE",
-        },
-        searchBar: {
-            width: "180px",
-            height: "20px",
-            background: "white",
-            display: "inline",
-            margin: "20px",
         }
     }
 
@@ -47,6 +40,7 @@ class MainPageSimple extends Component {
         }
         this.state.searchVal = "";
         this.state.currentType = target;
+        this.refs.searchBar.value = "";
         this.searchCtgr();
     }
     /**
@@ -77,17 +71,30 @@ class MainPageSimple extends Component {
      * 검색 결과 반환
      */
     searchCtgr = () => {
-        this.setState({
-            ctgrs: [
-                this.state.searchVal + "1",
-                this.state.searchVal + "2",
-                this.state.searchVal + "3",
-                this.state.searchVal + "4",
-                this.state.searchVal + "5",
-            ],
-            selectedCtgr: this.state.searchVal + "1",
-        })
-        this.refs.CtgrResults.refreshResults(this.state.searchVal + "1");
+        // searchVal -> 가장 핫한 카테고리 5선
+        if (this.state.searchVal === "") {
+            this.setState({
+                ctgrs: [
+                    "핫 " + "1",
+                    "핫 " + "2",
+                    "핫 " + "3",
+                    "핫 " + "4",
+                    "핫 " + "5",
+                ],
+                selectedCtgr: "핫 " + "1",
+            });
+        } else {
+            this.setState({
+                ctgrs: [
+                    this.state.searchVal + "1",
+                    this.state.searchVal + "2",
+                    this.state.searchVal + "3",
+                    this.state.searchVal + "4",
+                    this.state.searchVal + "5",
+                ],
+                selectedCtgr: this.state.searchVal + "1",
+            });
+        }
     }
 
     render() {
@@ -121,7 +128,7 @@ class MainPageSimple extends Component {
                         )
                 }
 
-                <input style={this.state.searchBar} type="text" onChange={this.searchTracker} />
+                <input className = "searchBar" ref = "searchBar" type="text" onChange={this.searchTracker} />
                 <button style={this.state.logo} onClick={this.searchCtgr}> 검색 </button>
 
                 {
