@@ -95,8 +95,10 @@ class TrendMainPage extends Component {
                     }]
                 },
                 elements: {
-                    line: {
-                        tension: 0
+                    point:{
+                        radius: 5,
+                        backgroundColor: 'white',
+                        pointStyle:'rectRounded'
                     }
                 },
                 plugins: {
@@ -116,8 +118,10 @@ class TrendMainPage extends Component {
                     }]
                 },
                 elements: {
-                    line: {
-                        tension: 0
+                    point:{
+                        radius: 5,
+                        backgroundColor: 'white',
+                        pointStyle:'rectRounded'
                     }
                 },
                 plugins: {
