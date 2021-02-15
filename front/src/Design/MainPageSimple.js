@@ -76,17 +76,30 @@ class MainPageSimple extends Component {
      * 검색 결과 반환
      */
     searchCtgr = () => {
-        this.setState({
-            ctgrs: [
-                this.state.searchVal + "1",
-                this.state.searchVal + "2",
-                this.state.searchVal + "3",
-                this.state.searchVal + "4",
-                this.state.searchVal + "5",
-            ],
-            selectedCtgr: this.state.searchVal + "1",
-        })
-        this.refs.CtgrResults.refreshResults(this.state.searchVal + "1");
+        console.log(this.state.searchVal);
+        if (this.state.searchVal === "") {
+            this.setState({
+                ctgrs: [
+                    "핫 " + "1",
+                    "핫 " + "2",
+                    "핫 " + "3",
+                    "핫 " + "4",
+                    "핫 " + "5",
+                ],
+                selectedCtgr: "핫 " + "1",
+            });
+        } else {
+            this.setState({
+                ctgrs: [
+                    this.state.searchVal + "1",
+                    this.state.searchVal + "2",
+                    this.state.searchVal + "3",
+                    this.state.searchVal + "4",
+                    this.state.searchVal + "5",
+                ],
+                selectedCtgr: this.state.searchVal + "1",
+            });
+        }
     }
 
     render() {
