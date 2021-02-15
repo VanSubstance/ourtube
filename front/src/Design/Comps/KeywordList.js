@@ -58,7 +58,6 @@ class KeywordList extends Component {
                     className= "keywordListVertical"
                     spaceBetween={100}
                     slidesPerView={5}
-                    direction={'vertical'}
                     onSlideChange={() => console.log('slide change')}
                     pagination={{ clickable: true }}
 
