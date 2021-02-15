@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {KeywordThumbnail} from './Comps';
+import {KeywordThumbnail, Cloud} from './Comps';
 import { Bar, Line, Radar, Pie } from 'react-chartjs-2';
 import 'chartjs-plugin-datalabels';
 
@@ -88,10 +88,16 @@ class AlltimeResultPage extends Component {
                         display:false
                     },
                     ticks: {
+                        display:false,
                         beginAtZero: true,
                         min: 0,
                         max: 10000,
                         stepSize: 1000,
+                    }
+                },
+                plugins: {
+                    datalabels: {
+                        display: false
                     }
                 }
             }
@@ -230,6 +236,10 @@ class AlltimeResultPage extends Component {
                 <p>
                     키워드: {this.state.keyword}
                 </p>
+                <Cloud
+                    ref = "Cloud" keyword = {this.state.keyword}>
+
+                </Cloud>
                 <KeywordThumbnail ref = "KeywordThumbnail">
 
                 </KeywordThumbnail>

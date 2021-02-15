@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { KeywordList, KeywordListVertical } from './Comps';
+import { KeywordListVertical } from './Comps';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
@@ -95,8 +95,10 @@ class TrendMainPage extends Component {
                     }]
                 },
                 elements: {
-                    line: {
-                        tension: 0
+                    point:{
+                        radius: 5,
+                        backgroundColor: 'white',
+                        pointStyle:'rectRounded'
                     }
                 },
                 plugins: {
@@ -116,8 +118,10 @@ class TrendMainPage extends Component {
                     }]
                 },
                 elements: {
-                    line: {
-                        tension: 0
+                    point:{
+                        radius: 5,
+                        backgroundColor: 'white',
+                        pointStyle:'rectRounded'
                     }
                 },
                 plugins: {
@@ -431,14 +435,26 @@ class TrendMainPage extends Component {
      * 현재 입력되어있는 searchVal로 카테고리 검색
      */
     searchCtgr = () => {
-        this.state.ctgrs = [
-            this.state.searchVal + "1",
-            this.state.searchVal + "2",
-            this.state.searchVal + "3",
-            this.state.searchVal + "4",
-            this.state.searchVal + "5",
-        ];
-        this.state.selectedCtgr = this.state.ctgrs[0];
+        // searchVal -> 가장 핫한 카테고리 5선
+        if (this.state.searchVal === "") {
+            this.state.ctgrs = [
+                "핫 " + "1",
+                "핫 " + "2",
+                "핫 " + "3",
+                "핫 " + "4",
+                "핫 " + "5",
+            ];
+            this.state.selectedCtgr = this.state.ctgrs[0];
+        } else {
+            this.state.ctgrs = [
+                this.state.searchVal + "1",
+                this.state.searchVal + "2",
+                this.state.searchVal + "3",
+                this.state.searchVal + "4",
+                this.state.searchVal + "5",
+            ];
+            this.state.selectedCtgr = this.state.ctgrs[0];
+        }
         this.selectCtgr(this.state.selectedCtgr);
         this.getDatasets();
     }
