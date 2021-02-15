@@ -3,6 +3,7 @@ import { KeywordList } from './Comps';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
+import "./Css/styles.css";
 
 class MainPageSimple extends Component {
 
@@ -99,8 +100,16 @@ class MainPageSimple extends Component {
     render() {
         return (
             <div
-                className="SearchModule"
-                style={this.state.outside}>
+                classname = "mainBackground">
+                <div
+                    className = "mainBanner">
+                    <a
+                        href="http://localhost:3012/">
+                            <img
+                                src = "/Ex/happy.jpg">
+                            </img>
+                    </a>    
+                </div>
                 {
                     this.state.currentType === "트렌드"
                         ? (
