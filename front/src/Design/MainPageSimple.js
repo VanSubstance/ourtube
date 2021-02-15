@@ -22,14 +22,7 @@ class MainPageSimple extends Component {
             background: "white",
             display: "inline",
             margin: "20px",
-        },
-        logo: {
-            width: "80px",
-            height: "40px",
-            background: "red",
-            color: "white",
-            display: "inline",
-        },
+        }
     }
 
     getValues = () => {
@@ -52,17 +45,8 @@ class MainPageSimple extends Component {
             target = "트렌드";
             color = "red";
         }
-        this.setState({
-            searchVal: "",
-            currentType: target,
-            logo: {
-                width: "80px",
-                height: "40px",
-                background: color,
-                color: "white",
-                display: "inline",
-            },
-        });
+        this.state.searchVal = "";
+        this.state.currentType = target;
         this.searchCtgr();
     }
     /**
@@ -123,14 +107,14 @@ class MainPageSimple extends Component {
                     this.state.currentType === "트렌드"
                         ? (
                             <button
-                                style={this.state.logo}
+                                className="logoTrend"
                                 onClick={this.changeType}>
                                 {this.state.currentType}
                             </button>
                         )
                         : (
                             <button
-                                style={this.state.logo}
+                                className = "logoAlltime"
                                 onClick={this.changeType}>
                                 {this.state.currentType}
                             </button>
@@ -144,7 +128,6 @@ class MainPageSimple extends Component {
                     this.state.currentType === "트렌드"
                         ? (
                             <Link
-                                style={this.state.logo}
                                 to={{
                                     pathname: "/trend",
                                     state: {
@@ -161,7 +144,6 @@ class MainPageSimple extends Component {
                                         searchVal: this.state.searchVal
                                     }
                                 }}
-                                style={this.state.logo}
                             >자세히 보기</Link>
                         )
                 }

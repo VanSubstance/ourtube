@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { KeywordList } from './Comps';
+import { KeywordList, KeywordListVertical } from './Comps';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
@@ -485,9 +485,9 @@ class TrendMainPage extends Component {
                     }
                 </Paper>
 
-                <KeywordList type="트렌드" ref="CtgrResults">
+                <KeywordListVertical type="트렌드" ref="CtgrResults">
 
-                </KeywordList>
+                </KeywordListVertical>
                 <div
                     style={this.state.chart}>
                     <p> 바 그래프: 좋아요 싫어요 비율 </p>
