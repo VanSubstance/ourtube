@@ -32,14 +32,13 @@ class AlltimeMainPage extends Component {
             display: "inline",
         },
         chart: {
-            width: "800px",
+            width: "80%",
             height: "300px",
             background: "#FFFFFF",
             color: "#000000",
             border: "3px solid red",
             margin: "100 100 100 100",
             padding: '60px'
-            
         },
         options: {
             // 좋아요 싫어요 막대 그래프 옵션
