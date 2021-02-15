@@ -14,13 +14,6 @@ class MainPageSimple extends Component {
         outside: {
             margin: "100px",
             background: "#DEDEDE",
-        },
-        searchBar: {
-            width: "180px",
-            height: "20px",
-            background: "white",
-            display: "inline",
-            margin: "20px",
         }
     }
 
@@ -46,6 +39,7 @@ class MainPageSimple extends Component {
         }
         this.state.searchVal = "";
         this.state.currentType = target;
+        this.refs.searchBar.value = "";
         this.searchCtgr();
     }
     /**
@@ -76,7 +70,7 @@ class MainPageSimple extends Component {
      * 검색 결과 반환
      */
     searchCtgr = () => {
-        console.log(this.state.searchVal);
+        // searchVal -> 가장 핫한 카테고리 5선
         if (this.state.searchVal === "") {
             this.setState({
                 ctgrs: [
@@ -125,7 +119,7 @@ class MainPageSimple extends Component {
                         )
                 }
 
-                <input style={this.state.searchBar} type="text" onChange={this.searchTracker} />
+                <input className = "searchBar" ref = "searchBar" type="text" onChange={this.searchTracker} />
                 <button style={this.state.logo} onClick={this.searchCtgr}> 검색 </button>
 
                 {
