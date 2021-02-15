@@ -12,17 +12,6 @@ class MainPageSimple extends Component {
         searchVal: "",
         selectedCtgr: "",
         ctgrs: ["카테고리 예시 1", "카테고리 예시 2", "예시 3", "예시 4", "카테고리 예시 5"],
-        outside: {
-            margin: "100px",
-            background: "#DEDEDE",
-        },
-        searchBar: {
-            width: "180px",
-            height: "20px",
-            background: "white",
-            display: "inline",
-            margin: "20px",
-        }
     }
 
     getValues = () => {
@@ -93,100 +82,107 @@ class MainPageSimple extends Component {
     render() {
         return (
             <div
-                classname = "mainBackground">
-                <div
-                    className = "mainBanner">
+                className="mainBackground">
+                <div>
                     <a
-                        href="http://localhost:3012/">
-                            <img
-                                src = "/Ex/happy.jpg">
-                            </img>
-                    </a>    
+                        href="http://222.232.15.205:3012/">
+                        <img
+                            className="mainBanner"
+                            src="/Ex/ourtubeLogo.PNG">
+                        </img>
+                    </a>
                 </div>
-                {
-                    this.state.currentType === "트렌드"
-                        ? (
-                            <button
-                                className="logoTrend"
-                                onClick={this.changeType}>
-                                {this.state.currentType}
-                            </button>
-                        )
-                        : (
-                            <button
-                                className = "logoAlltime"
-                                onClick={this.changeType}>
-                                {this.state.currentType}
-                            </button>
-                        )
-                }
+                <div
+                    className="mainCategories">
+                    {
+                        this.state.currentType === "트렌드"
+                            ? (
+                                <button
+                                    className="logoTrend"
+                                    onClick={this.changeType}>
+                                    {this.state.currentType}
+                                </button>
+                            )
+                            : (
+                                <button
+                                    className="logoAlltime"
+                                    onClick={this.changeType}>
+                                    {this.state.currentType}
+                                </button>
+                            )
+                    }
 
-                <input style={this.state.searchBar} type="text" onChange={this.searchTracker} />
-                <button style={this.state.logo} onClick={this.searchCtgr}> 검색 </button>
+                    <input className="searchBar" type="text" onChange={this.searchTracker} />
+                    <button style={this.state.logo} onClick={this.searchCtgr}> 검색 </button>
 
-                {
-                    this.state.currentType === "트렌드"
-                        ? (
-                            <Link
-                                to={{
-                                    pathname: "/trend",
-                                    state: {
-                                        searchVal: this.state.searchVal
+                    {
+                        this.state.currentType === "트렌드"
+                            ? (
+                                <Link
+                                    to={{
+                                        pathname: "/trend",
+                                        state: {
+                                            searchVal: this.state.searchVal
+                                        }
+                                    }}
+                                >자세히 보기</Link>
+                            )
+                            : (
+                                <Link
+                                    to={{
+                                        pathname: "/alltime",
+                                        state: {
+                                            searchVal: this.state.searchVal
+                                        }
+                                    }}
+                                >자세히 보기</Link>
+                            )
+                    }
+
+                    {
+                        // 
+                        this.state.searchType === "트렌드"
+                            ? (
+                                <div
+                                    className="chipBackground">
+                                    {
+                                        this.state.ctgrs.map((element) => {
+                                            return (
+                                                <Chip
+                                                    className="chipStyles"
+                                                    label={element}
+                                                    clickable
+                                                    component="button"
+                                                    onClick={() => this.selectCtgr(element)}>
+                                                </Chip>
+                                            );
+                                        })
                                     }
-                                }}
-                            >자세히 보기</Link>
-                        )
-                        : (
-                            <Link
-                                to={{
-                                    pathname: "/alltime",
-                                    state: {
-                                        searchVal: this.state.searchVal
+                                </div>
+                            )
+                            : (
+                                <div
+                                    className="chipBackground">
+                                    {
+                                        this.state.ctgrs.map((element) => {
+                                            const path = "/alltime/" + element;
+                                            return (
+                                                <Chip
+                                                    className="chipStyles"
+                                                    label={element}
+                                                    clickable
+                                                    component="button"
+                                                    onClick={() => this.selectCtgr(element)}>
+                                                </Chip>
+                                            );
+                                        })
                                     }
-                                }}
-                            >자세히 보기</Link>
-                        )
-                }
-
-                {
-                    // 
-                    this.state.searchType === "트렌드"
-                        ? (
-                            <Paper>
-                                {
-                                    this.state.ctgrs.map((element) => {
-                                        return (
-                                            <Chip
-                                                label={element}
-                                                clickable
-                                                component="button"
-                                                onClick={() => this.selectCtgr(element)}>
-                                            </Chip>
-                                        );
-                                    })
-                                }
-                            </Paper>
-                        )
-                        : (
-                            <Paper>
-                                {
-                                    this.state.ctgrs.map((element) => {
-                                        const path = "/alltime/" + element;
-                                        return (
-                                            <Chip
-                                                label={element}
-                                                clickable
-                                                component="button"
-                                                onClick={() => this.selectCtgr(element)}>
-                                            </Chip>
-                                        );
-                                    })
-                                }
-                            </Paper>
-                        )
-                }
+                                </div>
+                            )
+                    }
+                </div>
                 <KeywordList
-                    type = {this.state.currentType}
+                    type={this.state.currentType}
                     ref="CtgrResults"
                 >
 
