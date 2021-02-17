@@ -4,19 +4,27 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.my.spring.domain.TestDto;
 import com.my.spring.service.BasicService;
 
 @RestController
-@RequestMapping(value = "/basic")
+@RequestMapping("/basic")
 public class BasicController {
+	
 	@Autowired
 	private BasicService service;
 	
-	@RequestMapping(value = "/test")
-	public List<String> testGet() {
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public List<String> test() {
 		return service.testGet();
+	}
+	
+	@RequestMapping(value = "/test2", method = RequestMethod.GET)
+	public List<TestDto> test2() {
+		return service.testGetAll();
 	}
 
 }

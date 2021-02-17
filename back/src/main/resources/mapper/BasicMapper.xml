@@ -9,4 +9,10 @@
 		select B_CAT from CATEGORY
 	</select>
 	
+	<select 
+		id = "testGetAll"
+		resultType = "com.my.spring.domain.TestVO">
+		select * from category
+	</select>
+	
 </mapper>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.my.spring.domain.TestDto;
 import com.my.spring.mapper.BasicMapper;
 import com.my.spring.service.BasicService;
 
@@ -17,6 +18,11 @@ public class BasicServiceImpl implements BasicService {
 	@Override
 	public List<String> testGet() {
 		return mapper.testGet();
+	}
+	
+	@Override
+	public List<TestDto> testGetAll() {
+		return mapper.testGetAll();
 	}
 
 }
