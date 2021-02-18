@@ -3,6 +3,7 @@ package com.my.spring.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,9 +23,9 @@ public class BasicController {
 		return service.testGet();
 	}
 	
-	@RequestMapping(value = "/test2", method = RequestMethod.GET)
-	public List<TestDto> test2() {
-		return service.testGetAll();
+	@RequestMapping(value = "/test2/{parent}", method = RequestMethod.GET)
+	public List<TestDto> test2(@PathVariable String parent) {
+		return service.getCtgrBySearch(parent);
 	}
 
 }

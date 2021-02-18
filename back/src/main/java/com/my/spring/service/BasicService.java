@@ -6,5 +6,5 @@ import com.my.spring.domain.TestDto;
 
 public interface BasicService {
 	public List<String> testGet();
-	public List<TestDto> testGetAll();
+	public List<TestDto> getCtgrBySearch(String parent);
 }

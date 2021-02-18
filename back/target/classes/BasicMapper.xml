@@ -10,9 +10,10 @@
 	</select>
 	
 	<select 
-		id = "testGetAll"
-		resultType = "com.my.spring.domain.TestVO">
-		select * from category
+		id = "getCtgrBySearch"
+		resultType = "com.my.spring.domain.CtgrDto"
+		parameterType="String">
+		select child from ctgrrelation where parent = #{parent} ORDER BY child DESC
 	</select>
 	
 </mapper>

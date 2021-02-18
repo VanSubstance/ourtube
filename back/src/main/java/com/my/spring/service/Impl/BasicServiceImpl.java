@@ -21,8 +21,8 @@ public class BasicServiceImpl implements BasicService {
 	}
 	
 	@Override
-	public List<TestDto> testGetAll() {
-		return mapper.testGetAll();
+	public List<TestDto> getCtgrBySearch(String parent) {
+		return mapper.getCtgrBySearch(parent);
 	}
 
 }
