@@ -52,17 +52,59 @@ class KeywordList extends Component {
 
     render() {
         return (
-            <div>
+            <div
+                style = {{
+                    backgroundColor: "grey"
+                }}>
                 <p>{this.props.type} 내 선택한 카테고리 내 키워드 순위 리스트</p>
                 <Swiper
                     className= "keywordListVertical"
-                    spaceBetween={100}
+                    spaceBetween={30}
                     slidesPerView={5}
+                    navigation
+                    loop
                     onSlideChange={() => console.log('slide change')}
                     pagination={{ clickable: true }}
 
                 >
-                    {this.renderLists()}
+                    {/* {this.renderLists()} */}
+
+                <SwiperSlide>
+                    <KeywordItemVertical
+                        type = {this.props.type}
+                        keyword={this.state.keywords[0]}>
+
+                    </KeywordItemVertical>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <KeywordItemVertical
+                        type = {this.props.type}
+                        keyword={this.state.keywords[1]}>
+
+                    </KeywordItemVertical>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <KeywordItemVertical
+                        type = {this.props.type}
+                        keyword={this.state.keywords[2]}>
+
+                    </KeywordItemVertical>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <KeywordItemVertical
+                        type = {this.props.type}
+                        keyword={this.state.keywords[3]}>
+
+                    </KeywordItemVertical>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <KeywordItemVertical
+                        type = {this.props.type}
+                        keyword={this.state.keywords[4]}>
+
+                    </KeywordItemVertical>
+                </SwiperSlide>
+
                 </Swiper>
             </div>
         );
