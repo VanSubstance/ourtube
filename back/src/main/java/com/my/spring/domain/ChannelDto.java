@@ -12,4 +12,7 @@ public class ChannelDto {
 	private String description;
 	private String thumbnail;
 	private DateTime publishedDate;
+	private int views;
+	private int videos;
+	private int subs;
 }
