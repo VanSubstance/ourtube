@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.my.spring.domain.CtgrDto;
 import com.my.spring.domain.TestDto;
 import com.my.spring.service.BasicService;
 
@@ -18,13 +19,18 @@ public class BasicController {
 	@Autowired
 	private BasicService service;
 	
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public List<String> test() {
-		return service.testGet();
+	@RequestMapping(value = "/checkCtgr/{ctgr}", method = RequestMethod.GET)
+	public List<String> checkCtgr(@PathVariable String ctgr) {
+		return service.checkCtgr(ctgr);
 	}
 	
-	@RequestMapping(value = "/test2/{parent}", method = RequestMethod.GET)
-	public List<TestDto> test2(@PathVariable String parent) {
+	@RequestMapping(value = "/checkCtgrRelation/{parent}/{title}", method = RequestMethod.GET)
+	public List<CtgrDto> checkCtgrRelation(@PathVariable String parent, @PathVariable String title) {
+		return service.checkCtgrRelation(parent, title);
+	}
+	
+	@RequestMapping(value = "/searchCtgrsByParent/{parent}", method = RequestMethod.GET)
+	public List<TestDto> searchCtgrsByParent(@PathVariable String parent) {
 		return service.getCtgrBySearch(parent);
 	}
 

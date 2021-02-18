@@ -4,16 +4,28 @@
 	namespace = "com.my.spring.mapper.BasicMapper">
 	
 	<select 
-		id = "testGet"
+		id = "checkCtgr"
+		parameterType="String"
 		resultType = "String">
-		select B_CAT from CATEGORY
+		select title from ctgr 
+		where upper(title) like upper(#{ctgr})
+	</select>
+	
+	<select 
+	id="checkCtgrRelation"
+	parameterType="String"
+	resultType="com.my.spring.domain.CtgrDto">
+		select * from ctgrRelation 
+		where upper(parent) like upper(#{parent}) 
+		and upper(title) like upper(#{title})
 	</select>
 	
 	<select 
 		id = "getCtgrBySearch"
 		resultType = "com.my.spring.domain.CtgrDto"
 		parameterType="String">
-		select child from ctgrrelation where parent = #{parent} ORDER BY child DESC
+		select * from ctgrRelation 
+		where upper(parent) = upper(#{parent}) ORDER BY title DESC
 	</select>
 	
 </mapper>

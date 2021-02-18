@@ -5,5 +5,6 @@ import lombok.*;
 @Setter
 @Getter
 public class CtgrDto {
-	private String child;
+	private String parent;
+	private String title;
 }
