@@ -97,18 +97,21 @@ class MainPageSimple extends Component {
         return (
             <div
                 className="mainBackground">
-                <div>
-                    <a
-                        href="http://222.232.15.205:3012/">
-                        <img
-                            className="mainBanner"
-                            src="/Ex/ourtubeLogo.PNG">
+                <div
+                    className="mainBanner">
+                    <a href= "http://localhost:3012/">
+                        <img src= "/Ex/ourtubeLogo.PNG">
                         </img>
                     </a>
                 </div>
                 <div
-                    className="mainCategories">
-                    {
+                    className="mainCategoriesBox">
+                        <button
+                            className = "trendImage">
+                                <d1>TREND</d1>
+                        </button>
+                            
+                    {/* {
                         this.state.currentType === "트렌드"
                             ? (
                                 <button
@@ -122,12 +125,14 @@ class MainPageSimple extends Component {
                                     className="logoAlltime"
                                     onClick={this.changeType}>
                                     {this.state.currentType}
-                                </button>
+                                </button>s
                             )
-                    }
+                    } */}
 
                 <input className = "searchBar" ref = "searchBar" type="text" onChange={this.searchTracker} />
-                <button style={this.state.logo} onClick={this.searchCtgr}> 검색 </button>
+                <button className = "searchButton" onClick={this.searchCtgr}>
+                    <d1>검색</d1>
+                </button>
 
                     {
                         this.state.currentType === "트렌드"
