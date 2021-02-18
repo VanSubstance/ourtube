@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.my.spring.domain.CtgrDto;
 import com.my.spring.domain.TestDto;
 import com.my.spring.service.BasicService;
 
@@ -20,12 +19,12 @@ public class BasicController {
 	private BasicService service;
 	
 	@RequestMapping(value = "/checkCtgr/{ctgr}", method = RequestMethod.GET)
-	public List<String> checkCtgr(@PathVariable String ctgr) {
+	public int checkCtgr(@PathVariable String ctgr) {
 		return service.checkCtgr(ctgr);
 	}
 	
 	@RequestMapping(value = "/checkCtgrRelation/{parent}/{title}", method = RequestMethod.GET)
-	public List<CtgrDto> checkCtgrRelation(@PathVariable String parent, @PathVariable String title) {
+	public int checkCtgrRelation(@PathVariable String parent, @PathVariable String title) {
 		return service.checkCtgrRelation(parent, title);
 	}
 	

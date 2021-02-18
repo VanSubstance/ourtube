@@ -4,28 +4,40 @@
 	namespace = "com.my.spring.mapper.BasicMapper">
 	
 	<select 
-		id = "checkCtgr"
-		parameterType="String"
-		resultType = "String">
-		select title from ctgr 
+	id = "checkCtgr"
+	parameterType="String"
+	resultType="int">
+		select count(*) from ctgr 
 		where upper(title) like upper(#{ctgr})
 	</select>
 	
 	<select 
 	id="checkCtgrRelation"
 	parameterType="String"
-	resultType="com.my.spring.domain.CtgrDto">
-		select * from ctgrRelation 
+	resultType="int">
+		select count(*) from ctgrRelation 
 		where upper(parent) like upper(#{parent}) 
 		and upper(title) like upper(#{title})
 	</select>
 	
 	<select 
-		id = "getCtgrBySearch"
-		resultType = "com.my.spring.domain.CtgrDto"
-		parameterType="String">
+	id = "getCtgrBySearch"
+	resultType = "com.my.spring.domain.CtgrDto"
+	parameterType="String">
 		select * from ctgrRelation 
 		where upper(parent) = upper(#{parent}) ORDER BY title DESC
 	</select>
+	
+	<insert 
+	id="addCtgr"
+	parameterType="String">
+		insert into ctgr (title) values (#{ctgr})
+	</insert>
+	
+	<insert 
+	id="addCtgrRelation"
+	parameterType="String">
+		insert into ctgrRelation (parent, title) values (#{parent}, #{title})
+	</insert>
 	
 </mapper>

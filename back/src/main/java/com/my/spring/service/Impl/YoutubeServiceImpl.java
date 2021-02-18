@@ -111,7 +111,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 		
 	}
 	
-	private static void printChannelListDetail(Iterator<Channel> results, List<ChannelDto> channelDtoList) {
+	private static void printChannelListDetail(Iterator<Channel> results, List<ChannelDto> channelDtoList, List<String> ctgrList) {
 		System.out.println("\n----------------------------------------------------------------");
 		System.out.println("----------------------------------------------------------------\n");
 		
@@ -134,7 +134,12 @@ public class YoutubeServiceImpl implements YoutubeService {
 				System.out.println("Topics:");
 				if (item.getTopicDetails() != null && item.getTopicDetails().getTopicCategories() != null) {
 					for (String topic: item.getTopicDetails().getTopicCategories()) {
+						String[] temp = topic.split("/");
+						topic = temp[temp.length - 1];
 						System.out.println("\t" + topic);
+						if (!ctgrList.contains(topic)) {
+							ctgrList.add(topic);
+						}
 					}
 				}
 				System.out.println("\n----------------------------------------------------------------\n");
@@ -144,8 +149,9 @@ public class YoutubeServiceImpl implements YoutubeService {
 	}
 	
 	@Override
-	public List<ChannelDto> getChannelsByCtgr(String ctgr) {
+	public ArrayList<Object> getChannelsByCtgr(String ctgr) {
 		List<ChannelDto> channelDtoList = new ArrayList<ChannelDto>();
+		List<String> ctgrList = new ArrayList<String>();
 		try {
 			youtube = new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, new HttpRequestInitializer() {
 				public void initialize(HttpRequest request) throws IOException {
@@ -160,7 +166,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			// 검색 결과 채널로 한정
 			channelBasics.setType("channel");
 			// 검색 결과 제목으로 정렬
-			//channelBasics.setOrder("title");
+			channelBasics.setOrder("title");
 			// 검색 범위 한국으로 한정
 			channelBasics.setRegionCode("KR");
 			// 조회 상한선
@@ -185,7 +191,8 @@ public class YoutubeServiceImpl implements YoutubeService {
 			channelDetails.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
 			List<Channel> channelListDetail = channelDetails.execute().getItems();
 			if (channelListDetail != null) {
-				printChannelListDetail(channelListDetail.iterator(), channelDtoList);
+				printChannelListDetail(channelListDetail.iterator(), channelDtoList, ctgrList);
+				System.out.println("API works done.\n\n");
 			}
 			
 		} catch (GoogleJsonResponseException e) {
@@ -196,7 +203,10 @@ public class YoutubeServiceImpl implements YoutubeService {
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
-		return channelDtoList;
+		ArrayList<Object> result = new ArrayList<Object>();
+		result.add(channelDtoList);
+		result.add(ctgrList);
+		return result;
 	}
 	
 }
