@@ -99,8 +99,11 @@ class MainPageSimple extends Component {
                 className="mainBackground">
                 <div
                     className="mainBanner">
-                    <a href= "http://localhost:3012/">
-                        <img src= "/Ex/ourtubeLogo.PNG">
+                    <a 
+                        href= "http://localhost:3012/">
+                        <img
+                            className="bannerImage"
+                            src= "/Ex/ourtubeLogo.PNG">
                         </img>
                     </a>
                 </div>
@@ -133,7 +136,6 @@ class MainPageSimple extends Component {
                 <button className = "searchButton" onClick={this.searchCtgr}>
                     <d1>검색</d1>
                 </button>
-
                     {
                         this.state.currentType === "트렌드"
                             ? (
@@ -144,7 +146,7 @@ class MainPageSimple extends Component {
                                             searchVal: this.state.searchVal
                                         }
                                     }}
-                                >자세히 보기</Link>
+                                >Chart View</Link>
                             )
                             : (
                                 <Link
@@ -154,12 +156,14 @@ class MainPageSimple extends Component {
                                             searchVal: this.state.searchVal
                                         }
                                     }}
-                                >자세히 보기</Link>
+                                >Chart View</Link>
                             )
                     }
 
+                </div>
+                <div
+                    className="mainChipBox">
                     {
-                        // 
                         this.state.searchType === "트렌드"
                             ? (
                                 <div
