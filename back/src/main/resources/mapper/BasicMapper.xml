@@ -28,6 +28,14 @@
 		where upper(parent) = upper(#{parent}) ORDER BY title DESC
 	</select>
 	
+	<select 
+	id="translateCtgrByTopicId"
+	resultType="String"
+	parameterType="String">
+		select title from ctgrdictionary
+		where code = #{topicId}
+	</select>
+	
 	<insert 
 	id="addCtgr"
 	parameterType="String">

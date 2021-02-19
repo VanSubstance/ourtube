@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.my.spring.domain.*;
 import com.my.spring.service.BasicService;
+import com.my.spring.service.ChannelService;
 import com.my.spring.service.YoutubeService;
 
 @RestController
-@RequestMapping(value = "/youtube")
+@RequestMapping(value = "/ytb")
 public class YoutubeController {
 	
 	private YoutubeService service;
@@ -23,37 +24,35 @@ public class YoutubeController {
 	private BasicService serviceBasic;
 	
 	@Autowired
+	private ChannelService serviceChannel;
+	
+	@Autowired
 	public YoutubeController(final YoutubeService service) {
 		this.service = service;
 	}
 	
-	@RequestMapping(value = "/ctgr/{ctgr}", method = RequestMethod.GET)
-	public List<ChannelDto> Index(@PathVariable String ctgr) {
-		ArrayList<Object> dataset = service.getChannelsByCtgr(ctgr);
-		List<String> ctgrs = new ArrayList();
-		ctgrs.add(ctgr);
-		ctgrs.addAll((List<String>) dataset.get(1));
+	@RequestMapping(value = "/channel/{searchVal}", method = RequestMethod.GET)
+	public List<ChannelDto> searchChannelsBySearchVal(@PathVariable String searchVal) {
+		ArrayList<Object> dataset = service.getChannelsBySearchVal(searchVal);
+		List<ChannelDto> channels = (List<ChannelDto>) dataset.get(0);
+		List<ChainChannelDto> chains = (List<ChainChannelDto>) dataset.get(1);
 		System.out.println("Getting Dataset dones.\n");
-		System.out.println(ctgrs);
-		for (int i = 0; i < ctgrs.size(); i++) {
-			System.out.println(ctgrs.get(i));
-			if (serviceBasic.checkCtgr(ctgrs.get(i)) == 0) {
-				System.out.println("Add new ctgr.\n");
-				serviceBasic.addCtgr(ctgrs.get(i));
+		System.out.println("# of Channel: " + channels.size());
+		
+		for (ChannelDto channel : channels) {
+			System.out.println(channel.getTitle());
+			if (!serviceChannel.putChannelInfo(channel)) {
+				System.out.println("Already existed channel.");
 			}
 		}
-		System.out.println("Adding new ctgrs done.\n\n");
-		for (int i = 0; i < ctgrs.size(); i++) {
-			for (int j = i; j < ctgrs.size(); j++) {
-				System.out.println(ctgrs.get(i) + ", " + ctgrs.get(j));
-				if (serviceBasic.checkCtgrRelation(ctgrs.get(i), ctgrs.get(j)) == 0) {
-					System.out.println("Add new ctgrRelation.\n");
-					serviceBasic.addCtgrRelation(ctgrs.get(i), ctgrs.get(j));
-				}
+		
+		for (ChainChannelDto chain : chains) {
+			String ctgrTranslated = serviceBasic.translateCtgrByTopicId(chain.getCtgr());
+			if (!serviceChannel.putChain(chain.getChannelId(), ctgrTranslated)) {
+				System.out.println("Already existed chain.");
 			}
 		}
-		System.out.println("Adding new ctgrRelation done.\n\n");
-		return (List<ChannelDto>) dataset.get(0);
+		return channels;
 	}
 	
 }

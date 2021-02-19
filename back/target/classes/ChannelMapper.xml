@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper
+	namespace = "com.my.spring.mapper.ChannelMapper">
+	
+	<select 
+	id="getChannelsByCtgr"
+	parameterType="String"
+	resultType="String">
+		select A.title from channel A, channelctgr B
+		where B.ctgr = #{ctgr} and A.id = B.channelid
+	</select>
+	
+	<select 
+	id="getCtgrsByChannelId"
+	parameterType="String">
+		select ctgr from channelctgr
+		where channelid = #{channelId}
+	</select>
+	
+	<insert 
+	id="putChannelInfo"
+	parameterType="com.my.spring.domain.ChannelDto">
+		insert into channel (
+		id, title, thumbnail, description, publisheddate, 
+		videocount, viewcount, subscount, infodate) 
+		values (
+		#{data.id}, #{data.title}, #{data.thumbnail}, #{data.description}, #{data.publishedDate}, 
+		#{data.videoCount}, #{data.viewCount}, #{data.subsCount}, #{data.infoDate})
+	</insert>
+	
+	<insert 
+	id="putChain"
+	parameterType="String">
+		insert into channelctgr (
+		channelid, ctgr)
+		values (
+		#{channelId}, #{ctgr})
+	</insert>
+	
+	
+</mapper>

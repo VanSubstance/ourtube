@@ -40,4 +40,9 @@ public class BasicServiceImpl implements BasicService {
 		return mapper.addCtgrRelation(parent, title);
 	}
 
+	@Override
+	public String translateCtgrByTopicId(String topicId) {
+		return mapper.translateCtgrByTopicId(topicId);
+	}
+
 }
