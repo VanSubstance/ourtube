@@ -55,5 +55,67 @@ public class YoutubeController {
 		}
 		return channels;
 	}
+
+	@RequestMapping(value = "/ctgr/{ctgr}", method = RequestMethod.GET)
+	public List<ChannelDto> putChannelInfoByCtgr(@PathVariable String ctgr) {
+		ArrayList<Object> dataset = service.getChannelsBySearchVal(ctgr);
+		List<ChannelDto> channels = (List<ChannelDto>) dataset.get(0);
+		List<ChainChannelDto> chains = (List<ChainChannelDto>) dataset.get(1);
+		// 카테고리를 위한 리스트 생성
+		List<String> basicCtgrs = new ArrayList();
+		basicCtgrs.add(ctgr);
+		
+		System.out.println("카테고리 등록: " + ctgr);
+		// 카테고리 등록
+		if (serviceBasic.checkCtgr(ctgr) == 0) {
+			serviceBasic.addCtgr(ctgr);
+		}
+
+		System.out.println("-----------------------------------------------------");
+
+		// 채널 등록
+		for (ChannelDto channel : channels) {
+			System.out.println("채널 등록: " + channel.getTitle() + " ~ " + channel.getId());
+			if (serviceChannel.checkExistence(channel.getId()).size() == 0) {
+				System.out.println("등록중");
+				serviceChannel.putChannelInfo(channel);
+			}
+			// 채널 별 ctgr와 체인 등록
+			if (serviceChannel.checkExistenceChain(channel.getId(), ctgr).size() == 0) {
+				serviceChannel.putChain(channel.getId(), ctgr);
+			}
+		}
+		
+		System.out.println("-----------------------------------------------------");
+		
+		
+		// 체인 등록(채널과 기본 카테고리간의 체인)
+		for (ChainChannelDto chain : chains) {
+			String ctgrTranslated = serviceBasic.translateCtgrByTopicId(chain.getCtgr());
+			System.out.println("Assigning chain: " + chain.getChannelId() + "\t~\t" + ctgrTranslated + "|" + chain.getCtgr());
+			if (serviceChannel.checkExistenceChain(chain.getChannelId(), ctgrTranslated).size() == 0) {
+				serviceChannel.putChain(chain.getChannelId(), ctgrTranslated);
+			}
+			if (!basicCtgrs.contains(ctgrTranslated)) {
+				basicCtgrs.add(ctgrTranslated);
+			}
+		}
+		
+
+		System.out.println("-----------------------------------------------------");
+		
+		System.out.println("basicCtgrs: " + basicCtgrs);
+		// 카테고리들간의 relation 등록
+		for (String basicCtgr: basicCtgrs) {
+			if (!basicCtgr.equals(ctgr)) {
+				System.out.println("Assigning relation: \n\tparent: " + basicCtgr + "\n\ttitle: " + ctgr);
+				serviceBasic.addCtgrRelation(basicCtgr, ctgr);
+			}
+		}
+		
+		System.out.println(ctgr + " 채널 검색 / 등록 종료\n----------------------------------------\n----------------------------------------\n");
+		
+		return channels;
+	}
 	
 }

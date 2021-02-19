@@ -29,8 +29,9 @@ public class YoutubeServiceImpl implements YoutubeService {
 	
 	private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 	private static final JsonFactory JSON_FACTORY = new JacksonFactory();
-	private static final long NUMBER_OF_VIDEOS_RETURNED = 3;
+	private static final long NUMBER_OF_VIDEOS_RETURNED = 10;
 	private static YouTube youtube;
+	private static final String[] apiKeys = {"AIzaSyAE-kTRiIreaTxMsNG6Vg6W39YEv-a89x8", "AIzaSyCXiMrdsfLrPLtHRqhS5POORUzqrIK5_74"}; 
 	
 	private static void prettyPrint (Iterator<Video> iteratorSearchResults, YoutubeDto youtubeDto) {
 		System.out.println("\n----------------------------------------------------------------");
@@ -73,7 +74,8 @@ public class YoutubeServiceImpl implements YoutubeService {
 			
 			YouTube.Videos.List videos = youtube.videos().list("id,snippet,contentDetails");
 			// API 키 입력
-			videos.setKey("AIzaSyCXiMrdsfLrPLtHRqhS5POORUzqrIK5_74");
+			videos.setKey(apiKeys[0]);
+			//videos.setKey(apiKeys[1]);
 			// 동영상 id 입력
 			videos.setId("5EXFilTUiko");
 			// 조회 상한선
@@ -96,8 +98,6 @@ public class YoutubeServiceImpl implements YoutubeService {
 
 
 	private static void printChannelList(Iterator<SearchResult> searchResults, List<String> channelIdList) {
-		System.out.println("\n----------------------------------------------------------------");
-		System.out.println("----------------------------------------------------------------\n");
 		
 		if (!searchResults.hasNext()) {
 			System.out.println("No results for your query.");
@@ -107,8 +107,8 @@ public class YoutubeServiceImpl implements YoutubeService {
 			SearchResult item = searchResults.next();
 			
 			if (item.getKind().equals("youtube#searchResult")) {
-				System.out.println("Channel Id: " + item.getSnippet().getChannelId());
-				channelIdList.add(item.getSnippet().getChannelId());
+				System.out.println("Channel Id: " + item.getId().getChannelId());
+				channelIdList.add(item.getId().getChannelId());
 			}
 			
 		}
@@ -116,8 +116,6 @@ public class YoutubeServiceImpl implements YoutubeService {
 	}
 	
 	private static void printChannelListDetail(Iterator<Channel> results, List<ChannelDto> channelDtoList, List<ChainChannelDto> ctgrList) {
-		System.out.println("\n----------------------------------------------------------------");
-		System.out.println("----------------------------------------------------------------\n");
 		
 		if (!results.hasNext()) {
 			System.out.println("No results for your query.");
@@ -131,16 +129,16 @@ public class YoutubeServiceImpl implements YoutubeService {
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 				String infoDate = dateFormat.format(Calendar.getInstance().getTime());
 				
-				System.out.println("Id: " + item.getId());
-				System.out.println("Title: " + item.getSnippet().getTitle());
-				System.out.println("Thumbnail: " + thumbnail.getUrl());
-				System.out.println("Description: " + item.getSnippet().getDescription());
-				System.out.println("Published date: " + publishedDate);
-				System.out.println("Statistics:");
+				System.out.println("\nId: " + item.getId());
+				System.out.println("\nTitle: " + item.getSnippet().getTitle());
+				System.out.println("\nThumbnail: " + thumbnail.getUrl());
+				System.out.println("\nDescription: " + item.getSnippet().getDescription());
+				System.out.println("\nPublished date: " + publishedDate);
+				System.out.println("\nStatistics:");
 				System.out.println("\tViews: " + item.getStatistics().getViewCount());
 				System.out.println("\tSubs: " + item.getStatistics().getSubscriberCount());
 				System.out.println("\tVideos: " + item.getStatistics().getVideoCount());
-				System.out.println("info date: " + infoDate);
+				System.out.println("\ninfo date: " + infoDate);
 				
 				
 				newChannel.setId(item.getId());
@@ -148,15 +146,13 @@ public class YoutubeServiceImpl implements YoutubeService {
 				newChannel.setDescription(item.getSnippet().getDescription());
 				newChannel.setThumbnail(thumbnail.getUrl());
 				newChannel.setPublishedDate(Date.valueOf(publishedDate));
-				newChannel.setVideoCount(item.getStatistics().getVideoCount().intValue());
-				newChannel.setViewCount(item.getStatistics().getViewCount().intValue());
-				if (item.getStatistics().getSubscriberCount() != null) {
-					newChannel.setSubsCount(item.getStatistics().getSubscriberCount().intValue());
-				}
+				newChannel.setVideoCount(item.getStatistics().getVideoCount());
+				newChannel.setViewCount(item.getStatistics().getViewCount());
+				newChannel.setSubsCount(item.getStatistics().getSubscriberCount());
 				newChannel.setInfoDate(Date.valueOf(infoDate));
 				channelDtoList.add(newChannel);
 				
-				System.out.println("Ctgrs:");
+				System.out.println("\nCtgrs:");
 				if (item.getTopicDetails() != null && item.getTopicDetails().getTopicCategories() != null) {
 					ChannelTopicDetails itemTopic = item.getTopicDetails();
 					for (String ctgr : itemTopic.getTopicIds()) {
@@ -171,7 +167,6 @@ public class YoutubeServiceImpl implements YoutubeService {
 						ctgrList.add(newChain);
 					}
 				}
-				System.out.println("\n----------------------------------------------------------------\n");
 			}
 		}
 		
@@ -187,15 +182,16 @@ public class YoutubeServiceImpl implements YoutubeService {
 				}
 			}).setApplicationName("Youtube-connection").build();
 			
-			YouTube.Search.List channelBasics = youtube.search().list("id, snippet");
+			YouTube.Search.List channelBasics = youtube.search().list("id");
 			// api 키 입력
-			channelBasics.setKey("AIzaSyCXiMrdsfLrPLtHRqhS5POORUzqrIK5_74");
+			channelBasics.setKey(apiKeys[0]);
+			//channelBasics.setKey(apiKeys[1]);
 			// 검색어 지정
 			channelBasics.setQ(ctgr);
 			// 검색 결과 채널로 한정
 			channelBasics.setType("channel");
 			// 검색 결과 제목으로 정렬
-			channelBasics.setOrder("videoCount");
+			channelBasics.setOrder("viewCount");
 			// 검색 범위 한국으로 한정
 			channelBasics.setRegionCode("KR");
 			// 토픽 아이디 한정
@@ -215,7 +211,8 @@ public class YoutubeServiceImpl implements YoutubeService {
 			
 			YouTube.Channels.List channelDetails = youtube.channels().list("snippet, statistics, topicDetails");
 			// api 키 입력
-			channelDetails.setKey("AIzaSyCXiMrdsfLrPLtHRqhS5POORUzqrIK5_74");
+			channelDetails.setKey(apiKeys[0]);
+			//channelDetails.setKey(apiKeys[1]);
 			// 국가 한정
 			channelDetails.setHl("ko_kr");
 			channelDetails.setId(idList);

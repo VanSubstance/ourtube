@@ -1,8 +1,7 @@
 package com.my.spring.domain;
 
+import java.math.BigInteger;
 import java.sql.Date;
-
-import com.google.api.client.util.DateTime;
 
 import lombok.*;
 
@@ -14,8 +13,8 @@ public class ChannelDto {
 	private String description;
 	private String thumbnail;
 	private Date publishedDate;
-	private int viewCount;
-	private int videoCount;
-	private int subsCount;
+	private BigInteger viewCount;
+	private BigInteger videoCount;
+	private BigInteger subsCount;
 	private Date infoDate;
 }
