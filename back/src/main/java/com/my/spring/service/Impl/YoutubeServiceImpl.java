@@ -31,7 +31,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 	private static final JsonFactory JSON_FACTORY = new JacksonFactory();
 	private static final long NUMBER_OF_VIDEOS_RETURNED = 10;
 	private static YouTube youtube;
-	private static final String[] apiKeys = {"AIzaSyAE-kTRiIreaTxMsNG6Vg6W39YEv-a89x8", "AIzaSyCXiMrdsfLrPLtHRqhS5POORUzqrIK5_74"}; 
+	private static final String[] apiKeys = {"AIzaSyCXiMrdsfLrPLtHRqhS5POORUzqrIK5_74", "AIzaSyAE-kTRiIreaTxMsNG6Vg6W39YEv-a89x8", "AIzaSyAFdfs807Tl-7PM8tb4ZDOqfC7vKSCSaRg", "AIzaSyAQtHVKj5g7XtkJJh_Ipd5WlifxCOCwzsc"}; 
 	
 	private static void prettyPrint (Iterator<Video> iteratorSearchResults, YoutubeDto youtubeDto) {
 		System.out.println("\n----------------------------------------------------------------");
@@ -75,7 +75,6 @@ public class YoutubeServiceImpl implements YoutubeService {
 			YouTube.Videos.List videos = youtube.videos().list("id,snippet,contentDetails");
 			// API 키 입력
 			videos.setKey(apiKeys[0]);
-			//videos.setKey(apiKeys[1]);
 			// 동영상 id 입력
 			videos.setId("5EXFilTUiko");
 			// 조회 상한선
@@ -184,8 +183,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			
 			YouTube.Search.List channelBasics = youtube.search().list("id");
 			// api 키 입력
-			channelBasics.setKey(apiKeys[0]);
-			//channelBasics.setKey(apiKeys[1]);
+			channelBasics.setKey(apiKeys[3]);
 			// 검색어 지정
 			channelBasics.setQ(ctgr);
 			// 검색 결과 채널로 한정
@@ -211,8 +209,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			
 			YouTube.Channels.List channelDetails = youtube.channels().list("snippet, statistics, topicDetails");
 			// api 키 입력
-			channelDetails.setKey(apiKeys[0]);
-			//channelDetails.setKey(apiKeys[1]);
+			channelDetails.setKey(apiKeys[3]);
 			// 국가 한정
 			channelDetails.setHl("ko_kr");
 			channelDetails.setId(idList);
