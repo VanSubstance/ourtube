@@ -13,9 +13,26 @@
 	
 	<select 
 	id="getCtgrsByChannelId"
-	parameterType="String">
+	parameterType="String"
+	resultType="String">
 		select ctgr from channelctgr
 		where channelid = #{channelId}
+	</select>
+	
+	<select 
+	id="checkExistence"
+	parameterType="String"
+	resultType="String">
+		select title from channel
+		where id = #{channelId}
+	</select>
+	
+	<select 
+	id="checkExistenceChain"
+	parameterType="String"
+	resultType="String">
+		select ctgr from channelctgr
+		where channelId = #{channelId} and ctgr = #{ctgr}
 	</select>
 	
 	<insert 

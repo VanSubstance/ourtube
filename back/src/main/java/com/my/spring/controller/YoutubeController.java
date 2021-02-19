@@ -1,5 +1,6 @@
 package com.my.spring.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class YoutubeController {
 	}
 	
 	@RequestMapping(value = "/channel/{searchVal}", method = RequestMethod.GET)
-	public List<ChannelDto> searchChannelsBySearchVal(@PathVariable String searchVal) {
+	public List<ChannelDto> searchChannelsBySearchVal(@PathVariable String searchVal) throws SQLException {
 		ArrayList<Object> dataset = service.getChannelsBySearchVal(searchVal);
 		List<ChannelDto> channels = (List<ChannelDto>) dataset.get(0);
 		List<ChainChannelDto> chains = (List<ChainChannelDto>) dataset.get(1);
@@ -41,15 +42,15 @@ public class YoutubeController {
 		
 		for (ChannelDto channel : channels) {
 			System.out.println(channel.getTitle());
-			if (!serviceChannel.putChannelInfo(channel)) {
-				System.out.println("Already existed channel.");
+			if (serviceChannel.checkExistence(channel.getId()).size() == 0) {
+				serviceChannel.putChannelInfo(channel);
 			}
 		}
 		
 		for (ChainChannelDto chain : chains) {
 			String ctgrTranslated = serviceBasic.translateCtgrByTopicId(chain.getCtgr());
-			if (!serviceChannel.putChain(chain.getChannelId(), ctgrTranslated)) {
-				System.out.println("Already existed chain.");
+			if (serviceChannel.checkExistenceChain(chain.getChannelId(), ctgrTranslated).size() == 0) {
+				serviceChannel.putChain(chain.getChannelId(), ctgrTranslated);
 			}
 		}
 		return channels;

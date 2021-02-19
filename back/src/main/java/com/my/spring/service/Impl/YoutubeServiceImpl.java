@@ -150,7 +150,9 @@ public class YoutubeServiceImpl implements YoutubeService {
 				newChannel.setPublishedDate(Date.valueOf(publishedDate));
 				newChannel.setVideoCount(item.getStatistics().getVideoCount().intValue());
 				newChannel.setViewCount(item.getStatistics().getViewCount().intValue());
-				newChannel.setSubsCount(item.getStatistics().getSubscriberCount().intValue());
+				if (item.getStatistics().getSubscriberCount() != null) {
+					newChannel.setSubsCount(item.getStatistics().getSubscriberCount().intValue());
+				}
 				newChannel.setInfoDate(Date.valueOf(infoDate));
 				channelDtoList.add(newChannel);
 				

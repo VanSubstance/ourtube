@@ -35,4 +35,14 @@ public class ChannelServiceImpl implements ChannelService{
 		return mapper.putChain(channelId, ctgr);
 	}
 
+	@Override
+	public List<String> checkExistence(String channelId) {
+		return mapper.checkExistence(channelId);
+	}
+
+	@Override
+	public List<String> checkExistenceChain(String channelId, String ctgr) {
+		return mapper.checkExistenceChain(channelId, ctgr);
+	}
+
 }

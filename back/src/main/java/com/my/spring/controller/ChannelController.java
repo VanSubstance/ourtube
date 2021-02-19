@@ -17,8 +17,13 @@ public class ChannelController {
 	@Autowired
 	private ChannelService service;
 	
-	@RequestMapping(value = "/ctgr/{ctgr}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{ctgr}", method = RequestMethod.GET)
 	public List<String> getChannelsByCtgr(@PathVariable String ctgr) {
 		return service.getChannelsByCtgr(ctgr);
+	}
+	
+	@RequestMapping(value = "/id/{channelId}", method = RequestMethod.GET)
+	public List<String> getCtgrsByChannelId(@PathVariable String channelId) {
+		return service.getCtgrsByChannelId(channelId);
 	}
 }
