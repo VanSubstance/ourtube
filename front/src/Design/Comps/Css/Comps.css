@@ -11,14 +11,14 @@
 .keywordListVertical {
     position: relative;
     align-self: center;
-    width: 50%;
-    height: 500px;
+    width: 1500px;
+    height: 250px;
     align-content: center;
 }
 .keywordItemVertical {
     position: relative;
-    width: 80%;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     background-color: rgb(255, 222, 255);
     border: 2px solid rgb(2, 0, 100);
     color: black;

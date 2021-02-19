@@ -99,21 +99,22 @@ class MainPageSimple extends Component {
                 className="mainBackground">
                 <div
                     className="mainBanner">
-                    <a 
-                        href= "http://localhost:3012/">
+                    <a
+                        href="http://localhost:3012/">
                         <img
                             className="bannerImage"
-                            src= "/Ex/ourtubeLogo.PNG">
+                            src="/Ex/ourtubeLogo.PNG">
                         </img>
                     </a>
                 </div>
                 <div
                     className="mainCategoriesBox">
-                        <button
+
+                    {/* <button
                             className = "trendImage">
                                 <d1>TREND</d1>
-                        </button>
-                            
+                        </button> */}
+
                     {/* {
                         this.state.currentType === "트렌드"
                             ? (
@@ -131,12 +132,33 @@ class MainPageSimple extends Component {
                                 </button>s
                             )
                     } */}
+                <div
+                    className="searchBar">
+                    <input
+                        className="searchInput"
+                        placeholder="검색어를 입력하세요"
+                        autoComplete="off"
+                        ref="searchBar"
+                        type="text"
+                        onChange={this.searchTracker} />
+                    <button className = "searchButton" onClick={this.searchCtgr}>
+                        <img
+                            className = "searchButtonImg"
+                            src= "/Ex/searchbutton.png"></img>
+                    </button>
+                </div>
 
-                <input className = "searchBar" ref = "searchBar" type="text" onChange={this.searchTracker} />
-                <button className = "searchButton" onClick={this.searchCtgr}>
-                    <d1>검색</d1>
-                </button>
-                    {
+                    <Link
+                        to={{
+                            pathname: "/trend",
+                            state: {
+                                searchVal: this.state.searchVal
+                            }
+                        }}
+                        className="chartLink"
+                    >Chart View</Link>
+
+                    {/* {
                         this.state.currentType === "트렌드"
                             ? (
                                 <Link
@@ -158,7 +180,7 @@ class MainPageSimple extends Component {
                                     }}
                                 >Chart View</Link>
                             )
-                    }
+                    } */}
 
                 </div>
                 <div
