@@ -52,6 +52,11 @@
 		</foreach>
 	</insert>
 	
+	<insert id="addTagSingle"
+	parameterType="com.my.spring.domain.TagDto">
+		insert into tag (id, tag) values (#{tag.id}, #{tag.tag})
+	</insert>
+	
 	<insert 
 	id="addChainRaw"
 	parameterType="com.my.spring.domain.ChainDto">

@@ -14,6 +14,7 @@ public interface VideoMapper {
 	public int checkExistenceTag(@Param("tag") TagDto tag);
 	public int checkExistenceParent(@Param("video") VideoDto video);
 	public Boolean addTag(Map<String, Object> tags);
+	public Boolean addTagSingle(@Param("tag") TagDto tag);
 	public Boolean addChain(Map<String, Object> chains);
 	public Boolean addChainRaw(@Param("chain") ChainDto chain);
 

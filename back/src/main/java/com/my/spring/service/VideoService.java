@@ -12,6 +12,7 @@ public interface VideoService {
 	public int checkExistenceTag(TagDto tag);
 	public int checkExistenceParent(VideoDto video);
 	public Boolean addTag(Map<String, Object> tags);
+	public Boolean addTagSingle(TagDto tag);
 	public Boolean addChain(Map<String, Object> chains);
 	public Boolean addChainRaw(ChainDto chain);
 

@@ -108,18 +108,16 @@ public class YoutubeController {
 		List<TagDto> tags = (List<TagDto>) dataset.get(2);
 		if (videos.size() != 0) {
 			System.out.print("비디오 리스트 등록 ->");
-			Boolean parent = true;
 			for (VideoDto video : videos) {
 				if (serviceVideo.checkExistence(video.getId()) == 0 && serviceVideo.checkExistenceParent(video) != 0) {
 					System.out.print("o");
 					serviceVideo.addVideo(video);
 				} else {
-					parent = false;
 					System.out.print("x");
 				}
 			}
 			System.out.println(" 완료.\n");
-			if (chains.size() != 0 && parent) {
+			if (chains.size() != 0) {
 				Map<String, Object> paramChains = new HashMap<String, Object>();
 				paramChains.put("chains", chains);
 				System.out.println("체인 등록 -> ");
@@ -128,11 +126,16 @@ public class YoutubeController {
 			} else {
 				System.out.println("체인 없음.");
 			}
-			if (tags.size() != 0 && parent) {
-				Map<String, Object> paramTags = new HashMap<String, Object>();
-				paramTags.put("tags", tags);
-				System.out.println("테그 등록 -> ");
-				serviceVideo.addTag(paramTags);
+			if (tags.size() != 0) {
+				System.out.println("태그 등록 -> " + tags.size() + "개");
+				for (TagDto tag : tags) {
+					System.out.print(",");
+				}
+				System.out.println();
+				for (TagDto tag : tags) {
+					System.out.print(".");
+					serviceVideo.addTagSingle(tag);
+				}
 				System.out.println(" 완료.\n");
 			} else {
 				System.out.println("태그 없음.");

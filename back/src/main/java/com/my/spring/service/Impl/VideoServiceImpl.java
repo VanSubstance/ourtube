@@ -61,4 +61,9 @@ public class VideoServiceImpl implements VideoService {
 		return mapper.checkExistenceParent(video);
 	}
 
+	@Override
+	public Boolean addTagSingle(TagDto tag) {
+		return mapper.addTagSingle(tag);
+	}
+
 }
