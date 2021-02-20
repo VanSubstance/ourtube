@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.TagDto;
+import com.my.spring.domain.VideoDto;
 import com.my.spring.mapper.VideoMapper;
 import com.my.spring.service.VideoService;
 
@@ -16,8 +17,8 @@ public class VideoServiceImpl implements VideoService {
 	private VideoMapper mapper;
 
 	@Override
-	public Boolean addVideo(Map<String, Object> videos) {
-		return mapper.addVideo(videos);
+	public Boolean addVideo(VideoDto video) {
+		return mapper.addVideo(video);
 	}
 
 	@Override
@@ -43,6 +44,21 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	public Boolean addChainRaw(ChainDto chain) {
 		return mapper.addChainRaw(chain);
+	}
+
+	@Override
+	public void cleanChain() {
+		mapper.cleanChain();
+	}
+
+	@Override
+	public void cleanVideo() {
+		mapper.cleanVideo();
+	}
+
+	@Override
+	public int checkExistenceParent(VideoDto video) {
+		return mapper.checkExistenceParent(video);
 	}
 
 }

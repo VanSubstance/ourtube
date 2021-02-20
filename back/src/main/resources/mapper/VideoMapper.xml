@@ -5,23 +5,16 @@
 	
 	<insert 
 	id="addVideo"
-	parameterType="java.util.Map">
-		<foreach collection="videos"
-		item = "video"
-		index = "index"
-		separator=" "
-		open = "insert all"
-		close="select * from dual">
-			into video (
-			id, title, thumbnail, description,
-			publisheddate, viewcount, likecount,
-			dislikecount, favoritecount, commentcount, infodate, channelid
-			) values (
-			#{video.id}, #{video.title}, #{video.thumbnail}, #{video.description},
-			#{video.publishedDate}, #{video.viewCount}, #{video.likeCount}, 
-			#{video.dislikeCount}, #{video.favoriteCount}, #{video.commentCount}, #{video.infoDate},  #{video.channelId}
-			)
-		</foreach>
+	parameterType="com.my.spring.domain.VideoDto">
+		insert into video (
+		id, title, thumbnail, description,
+		publisheddate, viewcount, likecount,
+		dislikecount, favoritecount, commentcount, infodate, channelid
+		) values (
+		#{video.id}, #{video.title}, #{video.thumbnail}, #{video.description},
+		#{video.publishedDate}, #{video.viewCount}, #{video.likeCount}, 
+		#{video.dislikeCount}, #{video.favoriteCount}, #{video.commentCount}, #{video.infoDate},  #{video.channelId}
+		)
 	</insert>
 	
 	
@@ -31,6 +24,10 @@
 	resultType="Int">
 		select count(*) from video
 		where id = #{id}
+	</select>
+	
+	<select id="checkExistenceParent" parameterType="com.my.spring.domain.VideoDto" resultType="Int">
+		select count(*) from channel where id = #{video.channelId} and infoDate = #{video.infoDate}
 	</select>
 	
 	<select 
@@ -79,4 +76,19 @@
 		</foreach>
 	</insert>
 	
+	<delete id="cleanChain">
+		<![CDATA[
+		delete from chainvideo
+		where id 
+		in (select id from video where viewcount <= 5000 or commentcount <= 10)
+		]]>
+	</delete>
+	
+	<delete id="cleanVideo">
+		<![CDATA[
+		delete from video
+		where
+		viewcount <= 5000 or commentcount <= 10
+		]]>
+	</delete>
 </mapper>

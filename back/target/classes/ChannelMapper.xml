@@ -19,12 +19,19 @@
 		where id = #{channelId}
 	</select>
 	
+	<select
+	id = "getChannelIdsByDate"
+	parameterType="java.sql.Date"
+	resultType="String">
+		select id from channel where infodate = #{date};
+	</select>
+	
 	<select 
 	id="checkExistence"
-	parameterType="String"
+	parameterType="com.my.spring.domain.ChannelDto"
 	resultType="String">
 		select title from channel
-		where id = #{channelId}
+		where id = #{channel.id} and infodate = #{channel.infoDate}
 	</select>
 	
 	<insert 
@@ -62,5 +69,22 @@
 		</foreach>
 	</insert>
 	
+	<delete id="cleanChain">
+		<![CDATA[
+		delete from chainchannel
+		where id 
+		in (select id from channel where videocount <= 100 or viewcount <= 10000 or subscount <= 1000)
+		]]>
+	</delete>
+	
+	<delete id="cleanChannel">
+		<![CDATA[
+		delete from channel
+		where
+		videocount <= 100
+		or viewcount <= 10000
+		or subscount <= 1000
+		]]>
+	</delete>
 	
 </mapper>

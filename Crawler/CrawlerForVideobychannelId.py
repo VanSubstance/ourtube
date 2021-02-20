@@ -16,7 +16,7 @@ for ctgr in ctgrs:
     ctgr = ctgr.replace("\r", "")
     ctgr = ctgr.replace("\n", "")
     print(ctgr)
-    if i >= 0:
+    if i >= 2:
         driver = webdriver.Chrome('chromedriver')
         driver.get(baseUrl + ctgr)
         driver.close()

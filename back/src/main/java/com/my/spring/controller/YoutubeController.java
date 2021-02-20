@@ -36,7 +36,7 @@ public class YoutubeController {
 	@Autowired
 	public YoutubeController(final YoutubeService service) {
 		this.service = service;
-	}
+	}	
 
 	@RequestMapping(value = "/ctgr/{ctgr}", method = RequestMethod.GET)
 	public List<ChannelDto> putChannelInfoByCtgr(@PathVariable String ctgr) {
@@ -57,7 +57,7 @@ public class YoutubeController {
 			// 채널 등록
 			System.out.print("채널 등록 -> ");
 			for (ChannelDto channel : channels) {
-				if (serviceChannel.checkExistence(channel.getId()).size() == 0) {
+				if (serviceChannel.checkExistence(channel).size() == 0) {
 					System.out.print("o");
 					serviceChannel.putChannelInfo(channel);
 				} else {
@@ -79,6 +79,7 @@ public class YoutubeController {
 			System.out.println(" 완료");
 
 			// 카테고리들간의 relation 등록
+			System.out.print("ctgrRelation 등록 -> ");
 			for (ChainDto chain : chains) {
 				if (!chain.getCtgr().equals(ctgr)) {
 					System.out.print("o");
@@ -88,9 +89,13 @@ public class YoutubeController {
 				}
 			}
 			System.out.println(" 완료");
-			System.out.println(ctgr
-					+ " 채널 검색 / 등록 종료\n----------------------------------------\n----------------------------------------\n");
+			
+//			// 기준 미달 데이터 삭제
+//			serviceChannel.cleanChain();
+//			serviceChannel.cleanChannel();
 		}
+		System.out.println(ctgr
+				+ " 채널 검색 / 등록 종료\n----------------------------------------\n----------------------------------------\n");
 		return channels;
 	}
 
@@ -101,25 +106,42 @@ public class YoutubeController {
 		List<VideoDto> videos = (List<VideoDto>) dataset.get(0);
 		List<ChainDto> chains = (List<ChainDto>) dataset.get(1);
 		List<TagDto> tags = (List<TagDto>) dataset.get(2);
-
-		Map<String, Object> paramVideos = new HashMap<String, Object>();
-		paramVideos.put("videos", videos);
-		System.out.print("비디오 리스트 등록 ->");
-		System.out.println(paramVideos.toString());
-		serviceVideo.addVideo(paramVideos);
-		System.out.println(" 완료.\n");
-
-		Map<String, Object> paramChains = new HashMap<String, Object>();
-		paramChains.put("chains", chains);
-		System.out.println("체인 등록 -> ");
-		serviceVideo.addChain(paramChains);
-		System.out.println(" 완료.\n");
-		
-		Map<String, Object> paramTags = new HashMap<String, Object>();
-		paramTags.put("tags", tags);
-		System.out.println("테그 등록 -> ");
-		serviceVideo.addTag(paramTags);
-		System.out.println(" 완료.\n");
+		if (videos.size() != 0) {
+			System.out.print("비디오 리스트 등록 ->");
+			Boolean parent = true;
+			for (VideoDto video : videos) {
+				if (serviceVideo.checkExistence(video.getId()) == 0 && serviceVideo.checkExistenceParent(video) != 0) {
+					System.out.print("o");
+					serviceVideo.addVideo(video);
+				} else {
+					parent = false;
+					System.out.print("x");
+				}
+			}
+			System.out.println(" 완료.\n");
+			if (chains.size() != 0 && parent) {
+				Map<String, Object> paramChains = new HashMap<String, Object>();
+				paramChains.put("chains", chains);
+				System.out.println("체인 등록 -> ");
+				serviceVideo.addChain(paramChains);
+				System.out.println(" 완료.\n");
+			} else {
+				System.out.println("체인 없음.");
+			}
+			if (tags.size() != 0 && parent) {
+				Map<String, Object> paramTags = new HashMap<String, Object>();
+				paramTags.put("tags", tags);
+				System.out.println("테그 등록 -> ");
+				serviceVideo.addTag(paramTags);
+				System.out.println(" 완료.\n");
+			} else {
+				System.out.println("태그 없음.");
+			}
+//			serviceVideo.cleanChain();
+//			serviceVideo.cleanVideo();
+		}
+		System.out.println(channelId
+				+ " 동영상 검색 / 등록 종료\n----------------------------------------\n----------------------------------------\n");
 
 		return videos;
 	}

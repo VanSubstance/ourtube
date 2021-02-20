@@ -1,5 +1,6 @@
 package com.my.spring.service.Impl;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -34,8 +35,8 @@ public class ChannelServiceImpl implements ChannelService{
 
 
 	@Override
-	public List<String> checkExistence(String channelId) {
-		return mapper.checkExistence(channelId);
+	public List<String> checkExistence(ChannelDto channel) {
+		return mapper.checkExistence(channel);
 	}
 
 	@Override
@@ -46,5 +47,20 @@ public class ChannelServiceImpl implements ChannelService{
 	@Override
 	public Boolean addChainRaw(ChainDto chain) {
 		return mapper.addChainRaw(chain);
+	}
+
+	@Override
+	public void cleanChain() {
+		mapper.cleanChain();
+	}
+
+	@Override
+	public void cleanChannel() {
+		mapper.cleanChannel();
+	}
+
+	@Override
+	public List<String> getChannelIdsByDate(Date date) {
+		return mapper.getChannelIdsByDate(date);
 	}
 }

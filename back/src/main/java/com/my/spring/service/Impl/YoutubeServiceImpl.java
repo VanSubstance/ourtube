@@ -36,8 +36,13 @@ public class YoutubeServiceImpl implements YoutubeService {
 	private static YouTube youtube;
 	private static final String[] apiKeys = {"AIzaSyDmY56rONS-hcNqXGFxYc9vgVeGSk0YeSc", 
 			"AIzaSyAE-kTRiIreaTxMsNG6Vg6W39YEv-a89x8", "AIzaSyAFdfs807Tl-7PM8tb4ZDOqfC7vKSCSaRg", 
-			"AIzaSyAQtHVKj5g7XtkJJh_Ipd5WlifxCOCwzsc", "AIzaSyCXiMrdsfLrPLtHRqhS5POORUzqrIK5_74"}; 
-
+			"AIzaSyAQtHVKj5g7XtkJJh_Ipd5WlifxCOCwzsc", "AIzaSyCXiMrdsfLrPLtHRqhS5POORUzqrIK5_74",
+			"AIzaSyC3AOXf-KO5m0vhucrB0nsI1w1PLw55StM", "AIzaSyDk3PSC2kj8oxTLvgFX57i49jUxljUApMI",
+			"AIzaSyB1SWSCbjYnrjSu4eZ4q5IWnjQ3XMxa0L4", "AIzaSyBJfPmakS-n7iOVvCSOSoDRPz6_Eglu1As",
+			"AIzaSyD4gF7sd48M26hJ0ci_rf52FgPdf8acA7k", "AIzaSyAC67nCWFmjqtw_LJOGuhHxfzLC-Chsndo",
+			"AIzaSyBwzty52oeAL9pLGhC33YPh5eDg8YOL0GU", "AIzaSyBA5i1cy-bawh4fC3QZJCcPlN994RL2prY",
+			"AIzaSyADgD5vbc9jfBiK-IGXpmFct6pU2UbYVts", ""}; 
+	private static final int api = 10;
 	// 채널 id 리스트 저장
 	private static void getChannelList(Iterator<SearchResult> searchResults, List<String> channelIdList) {
 		
@@ -71,16 +76,16 @@ public class YoutubeServiceImpl implements YoutubeService {
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 				String infoDate = dateFormat.format(Calendar.getInstance().getTime());
 				
-				System.out.println("\nId: " + item.getId());
-				System.out.println("\nTitle: " + item.getSnippet().getTitle());
-				System.out.println("\nThumbnail: " + thumbnail.getUrl());
-				System.out.println("\nDescription: " + item.getSnippet().getDescription());
-				System.out.println("\nPublished date: " + publishedDate);
-				System.out.println("\nStatistics:");
-				System.out.println("\tViews: " + item.getStatistics().getViewCount());
-				System.out.println("\tSubs: " + item.getStatistics().getSubscriberCount());
-				System.out.println("\tVideos: " + item.getStatistics().getVideoCount());
-				System.out.println("\ninfo date: " + infoDate);
+//				System.out.println("\nId: " + item.getId());
+//				System.out.println("\nTitle: " + item.getSnippet().getTitle());
+//				System.out.println("\nThumbnail: " + thumbnail.getUrl());
+//				System.out.println("\nDescription: " + item.getSnippet().getDescription());
+//				System.out.println("\nPublished date: " + publishedDate);
+//				System.out.println("\nStatistics:");
+//				System.out.println("\tViews: " + item.getStatistics().getViewCount());
+//				System.out.println("\tSubs: " + item.getStatistics().getSubscriberCount());
+//				System.out.println("\tVideos: " + item.getStatistics().getVideoCount());
+//				System.out.println("\ninfo date: " + infoDate);
 				
 				
 				newChannel.setId(item.getId());
@@ -94,13 +99,13 @@ public class YoutubeServiceImpl implements YoutubeService {
 				newChannel.setInfoDate(Date.valueOf(infoDate));
 				channelDtoList.add(newChannel);
 				
-				System.out.println("\nCtgrs:");
+//				System.out.println("\nCtgrs:");
 				if (item.getTopicDetails() != null && item.getTopicDetails().getTopicCategories() != null) {
 					ChannelTopicDetails itemTopic = item.getTopicDetails();
 					for (String ctgr : itemTopic.getTopicIds()) {
 						String[] temp = ctgr.split("/");
 						ctgr = temp[temp.length - 1];
-						System.out.println("\t" + ctgr);
+//						System.out.println("\t" + ctgr);
 						// 새 체인 생성
 						ChainDto newChain = new ChainDto();
 						newChain.setId(item.getId());
@@ -115,8 +120,8 @@ public class YoutubeServiceImpl implements YoutubeService {
 	}	
 	// Advanced 카테고리 검색 -> 카테고리 + 채널 + 채널 카테고리 ~ Advanced 카테고리 체인 정보 저장
 	@Override
-	public ArrayList<Object> getChannelsBySearchVal(String ctgr) {
-		String apiKeyCurrnet = apiKeys[4];
+	public ArrayList<Object> getChannelsBySearchVal(String ctgr) { 
+		String apiKeyCurrnet = apiKeys[api];
 		List<ChannelDto> channelDtoList = new ArrayList<ChannelDto>();
 		List<ChainDto> ctgrList = new ArrayList<ChainDto>();
 		try {
@@ -208,19 +213,19 @@ public class YoutubeServiceImpl implements YoutubeService {
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 				String infoDate = dateFormat.format(Calendar.getInstance().getTime());
 				
-				System.out.println("\nId: " + item.getId());
-				System.out.println("\nTitle: " + item.getSnippet().getTitle());
-				System.out.println("\nThumbnail: " + thumbnail.getUrl());
-				System.out.println("\nDescription: " + item.getSnippet().getDescription());
-				System.out.println("\nPublished date: " + publishedDate);
-				System.out.println("\nStatistics:");
-				System.out.println("\tViews: " + item.getStatistics().getViewCount());
-				System.out.println("\tLikes: " + item.getStatistics().getLikeCount());
-				System.out.println("\tDislikes: " + item.getStatistics().getDislikeCount());
-				System.out.println("\tFavorites: " + item.getStatistics().getFavoriteCount());
-				System.out.println("\tComments: " + item.getStatistics().getCommentCount());
-				System.out.println("\ninfo date: " + infoDate);
-				System.out.println("\nCategoryId: " + item.getSnippet().getCategoryId());
+//				System.out.println("\nId: " + item.getId());
+//				System.out.println("\nTitle: " + item.getSnippet().getTitle());
+//				System.out.println("\nThumbnail: " + thumbnail.getUrl());
+//				System.out.println("\nDescription: " + item.getSnippet().getDescription());
+//				System.out.println("\nPublished date: " + publishedDate);
+//				System.out.println("\nStatistics:");
+//				System.out.println("\tViews: " + item.getStatistics().getViewCount());
+//				System.out.println("\tLikes: " + item.getStatistics().getLikeCount());
+//				System.out.println("\tDislikes: " + item.getStatistics().getDislikeCount());
+//				System.out.println("\tFavorites: " + item.getStatistics().getFavoriteCount());
+//				System.out.println("\tComments: " + item.getStatistics().getCommentCount());
+//				System.out.println("\ninfo date: " + infoDate);
+//				System.out.println("\nCategoryId: " + item.getSnippet().getCategoryId());
 				
 				// 새 체인 생성
 				ChainDto newChain = new ChainDto();
@@ -243,11 +248,11 @@ public class YoutubeServiceImpl implements YoutubeService {
 				newVideo.setChannelId(item.getSnippet().getChannelId());
 				videoDtoList.add(newVideo);
 				
-				System.out.println("\nTags:");
+//				System.out.println("\nTags:");
 				if (item.getSnippet().getTags() != null) {
 					List<String> itemTags = item.getSnippet().getTags();
 					for (String tag : itemTags) {
-						System.out.println("\t" + tag);
+//						System.out.println("\t" + tag);
 						TagDto newTag = new TagDto();
 						newTag.setId(item.getId());
 						newTag.setTag(tag);
@@ -261,7 +266,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 	
 	@Override
 	public ArrayList<Object> getVideosByChannelId(String channelId) {
-		String apiKeyCurrnet = apiKeys[4];
+		String apiKeyCurrnet = apiKeys[api];
 		List<VideoDto> videoDtoList = new ArrayList<VideoDto>();
 		List<TagDto> tags = new ArrayList<TagDto>();
 		List<ChainDto> chains = new ArrayList<ChainDto>();
@@ -300,7 +305,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			videoDetails.setKey(apiKeyCurrnet);
 			// 국가 한정
 			videoDetails.setHl("ko_kr");
-			System.out.println(idList);
+//			System.out.println(idList);
 			videoDetails.setId(idList);
 			List<Video> videoListDetail = videoDetails.execute().getItems();
 			if (videoListDetail != null) {
