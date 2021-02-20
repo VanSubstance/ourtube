@@ -15,4 +15,6 @@ public interface BasicMapper {
 	
 	public Boolean addCtgr(@Param("ctgr") String ctgr);
 	public Boolean addCtgrRelation(@Param("parent") String parent, @Param("title") String title);
+
+	public List<String> checkExistenceChain(@Param("id") String id, @Param("ctgr") String ctgr);
 }

@@ -4,7 +4,7 @@ import lombok.*;
 
 @Getter
 @Setter
-public class ChainChannelDto {
-	private String channelId;
+public class ChainDto {
+	private String id;
 	private String ctgr;
 }

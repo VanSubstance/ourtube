@@ -13,4 +13,6 @@ public interface BasicService {
 	
 	public Boolean addCtgr(String ctgr);
 	public Boolean addCtgrRelation(String parent, String title);
+
+	public List<String> checkExistenceChain(String id, String ctgr);
 }

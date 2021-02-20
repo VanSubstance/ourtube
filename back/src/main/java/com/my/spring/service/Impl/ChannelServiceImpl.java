@@ -1,10 +1,12 @@
 package com.my.spring.service.Impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.ChannelDto;
 import com.my.spring.mapper.ChannelMapper;
 import com.my.spring.service.ChannelService;
@@ -30,10 +32,6 @@ public class ChannelServiceImpl implements ChannelService{
 		return mapper.putChannelInfo(data);
 	}
 
-	@Override
-	public Boolean putChain(String channelId, String ctgr) {
-		return mapper.putChain(channelId, ctgr);
-	}
 
 	@Override
 	public List<String> checkExistence(String channelId) {
@@ -41,8 +39,12 @@ public class ChannelServiceImpl implements ChannelService{
 	}
 
 	@Override
-	public List<String> checkExistenceChain(String channelId, String ctgr) {
-		return mapper.checkExistenceChain(channelId, ctgr);
+	public Boolean addChain(Map<String, Object> chains) {
+		return mapper.addChain(chains);
 	}
 
+	@Override
+	public Boolean addChainRaw(ChainDto chain) {
+		return mapper.addChainRaw(chain);
+	}
 }

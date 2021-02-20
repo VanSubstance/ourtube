@@ -7,16 +7,16 @@
 	id="getChannelsByCtgr"
 	parameterType="String"
 	resultType="String">
-		select A.title from channel A, channelctgr B
-		where B.ctgr = #{ctgr} and A.id = B.channelid
+		select A.title from channel A, chainchannel B
+		where B.ctgr = #{ctgr} and A.id = B.id
 	</select>
 	
 	<select 
 	id="getCtgrsByChannelId"
 	parameterType="String"
 	resultType="String">
-		select ctgr from channelctgr
-		where channelid = #{channelId}
+		select ctgr from chainchannel
+		where id = #{channelId}
 	</select>
 	
 	<select 
@@ -25,14 +25,6 @@
 	resultType="String">
 		select title from channel
 		where id = #{channelId}
-	</select>
-	
-	<select 
-	id="checkExistenceChain"
-	parameterType="String"
-	resultType="String">
-		select ctgr from channelctgr
-		where channelId = #{channelId} and ctgr = #{ctgr}
 	</select>
 	
 	<insert 
@@ -47,12 +39,27 @@
 	</insert>
 	
 	<insert 
-	id="putChain"
-	parameterType="String">
-		insert into channelctgr (
-		channelid, ctgr)
+	id="addChainRaw"
+	parameterType="com.my.spring.domain.ChainDto">
+		insert into chainchannel (
+		id, ctgr)
 		values (
-		#{channelId}, #{ctgr})
+		#{chain.id}, #{chain.ctgr})
+	</insert>
+	
+	<insert id="addChain"
+	parameterType="java.util.Map">
+		<foreach 
+		collection="chains"
+		item = "chain"
+		index = "index"
+		separator=" "
+		open = "insert all"
+		close="select * from dual">
+			into chainchannel (id, ctgr) values (
+			#{chain.id}, (select title from ctgrdictionary where code = #{chain.ctgr})
+			)
+		</foreach>
 	</insert>
 	
 	

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper
+	namespace = "com.my.spring.mapper.VideoMapper">
+	
+	<insert 
+	id="addVideo"
+	parameterType="java.util.Map">
+		<foreach collection="videos"
+		item = "video"
+		index = "index"
+		separator=" "
+		open = "insert all"
+		close="select * from dual">
+			into video (
+			id, title, thumbnail, description,
+			publisheddate, viewcount, likecount,
+			dislikecount, favoritecount, commentcount, infodate, channelid
+			) values (
+			#{video.id}, #{video.title}, #{video.thumbnail}, #{video.description},
+			#{video.publishedDate}, #{video.viewCount}, #{video.likeCount}, 
+			#{video.dislikeCount}, #{video.favoriteCount}, #{video.commentCount}, #{video.infoDate},  #{video.channelId}
+			)
+		</foreach>
+	</insert>
+	
+	
+	<select 
+	id="checkExistence"
+	parameterType="String"
+	resultType="Int">
+		select count(*) from video
+		where id = #{id}
+	</select>
+	
+	<select 
+	id="checkExistenceTag"
+	parameterType="com.my.spring.domain.TagDto"
+	resultType="Int">
+		select count(*) from tag
+		where id = #{tag.id} and tag = #{tag.tag}
+	</select>
+	
+	<insert 
+	id="addTag"
+	parameterType="java.util.Map">
+		<foreach 
+		collection="tags"
+		item = "tag"
+		index = "index"
+		separator=" "
+		open = "insert all"
+		close="select * from dual">
+			into tag (id, tag) values (#{tag.id}, #{tag.tag})
+		</foreach>
+	</insert>
+	
+	<insert 
+	id="addChainRaw"
+	parameterType="com.my.spring.domain.ChainDto">
+		insert into chainvideo (
+		id, ctgr)
+		values (
+		#{chain.id}, #{chain.ctgr})
+	</insert>
+	
+	<insert id="addChain"
+	parameterType="java.util.Map">
+		<foreach 
+		collection="chains"
+		item = "chain"
+		index = "index"
+		separator=" "
+		open = "insert all"
+		close="select * from dual">
+			into chainvideo (id, ctgr) values (
+			#{chain.id}, (select title from ctgrdictionary where code = #{chain.ctgr})
+			)
+		</foreach>
+	</insert>
+	
+</mapper>

@@ -45,4 +45,9 @@ public class BasicServiceImpl implements BasicService {
 		return mapper.translateCtgrByTopicId(topicId);
 	}
 
+	@Override
+	public List<String> checkExistenceChain(String id, String ctgr) {
+		return mapper.checkExistenceChain(id, ctgr);
+	}
+
 }

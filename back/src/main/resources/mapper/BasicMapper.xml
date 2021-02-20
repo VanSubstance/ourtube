@@ -45,7 +45,16 @@
 	<insert 
 	id="addCtgrRelation"
 	parameterType="String">
-		insert into ctgrRelation (parent, title) values (#{parent}, #{title})
+		insert into ctgrRelation (parent, title) 
+		values (#{parent}, (select title from ctgrdictionary where code = #{title}))
 	</insert>
+	
+	<select 
+	id="checkExistenceChain"
+	parameterType="String"
+	resultType="String">
+		select ctgr from chain
+		where id = #{id} and ctgr = #{ctgr}
+	</select>
 	
 </mapper>
