@@ -16,7 +16,7 @@ for video in videos:
     if video != "":
         print(i, "----------")
         print(video)
-        if i >= 38:
+        if i >= 87:
             driver = webdriver.Chrome('chromedriver')
             driver.get(baseUrl + video)
             driver.close()

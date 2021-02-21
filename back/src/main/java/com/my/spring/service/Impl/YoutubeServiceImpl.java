@@ -44,7 +44,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			"AIzaSyD4gF7sd48M26hJ0ci_rf52FgPdf8acA7k", "AIzaSyAC67nCWFmjqtw_LJOGuhHxfzLC-Chsndo",
 			"AIzaSyBwzty52oeAL9pLGhC33YPh5eDg8YOL0GU", "AIzaSyBA5i1cy-bawh4fC3QZJCcPlN994RL2prY",
 			"AIzaSyADgD5vbc9jfBiK-IGXpmFct6pU2UbYVts", "" };
-	private static final int api = 1;
+	private static final int api = 3;
 
 	// 채널 id 리스트 저장
 	private static void getChannelList(Iterator<SearchResult> searchResults, List<String> channelIdList) {
