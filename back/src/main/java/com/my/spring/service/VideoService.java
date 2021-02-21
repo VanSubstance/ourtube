@@ -1,5 +1,6 @@
 package com.my.spring.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.my.spring.domain.ChainDto;
@@ -18,4 +19,6 @@ public interface VideoService {
 
 	public void cleanChain();
 	public void cleanVideo();
+
+	public List<String> getVideoIdsByChannelId(String id);
 }

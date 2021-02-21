@@ -1,5 +1,6 @@
 package com.my.spring.service.Impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +65,11 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	public Boolean addTagSingle(TagDto tag) {
 		return mapper.addTagSingle(tag);
+	}
+
+	@Override
+	public List<String> getVideoIdsByChannelId(String id) {
+		return mapper.getVideoIdsByChannelId(id);
 	}
 
 }

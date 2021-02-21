@@ -87,4 +87,8 @@
 		]]>
 	</delete>
 	
+	<select id="getChannelIdsByCtgr" parameterType="String" resultType="String">
+		select id from (select b.id from chainchannel b
+		where b.ctgr = #{ctgr}) group by id
+	</select>
 </mapper>

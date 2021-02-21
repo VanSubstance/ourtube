@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.my.spring.domain.*;
 import com.my.spring.service.BasicService;
 import com.my.spring.service.ChannelService;
+import com.my.spring.service.CommentService;
 import com.my.spring.service.VideoService;
 import com.my.spring.service.YoutubeService;
 
@@ -32,6 +33,9 @@ public class YoutubeController {
 
 	@Autowired
 	private VideoService serviceVideo;
+	
+	@Autowired
+	private CommentService serviceComment;
 
 	@Autowired
 	public YoutubeController(final YoutubeService service) {
@@ -148,4 +152,23 @@ public class YoutubeController {
 
 		return videos;
 	}
+	
+	@RequestMapping(value = "/comment/{videoId}", method = RequestMethod.GET)
+	public List<CommentDto> getCommentsByVideoId(@PathVariable String videoId) {
+		ArrayList<Object> result = service.getCommentsByVideoId(videoId);
+		List<CommentDto> comments = (List<CommentDto>) result.get(0);
+		
+		System.out.println("video id: " + videoId);
+		System.out.println("댓글 등록 ->");
+		for (CommentDto comment : comments) {
+			if (serviceComment.checkExistence(comment.getId()) == 0) {
+				System.out.print("|");
+				serviceComment.addCommentSingle(comment);
+			}
+		}
+		System.out.println("\n완료.");
+		
+		return comments;
+	}
+	
 }

@@ -96,4 +96,10 @@
 		viewcount <= 5000 or commentcount <= 10
 		]]>
 	</delete>
+		
+	<select id="getVideoIdsByChannelId" parameterType="String" resultType="String">
+		select b.id from video b
+		where b.channelid = #{id}
+	</select>
+	
 </mapper>

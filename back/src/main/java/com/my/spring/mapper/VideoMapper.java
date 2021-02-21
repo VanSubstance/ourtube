@@ -1,5 +1,6 @@
 package com.my.spring.mapper;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
@@ -20,4 +21,6 @@ public interface VideoMapper {
 
 	public void cleanChain();
 	public void cleanVideo();
+	
+	public List<String> getVideoIdsByChannelId(@Param("id") String id);
 }

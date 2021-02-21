@@ -18,4 +18,6 @@ public interface ChannelService {
 
 	public void cleanChain();
 	public void cleanChannel();
+	
+	public List<String> getChannelIdsByCtgr(String ctgr);
 }

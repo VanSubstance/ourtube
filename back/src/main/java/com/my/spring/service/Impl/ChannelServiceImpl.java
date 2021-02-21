@@ -63,4 +63,9 @@ public class ChannelServiceImpl implements ChannelService{
 	public List<String> getChannelIdsByDate(Date date) {
 		return mapper.getChannelIdsByDate(date);
 	}
+
+	@Override
+	public List<String> getChannelIdsByCtgr(String ctgr) {
+		return mapper.getChannelIdsByCtgr(ctgr);
+	}
 }

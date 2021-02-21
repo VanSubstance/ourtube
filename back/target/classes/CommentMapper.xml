@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper
+	namespace = "com.my.spring.mapper.CommentMapper">
+	
+	<select id = "checkExistence" parameterType="String" resultType="int">
+		select count(*) from comments where id = #{id}
+	</select>
+	
+	<insert id="addCommentSingle" parameterType="com.my.spring.domain.CommentDto">
+		insert into comments (id, name, text, videoid, likecount, publisheddate)
+		values (#{item.id}, #{item.name}, #{item.text}, #{item.videoId}, #{item.likeCount}, #{item.publishedDate})
+	</insert>
+	
+	<select id="getCommentTextsByVideoId" parameterType="String" resultType="String">
+		select text from comments where videoid = #{id}
+	</select>
+	
+</mapper>

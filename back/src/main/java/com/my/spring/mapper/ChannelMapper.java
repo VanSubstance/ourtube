@@ -20,4 +20,6 @@ public interface ChannelMapper {
 	
 	public void cleanChain();
 	public void cleanChannel();
+	
+	public List<String> getChannelIdsByCtgr(@Param("ctgr") String ctgr);
 }

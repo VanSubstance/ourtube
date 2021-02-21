@@ -10,4 +10,6 @@ public interface YoutubeService {
 	public ArrayList<Object> getChannelsBySearchVal(String ctgr);
 	
 	public ArrayList<Object> getVideosByChannelId(String channelId);
+	
+	public ArrayList<Object> getCommentsByVideoId(String videoId);
 }
