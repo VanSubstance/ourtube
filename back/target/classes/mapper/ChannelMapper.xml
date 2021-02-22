@@ -2,93 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper
 	namespace = "com.my.spring.mapper.ChannelMapper">
-	
-	<select 
-	id="getChannelsByCtgr"
-	parameterType="String"
-	resultType="String">
-		select A.title from channel A, chainchannel B
-		where B.ctgr = #{ctgr} and A.id = B.id
-	</select>
-	
-	<select 
-	id="getCtgrsByChannelId"
-	parameterType="String"
-	resultType="String">
-		select ctgr from chainchannel
-		where id = #{channelId}
-	</select>
-	
-	<select
-	id = "getChannelIdsByDate"
-	parameterType="java.sql.Date"
-	resultType="String">
-		select id from channel where infodate = #{date};
-	</select>
-	
-	<select 
-	id="checkExistence"
-	parameterType="com.my.spring.domain.ChannelDto"
-	resultType="String">
-		select title from channel
-		where id = #{channel.id} and infodate = #{channel.infoDate}
-	</select>
-	
-	<insert 
-	id="putChannelInfo"
-	parameterType="com.my.spring.domain.ChannelDto">
-		insert into channel (
-		id, title, thumbnail, description, publisheddate, 
-		videocount, viewcount, subscount, infodate) 
-		values (
-		#{data.id}, #{data.title}, #{data.thumbnail}, #{data.description}, #{data.publishedDate}, 
-		#{data.videoCount}, #{data.viewCount}, #{data.subsCount}, #{data.infoDate})
-	</insert>
-	
-	<insert 
-	id="addChainRaw"
-	parameterType="com.my.spring.domain.ChainDto">
-		insert into chainchannel (
-		id, ctgr)
-		values (
-		#{chain.id}, #{chain.ctgr})
-	</insert>
-	
-	<insert id="addChain"
-	parameterType="java.util.Map">
-		<foreach 
-		collection="chains"
-		item = "chain"
-		index = "index"
-		separator=" "
-		open = "insert all"
-		close="select * from dual">
-			into chainchannel (id, ctgr) values (
-			#{chain.id}, (select title from ctgrdictionary where code = #{chain.ctgr})
-			)
-		</foreach>
-	</insert>
-	
-	<delete id="cleanChain">
-		<![CDATA[
-		delete from chainchannel
-		where id 
-		in (select id from channel where videocount <= 100 or viewcount <= 10000 or subscount <= 1000)
-		]]>
-	</delete>
-	
-	<delete id="cleanChannel">
-		<![CDATA[
-		delete from channel
-		where
-		videocount <= 100
-		or viewcount <= 10000
-		or subscount <= 1000
-		]]>
-	</delete>
-	
 	<select id="getChannelIdsByCtgr" parameterType="String" resultType="String">
-		select id from (select b.id from chainchannel b
-		where b.ctgr = #{ctgr}) group by id
+		select a.id from channel a, chainchannel b where a.id = b.id and b.ctgr = #{ctgr}
+	</select>
+	<select id="getChannelIdsForStatisticsByCtgr" parameterType="String" resultType="String">
+		select a.id from channel a, chainchannel b 
+		where a.id = b.id and b.ctgr = #{ctgr} and 
+		a.id not in (select id from channelStatistics where infoDate = TO_DATE(SYSDATE, 'YY/MM/DD'))
+	</select>
+	<insert id="setChannelInfo" parameterType="com.my.spring.domain.ChannelDto">
+		insert into channel (id, title, thumbnail, description, publisheddate)
+		values (#{item.id}, #{item.title}, #{item.thumbnail}, #{item.description}, #{item.publishedDate})
+	</insert>
+	<insert id="setChannelChain" parameterType="com.my.spring.domain.ChainDto">
+		insert into chainchannel (id, ctgr)
+		values (#{item.id}, (select title from ctgrdictionary where code = #{chain.ctgr}))
+	</insert>
+	<insert id="setChannelStatistics" parameterType="com.my.spring.domain.ChannelStatDto">
+		insert into channelStatistics (id, infodate, videocount, viewcount, subscount)
+		values (#{item.id}, #{item.infoDate}, #{item.videoCount}, #{item.viewCount}, #{item.subsCount})
+	</insert>
+	<select id="checkChannelInfo" parameterType="String" resultType="Int">
+		select count(*) from channel where id = #{id}
+	</select>
+	<select id="checkChannelStatistics" parameterType="com.my.spring.domain.ChannelStatDto" resultType="Int">
+		select count(*) from channelstatistics where id = #{item.id} and infodate = #{item.infoDate}
+	</select>
+	<select id="checkChannelChain" parameterType="com.my.spring.domain.ChannelDto" resultType="Int">
+		select count(*) from chainchannel a, ctgrdictionary b where a.id = #{item.id} and a.ctgr = b.ctgr and b.code = #{item.ctgr}
 	</select>
 </mapper>

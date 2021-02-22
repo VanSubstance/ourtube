@@ -6,7 +6,7 @@ import pandas as pd
 
 path = 'advCtgr.csv'
 file_result = open(path, 'r', newline='')
-baseUrl = 'http://222.232.15.205:8082/ytb/ctgr/'
+baseUrl = 'http://222.232.15.205:8082/patch/ctgr/'
 
 ctgrs = list(file_result)
 i = 0
@@ -17,7 +17,7 @@ for ctgr in ctgrs:
     if ctgr != "":
         print(i, "----------")
         print(ctgr)
-        if i >= 158:
+        if i >= 2:
             driver = webdriver.Chrome('chromedriver')
             driver.get(baseUrl + ctgr)
             driver.close()

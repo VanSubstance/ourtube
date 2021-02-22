@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.ChannelDto;
+import com.my.spring.domain.ChannelStatDto;
 import com.my.spring.mapper.ChannelMapper;
 import com.my.spring.service.ChannelService;
 
@@ -19,53 +20,42 @@ public class ChannelServiceImpl implements ChannelService{
 	public ChannelMapper mapper;
 
 	@Override
-	public List<String> getChannelsByCtgr(String ctgr) {
-		return mapper.getChannelsByCtgr(ctgr);
-	}
-
-	@Override
-	public List<String> getCtgrsByChannelId(String channelId) {
-		return mapper.getCtgrsByChannelId(channelId);
-	}
-
-	@Override
-	public Boolean putChannelInfo(ChannelDto data) {
-		return mapper.putChannelInfo(data);
-	}
-
-
-	@Override
-	public List<String> checkExistence(ChannelDto channel) {
-		return mapper.checkExistence(channel);
-	}
-
-	@Override
-	public Boolean addChain(Map<String, Object> chains) {
-		return mapper.addChain(chains);
-	}
-
-	@Override
-	public Boolean addChainRaw(ChainDto chain) {
-		return mapper.addChainRaw(chain);
-	}
-
-	@Override
-	public void cleanChain() {
-		mapper.cleanChain();
-	}
-
-	@Override
-	public void cleanChannel() {
-		mapper.cleanChannel();
-	}
-
-	@Override
-	public List<String> getChannelIdsByDate(Date date) {
-		return mapper.getChannelIdsByDate(date);
-	}
-
-	@Override
 	public List<String> getChannelIdsByCtgr(String ctgr) {
 		return mapper.getChannelIdsByCtgr(ctgr);
+	}
+
+	@Override
+	public void setChannelInfo(ChannelDto item) {
+		mapper.setChannelInfo(item);
+	}
+
+	@Override
+	public void setChannelChain(ChainDto item) {
+		mapper.setChannelChain(item);
+	}
+
+	@Override
+	public void setChannelStatistics(ChannelStatDto item) {
+		mapper.setChannelStatistics(item);
+	}
+
+	@Override
+	public int checkChannelInfo(String id) {
+		return mapper.checkChannelInfo(id);
+	}
+
+	@Override
+	public int checkChannelChain(ChainDto item) {
+		return mapper.checkChannelChain(item);
+	}
+
+	@Override
+	public int checkChannelStatistics(ChannelStatDto item) {
+		return mapper.checkChannelStatistics(item);
+	}
+
+	@Override
+	public List<String> getChannelIdsForStatisticsByCtgr(String ctgr) {
+		return mapper.getChannelIdsForStatisticsByCtgr(ctgr);
 	}
 }

@@ -16,18 +16,13 @@ public class CommentServiceImpl implements CommentService{
 	private CommentMapper mapper;
 
 	@Override
-	public void addCommentSingle(CommentDto item) {
-		mapper.addCommentSingle(item);
+	public void setComment(CommentDto item) {
+		mapper.setComment(item);
 	}
 
 	@Override
-	public int checkExistence(String id) {
-		return mapper.checkExistence(id);
-	}
-
-	@Override
-	public List<String> getCommentTextsByVideoId(String id) {
-		return mapper.getCommentTextsByVideoId(id);
+	public int checkComment(String item) {
+		return mapper.checkComment(item);
 	}
 
 }

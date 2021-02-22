@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.TagDto;
 import com.my.spring.domain.VideoDto;
+import com.my.spring.domain.VideoStatDto;
 import com.my.spring.mapper.VideoMapper;
 import com.my.spring.service.VideoService;
 
@@ -18,58 +19,52 @@ public class VideoServiceImpl implements VideoService {
 	private VideoMapper mapper;
 
 	@Override
-	public Boolean addVideo(VideoDto video) {
-		return mapper.addVideo(video);
+	public List<String> getVideoIdsByChannelId(String ctgr) {
+		return mapper.getVideoIdsByChannelId(ctgr);
 	}
 
 	@Override
-	public int checkExistence(String id) {
-		return mapper.checkExistence(id);
+	public void setVideoInfo(VideoDto item) {
+		mapper.setVideoInfo(item);
 	}
 
 	@Override
-	public int checkExistenceTag(TagDto tag) {
-		return mapper.checkExistenceTag(tag);
+	public void setVideoChain(ChainDto item) {
+		mapper.setVideoChain(item);
 	}
 
 	@Override
-	public Boolean addTag(Map<String, Object> tags) {
-		return mapper.addTag(tags);
+	public void setVideoStatistics(VideoStatDto item) {
+		mapper.setVideoStatistics(item);
 	}
 
 	@Override
-	public Boolean addChain(Map<String, Object> chains) {
-		return mapper.addChain(chains);
+	public void setVideoTag(TagDto item) {
+		mapper.setVideoTag(item);
 	}
 
 	@Override
-	public Boolean addChainRaw(ChainDto chain) {
-		return mapper.addChainRaw(chain);
+	public int checkVideoInfo(String id) {
+		return mapper.checkVideoInfo(id);
 	}
 
 	@Override
-	public void cleanChain() {
-		mapper.cleanChain();
+	public int checkVideoChain(ChainDto item) {
+		return mapper.checkVideoChain(item);
 	}
 
 	@Override
-	public void cleanVideo() {
-		mapper.cleanVideo();
+	public int checkVideoStatistics(VideoStatDto item) {
+		return mapper.checkVideoStatistics(item);
 	}
 
 	@Override
-	public int checkExistenceParent(VideoDto video) {
-		return mapper.checkExistenceParent(video);
+	public List<String> getVideoIdsForStatisticsByCtgr(String ctgr) {
+		return mapper.getVideoIdsForStatisticsByCtgr(ctgr);
 	}
 
 	@Override
-	public Boolean addTagSingle(TagDto tag) {
-		return mapper.addTagSingle(tag);
+	public List<String> getVideoIdsForCommentByCtgr(String ctgr) {
+		return mapper.getVideoIdsForCommentByCtgr(ctgr);
 	}
-
-	@Override
-	public List<String> getVideoIdsByChannelId(String id) {
-		return mapper.getVideoIdsByChannelId(id);
-	}
-
 }

@@ -1,24 +1,21 @@
 package com.my.spring.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.TagDto;
 import com.my.spring.domain.VideoDto;
+import com.my.spring.domain.VideoStatDto;
 
 public interface VideoService {
-	public Boolean addVideo(VideoDto video);
-	public int checkExistence(String id);
-	public int checkExistenceTag(TagDto tag);
-	public int checkExistenceParent(VideoDto video);
-	public Boolean addTag(Map<String, Object> tags);
-	public Boolean addTagSingle(TagDto tag);
-	public Boolean addChain(Map<String, Object> chains);
-	public Boolean addChainRaw(ChainDto chain);
-
-	public void cleanChain();
-	public void cleanVideo();
-
-	public List<String> getVideoIdsByChannelId(String id);
+	public List<String> getVideoIdsByChannelId(String ctgr);
+	public List<String> getVideoIdsForStatisticsByCtgr(String ctgr);
+	public List<String> getVideoIdsForCommentByCtgr(String ctgr);
+	public void setVideoInfo(VideoDto item);
+	public void setVideoChain(ChainDto item);
+	public void setVideoStatistics(VideoStatDto item);
+	public void setVideoTag(TagDto item);
+	public int checkVideoInfo(String id);
+	public int checkVideoChain(ChainDto item);
+	public int checkVideoStatistics(VideoStatDto item);
 }
