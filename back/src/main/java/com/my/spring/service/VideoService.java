@@ -8,7 +8,7 @@ import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
 
 public interface VideoService {
-	public List<String> getVideoIdsByChannelId(String ctgr);
+	public List<String> getVideoIdsByCtgr(String ctgr);
 	public List<String> getVideoIdsForStatisticsByCtgr(String ctgr);
 	public List<String> getVideoIdsForCommentByCtgr(String ctgr);
 	public void setVideoInfo(VideoDto item);

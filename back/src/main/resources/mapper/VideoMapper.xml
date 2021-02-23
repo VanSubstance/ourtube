@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper
 	namespace = "com.my.spring.mapper.VideoMapper">
-	<select id="getVideoIdsByChannelId" parameterType="String" resultType="String">
+	<select id="getVideoIdsByCtgr" parameterType="String" resultType="String">
 		select a.id from video a, chainvideo b where a.id = b.id and b.ctgr = #{ctgr}
 	</select>
 	<select id="getVideoIdsForStatisticsByCtgr" parameterType="String" resultType="String">

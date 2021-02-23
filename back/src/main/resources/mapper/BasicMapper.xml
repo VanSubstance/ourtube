@@ -9,4 +9,11 @@
 		insert into resultCtgr (ctgr, infoDate, resultcount)
 		values (#{item.ctgr}, #{item.infoDate}, #{item.resultCount})
 	</insert>
+	<select id="getCtgrs" resultType="String">
+		select title from ctgr
+	</select>
+	<select id="getCtgrsForPatch" resultType="String">
+		select a.title from ctgr a where a.title not in (
+		select ctgr from resultctgr where infodate = TO_DATE(SYSDATE, 'YY/MM/DD'))
+	</select>
 </mapper>

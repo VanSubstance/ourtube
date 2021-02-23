@@ -1,5 +1,7 @@
 package com.my.spring.service.Impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,4 +23,15 @@ public class BasicServiceImpl implements BasicService {
 	public void setResultCtgr(ResultCtgr item) {
 		mapper.setResultCtgr(item);		
 	}
+
+	@Override
+	public List<String> getCtgrs() {
+		return mapper.getCtgrs();
+	}
+
+	@Override
+	public List<String> getCtgrsForPatch() {
+		return mapper.getCtgrsForPatch();
+	}
+	
 }

@@ -36,8 +36,8 @@ public class YoutubeServiceImpl implements YoutubeService {
 
 	private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 	private static final JsonFactory JSON_FACTORY = new JacksonFactory();
-	private static final long NUMBER_OF_CHANNELS_RETURNED = 5;
-	private static final long NUMBER_OF_VIDEOS_RETURNED = 10;
+	private static final long NUMBER_OF_CHANNELS_RETURNED = 3;
+	private static final long NUMBER_OF_VIDEOS_RETURNED = 5;
 	private static final long NUMBER_OF_COMMENTS_RETURNED = 10;
 	private static YouTube youtube;
 	private static final String[] apiKeys = { 
@@ -46,7 +46,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			"AIzaSyAFdfs807Tl-7PM8tb4ZDOqfC7vKSCSaRg",
 			"AIzaSyAQtHVKj5g7XtkJJh_Ipd5WlifxCOCwzsc", 
 			"AIzaSyCXiMrdsfLrPLtHRqhS5POORUzqrIK5_74"};
-	private static final int api = 4;
+	private static final int api = 0;
 
 	public YoutubeServiceImpl() {
 		getConnection();
@@ -61,6 +61,43 @@ public class YoutubeServiceImpl implements YoutubeService {
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
+	}
+
+	@Override
+	public ArrayList<Object> callResultCtgrBtCtgr(String ctgr) {
+		ArrayList<Object> result = new ArrayList<Object>();
+		ResultCtgr resultCtgr = new ResultCtgr();
+		try {
+			YouTube.Search.List base = youtube.search().list("id");
+			// api 키 입력
+			base.setKey(apiKeys[api]);
+			// 검색어 지정
+			base.setQ(ctgr);
+			// 검색 결과 채널로 한정
+			base.setType("channel");
+			// 검색 결과 제목으로 정렬
+			base.setOrder("viewCount");
+			// 검색 범위 한국으로 한정
+			base.setRegionCode("KR");
+			// 토픽 아이디 한정
+			base.setTopicId("/m/0bzvm2");
+			// 조회 상한선
+			base.setMaxResults((long) 0);
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String infoDate = dateFormat.format(Calendar.getInstance().getTime());
+			resultCtgr.setInfoDate(Date.valueOf(infoDate));
+			resultCtgr.setCtgr(ctgr);
+			resultCtgr.setResultCount(base.execute().getPageInfo().getTotalResults());
+		} catch (GoogleJsonResponseException e) {
+			System.err.println("SERVICE ERROR: " + e.getDetails().getCode() + " : " + e.getDetails().getMessage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.err.println("IO ERROR: " + e.getCause() + " : " + e.getMessage());
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+		result.add(resultCtgr);
+		return result;
 	}
 
 	@Override
@@ -252,7 +289,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			if (searchResult != null) {
 				Iterator<SearchResult> data = searchResult.iterator();
 				if (!data.hasNext()) {
-					System.out.println("채널 id -> 비디오 id 검색결과 없음.");
+					System.out.println("채널 id -> " + channelId + " -> " + "비디오 id 검색결과 없음.");
 				}
 				while (data.hasNext()) {
 					SearchResult item = data.next();
@@ -385,6 +422,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 						videoStatList.add(newVideoStat);
 					}
 				}
+				System.out.println();
 			}
 		} catch (GoogleJsonResponseException e) {
 			System.err.println("SERVICE ERROR: " + e.getDetails().getCode() + " : " + e.getDetails().getMessage());
@@ -414,13 +452,15 @@ public class YoutubeServiceImpl implements YoutubeService {
 			commentBasics.setMaxResults(NUMBER_OF_COMMENTS_RETURNED);
 			for (String videoId : videoIdList) {
 				// 검색어 지정
+				System.out.print("비디오 id -> " + videoId + " -> ");
 				commentBasics.setVideoId(videoId);
 				List<CommentThread> searchResult = commentBasics.execute().getItems();
 				if (searchResult != null) {
 					Iterator<CommentThread> data = searchResult.iterator();
 					if (!data.hasNext()) {
-						System.out.println("비디오 id -> 댓글 정보 검색결과 없음.");
+						System.out.println("댓글 유무: x");
 					}
+					System.out.println("댓글 유무: o");
 					while (data.hasNext()) {
 						CommentThread item = data.next();
 						if (item.getKind().equals("youtube#commentThread")) {

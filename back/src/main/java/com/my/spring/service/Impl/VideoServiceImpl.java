@@ -19,8 +19,8 @@ public class VideoServiceImpl implements VideoService {
 	private VideoMapper mapper;
 
 	@Override
-	public List<String> getVideoIdsByChannelId(String ctgr) {
-		return mapper.getVideoIdsByChannelId(ctgr);
+	public List<String> getVideoIdsByCtgr(String ctgr) {
+		return mapper.getVideoIdsByCtgr(ctgr);
 	}
 
 	@Override

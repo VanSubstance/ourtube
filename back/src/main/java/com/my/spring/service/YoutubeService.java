@@ -3,7 +3,16 @@ package com.my.spring.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.my.spring.domain.ResultCtgr;
+
 public interface YoutubeService {
+	
+
+	/**
+	 * 카테고리 -> 해당일 카테고리 검색결과 수치
+	 * ResultCtgr
+	 */
+	public ArrayList<Object> callResultCtgrBtCtgr(String ctgr);
 	
 	/**
 	 * 카테고리 -> 상위 채널 id 리스트

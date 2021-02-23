@@ -13,6 +13,7 @@ import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.ChannelDto;
 import com.my.spring.domain.ChannelStatDto;
 import com.my.spring.domain.CommentDto;
+import com.my.spring.domain.ResultCtgr;
 import com.my.spring.domain.TagDto;
 import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
@@ -36,7 +37,7 @@ public class BasicController {
 	private YoutubeService serviceYoutube;
 	@Autowired
 	private CommentService serviceComment;
-	
+
 	public void patchChannelByCtgr(String ctgr) {
 		System.out.print("\tYoutube API -> 상위 채널 id 리스트: ");
 		List<String> channelIdList = (List<String>) serviceYoutube.callChannelIdsByCtgr(ctgr).get(0);
@@ -93,7 +94,7 @@ public class BasicController {
 		}
 		System.out.println(" 완료.");
 	}
-	
+
 	public void patchVideoByCtgr(String ctgr) {
 		System.out.print("\tDatebase -> 채널 id 리스트: ");
 		List<String> channelIdList = serviceChannel.getChannelIdsByCtgr(ctgr);
@@ -163,13 +164,16 @@ public class BasicController {
 		}
 		System.out.println(" 완료.");
 	}
+
 	public void patchCommentsByCtgr(String ctgr) {
-		System.out.println("\tDatabase -> 댓글 정보 추가를 위한 비디오 id 리스트");
+		System.out.print("\tDatabase -> 댓글 정보 추가를 위한 비디오 id 리스트: ");
 		List<String> videoIdList = serviceVideo.getVideoIdsForCommentByCtgr(ctgr);
+		System.out.println(videoIdList.size() + " 개");
 		
 		System.out.println("\t\t댓글 정보 추가를 위한 비디오 id 리스트 -> Youtube API -> 댓글 리스트");
 		ArrayList<Object> data = serviceYoutube.callCommentsByVideoId(videoIdList);
 		List<CommentDto> commentDtoList = (List<CommentDto>) data.get(0);
+		
 		System.out.print("\t\t\t댓글 리스트 -> Database | o -> 등록 | ");
 		for (CommentDto commentDto : commentDtoList) {
 			System.out.print("o");
@@ -177,14 +181,80 @@ public class BasicController {
 		}
 		System.out.println(" 완료.");
 	}
+
+	@RequestMapping(value = "/ctgr/channel/{ctgr}", method = RequestMethod.GET)
+	public void patchChannelByCtgrApi(@PathVariable String ctgr) {
+		System.out.println("카테고리: " + ctgr);
+		patchChannelByCtgr(ctgr);
+		System.out.println("카테고리: " + ctgr + " : 채널 데이터 갱신 완료.");
+	}
+
+	@RequestMapping(value = "/ctgr/video/{ctgr}", method = RequestMethod.GET)
+	public void patchVideosByCtgrApi(@PathVariable String ctgr) {
+		System.out.println("카테고리: " + ctgr);
+		patchVideoByCtgr(ctgr);
+		System.out.println("카테고리: " + ctgr + " : 비디오 데이터 갱신 완료.");
+	}
+
+	@RequestMapping(value = "/ctgr/comment/{ctgr}", method = RequestMethod.GET)
+	public void patchCommentsByCtgrApi(@PathVariable String ctgr) {
+		System.out.println("카테고리: " + ctgr);
+		patchCommentsByCtgr(ctgr);
+		System.out.println("카테고리: " + ctgr + " : 댓글 데이터 갱신 완료.");
+	}
 	
-	@RequestMapping(value = "/ctgr/{ctgr}", method = RequestMethod.GET)
+	@RequestMapping(value = "/ctgr/all/{ctgr}", method = RequestMethod.GET)
 	public void patchDataByCtgr(@PathVariable String ctgr) {
 		System.out.println("카테고리: " + ctgr);
 		patchChannelByCtgr(ctgr);
 		patchVideoByCtgr(ctgr);
 		patchCommentsByCtgr(ctgr);
 		System.out.println("카테고리: " + ctgr + " : 데이터 갱신 완료.");
+	}
+	
+	@RequestMapping(value = "/ctgr/daily", method = RequestMethod.GET)
+	public void patchDailyByCtgr() {
+		List<String> ctgrs = serviceBasic.getCtgrsForPatch();
+		System.out.println("카테고리 검색량 갱신");
+		for (String ctgr: ctgrs) {
+			System.out.print("\t카테고리 " + ctgr + " : ");
+			ResultCtgr resultCtgr = (ResultCtgr) serviceYoutube.callResultCtgrBtCtgr(ctgr).get(0);
+			if (resultCtgr != null) {
+				System.out.print("o");
+				serviceBasic.setResultCtgr(resultCtgr);
+			} else {
+				System.out.print("x");
+			}
+			System.out.println(" :종료");
+		}
+		System.out.println("완료");
+		
+		ctgrs = serviceBasic.getCtgrs();
+		System.out.println("채널 통계 정보 갱신");
+		for (String ctgr: ctgrs) {
+			System.out.println("\t카테고리 : " + ctgr + " :시작");
+			List<String> channels = serviceChannel.getChannelIdsForStatisticsByCtgr(ctgr);
+			System.out.println("\t\t채널 개수: " + channels.size());
+			List<ChannelStatDto> channelStats = (List<ChannelStatDto>) serviceYoutube.callChannelStatsByChannelId(channels).get(0);
+			for (ChannelStatDto item : channelStats) {
+				serviceChannel.setChannelStatistics(item);
+			}
+			System.out.println("\t카테고리: " + ctgr + " :완료");
+		}
+		System.out.println("완료");
+		
+		System.out.println("비디오 통계 정보 갱신");
+		for (String ctgr: ctgrs) {
+			System.out.println("\t카테고리 : " + ctgr + " :시작");
+			List<String> videos = serviceVideo.getVideoIdsForStatisticsByCtgr(ctgr);
+			System.out.println("\t\t비디오 개수: " + videos.size());
+			List<VideoStatDto> videoStats = (List<VideoStatDto>) serviceYoutube.callVideoStatsByVideoId(videos).get(0);
+			for(VideoStatDto item : videoStats) {
+				serviceVideo.setVideoStatistics(item);
+			}
+			System.out.println("\t카테고리: " + ctgr + " :완료");
+		}
+		System.out.println("완료");
 	}
 
 }

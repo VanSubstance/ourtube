@@ -10,7 +10,7 @@ import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
 
 public interface VideoMapper {
-	public List<String> getVideoIdsByChannelId(@Param("ctgr") String ctgr);
+	public List<String> getVideoIdsByCtgr(@Param("ctgr") String ctgr);
 	public List<String> getVideoIdsForStatisticsByCtgr(@Param("ctgr") String ctgr);
 	public List<String> getVideoIdsForCommentByCtgr(@Param("ctgr") String ctgr);
 	public void setVideoInfo(@Param("item") VideoDto item);
