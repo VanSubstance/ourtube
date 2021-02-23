@@ -2,5 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper
 	namespace = "com.my.spring.mapper.BasicMapper">
-	
+	<select id="checkResultCtgr" parameterType="String" resultType="Int">
+		select count(*) from resultctgr where ctgr = #{ctgr} and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+	</select>
+	<insert id="setResultCtgr" parameterType="com.my.spring.domain.ResultCtgr">
+		insert into resultCtgr (ctgr, infoDate, resultcount)
+		values (#{item.ctgr}, #{item.infoDate}, #{item.resultCount})
+	</insert>
 </mapper>

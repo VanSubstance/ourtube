@@ -8,6 +8,7 @@ public interface YoutubeService {
 	/**
 	 * 카테고리 -> 상위 채널 id 리스트
 	 * List<String>
+	 * ResultCtgr
 	 */
 	public ArrayList<Object> callChannelIdsByCtgr(String ctgr);
 	

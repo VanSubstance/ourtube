@@ -16,7 +16,7 @@
 	</insert>
 	<insert id="setChannelChain" parameterType="com.my.spring.domain.ChainDto">
 		insert into chainchannel (id, ctgr)
-		values (#{item.id}, (select title from ctgrdictionary where code = #{chain.ctgr}))
+		values (#{item.id}, (select title from ctgrdictionary where code = #{item.ctgr}))
 	</insert>
 	<insert id="setChannelStatistics" parameterType="com.my.spring.domain.ChannelStatDto">
 		insert into channelStatistics (id, infodate, videocount, viewcount, subscount)
@@ -29,6 +29,6 @@
 		select count(*) from channelstatistics where id = #{item.id} and infodate = #{item.infoDate}
 	</select>
 	<select id="checkChannelChain" parameterType="com.my.spring.domain.ChannelDto" resultType="Int">
-		select count(*) from chainchannel a, ctgrdictionary b where a.id = #{item.id} and a.ctgr = b.ctgr and b.code = #{item.ctgr}
+		select count(*) from chainchannel a, ctgrdictionary b where a.id = #{item.id} and a.ctgr = b.title and b.code = #{item.ctgr}
 	</select>
 </mapper>

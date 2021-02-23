@@ -17,7 +17,7 @@ for ctgr in ctgrs:
     if ctgr != "":
         print(i, "----------")
         print(ctgr)
-        if i >= 2:
+        if i >= 14:
             driver = webdriver.Chrome('chromedriver')
             driver.get(baseUrl + ctgr)
             driver.close()

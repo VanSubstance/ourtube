@@ -25,6 +25,7 @@ import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.ChannelDto;
 import com.my.spring.domain.ChannelStatDto;
 import com.my.spring.domain.CommentDto;
+import com.my.spring.domain.ResultCtgr;
 import com.my.spring.domain.TagDto;
 import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
@@ -35,9 +36,9 @@ public class YoutubeServiceImpl implements YoutubeService {
 
 	private static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 	private static final JsonFactory JSON_FACTORY = new JacksonFactory();
-	private static final long NUMBER_OF_CHANNELS_RETURNED = 10;
-	private static final long NUMBER_OF_VIDEOS_RETURNED = 20;
-	private static final long NUMBER_OF_COMMENTS_RETURNED = 20;
+	private static final long NUMBER_OF_CHANNELS_RETURNED = 5;
+	private static final long NUMBER_OF_VIDEOS_RETURNED = 10;
+	private static final long NUMBER_OF_COMMENTS_RETURNED = 10;
 	private static YouTube youtube;
 	private static final String[] apiKeys = { 
 			"AIzaSyDmY56rONS-hcNqXGFxYc9vgVeGSk0YeSc",
@@ -45,7 +46,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			"AIzaSyAFdfs807Tl-7PM8tb4ZDOqfC7vKSCSaRg",
 			"AIzaSyAQtHVKj5g7XtkJJh_Ipd5WlifxCOCwzsc", 
 			"AIzaSyCXiMrdsfLrPLtHRqhS5POORUzqrIK5_74"};
-	private static final int api = 0;
+	private static final int api = 4;
 
 	public YoutubeServiceImpl() {
 		getConnection();
@@ -66,6 +67,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 	public ArrayList<Object> callChannelIdsByCtgr(String ctgr) {
 		ArrayList<Object> result = new ArrayList<Object>();
 		List<String> channelIdList = new ArrayList();
+		ResultCtgr resultCtgr = new ResultCtgr();
 		try {
 			YouTube.Search.List base = youtube.search().list("id");
 			// api 키 입력
@@ -84,6 +86,11 @@ public class YoutubeServiceImpl implements YoutubeService {
 			base.setMaxResults(NUMBER_OF_CHANNELS_RETURNED);
 			
 			List<SearchResult> searchResults = base.execute().getItems();
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String infoDate = dateFormat.format(Calendar.getInstance().getTime());
+			resultCtgr.setInfoDate(Date.valueOf(infoDate));
+			resultCtgr.setCtgr(ctgr);
+			resultCtgr.setResultCount(base.execute().getPageInfo().getTotalResults());
 			if (base != null) {
 				Iterator<SearchResult> data = searchResults.iterator();
 				if (!data.hasNext()) {
@@ -92,7 +99,6 @@ public class YoutubeServiceImpl implements YoutubeService {
 				while (data.hasNext()) {
 					SearchResult item = data.next();
 					if (item.getKind().equals("youtube#searchResult")) {
-						System.out.println("Channel Id: " + item.getId().getChannelId());
 						channelIdList.add(item.getId().getChannelId());
 					}
 				}
@@ -106,6 +112,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			t.printStackTrace();
 		}
 		result.add(channelIdList);
+		result.add(resultCtgr);
 		return result;
 	}
 
@@ -185,30 +192,29 @@ public class YoutubeServiceImpl implements YoutubeService {
 			base.setKey(apiKeys[api]);
 			// 국가 한정
 			base.setHl("ko_kr");
-			String idList = "";
 			for (String id : channelIdList) {
-				idList += id + ",";
-			}
-			base.setId(idList);
-			base.setMaxResults(NUMBER_OF_CHANNELS_RETURNED);
-			List<Channel> searchResult = base.execute().getItems();
-			if (searchResult != null) {
-				Iterator<Channel> data = searchResult.iterator();
-				if (!data.hasNext()) {
-					System.out.println("No results for your query.");
-				}
-				while (data.hasNext()) {
-					Channel item = data.next();
-					if (item.getKind().equals("youtube#channel")) {
-						ChannelStatDto newChannelStat = new ChannelStatDto();
-						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-						String infoDate = dateFormat.format(Calendar.getInstance().getTime());
-						newChannelStat.setId(item.getId());
-						newChannelStat.setVideoCount(item.getStatistics().getVideoCount());
-						newChannelStat.setViewCount(item.getStatistics().getViewCount());
-						newChannelStat.setSubsCount(item.getStatistics().getSubscriberCount());
-						newChannelStat.setInfoDate(Date.valueOf(infoDate));
-						channelStatList.add(newChannelStat);
+				base.setId(id);
+				base.setMaxResults(NUMBER_OF_CHANNELS_RETURNED);
+				List<Channel> searchResult = base.execute().getItems();
+				if (searchResult != null) {
+					Iterator<Channel> data = searchResult.iterator();
+					if (!data.hasNext()) {
+						System.out.println("No results for your query.");
+					}
+					while (data.hasNext()) {
+						Channel item = data.next();
+						if (item.getKind().equals("youtube#channel")) {
+							System.out.print("|");
+							ChannelStatDto newChannelStat = new ChannelStatDto();
+							SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+							String infoDate = dateFormat.format(Calendar.getInstance().getTime());					
+							newChannelStat.setId(item.getId());
+							newChannelStat.setVideoCount(item.getStatistics().getVideoCount());
+							newChannelStat.setViewCount(item.getStatistics().getViewCount());
+							newChannelStat.setSubsCount(item.getStatistics().getSubscriberCount());
+							newChannelStat.setInfoDate(Date.valueOf(infoDate));
+							channelStatList.add(newChannelStat);
+						}
 					}
 				}
 			}
@@ -362,12 +368,13 @@ public class YoutubeServiceImpl implements YoutubeService {
 				while (data.hasNext()) {
 					Video item = data.next();
 					if (item.getKind().equals("youtube#video")) {
+						System.out.print("|");
 						VideoStatDto newVideoStat = new VideoStatDto();
 						Thumbnail thumbnail = (Thumbnail) item.getSnippet().getThumbnails().get("high");
 						String publishedDate = item.getSnippet().getPublishedAt().toString().substring(0, 10);
 						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 						String infoDate = dateFormat.format(Calendar.getInstance().getTime());
-
+						
 						newVideoStat.setId(item.getId());
 						newVideoStat.setViewCount(item.getStatistics().getViewCount());
 						newVideoStat.setLikeCount(item.getStatistics().getDislikeCount());

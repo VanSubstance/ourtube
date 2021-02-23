@@ -38,6 +38,6 @@
 		select count(*) from Videostatistics where id = #{item.id} and infodate = #{item.infoDate}
 	</select>
 	<select id="checkVideoChain" parameterType="com.my.spring.domain.VideoDto" resultType="Int">
-		select count(a) from chainVideo a, ctgrdictionary b where a.id = #{item.id} and a.ctgr = b.ctgr and b.code = #{item.ctgr}
+		select count(a) from chainVideo a, ctgrdictionary b where a.id = #{item.id} and a.ctgr = b.title and b.code = #{item.ctgr}
 	</select>
 </mapper>
