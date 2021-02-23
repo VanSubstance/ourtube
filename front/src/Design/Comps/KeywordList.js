@@ -58,7 +58,8 @@ class KeywordList extends Component {
         return (
             <div
                 style = {{
-                    backgroundColor: "grey"
+                    backgroundColor: "#d4d4d4",
+                    border: "1px solid white"
                 }}>
                 <p>{this.props.type} 내 선택한 카테고리 내 키워드 순위 리스트</p>
                 <Swiper
@@ -144,6 +145,8 @@ class KeywordList extends Component {
                     </KeywordItemVertical>
                 </SwiperSlide>
                 </Swiper>
+                <div
+                    className="keywordMarginBox"></div>
             </div>
         );
     }

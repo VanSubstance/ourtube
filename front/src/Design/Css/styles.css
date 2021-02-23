@@ -16,6 +16,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 99999;
 }
 
 .chartLink {
@@ -33,9 +34,9 @@
 .mainBanner {
     position: relative;
     text-align: center;
-    border: 2px solid white;
+    border: 1px solid white;
     height: 150px;
-    width: 300px;
+    width: 100%;
     margin: 0 auto;
     background-color: #d4d4d4;
     object-fit: cover;
@@ -58,6 +59,7 @@
     text-align: center;
     width: 100%;
     height: fit-content;
+    border: 1px solid white;
 }
 
 .searchBar {
@@ -98,8 +100,8 @@
 
 .searchButtonImg {
     position: relative;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
 }
 
 .mainChipBox {
@@ -113,7 +115,7 @@
 }
 
 .chipBackground {
-    width: 1000px;
+    width: 100%;
     height: 60px;
     background-color: #d4d4d4;
     margin: 0 auto;
@@ -134,7 +136,6 @@
 .footer {
     background: #5B5B5B;
     padding: 30px 0;
-    margin-top: 40px;
     color: rgba(47,62,78,.7);
     font-size: 12px;
     bottom: 0px;

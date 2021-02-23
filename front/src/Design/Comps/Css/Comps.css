@@ -11,8 +11,8 @@
 .keywordListVertical {
     position: relative;
     align-self: center;
-    width: 1500px;
-    height: 250px;
+    width: 1920px;
+    height: 595px;
     align-content: center;
 }
 .keywordItemVertical {
@@ -25,4 +25,9 @@
     margin: 10px;
     font-family: Arial;
     text-align: center;
+}
+
+.keywordMarginBox {
+    width: 100%;
+    height: 50px;
 }
