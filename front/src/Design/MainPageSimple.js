@@ -11,7 +11,16 @@ class MainPageSimple extends Component {
         currentType: "트렌드",
         searchVal: "",
         selectedCtgr: "",
-        ctgrs: ["카테고리 예시 1", "카테고리 예시 2", "예시 3", "예시 4", "카테고리 예시 5"],
+        ctgrs: [],
+    }
+
+    //렌더링을 하기 전에 작업을 해주는 것 :)
+    componentWillMount() {
+        this.searchCtgr();
+    }
+
+    //렌더링을 끝낸 다음에 작업 :)
+    componentDidMount() {
     }
 
     getValues = () => {
@@ -67,7 +76,7 @@ class MainPageSimple extends Component {
      * 검색 결과 반환
      */
     searchCtgr = () => {
-        // searchVal -> 가장 핫한 카테고리 5선
+        // searchVal -> 가장 핫한 카테고리 8선
         if (this.state.searchVal === "") {
             this.setState({
                 ctgrs: [
@@ -76,6 +85,9 @@ class MainPageSimple extends Component {
                     "핫 " + "3",
                     "핫 " + "4",
                     "핫 " + "5",
+                    "핫 " + "6",
+                    "핫 " + "7",
+                    "핫 " + "8",
                 ],
                 selectedCtgr: "핫 " + "1",
             });
@@ -87,6 +99,9 @@ class MainPageSimple extends Component {
                     this.state.searchVal + "3",
                     this.state.searchVal + "4",
                     this.state.searchVal + "5",
+                    this.state.searchVal + "6",
+                    this.state.searchVal + "7",
+                    this.state.searchVal + "8",
                 ],
                 selectedCtgr: this.state.searchVal + "1",
             });
@@ -98,9 +113,23 @@ class MainPageSimple extends Component {
             <div
                 className="mainBackground">
                 <div
+                    className="linkBox">
+                    <Link
+                        to={{
+                            pathname: "/trend",
+                            state: {
+                            searchVal: this.state.searchVal
+                            }
+                        }}
+                        className="chartLink"
+                    >Chart View
+                    </Link>    
+                </div>
+                <div
                     className="mainBanner">
                     <a
-                        href="http://localhost:3012/">
+                        href="http://localhost:3012/"
+                        className="bannerA">
                         <img
                             className="bannerImage"
                             src="/Ex/ourtubeLogo.PNG">
@@ -132,31 +161,21 @@ class MainPageSimple extends Component {
                                 </button>s
                             )
                     } */}
-                <div
-                    className="searchBar">
-                    <input
-                        className="searchInput"
-                        placeholder="검색어를 입력하세요"
-                        autoComplete="off"
-                        ref="searchBar"
-                        type="text"
-                        onChange={this.searchTracker} />
-                    <button className = "searchButton" onClick={this.searchCtgr}>
-                        <img
-                            className = "searchButtonImg"
-                            src= "/Ex/searchbutton.png"></img>
-                    </button>
-                </div>
-
-                    <Link
-                        to={{
-                            pathname: "/trend",
-                            state: {
-                                searchVal: this.state.searchVal
-                            }
-                        }}
-                        className="chartLink"
-                    >Chart View</Link>
+                    <div
+                        className="searchBar">
+                        <input
+                            className="searchInput"
+                            placeholder="검색어를 입력하세요"
+                            autoComplete="off"
+                            ref="searchBar"
+                            type="text"
+                            onChange={this.searchTracker} />
+                        <button className="searchButton" onClick={this.searchCtgr}>
+                            <img
+                                className="searchButtonImg"
+                                src="/Ex/searchbutton.png"></img>
+                        </button>
+                    </div>
 
                     {/* {
                         this.state.currentType === "트렌드"
@@ -185,7 +204,25 @@ class MainPageSimple extends Component {
                 </div>
                 <div
                     className="mainChipBox">
-                    {
+
+                    <div
+                        className="chipBackground">
+                        {
+                            this.state.ctgrs.map((element) => {
+                                return (
+                                    <Chip
+                                        className="chipStyles"
+                                        label={element}
+                                        clickable
+                                        component="button"
+                                        onClick={() => this.selectCtgr(element)}>
+                                    </Chip>
+                                );
+                            })
+                        }
+                    </div>
+
+                    {/* {
                         this.state.searchType === "트렌드"
                             ? (
                                 <div
@@ -205,6 +242,8 @@ class MainPageSimple extends Component {
                                     }
                                 </div>
                             )
+
+                            올타임 Chip 관련 내용
                             : (
                                 <div
                                     className="chipBackground">
@@ -224,7 +263,8 @@ class MainPageSimple extends Component {
                                     }
                                 </div>
                             )
-                    }
+                    } */}
+
                 </div>
                 <KeywordList
                     type={this.state.currentType}
@@ -232,6 +272,13 @@ class MainPageSimple extends Component {
                 >
 
                 </KeywordList>
+                <footer
+                    className="footer">
+                    <div
+                        className="footerBox">
+                        <d1>FOOTER, 공지사항, 이용약관, 버그리포팅, 사이트 설명</d1>
+                    </div>
+                </footer>
             </div>
         );
     }
