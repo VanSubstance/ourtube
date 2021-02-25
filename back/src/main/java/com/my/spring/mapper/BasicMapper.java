@@ -4,11 +4,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.my.spring.domain.ResultCtgr;
+import com.my.spring.domain.TopicDto;
+import com.my.spring.domain.TopicStatDto;
 
 public interface BasicMapper {
-	public int checkResultCtgr(@Param("ctgr") String ctgr);
-	public void setResultCtgr(@Param("item") ResultCtgr item);
-	public List<String> getCtgrs();
-	public List<String> getCtgrsForPatch();
+	public int checkTopicStat(@Param("topic") String topic);
+	public void setTopicStat(@Param("item") TopicStatDto item);
+	public List<TopicDto> getTopics();
+	public List<TopicDto> getTopicsForPatch();
 }

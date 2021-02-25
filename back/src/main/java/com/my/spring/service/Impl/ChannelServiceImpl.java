@@ -30,8 +30,8 @@ public class ChannelServiceImpl implements ChannelService{
 	}
 
 	@Override
-	public void setChannelChain(ChainDto item) {
-		mapper.setChannelChain(item);
+	public void setChain(ChainDto item) {
+		mapper.setChain(item);
 	}
 
 	@Override
@@ -45,8 +45,8 @@ public class ChannelServiceImpl implements ChannelService{
 	}
 
 	@Override
-	public int checkChannelChain(ChainDto item) {
-		return mapper.checkChannelChain(item);
+	public int checkChain(ChainDto item) {
+		return mapper.checkChain(item);
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class ChannelServiceImpl implements ChannelService{
 	}
 
 	@Override
-	public List<String> getChannelIdsForStatisticsByCtgr(String ctgr) {
-		return mapper.getChannelIdsForStatisticsByCtgr(ctgr);
+	public List<String> getChannelIdsForStatisticsByTopic(String topic) {
+		return mapper.getChannelIdsForStatisticsByTopic(topic);
 	}
 }

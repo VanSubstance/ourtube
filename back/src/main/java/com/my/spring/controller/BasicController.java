@@ -13,8 +13,9 @@ import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.ChannelDto;
 import com.my.spring.domain.ChannelStatDto;
 import com.my.spring.domain.CommentDto;
-import com.my.spring.domain.ResultCtgr;
+import com.my.spring.domain.TopicStatDto;
 import com.my.spring.domain.TagDto;
+import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
 import com.my.spring.service.BasicService;
@@ -38,9 +39,22 @@ public class BasicController {
 	@Autowired
 	private CommentService serviceComment;
 
-	public void patchChannelByCtgr(String ctgr) {
+	public void patchChannelByTopic(TopicDto topicDto) {
+		System.out.println("------------------------------------------------");
+		ArrayList<Object> data = serviceYoutube.callChannelIdsByTopic(topicDto);
+		
+		System.out.print("토픽 당일 데이터: ");
+		TopicStatDto topicStatDto = (TopicStatDto) data.get(1);
+		if (serviceBasic.checkTopicStat(topicStatDto.getTopic()) != 0) {
+			System.out.println("x");
+		} else {
+			System.out.println("o");
+			serviceBasic.setTopicStat(topicStatDto);
+		}
+		System.out.println(" :완료");
+		
 		System.out.print("\tYoutube API -> 상위 채널 id 리스트: ");
-		List<String> channelIdList = (List<String>) serviceYoutube.callChannelIdsByCtgr(ctgr).get(0);
+		List<String> channelIdList = (List<String>) data.get(0);
 		System.out.println(channelIdList.size() + " 개");
 		
 		System.out.print("\t\t신규 채널 유효성 검사 | o -> 신규 등록 | x -> 이미 존재 | ");
@@ -56,32 +70,39 @@ public class BasicController {
 		channelIdList = temp;
 		System.out.println(" : 완료.");		
 		
-		System.out.println("\t\t상위 채널 id 리스트 -> 채널 기본 정보 & 체인 정보");
-		ArrayList<Object> data = serviceYoutube.callChannelInfosByChannelId(channelIdList);
+		System.out.println("\t\t상위 채널 중 신규 id 리스트 -> 채널 기본 정보 & 채널 토픽 체인");
+		data = serviceYoutube.callChannelInfosByChannelId(channelIdList);
 		List<ChannelDto> channelDtoList = (List<ChannelDto>) data.get(0);
+		List<ChainDto> chainChannel = new ArrayList<ChainDto>();
 		
 		System.out.print("\t\t\t채널 기본 정보 -> Database | o -> 등록 | ");
 		for (ChannelDto channelDto : channelDtoList) {
+			ChainDto newChain = new ChainDto();
+			newChain.setId(channelDto.getId());
+			newChain.setTopic(topicDto.getTopic());
+			chainChannel.add(newChain);
 			System.out.print("o");
+			if (channelDto.getDescription().length() >= 2000) {
+				channelDto.setDescription(channelDto.getDescription().substring(0, 2000));
+			}
 			serviceChannel.setChannelInfo(channelDto);
 		}
 		System.out.println(" 완료.");
 		
-		System.out.print("\t\t\t체인 정보 -> Database | o -> 신규 등록 | x -> 이미 존재 | ");
-		List<ChainDto> chainDtoList = (List<ChainDto>) data.get(1);
-		System.out.print(chainDtoList.size() + " 개\n\t\t\t");
-		for (ChainDto chainDto : chainDtoList) {
-			if (serviceChannel.checkChannelChain(chainDto) != 0) {
+		System.out.print("\t\t\t채널 토픽 체인 -> Database | o -> 신규 등록 | x -> 이미 존재 | ");
+		System.out.print(chainChannel.size() + " 개\n\t\t\t");
+		for (ChainDto chainDto : chainChannel) {
+			if (serviceChannel.checkChain(chainDto) != 0) {
 				System.out.print("x");
 			} else {
 				System.out.print("o");
-				serviceChannel.setChannelChain(chainDto);
+				serviceChannel.setChain(chainDto);
 			}
 		}
 		System.out.println(" 완료.");
 		
 		System.out.print("\tDatebase -> 금일 통계 정보 갱신을 위한 채널 id 리스트: ");
-		channelIdList = serviceChannel.getChannelIdsForStatisticsByCtgr(ctgr);
+		channelIdList = serviceChannel.getChannelIdsForStatisticsByTopic(topicDto.getTopic());
 		System.out.println(channelIdList.size() + " 개");
 		System.out.println("\t\t금일 통계 정보 갱신을 위한 채널 id 리스트 -> Youtube API -> 금일 채널 통계 정보");
 		data = serviceYoutube.callChannelStatsByChannelId(channelIdList);
@@ -93,22 +114,18 @@ public class BasicController {
 			serviceChannel.setChannelStatistics(channelStatDto);
 		}
 		System.out.println(" 완료.");
+		System.out.println("------------------------------------------------");
 	}
-
-	public void patchVideoByCtgr(String ctgr) {
-		System.out.print("\tDatebase -> 채널 id 리스트: ");
-		List<String> channelIdList = serviceChannel.getChannelIdsByCtgr(ctgr);
-		System.out.println(channelIdList.size() + " 개");
+	
+	public void patchVideoByTopic(TopicDto topicDto) {
+		System.out.println("------------------------------------------------");
+		System.out.print("\tYoutube API -> 상위 비디오 id 리스트: ");
+		List<String> videoIdList = (List<String>) serviceYoutube.callVideoIdsByTopic(topicDto).get(0);
+		System.out.println(videoIdList.size() + " 개");
 		
-		System.out.println("\t\t채널 id 리스트 -> Youtube API -> 비디오 id 리스트: ");
-		List<String> videoIdList = new ArrayList<String>();
-		for (String channelId: channelIdList) {
-			videoIdList.addAll((List<String>) serviceYoutube.callVideoIdsByChannelId(channelId).get(0));
-			System.out.println("\t\t-> " + videoIdList.size() + " 개");
-		}
-		System.out.print("\t\t\t신규 비디오 유효성 검사 | o -> 신규 등록 | x -> 이미 존재 | ");
+		System.out.print("\t\t신규 비디오 유효성 검사 | o -> 신규 등록 | x -> 이미 존재 | ");
 		List<String> temp = new ArrayList<String>();
-		for (String videoId : videoIdList) {
+		for (String videoId: videoIdList) {
 			if (serviceVideo.checkVideoInfo(videoId) != 0) {
 				System.out.print("x");
 			} else {
@@ -117,144 +134,87 @@ public class BasicController {
 			}
 		}
 		videoIdList = temp;
-		System.out.println(" 완료.");
+		System.out.println(" : 완료.");		
 		
-		System.out.println("\t\t비디오 id 리스트 -> Youtube API -> 비디오 기본 정보 & 체인 정보 & 태그 정보: ");
+		System.out.println("\t\t상위 비디오 중 신규 id 리스트 -> 비디오 기본 정보 & 태그 & 비디오 토픽 체인");
 		ArrayList<Object> data = serviceYoutube.callVideoInfosByVideoId(videoIdList);
-		List<VideoDto> videoDtoList  = (List<VideoDto>) data.get(0);
-		System.out.println();
+		List<VideoDto> videoDtoList = (List<VideoDto>) data.get(0);
+		List<ChainDto> chainVideo = new ArrayList<ChainDto>();
+		
 		System.out.print("\t\t\t비디오 기본 정보 -> Database | o -> 등록 | ");
 		for (VideoDto videoDto : videoDtoList) {
+			ChainDto newChain = new ChainDto();
+			newChain.setId(videoDto.getId());
+			newChain.setTopic(topicDto.getTopic());	
+			chainVideo.add(newChain);
 			System.out.print("o");
+			if (videoDto.getDescription().length() >= 2000) {
+				videoDto.setDescription(videoDto.getDescription().substring(0, 2000));
+			}
 			serviceVideo.setVideoInfo(videoDto);
 		}
 		System.out.println(" 완료.");
 		
-		System.out.print("\t\t\t체인 정보 -> Database | o -> 신규 등록 | x -> 이미 존재 | ");
-		List<ChainDto> chainDtoList = (List<ChainDto>) data.get(1);
-		for (ChainDto chainDto : chainDtoList) {
-			if (serviceChannel.checkChannelChain(chainDto) != 0) {
-				System.out.print("x");
-			} else {
-				System.out.print("o");
-				serviceChannel.setChannelChain(chainDto);
-			}
-		}
-		System.out.println(" 완료.");
+		List<TagDto> tagDtoList = (List<TagDto>) data.get(1);
+		System.out.print("\t\t\t태그 -> Database | o -> 등록 | " + tagDtoList.size() +"개\n\t\t\t");
 		
-		System.out.print("\t\t\t태그 정보 -> Database | o -> 등록 | ");
-		List<TagDto> tagDtoList = (List<TagDto>) data.get(2);
 		for (TagDto tagDto : tagDtoList) {
 			System.out.print("o");
 			serviceVideo.setVideoTag(tagDto);
 		}
 		System.out.println(" 완료.");
 		
-		System.out.print("\tDatabase -> 금일 통계 정보 갱신을 위한 비디오 id 리스트: ");
-		videoIdList = serviceVideo.getVideoIdsForStatisticsByCtgr(ctgr);
+		System.out.print("\t\t\t비디오 토픽 체인 -> Database | o -> 신규 등록 | x -> 이미 존재 | ");
+		System.out.print(chainVideo.size() + " 개\n\t\t\t");
+		for (ChainDto chainDto : chainVideo) {
+			if (serviceVideo.checkChain(chainDto) != 0) {
+				System.out.print("x");
+			} else {
+				System.out.print("o");
+				serviceVideo.setChain(chainDto);
+			}
+		}
+		System.out.println(" 완료.");
+
+		System.out.print("\t\t\t댓글 -> Database | o -> 신규 등록 | x -> 이미 존재 | ");
+		data = serviceYoutube.callCommentsByVideoId(videoIdList);
+		List<CommentDto> commentDtoList = (List<CommentDto>) data.get(0);
+		System.out.print(commentDtoList.size() + " 개\n\t\t\t");
+		for (CommentDto commentDto : commentDtoList) {
+			if (serviceComment.checkComment(commentDto) != 0) {
+				System.out.print("x");
+			} else {
+				System.out.print("o");
+				serviceComment.setComment(commentDto);
+			}
+		}
+		System.out.println(" 완료.");
+		
+		System.out.print("\tDatebase -> 금일 통계 정보 갱신을 위한 비디오 id 리스트: ");
+		videoIdList = serviceVideo.getVideoIdsForStatisticsByTopic(topicDto.getTopic());
 		System.out.println(videoIdList.size() + " 개");
-		System.out.println("\t\t금일 통계 정보 갱신을 위한 비디오 id 리스트 -> Youtube API -> 금일 통계 정보");
+		
+		System.out.println("\t\t금일 통계 정보 갱신을 위한 비디오 id 리스트 -> Youtube API -> 금일 비디오 통계 정보");
 		data = serviceYoutube.callVideoStatsByVideoId(videoIdList);
 		System.out.println();
-		List<VideoStatDto> videoStatDtoList = (List<VideoStatDto>) data.get(0);
-		System.out.print("\t\t\t금일 통계 정보 -> Database: ");
-		for (VideoStatDto videoStatDto : videoStatDtoList) {
+		List<VideoStatDto> videoStatList = (List<VideoStatDto>) data.get(0);
+		System.out.print("\t\t\t금일 비디오 통계 정보 -> Database | o -> 등록 | ");
+		for (VideoStatDto videoStatDto : videoStatList) {
 			System.out.print("o");
 			serviceVideo.setVideoStatistics(videoStatDto);
 		}
 		System.out.println(" 완료.");
+		System.out.println("------------------------------------------------");
 	}
 
-	public void patchCommentsByCtgr(String ctgr) {
-		System.out.print("\tDatabase -> 댓글 정보 추가를 위한 비디오 id 리스트: ");
-		List<String> videoIdList = serviceVideo.getVideoIdsForCommentByCtgr(ctgr);
-		System.out.println(videoIdList.size() + " 개");
-		
-		System.out.println("\t\t댓글 정보 추가를 위한 비디오 id 리스트 -> Youtube API -> 댓글 리스트");
-		ArrayList<Object> data = serviceYoutube.callCommentsByVideoId(videoIdList);
-		List<CommentDto> commentDtoList = (List<CommentDto>) data.get(0);
-		
-		System.out.print("\t\t\t댓글 리스트 -> Database | o -> 등록 | ");
-		for (CommentDto commentDto : commentDtoList) {
-			System.out.print("o");
-			serviceComment.setComment(commentDto);
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	public void patchDataByCtgr() {
+		List<TopicDto> topicDtoList = serviceBasic.getTopics();
+		for (TopicDto topicDto : topicDtoList) {
+			System.out.println("토픽: " + topicDto.getTopic());
+			patchChannelByTopic(topicDto);
+			patchVideoByTopic(topicDto);
+			System.out.println("토픽: " + topicDto.getTopic() + " : 데이터 갱신 완료.");
 		}
-		System.out.println(" 완료.");
 	}
-
-	@RequestMapping(value = "/ctgr/channel/{ctgr}", method = RequestMethod.GET)
-	public void patchChannelByCtgrApi(@PathVariable String ctgr) {
-		System.out.println("카테고리: " + ctgr);
-		patchChannelByCtgr(ctgr);
-		System.out.println("카테고리: " + ctgr + " : 채널 데이터 갱신 완료.");
-	}
-
-	@RequestMapping(value = "/ctgr/video/{ctgr}", method = RequestMethod.GET)
-	public void patchVideosByCtgrApi(@PathVariable String ctgr) {
-		System.out.println("카테고리: " + ctgr);
-		patchVideoByCtgr(ctgr);
-		System.out.println("카테고리: " + ctgr + " : 비디오 데이터 갱신 완료.");
-	}
-
-	@RequestMapping(value = "/ctgr/comment/{ctgr}", method = RequestMethod.GET)
-	public void patchCommentsByCtgrApi(@PathVariable String ctgr) {
-		System.out.println("카테고리: " + ctgr);
-		patchCommentsByCtgr(ctgr);
-		System.out.println("카테고리: " + ctgr + " : 댓글 데이터 갱신 완료.");
-	}
-	
-	@RequestMapping(value = "/ctgr/all/{ctgr}", method = RequestMethod.GET)
-	public void patchDataByCtgr(@PathVariable String ctgr) {
-		System.out.println("카테고리: " + ctgr);
-		patchChannelByCtgr(ctgr);
-		patchVideoByCtgr(ctgr);
-		patchCommentsByCtgr(ctgr);
-		System.out.println("카테고리: " + ctgr + " : 데이터 갱신 완료.");
-	}
-	
-	@RequestMapping(value = "/ctgr/daily", method = RequestMethod.GET)
-	public void patchDailyByCtgr() {
-		List<String> ctgrs = serviceBasic.getCtgrsForPatch();
-		System.out.println("카테고리 검색량 갱신");
-		for (String ctgr: ctgrs) {
-			System.out.print("\t카테고리 " + ctgr + " : ");
-			ResultCtgr resultCtgr = (ResultCtgr) serviceYoutube.callResultCtgrBtCtgr(ctgr).get(0);
-			if (resultCtgr != null) {
-				System.out.print("o");
-				serviceBasic.setResultCtgr(resultCtgr);
-			} else {
-				System.out.print("x");
-			}
-			System.out.println(" :종료");
-		}
-		System.out.println("완료");
-		
-		ctgrs = serviceBasic.getCtgrs();
-		System.out.println("채널 통계 정보 갱신");
-		for (String ctgr: ctgrs) {
-			System.out.println("\t카테고리 : " + ctgr + " :시작");
-			List<String> channels = serviceChannel.getChannelIdsForStatisticsByCtgr(ctgr);
-			System.out.println("\t\t채널 개수: " + channels.size());
-			List<ChannelStatDto> channelStats = (List<ChannelStatDto>) serviceYoutube.callChannelStatsByChannelId(channels).get(0);
-			for (ChannelStatDto item : channelStats) {
-				serviceChannel.setChannelStatistics(item);
-			}
-			System.out.println("\t카테고리: " + ctgr + " :완료");
-		}
-		System.out.println("완료");
-		
-		System.out.println("비디오 통계 정보 갱신");
-		for (String ctgr: ctgrs) {
-			System.out.println("\t카테고리 : " + ctgr + " :시작");
-			List<String> videos = serviceVideo.getVideoIdsForStatisticsByCtgr(ctgr);
-			System.out.println("\t\t비디오 개수: " + videos.size());
-			List<VideoStatDto> videoStats = (List<VideoStatDto>) serviceYoutube.callVideoStatsByVideoId(videos).get(0);
-			for(VideoStatDto item : videoStats) {
-				serviceVideo.setVideoStatistics(item);
-			}
-			System.out.println("\t카테고리: " + ctgr + " :완료");
-		}
-		System.out.println("완료");
-	}
-
 }

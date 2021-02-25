@@ -29,8 +29,8 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public void setVideoChain(ChainDto item) {
-		mapper.setVideoChain(item);
+	public void setChain(ChainDto item) {
+		mapper.setChain(item);
 	}
 
 	@Override
@@ -49,8 +49,8 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public int checkVideoChain(ChainDto item) {
-		return mapper.checkVideoChain(item);
+	public int checkChain(ChainDto item) {
+		return mapper.checkChain(item);
 	}
 
 	@Override
@@ -59,12 +59,12 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public List<String> getVideoIdsForStatisticsByCtgr(String ctgr) {
-		return mapper.getVideoIdsForStatisticsByCtgr(ctgr);
+	public List<String> getVideoIdsForStatisticsByTopic(String ctgr) {
+		return mapper.getVideoIdsForStatisticsByTopic(ctgr);
 	}
 
 	@Override
-	public List<String> getVideoIdsForCommentByCtgr(String ctgr) {
-		return mapper.getVideoIdsForCommentByCtgr(ctgr);
+	public List<String> getVideoIdsForCommentByTopic(String ctgr) {
+		return mapper.getVideoIdsForCommentByTopic(ctgr);
 	}
 }

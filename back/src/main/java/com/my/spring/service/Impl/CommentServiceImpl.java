@@ -21,7 +21,7 @@ public class CommentServiceImpl implements CommentService{
 	}
 
 	@Override
-	public int checkComment(String item) {
+	public int checkComment(CommentDto item) {
 		return mapper.checkComment(item);
 	}
 

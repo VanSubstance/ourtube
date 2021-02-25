@@ -2,18 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper
 	namespace = "com.my.spring.mapper.BasicMapper">
-	<select id="checkResultCtgr" parameterType="String" resultType="Int">
-		select count(*) from resultctgr where ctgr = #{ctgr} and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+	
+	<select id="checkTopicStat" parameterType="String" resultType="Int">
+		select count(*) from topicstatistics where topic = #{topic} and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
 	</select>
-	<insert id="setResultCtgr" parameterType="com.my.spring.domain.ResultCtgr">
-		insert into resultCtgr (ctgr, infoDate, resultcount)
-		values (#{item.ctgr}, #{item.infoDate}, #{item.resultCount})
+	<insert id="setTopicStat" parameterType="com.my.spring.domain.TopicStatDto">
+		insert into topicstatistics (topic, infoDate, resultcount)
+		values (#{item.topic}, #{item.infoDate}, #{item.resultCount})
 	</insert>
-	<select id="getCtgrs" resultType="String">
-		select title from ctgr
+	<select id="getTopics" resultType="com.my.spring.domain.TopicDto">
+		select * from topic
 	</select>
-	<select id="getCtgrsForPatch" resultType="String">
-		select a.title from ctgr a where a.title not in (
-		select ctgr from resultctgr where infodate = TO_DATE(SYSDATE, 'YY/MM/DD'))
+	<select id="getTopicsForPatch" resultType="com.my.spring.domain.TopicDto">
+		select a.id from topic a where a.title not in (
+		select topic from topicstatistics where infodate = TO_DATE(SYSDATE, 'YY/MM/DD'))
 	</select>
 </mapper>

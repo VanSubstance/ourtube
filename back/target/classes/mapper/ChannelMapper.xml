@@ -5,18 +5,18 @@
 	<select id="getChannelIdsByCtgr" parameterType="String" resultType="String">
 		select a.id from channel a, chainchannel b where a.id = b.id and b.ctgr = #{ctgr}
 	</select>
-	<select id="getChannelIdsForStatisticsByCtgr" parameterType="String" resultType="String">
-		select a.id from channel a, chainchannel b 
-		where a.id = b.id and b.ctgr = #{ctgr} and 
+	<select id="getChannelIdsForStatisticsByTopic" parameterType="String" resultType="String">
+		select a.id from channel a, channelTopic b 
+		where a.id = b.id and b.topic = #{topic} and 
 		a.id not in (select id from channelStatistics where infoDate = TO_DATE(SYSDATE, 'YY/MM/DD'))
 	</select>
 	<insert id="setChannelInfo" parameterType="com.my.spring.domain.ChannelDto">
 		insert into channel (id, title, thumbnail, description, publisheddate)
 		values (#{item.id}, #{item.title}, #{item.thumbnail}, #{item.description}, #{item.publishedDate})
 	</insert>
-	<insert id="setChannelChain" parameterType="com.my.spring.domain.ChainDto">
-		insert into chainchannel (id, ctgr)
-		values (#{item.id}, (select title from ctgrdictionary where code = #{item.ctgr}))
+	<insert id="setChain" parameterType="com.my.spring.domain.ChainDto">
+		insert into channelTopic (id, topic)
+		values (#{item.id}, #{item.topic})
 	</insert>
 	<insert id="setChannelStatistics" parameterType="com.my.spring.domain.ChannelStatDto">
 		insert into channelStatistics (id, infodate, videocount, viewcount, subscount)
@@ -28,7 +28,7 @@
 	<select id="checkChannelStatistics" parameterType="com.my.spring.domain.ChannelStatDto" resultType="Int">
 		select count(*) from channelstatistics where id = #{item.id} and infodate = #{item.infoDate}
 	</select>
-	<select id="checkChannelChain" parameterType="com.my.spring.domain.ChannelDto" resultType="Int">
-		select count(*) from chainchannel a, ctgrdictionary b where a.id = #{item.id} and a.ctgr = b.title and b.code = #{item.ctgr}
+	<select id="checkChain" parameterType="com.my.spring.domain.ChainDto" resultType="Int">
+		select count(*) from channelTopic where topic = #{item.topic} and id = #{item.id}
 	</select>
 </mapper>

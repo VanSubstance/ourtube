@@ -9,13 +9,13 @@ import com.my.spring.domain.VideoStatDto;
 
 public interface VideoService {
 	public List<String> getVideoIdsByCtgr(String ctgr);
-	public List<String> getVideoIdsForStatisticsByCtgr(String ctgr);
-	public List<String> getVideoIdsForCommentByCtgr(String ctgr);
+	public List<String> getVideoIdsForStatisticsByTopic(String topic);
+	public List<String> getVideoIdsForCommentByTopic(String topic);
 	public void setVideoInfo(VideoDto item);
-	public void setVideoChain(ChainDto item);
+	public void setChain(ChainDto item);
 	public void setVideoStatistics(VideoStatDto item);
 	public void setVideoTag(TagDto item);
 	public int checkVideoInfo(String id);
-	public int checkVideoChain(ChainDto item);
+	public int checkChain(ChainDto item);
 	public int checkVideoStatistics(VideoStatDto item);
 }

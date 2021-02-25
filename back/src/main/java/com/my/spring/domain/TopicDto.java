@@ -4,7 +4,7 @@ import lombok.*;
 
 @Getter
 @Setter
-public class ChainDto {
+public class TopicDto {
 	private String id;
 	private String topic;
 }

@@ -5,8 +5,8 @@ import lombok.*;
 
 @Getter
 @Setter
-public class ResultCtgr {
-	private String ctgr;
+public class TopicStatDto {
+	private String topic;
 	private Date infoDate;
 	private Integer resultCount;
 }

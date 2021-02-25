@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.my.spring.domain.ResultCtgr;
+import com.my.spring.domain.TopicDto;
+import com.my.spring.domain.TopicStatDto;
 import com.my.spring.mapper.BasicMapper;
 import com.my.spring.service.BasicService;
 
@@ -15,23 +16,22 @@ public class BasicServiceImpl implements BasicService {
 	BasicMapper mapper;
 
 	@Override
-	public int checkResultCtgr(String ctgr) {
-		return mapper.checkResultCtgr(ctgr);
+	public int checkTopicStat(String topic) {
+		return mapper.checkTopicStat(topic);
 	}
 
 	@Override
-	public void setResultCtgr(ResultCtgr item) {
-		mapper.setResultCtgr(item);		
+	public void setTopicStat(TopicStatDto item) {
+		mapper.setTopicStat(item);
 	}
 
 	@Override
-	public List<String> getCtgrs() {
-		return mapper.getCtgrs();
+	public List<TopicDto> getTopics() {
+		return mapper.getTopics();
 	}
 
 	@Override
-	public List<String> getCtgrsForPatch() {
-		return mapper.getCtgrsForPatch();
+	public List<TopicDto> getTopicsForPatch() {
+		return mapper.getTopicsForPatch();
 	}
-	
 }

@@ -3,25 +3,25 @@
 <mapper
 	namespace = "com.my.spring.mapper.VideoMapper">
 	<select id="getVideoIdsByCtgr" parameterType="String" resultType="String">
-		select a.id from video a, chainvideo b where a.id = b.id and b.ctgr = #{ctgr}
+		select a.id from video a, videoTopic b where a.id = b.id and b.topic = #{topic}
 	</select>
-	<select id="getVideoIdsForStatisticsByCtgr" parameterType="String" resultType="String">
-		select a.id from Video a, chainvideo b 
-		where a.id = b.id and b.ctgr = #{ctgr} and 
+	<select id="getVideoIdsForStatisticsByTopic" parameterType="String" resultType="String">
+		select a.id from Video a, videoTopic b 
+		where a.id = b.id and b.topic = #{topic} and 
 		a.id not in (select id from VideoStatistics where infoDate = TO_DATE(SYSDATE, 'YY/MM/DD'))
 	</select>
-	<select id="getVideoIdsForCommentByCtgr" parameterType="String" resultType="String">
-		select a.id from Video a, chainvideo b 
-		where a.id = b.id and b.ctgr = #{ctgr} and 
+	<select id="getVideoIdsForCommentByTopic" parameterType="String" resultType="String">
+		select a.id from Video a, videoTopic b 
+		where a.id = b.id and b.topic = #{topic} and 
 		a.id not in (select videoid id from comments group by videoid)
 	</select>
 	<insert id="setVideoInfo" parameterType="com.my.spring.domain.VideoDto">
 		insert into Video (id, title, thumbnail, description, publisheddate)
 		values (#{item.id}, #{item.title}, #{item.thumbnail}, #{item.description}, #{item.publishedDate})
 	</insert>
-	<insert id="setVideoChain" parameterType="com.my.spring.domain.ChainDto">
-		insert into chainVideo (id, ctgr)
-		values (#{item.id}, (select title from ctgrdictionary where code = #{chain.ctgr}))
+	<insert id="setChain" parameterType="com.my.spring.domain.ChainDto">
+		insert into videoTopic (id, topic)
+		values (#{item.id}, #{item.topic})
 	</insert>
 	<insert id="setVideoStatistics" parameterType="com.my.spring.domain.VideoStatDto">
 		insert into VideoStatistics (id, infodate, likecount, dislikecount, viewcount, favoritecount, commentcount)
@@ -37,7 +37,7 @@
 	<select id="checkVideoStatistics" parameterType="com.my.spring.domain.VideoStatDto" resultType="Int">
 		select count(*) from Videostatistics where id = #{item.id} and infodate = #{item.infoDate}
 	</select>
-	<select id="checkVideoChain" parameterType="com.my.spring.domain.VideoDto" resultType="Int">
-		select count(a) from chainVideo a, ctgrdictionary b where a.id = #{item.id} and a.ctgr = b.title and b.code = #{item.ctgr}
+	<select id="checkChain" parameterType="com.my.spring.domain.ChainDto" resultType="Int">
+		select count(*) from videoTopic where id = #{item.id} and topic = #{item.topic}
 	</select>
 </mapper>
