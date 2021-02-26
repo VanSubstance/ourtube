@@ -39,23 +39,8 @@ public class BasicController {
 	@Autowired
 	private CommentService serviceComment;
 
-	public void patchChannelByTopic(TopicDto topicDto) {
-		System.out.println("------------------------------------------------");
-		ArrayList<Object> data = serviceYoutube.callChannelIdsByTopic(topicDto);
-		
-		System.out.print("토픽 당일 데이터: ");
-		TopicStatDto topicStatDto = (TopicStatDto) data.get(1);
-		if (serviceBasic.checkTopicStat(topicStatDto.getTopic()) != 0) {
-			System.out.println("x");
-		} else {
-			System.out.println("o");
-			serviceBasic.setTopicStat(topicStatDto);
-		}
-		System.out.println(" :완료");
-		
-		System.out.print("\tYoutube API -> 상위 채널 id 리스트: ");
-		List<String> channelIdList = (List<String>) data.get(0);
-		System.out.println(channelIdList.size() + " 개");
+	public void patchChannelByTopic(TopicDto topicDto, List<String> channelIdList) {
+		System.out.println("------------------------ 채널 데이터 작업 시작  ------------------------");
 		
 		System.out.print("\t\t신규 채널 유효성 검사 | o -> 신규 등록 | x -> 이미 존재 | ");
 		List<String> temp = new ArrayList<String>();
@@ -71,7 +56,7 @@ public class BasicController {
 		System.out.println(" : 완료.");		
 		
 		System.out.println("\t\t상위 채널 중 신규 id 리스트 -> 채널 기본 정보 & 채널 토픽 체인");
-		data = serviceYoutube.callChannelInfosByChannelId(channelIdList);
+		ArrayList<Object> data = serviceYoutube.callChannelInfosByChannelId(channelIdList);
 		List<ChannelDto> channelDtoList = (List<ChannelDto>) data.get(0);
 		List<ChainDto> chainChannel = new ArrayList<ChainDto>();
 		
@@ -114,14 +99,11 @@ public class BasicController {
 			serviceChannel.setChannelStatistics(channelStatDto);
 		}
 		System.out.println(" 완료.");
-		System.out.println("------------------------------------------------");
+		System.out.println("------------------------ 채널 데이터 작업 종료  ------------------------");
 	}
 	
-	public void patchVideoByTopic(TopicDto topicDto) {
-		System.out.println("------------------------------------------------");
-		System.out.print("\tYoutube API -> 상위 비디오 id 리스트: ");
-		List<String> videoIdList = (List<String>) serviceYoutube.callVideoIdsByTopic(topicDto).get(0);
-		System.out.println(videoIdList.size() + " 개");
+	public void patchVideoByTopic(TopicDto topicDto, List<String> videoIdList) {
+		System.out.println("------------------------ 비디오 데이터 작업 시작  ------------------------");
 		
 		System.out.print("\t\t신규 비디오 유효성 검사 | o -> 신규 등록 | x -> 이미 존재 | ");
 		List<String> temp = new ArrayList<String>();
@@ -135,6 +117,7 @@ public class BasicController {
 		}
 		videoIdList = temp;
 		System.out.println(" : 완료.");		
+		
 		
 		System.out.println("\t\t상위 비디오 중 신규 id 리스트 -> 비디오 기본 정보 & 태그 & 비디오 토픽 체인");
 		ArrayList<Object> data = serviceYoutube.callVideoInfosByVideoId(videoIdList);
@@ -204,7 +187,32 @@ public class BasicController {
 			serviceVideo.setVideoStatistics(videoStatDto);
 		}
 		System.out.println(" 완료.");
-		System.out.println("------------------------------------------------");
+		System.out.println("------------------------ 비디오 데이터 작업 종료  ------------------------");
+	}
+	
+	public void patchVideoAndChannelByTopic(TopicDto topicDto) {
+		System.out.println("------------------------ 데이터 작업 시작  ------------------------");
+		System.out.print("\tYoutube API -> 상위 비디오 id 리스트");
+		ArrayList<Object> data = serviceYoutube.callVideoIdsByTopic(topicDto);
+		List<String> videoIdList = (List<String>) data.get(0);
+		List<String> channelIdList = (List<String>) data.get(1);
+		TopicStatDto topicStatDto = (TopicStatDto) data.get(2);
+		System.out.print(videoIdList.size() + " 개, 채널 id 리스트: ");
+		System.out.println(channelIdList.size() + " 개");
+
+		System.out.print("토픽 당일 데이터: ");
+		if (serviceBasic.checkTopicStat(topicStatDto.getTopic()) != 0) {
+			System.out.println("x");
+		} else {
+			System.out.println("o");
+			serviceBasic.setTopicStat(topicStatDto);
+		}
+		System.out.println(" :완료");
+		
+		patchChannelByTopic(topicDto, channelIdList);
+		patchVideoByTopic(topicDto, videoIdList);
+		
+		System.out.println("------------------------ 데이터 작업 종료  ------------------------");
 	}
 
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -212,8 +220,7 @@ public class BasicController {
 		List<TopicDto> topicDtoList = serviceBasic.getTopics();
 		for (TopicDto topicDto : topicDtoList) {
 			System.out.println("토픽: " + topicDto.getTopic());
-			patchChannelByTopic(topicDto);
-			patchVideoByTopic(topicDto);
+			patchVideoAndChannelByTopic(topicDto);
 			System.out.println("토픽: " + topicDto.getTopic() + " : 데이터 갱신 완료.");
 		}
 	}

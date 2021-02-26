@@ -8,20 +8,12 @@ import com.my.spring.domain.TopicStatDto;
 
 public interface YoutubeService {
 	
-
 	/**
-	 * 토픽 -> 해당일 토픽 검색결과 수치
+	 * 카테고리 -> 상위 비디오 id 리스트, 채널 id 리스트
+	 * List<String> -> 비디오 id 리스트
 	 * TopicStatDto
+	 * List<String> -> 채널 id 리스트
 	 */
-	public ArrayList<Object> callTopicStatByTopic(TopicDto topicDto);
-	
-	/**
-	 * 카테고리 -> 상위 채널 id 리스트
-	 * List<String>
-	 * TopicStatDto
-	 */
-	public ArrayList<Object> callChannelIdsByTopic(TopicDto topicDto);
-	
 	public ArrayList<Object> callVideoIdsByTopic(TopicDto topicDto);
 	
 	/**
