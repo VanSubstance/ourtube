@@ -22,9 +22,38 @@
 	    <name>Oracle JDBC Repository</name>
 	    <url>http://www.datanucleus.org/downloads/maven2/</url>
 	  </repository>
+	  <repository>
+	  	<id>jitpack.io</id>
+	  	<url>https://jitpack.io</url>
+	  </repository>
 	</repositories>
 	
 	<dependencies>
+	
+		<!-- 형태소 분석을 위한 dependency 불러오기 -->
+		
+		<dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-lambda-java-core</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.shin285</groupId>
+            <artifactId>KOMORAN</artifactId>
+            <version>3.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.0.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
 	
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency> 
@@ -200,6 +229,7 @@
 			<scope>test</scope>
 		</dependency>        
 	</dependencies>
+    
     <build>
         <plugins>
             <plugin>

@@ -20,8 +20,8 @@ public class ChannelServiceImpl implements ChannelService{
 	public ChannelMapper mapper;
 
 	@Override
-	public List<String> getChannelIdsByCtgr(String ctgr) {
-		return mapper.getChannelIdsByCtgr(ctgr);
+	public List<String> getChannelIdsByTopic(String topic) {
+		return mapper.getChannelIdsByTopic(topic);
 	}
 
 	@Override
@@ -57,5 +57,10 @@ public class ChannelServiceImpl implements ChannelService{
 	@Override
 	public List<String> getChannelIdsForStatisticsByTopic(String topic) {
 		return mapper.getChannelIdsForStatisticsByTopic(topic);
+	}
+
+	@Override
+	public String getDescriptionByChannelId(String id) {
+		return mapper.getDescriptionByChannelId(id);
 	}
 }

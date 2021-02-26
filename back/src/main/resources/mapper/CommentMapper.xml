@@ -12,4 +12,8 @@
 		values (#{item.id}, #{item.name}, #{item.text}, #{item.videoId}, #{item.likeCount}, #{item.publishedDate})
 	</insert>
 	
+	<select id="getComments" resultType="com.my.spring.domain.WordDto">
+		select text from comments
+	</select>
+	
 </mapper>

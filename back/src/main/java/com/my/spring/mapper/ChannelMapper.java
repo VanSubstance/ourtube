@@ -9,8 +9,9 @@ import com.my.spring.domain.ChannelDto;
 import com.my.spring.domain.ChannelStatDto;
 
 public interface ChannelMapper {
-	public List<String> getChannelIdsByCtgr(@Param("ctgr") String ctgr);
+	public List<String> getChannelIdsByTopic(@Param("topic") String topic);
 	public List<String> getChannelIdsForStatisticsByTopic(@Param("topic") String topic);
+	public String getDescriptionByChannelId(@Param("id") String id);
 	public void setChannelInfo(@Param("item") ChannelDto item);
 	public void setChain(@Param("item") ChainDto item);
 	public void setChannelStatistics(@Param("item") ChannelStatDto item);

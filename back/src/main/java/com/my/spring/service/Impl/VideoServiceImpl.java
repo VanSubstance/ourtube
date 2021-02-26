@@ -19,8 +19,8 @@ public class VideoServiceImpl implements VideoService {
 	private VideoMapper mapper;
 
 	@Override
-	public List<String> getVideoIdsByCtgr(String ctgr) {
-		return mapper.getVideoIdsByCtgr(ctgr);
+	public List<String> getVideoIdsByTopic(String topic) {
+		return mapper.getVideoIdsByTopic(topic);
 	}
 
 	@Override
@@ -66,5 +66,15 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	public List<String> getVideoIdsForCommentByTopic(String ctgr) {
 		return mapper.getVideoIdsForCommentByTopic(ctgr);
+	}
+
+	@Override
+	public List<TagDto> getVideoTagByVideoId(String id) {
+		return mapper.getVideoTagByVideoId(id);
+	}
+
+	@Override
+	public String getDescriptionByVideoId(String id) {
+		return mapper.getDescriptionByVideoId(id);
 	}
 }

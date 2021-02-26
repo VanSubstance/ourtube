@@ -18,14 +18,17 @@ import com.my.spring.domain.TagDto;
 import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
+import com.my.spring.domain.WordDto;
 import com.my.spring.service.BasicService;
 import com.my.spring.service.ChannelService;
 import com.my.spring.service.CommentService;
+import com.my.spring.service.KomoranService;
 import com.my.spring.service.VideoService;
+import com.my.spring.service.WordService;
 import com.my.spring.service.YoutubeService;
 
 @RestController
-@RequestMapping("/patch")
+@RequestMapping("")
 public class BasicController {
 
 	@Autowired
@@ -38,7 +41,11 @@ public class BasicController {
 	private YoutubeService serviceYoutube;
 	@Autowired
 	private CommentService serviceComment;
-
+	@Autowired
+	private KomoranService serviceKomoran;
+	@Autowired
+	private WordService serviceWord;
+	
 	public void patchChannelByTopic(TopicDto topicDto, List<String> channelIdList) {
 		System.out.println("------------------------ 채널 데이터 작업 시작  ------------------------");
 		
@@ -215,7 +222,7 @@ public class BasicController {
 		System.out.println("------------------------ 데이터 작업 종료  ------------------------");
 	}
 
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/patch/all", method = RequestMethod.GET)
 	public void patchDataByCtgr() {
 		List<TopicDto> topicDtoList = serviceBasic.getTopics();
 		for (TopicDto topicDto : topicDtoList) {
@@ -223,5 +230,109 @@ public class BasicController {
 			patchVideoAndChannelByTopic(topicDto);
 			System.out.println("토픽: " + topicDto.getTopic() + " : 데이터 갱신 완료.");
 		}
+	}
+
+	public void parseTags() {
+		List<TopicDto> topicDtoList = serviceBasic.getTopics();
+		for (TopicDto topicDto : topicDtoList) {
+			System.out.println("토픽: " + topicDto.getTopic());
+			List<String> videoIdList = serviceVideo.getVideoIdsByTopic(topicDto.getTopic());
+			for (String videoId : videoIdList) {
+				System.out.print("\t비디오 id: " + videoId);
+				if (serviceWord.checkCompleteForTag(videoId) == 0) {
+					List<TagDto> tags = serviceVideo.getVideoTagByVideoId(videoId);
+					System.out.print("\t\t태그 수: " + tags.size() + " : ");
+					for (TagDto tag : tags) {
+						System.out.print("|");
+						List<WordDto> wordDtoList = serviceKomoran.parseTag(tag);
+						for (WordDto wordDto : wordDtoList) {
+							if (serviceWord.getWordFromTag(wordDto).size() != 0) {
+								WordDto exist = serviceWord.getWordFromTag(wordDto).get(0);
+								wordDto.setCount(wordDto.getCount() + exist.getCount());
+								serviceWord.updateWordFromTag(wordDto);
+							} else {
+								serviceWord.setWordFromTag(wordDto);
+							}
+						}
+					}
+					System.out.println(" : 완료.");
+				} else {
+					System.out.println(" 이미 완료. ");
+				}
+			}
+		}
+	}
+
+	public void parseChannels() {
+		List<TopicDto> topicDtoList = serviceBasic.getTopics();
+		for (TopicDto topicDto : topicDtoList) {
+			System.out.println("토픽: " + topicDto.getTopic());
+			List<String> channelIdList = serviceChannel.getChannelIdsByTopic(topicDto.getTopic());
+			for (String channelId : channelIdList) {
+				System.out.print("\t채널 id: " + channelId + " : ");
+				if (serviceWord.checkCompleteForChannel(channelId) == 0) {
+					String description = serviceChannel.getDescriptionByChannelId(channelId);
+					if (description != null) {
+						List<WordDto> wordDtoList = serviceKomoran.parseString(channelId, description);
+						for (WordDto wordDto : wordDtoList) {
+							System.out.print("|");
+							if (serviceWord.getWordFromChannel(wordDto).size() != 0) {
+								WordDto exist = serviceWord.getWordFromChannel(wordDto).get(0);
+								wordDto.setCount(wordDto.getCount() + exist.getCount());
+								serviceWord.updateWordFromChannel(wordDto);
+							} else {
+								serviceWord.setWordFromChannel(wordDto);
+							}
+						}
+					}
+					System.out.println(" : 완료.");
+				} else {
+					System.out.println(" 이미 완료. ");
+				}
+			}
+		}
+	}
+	
+	public void parseVideos() {
+		List<TopicDto> topicDtoList = serviceBasic.getTopics();
+		for (TopicDto topicDto : topicDtoList) {
+			System.out.println("토픽: " + topicDto.getTopic());
+			List<String> videoIdList = serviceVideo.getVideoIdsByTopic(topicDto.getTopic());
+			for (String videoId : videoIdList) {
+				System.out.print("\t비디오 id: " + videoId + " : ");
+				if (serviceWord.checkCompleteForVideo(videoId) == 0) {
+					String description = serviceVideo.getDescriptionByVideoId(videoId);
+					if (description != null) {
+						List<WordDto> wordDtoList = serviceKomoran.parseString(videoId, description);
+						for (WordDto wordDto : wordDtoList) {
+							System.out.print("|");
+							if (serviceWord.getWordFromVideo(wordDto).size() != 0) {
+								WordDto exist = serviceWord.getWordFromVideo(wordDto).get(0);
+								wordDto.setCount(wordDto.getCount() + exist.getCount());
+								serviceWord.updateWordFromVideo(wordDto);
+							} else {
+								serviceWord.setWordFromVideo(wordDto);
+							}
+						}
+					}
+					System.out.println(" : 완료.");
+				} else {
+					System.out.println(" 이미 완료. ");
+				}
+			}
+		}
+	}
+
+	@RequestMapping(value = "/parse/all")
+	public void parseWords() {
+		System.out.println("----------------- 채널 키워드 추출 시작 -----------------");
+		parseChannels();
+		System.out.println("----------------- 채널 키워드 추출 시작 -----------------");
+		System.out.println("----------------- 비디오 키워드 추출 시작 -----------------");
+		parseVideos();
+		System.out.println("----------------- 비디오 키워드 추출 시작 -----------------");
+		System.out.println("----------------- 태그 키워드 추출 시작 -----------------");
+		parseTags();
+		System.out.println("----------------- 태그 키워드 추출 종료 -----------------");
 	}
 }

@@ -2,8 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper
 	namespace = "com.my.spring.mapper.ChannelMapper">
-	<select id="getChannelIdsByCtgr" parameterType="String" resultType="String">
-		select a.id from channel a, chainchannel b where a.id = b.id and b.ctgr = #{ctgr}
+	<select id="getChannelIdsByTopic" parameterType="String" resultType="String">
+		select a.id from channel a, channelTopic b where a.id = b.id and b.Topic = #{topic}
+	</select>
+	<select id="getDescriptionByChannelId" parameterType="String" resultType="String">
+		select description from channel where id = #{id}
 	</select>
 	<select id="getChannelIdsForStatisticsByTopic" parameterType="String" resultType="String">
 		select a.id from channel a, channelTopic b 

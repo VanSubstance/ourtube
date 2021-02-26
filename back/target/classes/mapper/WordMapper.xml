@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper
+	namespace = "com.my.spring.mapper.WordMapper">
+	<select id="checkCompleteForTag" parameterType="String" resultType="Int">
+		select count(*) from TagWord where id = #{id}
+	</select>
+	<select id="getWordFromTag" parameterType="com.my.spring.domain.WordDto" resultType="com.my.spring.domain.WordDto">
+		select * from TagWord where word = #{item.word} and id = #{item.id}
+	</select>
+	<insert id="setWordFromTag" parameterType="com.my.spring.domain.WordDto">
+		insert into TagWord (id, word, count) values (#{item.id}, #{item.word}, #{item.count})
+	</insert>
+	<update id="updateWordFromTag" parameterType="com.my.spring.domain.WordDto">
+		update tagWord set
+		count = #{item.count}
+		where word = #{item.word} and id = #{item.id}
+	</update>
+	
+	
+	<select id="checkCompleteForChannel" parameterType="String" resultType="Int">
+		select count(*) from ChannelWord where id = #{id}
+	</select>
+	<select id="getWordFromChannel" parameterType="com.my.spring.domain.WordDto" resultType="com.my.spring.domain.WordDto">
+		select * from ChannelWord where word = #{item.word} and id = #{item.id}
+	</select>
+	<insert id="setWordFromChannel" parameterType="com.my.spring.domain.WordDto">
+		insert into ChannelWord (id, word, count) values (#{item.id}, #{item.word}, #{item.count})
+	</insert>
+	<update id="updateWordFromChannel" parameterType="com.my.spring.domain.WordDto">
+		update ChannelWord set
+		count = #{item.count}
+		where word = #{item.word} and id = #{item.id}
+	</update>
+	
+	
+	<select id="checkCompleteForVideo" parameterType="String" resultType="Int">
+		select count(*) from VideoWord where id = #{id}
+	</select>
+	<select id="getWordFromVideo" parameterType="com.my.spring.domain.WordDto" resultType="com.my.spring.domain.WordDto">
+		select * from VideoWord where word = #{item.word} and id = #{item.id}
+	</select>
+	<insert id="setWordFromVideo" parameterType="com.my.spring.domain.WordDto">
+		insert into VideoWord (id, word, count) values (#{item.id}, #{item.word}, #{item.count})
+	</insert>
+	<update id="updateWordFromVideo" parameterType="com.my.spring.domain.WordDto">
+		update VideoWord set
+		count = #{item.count}
+		where word = #{item.word} and id = #{item.id}
+	</update>
+	
+</mapper>
