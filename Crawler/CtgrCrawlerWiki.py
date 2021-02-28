@@ -4,7 +4,7 @@ import requests
 import csv
 import pandas as pd
 
-path = 'CtgrWiki_Tier1_1.csv'
+path = 'CtgrWiki_Tier1_2.csv'
 file_result = open(path, 'w', newline='', encoding='utf-8-sig')
 writer = csv.writer(file_result)
 writer.writerow(['title'])

@@ -81,7 +81,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			// 검색 범위 한국으로 한정
 			base.setRegionCode("KR");
 			// 토픽 아이디 한정
-			base.setTopicId(topicDto.getId());
+			base.setQ(topicDto.getTopic());
 			base.setVideoCategoryId("20");
 			// 조회 상한선
 			base.setMaxResults((long) 40);

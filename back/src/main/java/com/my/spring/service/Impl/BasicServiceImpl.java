@@ -34,4 +34,9 @@ public class BasicServiceImpl implements BasicService {
 	public List<TopicDto> getTopicsForPatch() {
 		return mapper.getTopicsForPatch();
 	}
+
+	@Override
+	public List<TopicDto> getTopicGames() {
+		return mapper.getTopicGames();
+	}
 }

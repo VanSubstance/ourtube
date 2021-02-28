@@ -11,5 +11,6 @@ public interface BasicMapper {
 	public int checkTopicStat(@Param("topic") String topic);
 	public void setTopicStat(@Param("item") TopicStatDto item);
 	public List<TopicDto> getTopics();
+	public List<TopicDto> getTopicGames();
 	public List<TopicDto> getTopicsForPatch();
 }

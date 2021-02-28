@@ -221,17 +221,7 @@ public class BasicController {
 		
 		System.out.println("------------------------ 데이터 작업 종료  ------------------------");
 	}
-
-	@RequestMapping(value = "/patch/all", method = RequestMethod.GET)
-	public void patchDataByCtgr() {
-		List<TopicDto> topicDtoList = serviceBasic.getTopics();
-		for (TopicDto topicDto : topicDtoList) {
-			System.out.println("토픽: " + topicDto.getTopic());
-			patchVideoAndChannelByTopic(topicDto);
-			System.out.println("토픽: " + topicDto.getTopic() + " : 데이터 갱신 완료.");
-		}
-	}
-
+	
 	public void parseTags() {
 		List<TopicDto> topicDtoList = serviceBasic.getTopics();
 		for (TopicDto topicDto : topicDtoList) {
@@ -320,6 +310,52 @@ public class BasicController {
 					System.out.println(" 이미 완료. ");
 				}
 			}
+		}
+	}
+
+	@RequestMapping(value = "/patch/1", method = RequestMethod.GET)
+	public void patchDataByTopicTier1() {
+		List<TopicDto> topicDtoList = serviceBasic.getTopics();
+		for (TopicDto topicDto : topicDtoList) {
+			System.out.println("토픽: " + topicDto.getTopic());
+			patchVideoAndChannelByTopic(topicDto);
+			System.out.println("토픽: " + topicDto.getTopic() + " : 데이터 갱신 완료.");
+		}
+	}
+	
+	@RequestMapping(value = "/patch/2/1", method = RequestMethod.GET)
+	public void patchDataByTopic1() {
+		List<TopicDto> topicDtoList = serviceBasic.getTopics();
+		int len = topicDtoList.size();
+		topicDtoList = topicDtoList.subList(0, len/3);
+		for (TopicDto topicDto : topicDtoList) {
+			System.out.println("토픽: " + topicDto.getTopic());
+			patchVideoAndChannelByTopic(topicDto);
+			System.out.println("토픽: " + topicDto.getTopic() + " : 데이터 갱신 완료.");
+		}
+	}
+
+	@RequestMapping(value = "/patch/2/2", method = RequestMethod.GET)
+	public void patchDataByTopic2() {
+		List<TopicDto> topicDtoList = serviceBasic.getTopics();
+		int len = topicDtoList.size();
+		topicDtoList = topicDtoList.subList(len/3, len*2/3);
+		for (TopicDto topicDto : topicDtoList) {
+			System.out.println("토픽: " + topicDto.getTopic());
+			patchVideoAndChannelByTopic(topicDto);
+			System.out.println("토픽: " + topicDto.getTopic() + " : 데이터 갱신 완료.");
+		}
+	}
+
+	@RequestMapping(value = "/patch/2/3", method = RequestMethod.GET)
+	public void patchDataByTopic3() {
+		List<TopicDto> topicDtoList = serviceBasic.getTopics();
+		int len = topicDtoList.size();
+		topicDtoList = topicDtoList.subList(len*2/3, len);
+		for (TopicDto topicDto : topicDtoList) {
+			System.out.println("토픽: " + topicDto.getTopic());
+			patchVideoAndChannelByTopic(topicDto);
+			System.out.println("토픽: " + topicDto.getTopic() + " : 데이터 갱신 완료.");
 		}
 	}
 

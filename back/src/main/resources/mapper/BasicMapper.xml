@@ -11,10 +11,13 @@
 		values (#{item.topic}, #{item.infoDate}, #{item.resultCount})
 	</insert>
 	<select id="getTopics" resultType="com.my.spring.domain.TopicDto">
-		select * from topic
+		select * from topictotal
+	</select>
+	<select id="getTopicGames" resultType="com.my.spring.domain.TopicDto">
+		select * from topicgame
 	</select>
 	<select id="getTopicsForPatch" resultType="com.my.spring.domain.TopicDto">
-		select a.id from topic a where a.title not in (
+		select a.id from topicbasic a where a.title not in (
 		select topic from topicstatistics where infodate = TO_DATE(SYSDATE, 'YY/MM/DD'))
 	</select>
 </mapper>
