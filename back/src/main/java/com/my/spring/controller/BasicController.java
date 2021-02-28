@@ -314,7 +314,7 @@ public class BasicController {
 	}
 
 	@RequestMapping(value = "/patch/1", method = RequestMethod.GET)
-	public void patchDataByTopicTier1() {
+	public void patchDataByTopicTotal() {
 		List<TopicDto> topicDtoList = serviceBasic.getTopics();
 		for (TopicDto topicDto : topicDtoList) {
 			System.out.println("≈‰«»: " + topicDto.getTopic());
