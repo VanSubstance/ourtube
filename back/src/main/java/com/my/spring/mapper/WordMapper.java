@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.my.spring.domain.WordDto;
+import com.my.spring.domain.words.NounDto;
 
 public interface WordMapper {
 	public List<WordDto> getWordFromTag(@Param("item") WordDto item);
@@ -21,4 +22,8 @@ public interface WordMapper {
 	public void setWordFromVideo(@Param("item") WordDto item);
 	public void updateWordFromVideo(@Param("item") WordDto item);
 	public int checkCompleteForVideo(@Param("id") String id);
+	
+	public List<NounDto> getTagWordsByTopic(@Param("topic") String topic);
+	public List<NounDto> getChannelWordsByTopic(@Param("topic") String topic);
+	public List<NounDto> getVideoWordsByTopic(@Param("topic") String topic);
 }

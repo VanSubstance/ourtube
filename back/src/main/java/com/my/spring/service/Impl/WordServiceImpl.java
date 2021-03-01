@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.my.spring.domain.WordDto;
+import com.my.spring.domain.words.NounDto;
 import com.my.spring.mapper.WordMapper;
 import com.my.spring.service.WordService;
 
@@ -73,5 +74,20 @@ public class WordServiceImpl implements WordService {
 	@Override
 	public int checkCompleteForVideo(String id) {
 		return mapper.checkCompleteForVideo(id);
+	}
+
+	@Override
+	public List<NounDto> getTagWordsByTopic(String topic) {
+		return mapper.getTagWordsByTopic(topic);
+	}
+
+	@Override
+	public List<NounDto> getChannelWordsByTopic(String topic) {
+		return mapper.getChannelWordsByTopic(topic);
+	}
+
+	@Override
+	public List<NounDto> getVideoWordsByTopic(String topic) {
+		return mapper.getVideoWordsByTopic(topic);
 	}
 }

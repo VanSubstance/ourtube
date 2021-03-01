@@ -49,4 +49,14 @@
 		where word = #{item.word} and id = #{item.id}
 	</update>
 	
+	<select id="getTagWordsByTopic" parameterType="String" resultType="com.my.spring.domain.words.NounDto">
+		select * from tagWord where id in (select id from videotopic where topic = #{topic})
+	</select>
+	<select id="getChannelWordsByTopic" parameterType="String" resultType="com.my.spring.domain.words.NounDto">
+		select * from channelWord where id in (select id from channelTopic where topic = #{topic})
+	</select>
+	<select id="getVideoWordsByTopic" parameterType="String" resultType="com.my.spring.domain.words.NounDto">
+		select * from videoWord where id in (select id from videotopic where topic = #{topic})
+	</select>
+	
 </mapper>

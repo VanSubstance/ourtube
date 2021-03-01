@@ -3,6 +3,7 @@ package com.my.spring.service;
 import java.util.List;
 
 import com.my.spring.domain.WordDto;
+import com.my.spring.domain.words.NounDto;
 
 public interface WordService {
 	public List<WordDto> getWordFromTag(WordDto item);
@@ -19,4 +20,8 @@ public interface WordService {
 	public void setWordFromVideo(WordDto item);
 	public void updateWordFromVideo(WordDto item);
 	public int checkCompleteForVideo(String id);
+	
+	public List<NounDto> getTagWordsByTopic(String topic);
+	public List<NounDto> getChannelWordsByTopic(String topic);
+	public List<NounDto> getVideoWordsByTopic(String topic);
 }
