@@ -39,4 +39,9 @@ public class BasicServiceImpl implements BasicService {
 	public List<TopicDto> getTopicGames() {
 		return mapper.getTopicGames();
 	}
+
+	@Override
+	public List<String> getNounFilter() {
+		return mapper.getNounFilter();
+	}
 }

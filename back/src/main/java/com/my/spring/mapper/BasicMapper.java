@@ -13,4 +13,5 @@ public interface BasicMapper {
 	public List<TopicDto> getTopics();
 	public List<TopicDto> getTopicGames();
 	public List<TopicDto> getTopicsForPatch();
+	public List<String> getNounFilter();
 }

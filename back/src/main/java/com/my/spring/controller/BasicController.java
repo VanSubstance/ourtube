@@ -1,6 +1,7 @@
 package com.my.spring.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,6 @@ import com.my.spring.domain.WordDto;
 import com.my.spring.service.BasicService;
 import com.my.spring.service.ChannelService;
 import com.my.spring.service.CommentService;
-import com.my.spring.service.KomoranService;
 import com.my.spring.service.VideoService;
 import com.my.spring.service.WordService;
 import com.my.spring.service.YoutubeService;
@@ -42,16 +42,14 @@ public class BasicController {
 	@Autowired
 	private CommentService serviceComment;
 	@Autowired
-	private KomoranService serviceKomoran;
-	@Autowired
 	private WordService serviceWord;
-	
+
 	public void patchChannelByTopic(TopicDto topicDto, List<String> channelIdList) {
 		System.out.println("------------------------ 채널 데이터 작업 시작  ------------------------");
-		
+
 		System.out.print("\t\t신규 채널 유효성 검사 | o -> 신규 등록 | x -> 이미 존재 | ");
 		List<String> temp = new ArrayList<String>();
-		for (String channelId: channelIdList) {
+		for (String channelId : channelIdList) {
 			if (serviceChannel.checkChannelInfo(channelId) != 0) {
 				System.out.print("x");
 			} else {
@@ -60,13 +58,13 @@ public class BasicController {
 			}
 		}
 		channelIdList = temp;
-		System.out.println(" : 완료.");		
-		
+		System.out.println(" : 완료.");
+
 		System.out.println("\t\t상위 채널 중 신규 id 리스트 -> 채널 기본 정보 & 채널 토픽 체인");
 		ArrayList<Object> data = serviceYoutube.callChannelInfosByChannelId(channelIdList);
 		List<ChannelDto> channelDtoList = (List<ChannelDto>) data.get(0);
 		List<ChainDto> chainChannel = new ArrayList<ChainDto>();
-		
+
 		System.out.print("\t\t\t채널 기본 정보 -> Database | o -> 등록 | ");
 		for (ChannelDto channelDto : channelDtoList) {
 			ChainDto newChain = new ChainDto();
@@ -80,7 +78,7 @@ public class BasicController {
 			serviceChannel.setChannelInfo(channelDto);
 		}
 		System.out.println(" 완료.");
-		
+
 		System.out.print("\t\t\t채널 토픽 체인 -> Database | o -> 신규 등록 | x -> 이미 존재 | ");
 		System.out.print(chainChannel.size() + " 개\n\t\t\t");
 		for (ChainDto chainDto : chainChannel) {
@@ -92,7 +90,7 @@ public class BasicController {
 			}
 		}
 		System.out.println(" 완료.");
-		
+
 		System.out.print("\tDatebase -> 금일 통계 정보 갱신을 위한 채널 id 리스트: ");
 		channelIdList = serviceChannel.getChannelIdsForStatisticsByTopic(topicDto.getTopic());
 		System.out.println(channelIdList.size() + " 개");
@@ -108,13 +106,13 @@ public class BasicController {
 		System.out.println(" 완료.");
 		System.out.println("------------------------ 채널 데이터 작업 종료  ------------------------");
 	}
-	
+
 	public void patchVideoByTopic(TopicDto topicDto, List<String> videoIdList) {
 		System.out.println("------------------------ 비디오 데이터 작업 시작  ------------------------");
-		
+
 		System.out.print("\t\t신규 비디오 유효성 검사 | o -> 신규 등록 | x -> 이미 존재 | ");
 		List<String> temp = new ArrayList<String>();
-		for (String videoId: videoIdList) {
+		for (String videoId : videoIdList) {
 			if (serviceVideo.checkVideoInfo(videoId) != 0) {
 				System.out.print("x");
 			} else {
@@ -123,19 +121,18 @@ public class BasicController {
 			}
 		}
 		videoIdList = temp;
-		System.out.println(" : 완료.");		
-		
-		
+		System.out.println(" : 완료.");
+
 		System.out.println("\t\t상위 비디오 중 신규 id 리스트 -> 비디오 기본 정보 & 태그 & 비디오 토픽 체인");
 		ArrayList<Object> data = serviceYoutube.callVideoInfosByVideoId(videoIdList);
 		List<VideoDto> videoDtoList = (List<VideoDto>) data.get(0);
 		List<ChainDto> chainVideo = new ArrayList<ChainDto>();
-		
+
 		System.out.print("\t\t\t비디오 기본 정보 -> Database | o -> 등록 | ");
 		for (VideoDto videoDto : videoDtoList) {
 			ChainDto newChain = new ChainDto();
 			newChain.setId(videoDto.getId());
-			newChain.setTopic(topicDto.getTopic());	
+			newChain.setTopic(topicDto.getTopic());
 			chainVideo.add(newChain);
 			System.out.print("o");
 			if (videoDto.getDescription().length() >= 2000) {
@@ -144,16 +141,16 @@ public class BasicController {
 			serviceVideo.setVideoInfo(videoDto);
 		}
 		System.out.println(" 완료.");
-		
+
 		List<TagDto> tagDtoList = (List<TagDto>) data.get(1);
-		System.out.print("\t\t\t태그 -> Database | o -> 등록 | " + tagDtoList.size() +"개\n\t\t\t");
-		
+		System.out.print("\t\t\t태그 -> Database | o -> 등록 | " + tagDtoList.size() + "개\n\t\t\t");
+
 		for (TagDto tagDto : tagDtoList) {
 			System.out.print("o");
 			serviceVideo.setVideoTag(tagDto);
 		}
 		System.out.println(" 완료.");
-		
+
 		System.out.print("\t\t\t비디오 토픽 체인 -> Database | o -> 신규 등록 | x -> 이미 존재 | ");
 		System.out.print(chainVideo.size() + " 개\n\t\t\t");
 		for (ChainDto chainDto : chainVideo) {
@@ -179,11 +176,11 @@ public class BasicController {
 			}
 		}
 		System.out.println(" 완료.");
-		
+
 		System.out.print("\tDatebase -> 금일 통계 정보 갱신을 위한 비디오 id 리스트: ");
 		videoIdList = serviceVideo.getVideoIdsForStatisticsByTopic(topicDto.getTopic());
 		System.out.println(videoIdList.size() + " 개");
-		
+
 		System.out.println("\t\t금일 통계 정보 갱신을 위한 비디오 id 리스트 -> Youtube API -> 금일 비디오 통계 정보");
 		data = serviceYoutube.callVideoStatsByVideoId(videoIdList);
 		System.out.println();
@@ -196,7 +193,7 @@ public class BasicController {
 		System.out.println(" 완료.");
 		System.out.println("------------------------ 비디오 데이터 작업 종료  ------------------------");
 	}
-	
+
 	public void patchVideoAndChannelByTopic(TopicDto topicDto) {
 		System.out.println("------------------------ 데이터 작업 시작  ------------------------");
 		System.out.print("\tYoutube API -> 상위 비디오 id 리스트");
@@ -215,14 +212,15 @@ public class BasicController {
 			serviceBasic.setTopicStat(topicStatDto);
 		}
 		System.out.println(" :완료");
-		
+
 		patchChannelByTopic(topicDto, channelIdList);
 		patchVideoByTopic(topicDto, videoIdList);
-		
+
 		System.out.println("------------------------ 데이터 작업 종료  ------------------------");
 	}
-	
+
 	public void parseTags() {
+		List<String> filter = serviceBasic.getNounFilter();
 		List<TopicDto> topicDtoList = serviceBasic.getTopics();
 		for (TopicDto topicDto : topicDtoList) {
 			System.out.println("토픽: " + topicDto.getTopic());
@@ -233,15 +231,37 @@ public class BasicController {
 					List<TagDto> tags = serviceVideo.getVideoTagByVideoId(videoId);
 					System.out.print("\t\t태그 수: " + tags.size() + " : ");
 					for (TagDto tag : tags) {
-						System.out.print("|");
-						List<WordDto> wordDtoList = serviceKomoran.parseTag(tag);
-						for (WordDto wordDto : wordDtoList) {
-							if (serviceWord.getWordFromTag(wordDto).size() != 0) {
-								WordDto exist = serviceWord.getWordFromTag(wordDto).get(0);
-								wordDto.setCount(wordDto.getCount() + exist.getCount());
-								serviceWord.updateWordFromTag(wordDto);
-							} else {
-								serviceWord.setWordFromTag(wordDto);
+						String desc = tag.getTag();
+						if (desc != null) {
+							for (String target : filter) {
+								desc = desc.replace(target, " ");
+							}
+							desc = desc.replace("\n", " ");
+							desc = desc.replace("\r", " ");
+							List<String> keywords = new ArrayList(Arrays.asList(desc.split(" ")));
+							List<String> trashs = new ArrayList<String>();
+							for (String keyword : keywords) {
+								if (keyword.length() <= 1) {
+									trashs.add(keyword);
+								}
+							}
+							for (String trash : trashs) {
+								keywords.remove(trash);
+							}
+							for (String keyword : keywords) {
+								if (keyword.length() < 200) {
+									WordDto newWord = new WordDto();
+									newWord.setId(videoId);
+									newWord.setWord(keyword);
+									newWord.setCount(1);
+									if (serviceWord.getWordFromTag(newWord).size() != 0) {
+										WordDto exist = serviceWord.getWordFromTag(newWord).get(0);
+										newWord.setCount(newWord.getCount() + exist.getCount());
+										serviceWord.updateWordFromTag(newWord);
+									} else {
+										serviceWord.setWordFromTag(newWord);
+									}
+								}
 							}
 						}
 					}
@@ -254,6 +274,7 @@ public class BasicController {
 	}
 
 	public void parseChannels() {
+		List<String> filter = serviceBasic.getNounFilter();
 		List<TopicDto> topicDtoList = serviceBasic.getTopics();
 		for (TopicDto topicDto : topicDtoList) {
 			System.out.println("토픽: " + topicDto.getTopic());
@@ -261,17 +282,36 @@ public class BasicController {
 			for (String channelId : channelIdList) {
 				System.out.print("\t채널 id: " + channelId + " : ");
 				if (serviceWord.checkCompleteForChannel(channelId) == 0) {
-					String description = serviceChannel.getDescriptionByChannelId(channelId);
-					if (description != null) {
-						List<WordDto> wordDtoList = serviceKomoran.parseString(channelId, description);
-						for (WordDto wordDto : wordDtoList) {
-							System.out.print("|");
-							if (serviceWord.getWordFromChannel(wordDto).size() != 0) {
-								WordDto exist = serviceWord.getWordFromChannel(wordDto).get(0);
-								wordDto.setCount(wordDto.getCount() + exist.getCount());
-								serviceWord.updateWordFromChannel(wordDto);
-							} else {
-								serviceWord.setWordFromChannel(wordDto);
+					String desc = serviceChannel.getDescriptionByChannelId(channelId);
+					if (desc != null) {
+						for (String target : filter) {
+							desc = desc.replace(target, " ");
+						}
+						desc = desc.replace("\n", " ");
+						desc = desc.replace("\r", " ");
+						List<String> keywords = new ArrayList(Arrays.asList(desc.split(" ")));
+						List<String> trashs = new ArrayList<String>();
+						for (String keyword : keywords) {
+							if (keyword.length() <= 1) {
+								trashs.add(keyword);
+							}
+						}
+						for (String trash : trashs) {
+							keywords.remove(trash);
+						}
+						for (String keyword : keywords) {
+							if (keyword.length() < 200) {
+								WordDto newWord = new WordDto();
+								newWord.setId(channelId);
+								newWord.setWord(keyword);
+								newWord.setCount(1);
+								if (serviceWord.getWordFromChannel(newWord).size() != 0) {
+									WordDto exist = serviceWord.getWordFromChannel(newWord).get(0);
+									newWord.setCount(newWord.getCount() + exist.getCount());
+									serviceWord.updateWordFromChannel(newWord);
+								} else {
+									serviceWord.setWordFromChannel(newWord);
+								}
 							}
 						}
 					}
@@ -282,8 +322,9 @@ public class BasicController {
 			}
 		}
 	}
-	
+
 	public void parseVideos() {
+		List<String> filter = serviceBasic.getNounFilter();
 		List<TopicDto> topicDtoList = serviceBasic.getTopics();
 		for (TopicDto topicDto : topicDtoList) {
 			System.out.println("토픽: " + topicDto.getTopic());
@@ -291,17 +332,36 @@ public class BasicController {
 			for (String videoId : videoIdList) {
 				System.out.print("\t비디오 id: " + videoId + " : ");
 				if (serviceWord.checkCompleteForVideo(videoId) == 0) {
-					String description = serviceVideo.getDescriptionByVideoId(videoId);
-					if (description != null) {
-						List<WordDto> wordDtoList = serviceKomoran.parseString(videoId, description);
-						for (WordDto wordDto : wordDtoList) {
-							System.out.print("|");
-							if (serviceWord.getWordFromVideo(wordDto).size() != 0) {
-								WordDto exist = serviceWord.getWordFromVideo(wordDto).get(0);
-								wordDto.setCount(wordDto.getCount() + exist.getCount());
-								serviceWord.updateWordFromVideo(wordDto);
-							} else {
-								serviceWord.setWordFromVideo(wordDto);
+					String desc = serviceVideo.getDescriptionByVideoId(videoId);
+					if (desc != null) {
+						for (String target : filter) {
+							desc = desc.replace(target, " ");
+						}
+						desc = desc.replace("\n", " ");
+						desc = desc.replace("\r", " ");
+						List<String> keywords = new ArrayList(Arrays.asList(desc.split(" ")));
+						List<String> trashs = new ArrayList<String>();
+						for (String keyword : keywords) {
+							if (keyword.length() <= 1) {
+								trashs.add(keyword);
+							}
+						}
+						for (String trash : trashs) {
+							keywords.remove(trash);
+						}
+						for (String keyword : keywords) {
+							if (keyword.length() < 200) {
+								WordDto newWord = new WordDto();
+								newWord.setId(videoId);
+								newWord.setWord(keyword);
+								newWord.setCount(1);
+								if (serviceWord.getWordFromVideo(newWord).size() != 0) {
+									WordDto exist = serviceWord.getWordFromVideo(newWord).get(0);
+									newWord.setCount(newWord.getCount() + exist.getCount());
+									serviceWord.updateWordFromVideo(newWord);
+								} else {
+									serviceWord.setWordFromVideo(newWord);
+								}
 							}
 						}
 					}
@@ -322,12 +382,12 @@ public class BasicController {
 			System.out.println("토픽: " + topicDto.getTopic() + " : 데이터 갱신 완료.");
 		}
 	}
-	
+
 	@RequestMapping(value = "/patch/2/1", method = RequestMethod.GET)
 	public void patchDataByTopic1() {
 		List<TopicDto> topicDtoList = serviceBasic.getTopics();
 		int len = topicDtoList.size();
-		topicDtoList = topicDtoList.subList(0, len/3);
+		topicDtoList = topicDtoList.subList(0, len / 3);
 		for (TopicDto topicDto : topicDtoList) {
 			System.out.println("토픽: " + topicDto.getTopic());
 			patchVideoAndChannelByTopic(topicDto);
@@ -339,7 +399,7 @@ public class BasicController {
 	public void patchDataByTopic2() {
 		List<TopicDto> topicDtoList = serviceBasic.getTopics();
 		int len = topicDtoList.size();
-		topicDtoList = topicDtoList.subList(len/3, len*2/3);
+		topicDtoList = topicDtoList.subList(len / 3, len * 2 / 3);
 		for (TopicDto topicDto : topicDtoList) {
 			System.out.println("토픽: " + topicDto.getTopic());
 			patchVideoAndChannelByTopic(topicDto);
@@ -351,7 +411,7 @@ public class BasicController {
 	public void patchDataByTopic3() {
 		List<TopicDto> topicDtoList = serviceBasic.getTopics();
 		int len = topicDtoList.size();
-		topicDtoList = topicDtoList.subList(len*2/3, len);
+		topicDtoList = topicDtoList.subList(len * 2 / 3, len);
 		for (TopicDto topicDto : topicDtoList) {
 			System.out.println("토픽: " + topicDto.getTopic());
 			patchVideoAndChannelByTopic(topicDto);
@@ -370,5 +430,34 @@ public class BasicController {
 		System.out.println("----------------- 태그 키워드 추출 시작 -----------------");
 		parseTags();
 		System.out.println("----------------- 태그 키워드 추출 종료 -----------------");
+	}
+
+	@RequestMapping(value = "/test")
+	public void trial2() {
+		List<String> filter = serviceBasic.getNounFilter();
+		List<VideoDto> dataset = serviceVideo.getVideoInfo();
+		for (VideoDto video : dataset) {
+			String desc = video.getDescription();
+			if (desc != null) {
+				for (String target : filter) {
+					desc = desc.replace(target, " ");
+				}
+				desc = desc.replace("\n", " ");
+				desc = desc.replace("\r", " ");
+				List<String> keywords = new ArrayList(Arrays.asList(desc.split(" ")));
+				List<String> trashs = new ArrayList<String>();
+				for (String keyword : keywords) {
+					if (keyword.length() <= 1) {
+						trashs.add(keyword);
+					}
+				}
+				for (String trash : trashs) {
+					keywords.remove(trash);
+				}
+				System.out.println();
+				System.out.println(keywords);
+				System.out.println();
+			}
+		}
 	}
 }

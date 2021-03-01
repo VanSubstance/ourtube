@@ -18,7 +18,9 @@
 		where a.id = b.id and b.topic = #{topic} and 
 		a.id not in (select videoid id from comments group by videoid)
 	</select>
-	
+	<select id="getVideoInfo" resultType="com.my.spring.domain.VideoDto">
+		select * from video
+	</select>
 	<select id="getVideoTagByVideoId" parameterType="String" resultType="com.my.spring.domain.TagDto">
 		select * from Tag where id = #{id}
 	</select>

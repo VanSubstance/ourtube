@@ -9,9 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import com.google.gson.Gson;
-import com.my.spring.domain.words.NounDto;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.gson.Gson;
+import com.my.spring.domain.VideoDto;
+import com.my.spring.domain.words.NounDto;
+import com.my.spring.service.BasicService;
+import com.my.spring.service.VideoService;
 import com.google.gson.reflect.TypeToken; 
 import java.lang.reflect.Type;
 
@@ -19,6 +23,9 @@ import java.lang.reflect.Type;
 public class WordTest {
 
 	public static void main(String[] args) {
+	}
+	
+	public void trial1() {
 		System.out.println("테스트");
 		List<String> synonyms = new ArrayList<String>();
 		List<String> uniques = new ArrayList<String>();
@@ -85,8 +92,9 @@ public class WordTest {
 			resultsVideo.put(nounsVideo.getKey(), keyword);
 		}
 		System.out.println("로직 2 종료.");
-		
 	}
+	
+	
 
 	public static HashMap<String, List<NounDto>> getData(String type) {
 		HashMap<String, List<NounDto>> dataset = new HashMap<String, List<NounDto>>();
