@@ -23,4 +23,5 @@ public interface VideoMapper {
 	public int checkChain(@Param("item") ChainDto item);
 	public int checkVideoStatistics(@Param("item") VideoStatDto item);
 	public List<VideoDto> getVideoInfo();
+	public List<VideoDto> getVideoInfoById(@Param("list") List<String> list);
 }

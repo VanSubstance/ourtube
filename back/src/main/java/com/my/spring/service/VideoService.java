@@ -21,4 +21,5 @@ public interface VideoService {
 	public int checkChain(ChainDto item);
 	public int checkVideoStatistics(VideoStatDto item);
 	public List<VideoDto> getVideoInfo();
+	public List<VideoDto> getVideoInfoById(List<String> list);
 }

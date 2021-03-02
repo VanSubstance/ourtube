@@ -21,6 +21,12 @@
 	<select id="getVideoInfo" resultType="com.my.spring.domain.VideoDto">
 		select * from video
 	</select>
+	<select id="getVideoInfoById" parameterType="java.util.List" resultType="com.my.spring.domain.VideoDto">
+		select * from video where id in
+		<foreach collection="list" item = "item" index = "index" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</select>
 	<select id="getVideoTagByVideoId" parameterType="String" resultType="com.my.spring.domain.TagDto">
 		select * from Tag where id = #{id}
 	</select>

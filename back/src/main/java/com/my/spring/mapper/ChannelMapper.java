@@ -18,5 +18,5 @@ public interface ChannelMapper {
 	public int checkChannelInfo(@Param("id") String id);
 	public int checkChain(@Param("item") ChainDto item);
 	public int checkChannelStatistics(@Param("item") ChannelStatDto item);
-	
+	public List<ChannelDto> getChannelInfoById(@Param("list") List<String> list);
 }

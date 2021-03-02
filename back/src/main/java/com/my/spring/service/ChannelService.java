@@ -16,4 +16,5 @@ public interface ChannelService {
 	public int checkChannelInfo(String id);
 	public int checkChain(ChainDto item);
 	public int checkChannelStatistics(ChannelStatDto item);
+	public List<ChannelDto> getChannelInfoById(List<String> list);
 }

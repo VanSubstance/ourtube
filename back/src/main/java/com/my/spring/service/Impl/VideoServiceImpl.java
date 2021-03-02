@@ -82,4 +82,9 @@ public class VideoServiceImpl implements VideoService {
 	public List<VideoDto> getVideoInfo() {
 		return mapper.getVideoInfo();
 	}
+
+	@Override
+	public List<VideoDto> getVideoInfoById(List<String> list) {
+		return mapper.getVideoInfoById(list);
+	}
 }

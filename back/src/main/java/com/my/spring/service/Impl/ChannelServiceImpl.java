@@ -63,4 +63,9 @@ public class ChannelServiceImpl implements ChannelService{
 	public String getDescriptionByChannelId(String id) {
 		return mapper.getDescriptionByChannelId(id);
 	}
+
+	@Override
+	public List<ChannelDto> getChannelInfoById(List<String> list) {
+		return mapper.getChannelInfoById(list);
+	}
 }

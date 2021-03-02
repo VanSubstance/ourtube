@@ -49,9 +49,11 @@ public class BasicController {
 
 		System.out.print("\t\t신규 채널 유효성 검사 | o -> 신규 등록 | x -> 이미 존재 | ");
 		List<String> temp = new ArrayList<String>();
+		List<String> existed = new ArrayList<String>();
 		for (String channelId : channelIdList) {
 			if (serviceChannel.checkChannelInfo(channelId) != 0) {
 				System.out.print("x");
+				existed.add(channelId);
 			} else {
 				System.out.print("o");
 				temp.add(channelId);
@@ -59,6 +61,7 @@ public class BasicController {
 		}
 		channelIdList = temp;
 		System.out.println(" : 완료.");
+		List<ChannelDto> existedInfo = serviceChannel.getChannelInfoById(existed);
 
 		System.out.println("\t\t상위 채널 중 신규 id 리스트 -> 채널 기본 정보 & 채널 토픽 체인");
 		ArrayList<Object> data = serviceYoutube.callChannelInfosByChannelId(channelIdList);
@@ -76,6 +79,12 @@ public class BasicController {
 				channelDto.setDescription(channelDto.getDescription().substring(0, 2000));
 			}
 			serviceChannel.setChannelInfo(channelDto);
+		}
+		for (ChannelDto channelDto : existedInfo) {
+			ChainDto newChain = new ChainDto();
+			newChain.setId(channelDto.getId());
+			newChain.setTopic(topicDto.getTopic());
+			chainChannel.add(newChain);
 		}
 		System.out.println(" 완료.");
 
@@ -112,9 +121,11 @@ public class BasicController {
 
 		System.out.print("\t\t신규 비디오 유효성 검사 | o -> 신규 등록 | x -> 이미 존재 | ");
 		List<String> temp = new ArrayList<String>();
+		List<String> existed = new ArrayList<String>();
 		for (String videoId : videoIdList) {
 			if (serviceVideo.checkVideoInfo(videoId) != 0) {
 				System.out.print("x");
+				existed.add(videoId);
 			} else {
 				System.out.print("o");
 				temp.add(videoId);
@@ -122,6 +133,8 @@ public class BasicController {
 		}
 		videoIdList = temp;
 		System.out.println(" : 완료.");
+		System.out.println("\t\t" + existed);
+		List<VideoDto> existedInfo = serviceVideo.getVideoInfoById(existed);
 
 		System.out.println("\t\t상위 비디오 중 신규 id 리스트 -> 비디오 기본 정보 & 태그 & 비디오 토픽 체인");
 		ArrayList<Object> data = serviceYoutube.callVideoInfosByVideoId(videoIdList);
@@ -139,6 +152,12 @@ public class BasicController {
 				videoDto.setDescription(videoDto.getDescription().substring(0, 2000));
 			}
 			serviceVideo.setVideoInfo(videoDto);
+		}
+		for (VideoDto videoDto : existedInfo) {
+			ChainDto newChain = new ChainDto();
+			newChain.setId(videoDto.getId());
+			newChain.setTopic(topicDto.getTopic());
+			chainVideo.add(newChain);
 		}
 		System.out.println(" 완료.");
 
@@ -172,6 +191,9 @@ public class BasicController {
 				System.out.print("x");
 			} else {
 				System.out.print("o");
+				if (commentDto.getText().length() >= 2000) {
+					commentDto.setText(commentDto.getText().substring(0, 2000));
+				}
 				serviceComment.setComment(commentDto);
 			}
 		}

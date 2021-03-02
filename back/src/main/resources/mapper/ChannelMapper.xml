@@ -34,4 +34,11 @@
 	<select id="checkChain" parameterType="com.my.spring.domain.ChainDto" resultType="Int">
 		select count(*) from channelTopic where topic = #{item.topic} and id = #{item.id}
 	</select>
+	
+	<select id="getChannelInfoById" parameterType="java.util.List" resultType="com.my.spring.domain.ChannelDto">
+		select * from Channel where id in
+		<foreach collection="list" item = "item" index = "index" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</select>
 </mapper>
