@@ -87,4 +87,14 @@ public class VideoServiceImpl implements VideoService {
 	public List<VideoDto> getVideoInfoById(List<String> list) {
 		return mapper.getVideoInfoById(list);
 	}
+
+	@Override
+	public void filterVideoWord() {
+		mapper.filterVideoWord();
+	}
+
+	@Override
+	public void filterTagWord() {
+		mapper.filterTagWord();
+	}
 }

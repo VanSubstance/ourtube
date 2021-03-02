@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.TopicStatDto;
+import com.my.spring.domain.chains.TopicChain;
 
 public interface BasicMapper {
 	public int checkTopicStat(@Param("topic") String topic);
@@ -14,4 +15,5 @@ public interface BasicMapper {
 	public List<TopicDto> getTopicGames();
 	public List<TopicDto> getTopicsForPatch();
 	public List<String> getNounFilter();
+	public List<TopicChain> getTopicChains();
 }

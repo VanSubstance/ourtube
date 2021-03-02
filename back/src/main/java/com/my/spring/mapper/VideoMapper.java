@@ -24,4 +24,6 @@ public interface VideoMapper {
 	public int checkVideoStatistics(@Param("item") VideoStatDto item);
 	public List<VideoDto> getVideoInfo();
 	public List<VideoDto> getVideoInfoById(@Param("list") List<String> list);
+	public void filterVideoWord();
+	public void filterTagWord();
 }

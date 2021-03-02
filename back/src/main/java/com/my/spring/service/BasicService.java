@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.TopicStatDto;
+import com.my.spring.domain.chains.TopicChain;
 
 public interface BasicService {
 	public int checkTopicStat(String topic);
@@ -12,4 +13,5 @@ public interface BasicService {
 	public List<TopicDto> getTopicGames();
 	public List<TopicDto> getTopicsForPatch();
 	public List<String> getNounFilter();
+	public List<TopicChain> getTopicChains();
 }

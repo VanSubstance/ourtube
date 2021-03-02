@@ -2,6 +2,7 @@ package com.my.spring.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
 import com.my.spring.domain.WordDto;
+import com.my.spring.domain.chains.WordChain;
 import com.my.spring.service.BasicService;
 import com.my.spring.service.ChannelService;
 import com.my.spring.service.CommentService;
@@ -241,7 +243,8 @@ public class BasicController {
 		System.out.println("------------------------ 데이터 작업 종료  ------------------------");
 	}
 
-	public void parseTags() {
+	public List<String> parseTags() {
+		List<String> result = new ArrayList<String>();
 		List<String> filter = serviceBasic.getNounFilter();
 		List<TopicDto> topicDtoList = serviceBasic.getTopics();
 		for (TopicDto topicDto : topicDtoList) {
@@ -270,8 +273,12 @@ public class BasicController {
 							for (String trash : trashs) {
 								keywords.remove(trash);
 							}
+							System.out.print(keywords.size());
 							for (String keyword : keywords) {
-								if (keyword.length() < 200) {
+								if (keyword.length() < 200 && keyword.length() != keyword.getBytes().length) {
+									if (serviceWord.checkWordUnique(keyword) == 0) {
+										serviceWord.setWordUnique(keyword);
+									}
 									WordDto newWord = new WordDto();
 									newWord.setId(videoId);
 									newWord.setWord(keyword);
@@ -287,15 +294,18 @@ public class BasicController {
 							}
 						}
 					}
+					result.add(videoId);
 					System.out.println(" : 완료.");
 				} else {
 					System.out.println(" 이미 완료. ");
 				}
 			}
 		}
+		return result;
 	}
 
-	public void parseChannels() {
+	public List<String> parseChannels() {
+		List<String> result = new ArrayList<String>();
 		List<String> filter = serviceBasic.getNounFilter();
 		List<TopicDto> topicDtoList = serviceBasic.getTopics();
 		for (TopicDto topicDto : topicDtoList) {
@@ -321,8 +331,12 @@ public class BasicController {
 						for (String trash : trashs) {
 							keywords.remove(trash);
 						}
+						System.out.print(keywords.size());
 						for (String keyword : keywords) {
-							if (keyword.length() < 200) {
+							if (keyword.length() < 200 && keyword.length() != keyword.getBytes().length) {
+								if (serviceWord.checkWordUnique(keyword) == 0) {
+									serviceWord.setWordUnique(keyword);
+								}
 								WordDto newWord = new WordDto();
 								newWord.setId(channelId);
 								newWord.setWord(keyword);
@@ -337,15 +351,18 @@ public class BasicController {
 							}
 						}
 					}
+					result.add(channelId);
 					System.out.println(" : 완료.");
 				} else {
 					System.out.println(" 이미 완료. ");
 				}
 			}
 		}
+		return result;
 	}
 
-	public void parseVideos() {
+	public List<String> parseVideos() {
+		List<String> result = new ArrayList<String>();
 		List<String> filter = serviceBasic.getNounFilter();
 		List<TopicDto> topicDtoList = serviceBasic.getTopics();
 		for (TopicDto topicDto : topicDtoList) {
@@ -371,8 +388,12 @@ public class BasicController {
 						for (String trash : trashs) {
 							keywords.remove(trash);
 						}
+						System.out.print(keywords.size());
 						for (String keyword : keywords) {
-							if (keyword.length() < 200) {
+							if (keyword.length() < 200 && keyword.length() != keyword.getBytes().length) {
+								if (serviceWord.checkWordUnique(keyword) == 0) {
+									serviceWord.setWordUnique(keyword);
+								}
 								WordDto newWord = new WordDto();
 								newWord.setId(videoId);
 								newWord.setWord(keyword);
@@ -387,10 +408,35 @@ public class BasicController {
 							}
 						}
 					}
+					result.add(videoId);
 					System.out.println(" : 완료.");
 				} else {
 					System.out.println(" 이미 완료. ");
 				}
+			}
+		}
+		return result;
+	}
+	
+	public void buildChains(List<String> videoIdListVideo, List<String> videoIdListTag, List<String> channelIdList) {
+		List<WordChain> chains = new ArrayList<WordChain>();
+		for (String channelId : channelIdList) {
+			chains.addAll(serviceWord.buildWordChainByChannel(channelId));
+		}
+		for (String videoId : videoIdListVideo) {
+			chains.addAll(serviceWord.buildWordChainByVideo(videoId));
+		}
+		for (String videoId : videoIdListTag) {
+			chains.addAll(serviceWord.buildWordChainByTag(videoId));
+		}
+		System.out.println("체인 개수: " + chains.size());
+		for (WordChain chain: chains) {
+			WordChain original = serviceWord.getWordChain(chain);
+			if (original != null) {
+				chain.setHardness(chain.getHardness() + original.getHardness());
+				serviceWord.setWordChain(chain);
+			} else {
+				serviceWord.setWordChain(chain);
 			}
 		}
 	}
@@ -443,15 +489,21 @@ public class BasicController {
 
 	@RequestMapping(value = "/parse/all")
 	public void parseWords() {
+		new ArrayList<String>();
+		new ArrayList<String>();
+		 new ArrayList<String>();
 		System.out.println("----------------- 채널 키워드 추출 시작 -----------------");
-		parseChannels();
+		List<String> channelIdList = parseChannels();
 		System.out.println("----------------- 채널 키워드 추출 시작 -----------------");
 		System.out.println("----------------- 비디오 키워드 추출 시작 -----------------");
-		parseVideos();
+		List<String> videoIdList = parseVideos();
 		System.out.println("----------------- 비디오 키워드 추출 시작 -----------------");
 		System.out.println("----------------- 태그 키워드 추출 시작 -----------------");
-		parseTags();
+		List<String> videoIdListTag = parseTags();
 		System.out.println("----------------- 태그 키워드 추출 종료 -----------------");
+		System.out.println("----------------- 연관성 구축 시작 -----------------");
+		buildChains(videoIdList, videoIdListTag, channelIdList);
+		System.out.println("----------------- 연관성 구축 종료 -----------------");
 	}
 
 	@RequestMapping(value = "/test")

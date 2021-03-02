@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.TopicStatDto;
+import com.my.spring.domain.chains.TopicChain;
 import com.my.spring.mapper.BasicMapper;
 import com.my.spring.service.BasicService;
 
@@ -43,5 +44,10 @@ public class BasicServiceImpl implements BasicService {
 	@Override
 	public List<String> getNounFilter() {
 		return mapper.getNounFilter();
+	}
+
+	@Override
+	public List<TopicChain> getTopicChains() {
+		return mapper.getTopicChains();
 	}
 }

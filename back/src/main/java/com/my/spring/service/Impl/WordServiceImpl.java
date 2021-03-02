@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.my.spring.domain.WordDto;
+import com.my.spring.domain.chains.WordChain;
 import com.my.spring.domain.words.NounDto;
 import com.my.spring.mapper.WordMapper;
 import com.my.spring.service.WordService;
@@ -89,5 +90,45 @@ public class WordServiceImpl implements WordService {
 	@Override
 	public List<NounDto> getVideoWordsByTopic(String topic) {
 		return mapper.getVideoWordsByTopic(topic);
+	}
+	
+	@Override
+	public int checkWordUnique(String word) {
+		return mapper.checkWordUnique(word);
+	}
+	
+	@Override
+	public void setWordUnique(String word) {
+		mapper.setWordUnique(word);
+	}
+
+	@Override
+	public WordChain getWordChain(WordChain item) {
+		return mapper.getWordChain(item);
+	}
+
+	@Override
+	public void setWordChain(WordChain item) {
+		mapper.setWordChain(item);
+	}
+
+	@Override
+	public void updateWordChain(WordChain item) {
+		mapper.updateWordChain(item);
+	}
+
+	@Override
+	public List<WordChain> buildWordChainByTag(String videoId) {
+		return mapper.buildWordChainByTag(videoId);
+	}
+
+	@Override
+	public List<WordChain> buildWordChainByVideo(String videoId) {
+		return mapper.buildWordChainByVideo(videoId);
+	}
+
+	@Override
+	public List<WordChain> buildWordChainByChannel(String channelId) {
+		return mapper.buildWordChainByChannel(channelId);
 	}
 }

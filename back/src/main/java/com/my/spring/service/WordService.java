@@ -3,6 +3,7 @@ package com.my.spring.service;
 import java.util.List;
 
 import com.my.spring.domain.WordDto;
+import com.my.spring.domain.chains.WordChain;
 import com.my.spring.domain.words.NounDto;
 
 public interface WordService {
@@ -24,4 +25,14 @@ public interface WordService {
 	public List<NounDto> getTagWordsByTopic(String topic);
 	public List<NounDto> getChannelWordsByTopic(String topic);
 	public List<NounDto> getVideoWordsByTopic(String topic);
+	
+	public int checkWordUnique(String word);
+	public void setWordUnique(String word);
+	public WordChain getWordChain(WordChain item);
+	public void setWordChain(WordChain item);
+	public void updateWordChain(WordChain item);
+	
+	public List<WordChain> buildWordChainByTag(String videoId);
+	public List<WordChain> buildWordChainByVideo(String videoId);
+	public List<WordChain> buildWordChainByChannel(String channelId);
 }

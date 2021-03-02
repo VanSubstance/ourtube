@@ -55,4 +55,12 @@
 	<select id="checkChain" parameterType="com.my.spring.domain.ChainDto" resultType="Int">
 		select count(*) from videoTopic where id = #{item.id} and topic = #{item.topic}
 	</select>
+	<delete id="filterTagWord">
+		delete from tagword
+		where length(word) = lengthb(word)
+	</delete>
+	<delete id="filterVideoWord">
+		delete from videoword
+		where length(word) = lengthb(word)
+	</delete>
 </mapper>

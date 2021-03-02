@@ -22,4 +22,6 @@ public interface VideoService {
 	public int checkVideoStatistics(VideoStatDto item);
 	public List<VideoDto> getVideoInfo();
 	public List<VideoDto> getVideoInfoById(List<String> list);
+	public void filterVideoWord();
+	public void filterTagWord();
 }

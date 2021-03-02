@@ -59,4 +59,50 @@
 		select * from videoWord where id in (select id from videotopic where topic = #{topic}) order by length(word) desc
 	</select>
 	
+	<select id="checkWordUnique" parameterType="String" resultType="Int">
+		select count(*) from wordunique where word = #{word}
+	</select>
+	
+	<insert id="setWordUnique" parameterType="String">
+		insert into wordunique (word)
+		values (#{word})
+	</insert>
+	
+	<select id="buildWordChainByTag" parameterType="String" resultType = "com.my.spring.domain.chains.WordChain">
+		select word1, word2, count(*) hardness from
+		(
+		select a.word word1, b.word word2 from tagword a, videoword b
+		where a.id = #{videoId} and a.id = b.id and a.word != b.word
+		) group by (word1, word2)
+	</select>
+	<select id="buildWordChainByVideo" parameterType="String" resultType = "com.my.spring.domain.chains.WordChain">
+		select word1, word2, count(*) hardness from
+		(
+		select a.word word1, b.word word2 from Videoword a, videoword b
+		where a.id = #{videoId} and a.id = b.id and a.word != b.word
+		) group by (word1, word2)
+	</select>
+	<select id="buildWordChainByChannel" parameterType="String" resultType = "com.my.spring.domain.chains.WordChain">
+		select word1, word2, count(*) hardness from
+		(
+		select a.word word1, b.word word2 from Channelword a, videoword b
+		where a.id = #{channelId} and a.id = b.id and a.word != b.word
+		) group by (word1, word2)
+	</select>
+	
+	
+	<select id="getWordChain" parameterType="com.my.spring.domain.chains.WordChain"
+	resultType = "com.my.spring.domain.chains.WordChain">
+		select * from WordChain where word1 = #{item.word1} and word2 = #{item.word2}
+	</select>
+	<insert id="setWordChain" parameterType="com.my.spring.domain.chains.WordChain">
+		insert into WordChain (word1, word2, hardness) 
+		values (#{item.word1}, #{item.word2}, #{item.hardness})
+	</insert>
+	<update id="updateWordChain" parameterType="com.my.spring.domain.chains.WordChain">
+		update WordChain set
+		hardness ={item.hardness}
+		where word1 = #{item.sord1} and word2 = #{item.word2}
+	</update>
+	
 </mapper>

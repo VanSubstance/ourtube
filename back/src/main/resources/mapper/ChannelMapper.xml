@@ -41,4 +41,8 @@
 			#{item}
 		</foreach>
 	</select>
+	<delete id="filterChannelWord">
+		delete from channelword
+		where length(word) = lengthb(word)
+	</delete>
 </mapper>

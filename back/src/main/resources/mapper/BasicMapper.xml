@@ -23,4 +23,20 @@
 	<select id="getNounFilter" resultType="String">
 		select * from nounFilter
 	</select>
+	
+	<select id="getTopicsByVideoId" parameterType="String"
+	resultType="String">
+		select topic from videotopic where id = #{id}
+	</select>
+	
+	<select id="getTopicChains" resultType="com.my.spring.domain.chains.TopicChain">
+		select topic1, topic2, count(*) hardness from
+		(select a.topic topic1, b.topic topic2 from videotopic a, videotopic b
+		where a.id = b.id and a.topic != b.topic
+		union all
+		select a.topic topic1, b.topic topic2 from channeltopic a, channeltopic b
+		where a.id = b.id and a.topic != b.topic) 
+		group by topic1, topic2
+		order by hardness desc
+	</select>
 </mapper>

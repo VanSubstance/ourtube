@@ -68,4 +68,9 @@ public class ChannelServiceImpl implements ChannelService{
 	public List<ChannelDto> getChannelInfoById(List<String> list) {
 		return mapper.getChannelInfoById(list);
 	}
+	
+	@Override
+	public void filterChannelWord() {
+		mapper.filterChannelWord();
+	}
 }
