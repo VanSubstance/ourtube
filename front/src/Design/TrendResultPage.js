@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import {KeywordThumbnail, Cloud} from './Comps';
+import { KeywordThumbnail, Cloud } from './Comps';
 import { Bar, Line, Radar, Pie } from 'react-chartjs-2';
 import 'chartjs-plugin-datalabels';
+import { render } from 'react-dom';
+import WordCloud from 'react-d3-cloud';
 
 class TrendResultPage extends Component {
 
@@ -32,7 +34,7 @@ class TrendResultPage extends Component {
                             beginAtZero: true,
                         }
                     }],
-                    xAxes:[{
+                    xAxes: [{
                         ticks: {
                             reverse: true
                         }
@@ -58,22 +60,22 @@ class TrendResultPage extends Component {
                             reverse: true
                         }
                     }],
-                    xAxes:[{
+                    xAxes: [{
                         ticks: {
                             reverse: true
                         }
                     }]
                 },
-                elements:{
-                    line:{
+                elements: {
+                    line: {
                         tension: 0
                     },
-                    point:{
-                        pointStyle:'rectRounded',
+                    point: {
+                        pointStyle: 'rectRounded',
                         radius: 3,
                         backgroundColor: 'red',
-                        borderWidth:5
-                    }                   
+                        borderWidth: 5
+                    }
                 },
                 plugins: {
                     datalabels: {
@@ -84,11 +86,11 @@ class TrendResultPage extends Component {
             radarInfo: {
                 maintainAspectRatio: false,
                 scale: {
-                    angleLines:{
-                        display:false
+                    angleLines: {
+                        display: false
                     },
                     ticks: {
-                        display:false,
+                        display: false,
                         beginAtZero: true,
                         min: 0,
                         max: 10000,
@@ -128,7 +130,7 @@ class TrendResultPage extends Component {
                     }
 
                 ],
-                labels: ['1주','2주','3주','4주','5주','6주','7주','8주','9주','10주','11주','12주']
+                labels: ['1주', '2주', '3주', '4주', '5주', '6주', '7주', '8주', '9주', '10주', '11주', '12주']
             },
             // 파이 그래프: 조회수 ~ 좋아요 / 싫어요 비율
             pieLikes: {
@@ -150,10 +152,10 @@ class TrendResultPage extends Component {
                         label: "순위",
                         data: [],
                         fill: false,
-                        borderColor: "red"                        
+                        borderColor: "red"
                     },
                 ],
-                labels: ['1주','2주','3주','4주','5주','6주','7주','8주','9주','10주','11주','12주']
+                labels: ['1주', '2주', '3주', '4주', '5주', '6주', '7주', '8주', '9주', '10주', '11주', '12주']
             },
             radarInfo: {
                 datasets: [
@@ -165,9 +167,24 @@ class TrendResultPage extends Component {
                         data: []
                     }
                 ],
-                labels: ['test1','test2','test3','test4','test5']
+                labels: ['test1', 'test2', 'test3', 'test4', 'test5']
             }
-        }
+        },
+        data: [
+            { text: '개', value: 1000 },
+            { text: '좆', value: 200 },
+            { text: '같은', value: 800 },
+            { text: '드디어', value: 12000 },
+            { text: '했네', value: 10 },
+            { text: '간단한', value: 10000 },
+            { text: '이걸', value: 15500 },
+            { text: '앰창', value: 25000}
+        ],
+        fontSizeMapper : word => Math.log2(word.value) * 5,
+        rotate : word => word.value % 360,
+        padding : 1,
+        width: 400,
+        height: 400
     }
 
     componentDidMount() {
@@ -194,7 +211,7 @@ class TrendResultPage extends Component {
             lineRankPerWeek.push(Math.floor(Math.random() * (20 - 1) + 1));
         }
         for (var i = 0; i < 5; i++) {
-            radarInfo.push(Math.floor(Math.random() *(10000 - 2000) + 1000));
+            radarInfo.push(Math.floor(Math.random() * (10000 - 2000) + 1000));
         }
         // 평균 좋아요 / 싫어요 변수
         pieLikes.push(Math.floor(Math.random() * (10000 - 2000) + 2000));
@@ -213,7 +230,7 @@ class TrendResultPage extends Component {
 
     // 각 컴포넌트에 변수 전달
     setDataset = () => {
-        const {datasets, keyword} = this.state;
+        const { datasets, keyword } = this.state;
         var data = this.getDatasetFromKeyword(keyword);
 
         // 막대그래프: 평균 좋아요/싫어요
@@ -227,6 +244,7 @@ class TrendResultPage extends Component {
         this.refs.KeywordThumbnail.setThumbnailInfo();
     }
 
+
     render() {
         return (
             <div>
@@ -237,12 +255,23 @@ class TrendResultPage extends Component {
                     키워드: {this.state.keyword}
                 </p>
                 <Cloud
-                    ref = "Cloud" keyword = {this.state.keyword}>
+                    ref="Cloud" keyword={this.state.keyword}>
 
                 </Cloud>
-                <KeywordThumbnail ref = "KeywordThumbnail">
+                <KeywordThumbnail ref="KeywordThumbnail">
 
                 </KeywordThumbnail>
+                <div>
+                    <p> Word Cloud Test </p>
+                    <WordCloud
+                        data={this.state.data}
+                        fontSizeMapper={this.state.fontSizeMapper}
+                        rotate={this.state.rotate}
+                        padding={this.state.padding}
+                        height={this.state.height}
+                        width={this.state.width}
+                    />
+                </div>
                 <div
                     style={this.state.chart}>
                     <p> 막대 그래프: 동영상 1개 당 평균 좋아요 / 싫어요 </p>
@@ -278,8 +307,8 @@ class TrendResultPage extends Component {
                     style={this.state.chart}>
                     <p> 레이더 그래프 </p>
                     <Radar
-                        data = {this.state.datasets.radarInfo}
-                        options = {this.state.options.radarInfo}
+                        data={this.state.datasets.radarInfo}
+                        options={this.state.options.radarInfo}
                     />
                 </div>
             </div>
