@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.my.spring.domain.IdComplete;
 import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.TopicStatDto;
 import com.my.spring.domain.chains.TopicChain;
@@ -32,11 +33,6 @@ public class BasicServiceImpl implements BasicService {
 	}
 
 	@Override
-	public List<TopicDto> getTopicsForPatch() {
-		return mapper.getTopicsForPatch();
-	}
-
-	@Override
 	public List<TopicDto> getTopicGames() {
 		return mapper.getTopicGames();
 	}
@@ -49,5 +45,25 @@ public class BasicServiceImpl implements BasicService {
 	@Override
 	public List<TopicChain> getTopicChains() {
 		return mapper.getTopicChains();
+	}
+
+	@Override
+	public List<TopicChain> getTopicChainsByTopic(String topic) {
+		return mapper.getTopicChainsByTopic(topic);
+	}
+
+	@Override
+	public List<TopicStatDto> getTopicListForToday() {
+		return mapper.getTopicListForToday();
+	}
+
+	@Override
+	public int getIdCompleteById(String id) {
+		return mapper.getIdCompleteById(id);
+	}
+
+	@Override
+	public void setIdComplete(IdComplete item) {
+		mapper.setIdComplete(item);
 	}
 }

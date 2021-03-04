@@ -1,5 +1,6 @@
 package com.my.spring.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -38,4 +39,6 @@ public interface WordMapper {
 	public List<WordChain> buildWordChainByTag(@Param("videoId") String videoId);
 	public List<WordChain> buildWordChainByVideo(@Param("videoId") String videoId);
 	public List<WordChain> buildWordChainByChannel(@Param("channelId") String channelId);
+	
+	public void setWordChainsById();
 }

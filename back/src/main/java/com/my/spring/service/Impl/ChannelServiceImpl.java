@@ -73,4 +73,9 @@ public class ChannelServiceImpl implements ChannelService{
 	public void filterChannelWord() {
 		mapper.filterChannelWord();
 	}
+
+	@Override
+	public List<String> getChannelIdsInComplete() {
+		return mapper.getChannelIdsInComplete();
+	}
 }

@@ -15,6 +15,7 @@ public interface YoutubeService {
 	 * List<String> -> 채널 id 리스트
 	 */
 	public ArrayList<Object> callVideoIdsByTopic(TopicDto topicDto);
+	public ArrayList<Object> callVideoIdsByGame();
 	
 	/**
 	 * 채널 id 리스트 -> 채널 기본 정보 & 체인 정보

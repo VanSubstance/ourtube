@@ -1,16 +1,18 @@
 package com.my.spring.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.chains.TopicChain;
 import com.my.spring.service.BasicService;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/process")
 public class ProcessingController {
@@ -22,6 +24,12 @@ public class ProcessingController {
 		System.out.println("토픽 체인 조회");
 		List<TopicChain> result = serviceBasic.getTopicChains();
 		return result;
+	}
+	
+	@RequestMapping(value = "/topic/chain/{topic}", method = RequestMethod.GET)
+	public List<TopicChain> getTopicChainsByTopic(@PathVariable String topic) {
+		System.out.println("토픽 체인 조회: " + topic);
+		return serviceBasic.getTopicChainsByTopic(topic);
 	}
 	
 }

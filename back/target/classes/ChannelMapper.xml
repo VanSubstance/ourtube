@@ -45,4 +45,8 @@
 		delete from channelword
 		where length(word) = lengthb(word)
 	</delete>
+	<select id="getChannelIdsInComplete" resultType="String">
+		select id from channel where id not in (
+		select id from idComplete where type = 'channel')
+	</select>
 </mapper>

@@ -63,4 +63,9 @@
 		delete from videoword
 		where length(word) = lengthb(word)
 	</delete>
+	
+	<select id="getVideoIdsInComplete" resultType="String">
+		select id from video where id not in (
+		select id from idComplete where type = 'video')
+	</select>
 </mapper>

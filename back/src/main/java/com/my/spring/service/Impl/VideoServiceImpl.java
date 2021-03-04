@@ -97,4 +97,9 @@ public class VideoServiceImpl implements VideoService {
 	public void filterTagWord() {
 		mapper.filterTagWord();
 	}
+
+	@Override
+	public List<String> getVideoIdsInComplete() {
+		return mapper.getVideoIdsInComplete();
+	}
 }

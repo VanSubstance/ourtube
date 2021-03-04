@@ -1,5 +1,6 @@
 package com.my.spring.service.Impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,4 +132,10 @@ public class WordServiceImpl implements WordService {
 	public List<WordChain> buildWordChainByChannel(String channelId) {
 		return mapper.buildWordChainByChannel(channelId);
 	}
+
+	@Override
+	public void setWordChainsById() {
+		mapper.setWordChainsById();
+	}
+
 }

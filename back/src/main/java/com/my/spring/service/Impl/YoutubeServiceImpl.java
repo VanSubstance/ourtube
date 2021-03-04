@@ -44,7 +44,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			"AIzaSyAFdfs807Tl-7PM8tb4ZDOqfC7vKSCSaRg",
 			"AIzaSyAQtHVKj5g7XtkJJh_Ipd5WlifxCOCwzsc", 
 			"AIzaSyCXiMrdsfLrPLtHRqhS5POORUzqrIK5_74"};
-	private static final int api = 1;
+	private static final int api = 3;
 
 	public YoutubeServiceImpl() {
 		getConnection();
@@ -85,13 +85,13 @@ public class YoutubeServiceImpl implements YoutubeService {
 			base.setVideoCategoryId("20");
 			// 조회 상한선
 			base.setMaxResults((long) 40);
-			
-			List<SearchResult> searchResults = base.execute().getItems();
+
+			SearchListResponse con = base.execute();
+			List<SearchResult> searchResults = con.getItems();
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String infoDate = dateFormat.format(Calendar.getInstance().getTime());
 			topicStat.setInfoDate(Date.valueOf(infoDate));
-			topicStat.setTopic(topicDto.getTopic());
-			topicStat.setResultCount(base.execute().getPageInfo().getTotalResults());
+			topicStat.setResultCount(con.getPageInfo().getTotalResults());
 			if (base != null) {
 				Iterator<SearchResult> data = searchResults.iterator();
 				if (!data.hasNext()) {
@@ -119,6 +119,72 @@ public class YoutubeServiceImpl implements YoutubeService {
 		result.add(videoIdList);
 		result.add(channelIdList);
 		result.add(topicStat);
+		return result;
+	}
+
+	// search.list: 100
+	@Override
+	public ArrayList<Object> callVideoIdsByGame() {
+		ArrayList<Object> result = new ArrayList<Object>();
+		List<String> videoIdList = new ArrayList();
+		List<String> channelIdList = new ArrayList();
+		try {
+			String pageToken = "";
+			YouTube.Search.List base = youtube.search().list("snippet");
+			// api 키 입력
+			base.setKey(apiKeys[api]);
+			// 검색 결과 채널로 한정
+			base.setType("video");
+			base.setLocation("37.55718,126.99006");
+			base.setLocationRadius("325km");
+			// 검색 결과 제목으로 정렬
+			base.setOrder("relevance");
+			// 검색 범위 한국으로 한정
+			base.setRegionCode("KR");
+			// 토픽 아이디 한정
+			base.setQ("게임");
+			base.setVideoCategoryId("20");
+			// 조회 상한선
+			base.setMaxResults((long) 40);
+			for (int i = 0; i < 20; i++) {
+				if (i == 0) {
+					base.setPageToken(null);
+				} else {
+					base.setPageToken(pageToken);
+				}
+				SearchListResponse con = base.execute();
+				List<SearchResult> searchResults = con.getItems();
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				String infoDate = dateFormat.format(Calendar.getInstance().getTime());
+				pageToken = con.getNextPageToken();
+				if (base != null) {
+					Iterator<SearchResult> data = searchResults.iterator();
+					if (!data.hasNext()) {
+						System.out.println("No results for your query.");
+					}
+					while (data.hasNext()) {
+						SearchResult item = data.next();
+						if (item.getKind().equals("youtube#searchResult")) {
+							videoIdList.add(item.getId().getVideoId());
+							String channelId = item.getSnippet().getChannelId();
+							if (!channelIdList.contains(channelId)) {
+								channelIdList.add(channelId);
+							}
+						}
+					}
+				}
+			}
+			
+		} catch (GoogleJsonResponseException e) {
+			System.err.println("SERVICE ERROR: " + e.getDetails().getCode() + " : " + e.getDetails().getMessage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.err.println("IO ERROR: " + e.getCause() + " : " + e.getMessage());
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+		result.add(videoIdList);
+		result.add(channelIdList);
 		return result;
 	}
 	

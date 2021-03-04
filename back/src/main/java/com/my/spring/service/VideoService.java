@@ -24,4 +24,5 @@ public interface VideoService {
 	public List<VideoDto> getVideoInfoById(List<String> list);
 	public void filterVideoWord();
 	public void filterTagWord();
+	public List<String> getVideoIdsInComplete();
 }

@@ -1,12 +1,13 @@
 package com.my.spring.controller;
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.ChannelDto;
 import com.my.spring.domain.ChannelStatDto;
 import com.my.spring.domain.CommentDto;
+import com.my.spring.domain.IdComplete;
 import com.my.spring.domain.TopicStatDto;
 import com.my.spring.domain.TagDto;
 import com.my.spring.domain.TopicDto;
@@ -29,6 +31,7 @@ import com.my.spring.service.VideoService;
 import com.my.spring.service.WordService;
 import com.my.spring.service.YoutubeService;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("")
 public class BasicController {
@@ -80,7 +83,9 @@ public class BasicController {
 			if (channelDto.getDescription().length() >= 2000) {
 				channelDto.setDescription(channelDto.getDescription().substring(0, 2000));
 			}
-			serviceChannel.setChannelInfo(channelDto);
+			if (serviceChannel.checkChannelInfo(channelDto.getId()) == 0) {
+				serviceChannel.setChannelInfo(channelDto);
+			}
 		}
 		for (ChannelDto channelDto : existedInfo) {
 			ChainDto newChain = new ChainDto();
@@ -135,7 +140,6 @@ public class BasicController {
 		}
 		videoIdList = temp;
 		System.out.println(" : 완료.");
-		System.out.println("\t\t" + existed);
 		List<VideoDto> existedInfo = serviceVideo.getVideoInfoById(existed);
 
 		System.out.println("\t\t상위 비디오 중 신규 id 리스트 -> 비디오 기본 정보 & 태그 & 비디오 토픽 체인");
@@ -153,7 +157,9 @@ public class BasicController {
 			if (videoDto.getDescription().length() >= 2000) {
 				videoDto.setDescription(videoDto.getDescription().substring(0, 2000));
 			}
-			serviceVideo.setVideoInfo(videoDto);
+			if (serviceVideo.checkVideoInfo(videoDto.getId()) == 0) {
+				serviceVideo.setVideoInfo(videoDto);
+			}
 		}
 		for (VideoDto videoDto : existedInfo) {
 			ChainDto newChain = new ChainDto();
@@ -237,6 +243,23 @@ public class BasicController {
 		}
 		System.out.println(" :완료");
 
+		patchChannelByTopic(topicDto, channelIdList);
+		patchVideoByTopic(topicDto, videoIdList);
+
+		System.out.println("------------------------ 데이터 작업 종료  ------------------------");
+	}
+	
+	public void patchVideoAndChannelByGame() {
+		System.out.println("------------------------ 데이터 작업 시작  ------------------------");
+		System.out.print("\tYoutube API -> 상위 비디오 id 리스트");
+		ArrayList<Object> data = serviceYoutube.callVideoIdsByGame();
+		List<String> videoIdList = (List<String>) data.get(0);
+		List<String> channelIdList = (List<String>) data.get(1);
+		System.out.print(videoIdList.size() + " 개, 채널 id 리스트: ");
+		System.out.println(channelIdList.size() + " 개");
+
+		TopicDto topicDto = new TopicDto();
+		topicDto.setTopic("게임");
 		patchChannelByTopic(topicDto, channelIdList);
 		patchVideoByTopic(topicDto, videoIdList);
 
@@ -417,26 +440,25 @@ public class BasicController {
 		}
 		return result;
 	}
-	
-	public void buildChains(List<String> videoIdListVideo, List<String> videoIdListTag, List<String> channelIdList) {
-		List<WordChain> chains = new ArrayList<WordChain>();
+
+	public void buildChains(List<String> videoIdList, List<String> videoIdListTag, List<String> channelIdList) {
+		System.out.println("비디오 개수: " + videoIdList.size());
+		System.out.println("채널 개수: " +channelIdList.size());
+		serviceWord.setWordChainsById();
 		for (String channelId : channelIdList) {
-			chains.addAll(serviceWord.buildWordChainByChannel(channelId));
+			if (serviceBasic.getIdCompleteById(channelId) == 0) {
+				IdComplete newComplete = new IdComplete();
+				newComplete.setType("channel");
+				newComplete.setId(channelId);
+				serviceBasic.setIdComplete(newComplete);
+			}
 		}
-		for (String videoId : videoIdListVideo) {
-			chains.addAll(serviceWord.buildWordChainByVideo(videoId));
-		}
-		for (String videoId : videoIdListTag) {
-			chains.addAll(serviceWord.buildWordChainByTag(videoId));
-		}
-		System.out.println("체인 개수: " + chains.size());
-		for (WordChain chain: chains) {
-			WordChain original = serviceWord.getWordChain(chain);
-			if (original != null) {
-				chain.setHardness(chain.getHardness() + original.getHardness());
-				serviceWord.setWordChain(chain);
-			} else {
-				serviceWord.setWordChain(chain);
+		for (String videoId : videoIdList) {
+			if (serviceBasic.getIdCompleteById(videoId) == 0) {
+				IdComplete newComplete = new IdComplete();
+				newComplete.setType("video");
+				newComplete.setId(videoId);
+				serviceBasic.setIdComplete(newComplete);
 			}
 		}
 	}
@@ -487,11 +509,18 @@ public class BasicController {
 		}
 	}
 
+	@RequestMapping(value = "/patch/game", method = RequestMethod.GET)
+	public void patchDataByGame() {
+			System.out.println("추가 갱신: 게임");
+			patchVideoAndChannelByGame();
+			System.out.println("추가 갱신: 게임 데이터 갱신 완료.");
+	}
+
 	@RequestMapping(value = "/parse/all")
 	public void parseWords() {
 		new ArrayList<String>();
 		new ArrayList<String>();
-		 new ArrayList<String>();
+		new ArrayList<String>();
 		System.out.println("----------------- 채널 키워드 추출 시작 -----------------");
 		List<String> channelIdList = parseChannels();
 		System.out.println("----------------- 채널 키워드 추출 시작 -----------------");
@@ -506,32 +535,12 @@ public class BasicController {
 		System.out.println("----------------- 연관성 구축 종료 -----------------");
 	}
 
-	@RequestMapping(value = "/test")
-	public void trial2() {
-		List<String> filter = serviceBasic.getNounFilter();
-		List<VideoDto> dataset = serviceVideo.getVideoInfo();
-		for (VideoDto video : dataset) {
-			String desc = video.getDescription();
-			if (desc != null) {
-				for (String target : filter) {
-					desc = desc.replace(target, " ");
-				}
-				desc = desc.replace("\n", " ");
-				desc = desc.replace("\r", " ");
-				List<String> keywords = new ArrayList(Arrays.asList(desc.split(" ")));
-				List<String> trashs = new ArrayList<String>();
-				for (String keyword : keywords) {
-					if (keyword.length() <= 1) {
-						trashs.add(keyword);
-					}
-				}
-				for (String trash : trashs) {
-					keywords.remove(trash);
-				}
-				System.out.println();
-				System.out.println(keywords);
-				System.out.println();
-			}
-		}
+	@RequestMapping(value = "/build/chain/all")
+	public void buildChains() {
+		List<String> videoIdList = serviceVideo.getVideoIdsInComplete();
+		List<String> channelIdList = serviceChannel.getChannelIdsInComplete();
+		System.out.println("----------------- 연관성 구축 시작 -----------------");
+		buildChains(videoIdList, videoIdList, channelIdList);
+		System.out.println("----------------- 연관성 구축 종료 -----------------");
 	}
 }

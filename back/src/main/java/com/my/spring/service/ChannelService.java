@@ -18,4 +18,5 @@ public interface ChannelService {
 	public int checkChannelStatistics(ChannelStatDto item);
 	public List<ChannelDto> getChannelInfoById(List<String> list);
 	public void filterChannelWord();
+	public List<String> getChannelIdsInComplete();
 }

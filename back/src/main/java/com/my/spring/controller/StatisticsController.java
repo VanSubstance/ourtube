@@ -1,30 +1,24 @@
 package com.my.spring.controller;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.my.spring.domain.TopicDto;
-import com.my.spring.domain.WordDto;
-import com.my.spring.domain.words.ChannelWordsDto;
+import com.my.spring.domain.TopicStatDto;
 import com.my.spring.domain.words.NounDto;
-import com.my.spring.domain.words.TagWordsDto;
-import com.my.spring.domain.words.VideoWordsDto;
 import com.my.spring.service.BasicService;
 import com.my.spring.service.ChannelService;
 import com.my.spring.service.VideoService;
 import com.my.spring.service.WordService;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/data")
 public class StatisticsController {
@@ -152,5 +146,11 @@ public class StatisticsController {
 		System.out.println("토픽 별 채널 설명 별 명사 리스트 추출 종료.");
 		System.out.println("----------------------------------------------\n");
 		return result;
+	}
+	
+	@RequestMapping(value = "/topic/rank/today")
+	public List<TopicStatDto> getTopicStatsforToday() {
+		System.out.println("금일 토픽 전체 랭킹 반환");
+		return serviceBasic.getTopicListForToday();
 	}
 }

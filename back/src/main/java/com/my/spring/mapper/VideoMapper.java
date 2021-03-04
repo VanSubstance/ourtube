@@ -26,4 +26,5 @@ public interface VideoMapper {
 	public List<VideoDto> getVideoInfoById(@Param("list") List<String> list);
 	public void filterVideoWord();
 	public void filterTagWord();
+	public List<String> getVideoIdsInComplete();
 }

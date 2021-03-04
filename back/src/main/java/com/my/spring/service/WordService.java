@@ -1,5 +1,6 @@
 package com.my.spring.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.my.spring.domain.WordDto;
@@ -35,4 +36,5 @@ public interface WordService {
 	public List<WordChain> buildWordChainByTag(String videoId);
 	public List<WordChain> buildWordChainByVideo(String videoId);
 	public List<WordChain> buildWordChainByChannel(String channelId);
+	public void setWordChainsById();
 }

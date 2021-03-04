@@ -20,4 +20,5 @@ public interface ChannelMapper {
 	public int checkChannelStatistics(@Param("item") ChannelStatDto item);
 	public List<ChannelDto> getChannelInfoById(@Param("list") List<String> list);
 	public void filterChannelWord();
+	public List<String> getChannelIdsInComplete();
 }
