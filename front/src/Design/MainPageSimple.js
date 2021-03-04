@@ -112,6 +112,10 @@ class MainPageSimple extends Component {
         return (
             <div
                 className="mainBackground">
+                <img
+                    className="backGroundImg"
+                    src="/Ex/backGroundIMG.PNG">
+                </img>
                 <div
                     className="linkBox">
                     <Link

@@ -58,7 +58,7 @@ class KeywordList extends Component {
         return (
             <div
                 style = {{
-                    backgroundColor: "#d4d4d4",
+                    background: "transparent",
                     border: "1px solid white"
                 }}>
                 <p>{this.props.type} 내 선택한 카테고리 내 키워드 순위 리스트</p>
@@ -67,7 +67,8 @@ class KeywordList extends Component {
                     spaceBetween={20}
                     slidesPerView={7}
                     navigation
-                    loop
+                    loop={true}
+                    autoplay={true}
                     onSlideChange={() => console.log('slide change')}
                     pagination={{ clickable: true }}
 
