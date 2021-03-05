@@ -5,7 +5,7 @@ import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/swiper.scss';
 
-import KeywordItemVertical from './KeywordItemVertical';
+import KeywordItem from './KeywordItem';
 import './Css/Comps.css';
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
@@ -43,11 +43,11 @@ class KeywordList extends Component {
         return (
             this.state.keywords.map((element) => (
                 <SwiperSlide>
-                    <KeywordItemVertical
+                    <KeywordItem
                         type = {this.props.type}
                         keyword={element}>
 
-                    </KeywordItemVertical>
+                    </KeywordItem>
                 </SwiperSlide>
             )
             )
@@ -63,7 +63,7 @@ class KeywordList extends Component {
                 }}>
                 <p>{this.props.type} 내 선택한 카테고리 내 키워드 순위 리스트</p>
                 <Swiper
-                    className= "keywordListVertical"
+                    className= "keywordList"
                     spaceBetween={20}
                     slidesPerView={7}
                     navigation
@@ -74,75 +74,75 @@ class KeywordList extends Component {
                 >
                     {/* {this.renderLists()} */}
 
-                <SwiperSlide>
-                    <KeywordItemVertical
+                <SwiperSlide className="keywordItem">
+                    <KeywordItem
                         type = {this.props.type}
                         keyword={this.state.keywords[0]}>
 
-                    </KeywordItemVertical>
+                    </KeywordItem>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <KeywordItemVertical
+                    <KeywordItem
                         type = {this.props.type}
                         keyword={this.state.keywords[1]}>
 
-                    </KeywordItemVertical>
+                    </KeywordItem>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <KeywordItemVertical
+                    <KeywordItem
                         type = {this.props.type}
                         keyword={this.state.keywords[2]}>
 
-                    </KeywordItemVertical>
+                    </KeywordItem>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <KeywordItemVertical
+                    <KeywordItem
                         type = {this.props.type}
                         keyword={this.state.keywords[3]}>
 
-                    </KeywordItemVertical>
+                    </KeywordItem>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <KeywordItemVertical
+                    <KeywordItem
                         type = {this.props.type}
                         keyword={this.state.keywords[4]}>
 
-                    </KeywordItemVertical>
+                    </KeywordItem>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <KeywordItemVertical
+                    <KeywordItem
                         type = {this.props.type}
                         keyword={this.state.keywords[5]}>
 
-                    </KeywordItemVertical>
+                    </KeywordItem>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <KeywordItemVertical
+                    <KeywordItem
                         type = {this.props.type}
                         keyword={this.state.keywords[6]}>
 
-                    </KeywordItemVertical>
+                    </KeywordItem>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <KeywordItemVertical
+                    <KeywordItem
                         type = {this.props.type}
                         keyword={this.state.keywords[7]}>
 
-                    </KeywordItemVertical>
+                    </KeywordItem>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <KeywordItemVertical
+                    <KeywordItem
                         type = {this.props.type}
                         keyword={this.state.keywords[8]}>
 
-                    </KeywordItemVertical>
+                    </KeywordItem>
                 </SwiperSlide>
                 <SwiperSlide>
-                    <KeywordItemVertical
+                    <KeywordItem
                         type = {this.props.type}
                         keyword={this.state.keywords[9]}>
 
-                    </KeywordItemVertical>
+                    </KeywordItem>
                 </SwiperSlide>
                 </Swiper>
                 <div

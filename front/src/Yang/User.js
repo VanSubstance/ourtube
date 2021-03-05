@@ -1,11 +1,20 @@
-import React, {Component} from 'react';
-
+import React, { Component } from 'react';
+import './Styles.css';
+import { ItemBoxList } from '.';
+import LeftBox from './LeftBox';
+import WallPaper from './WallPaper';
 class User extends Component {
     render() {
-        return(
-            <div>
-                <h2>민준이 공부</h2>
-            </div>
+        return (
+            <body>
+                <WallPaper></WallPaper>                
+                <ItemBoxList></ItemBoxList>
+                <LeftBox></LeftBox>                
+            </body>
+
+
+
+
         );
     }
 }

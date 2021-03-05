@@ -1,12 +1,10 @@
 .keywordItem {
-    width: 300px;
-    height: 150px;
-    background-color: rgb(255, 222, 255);
-    border: 2px solid red;
-    color: black;
-    margin: 10px;
-    font-family: Arial;
-    text-align: center;
+    position: absolute;
+    width: 261.987px;
+    height: 286px;
+    left: 0px;
+    top: 0px;
+    overflow: visible;
 }
 .keywordListVertical {
     position: relative;
@@ -21,7 +19,7 @@
     height: 200px;
     background-color: rgb(255, 222, 255);
     border: 2px solid rgb(2, 0, 100);
-    color: black;
+    color: white;
     margin: 10px;
     font-family: Arial;
     text-align: center;
@@ -30,4 +28,22 @@
 .keywordMarginBox {
     width: 100%;
     height: 50px;
+}
+._138_ca_svg {
+    fill: transparent;
+    stroke: rgba(255,255,255,1);
+    stroke-width: 2px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+._138_ca_path {
+    overflow: visible;
+    position: absolute;
+    width: 261.986px;
+    height: 286px;
+    left: 0px;
+    top: 0px;
+    transform: matrix(1,0,0,1,0,0);
 }
