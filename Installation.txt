@@ -8,3 +8,4 @@ node-sass@4.14.0
 swiper
 material-ui/core
 chartjs-plugin-datalabels
+react-d3-cloud

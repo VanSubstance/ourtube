@@ -57,15 +57,11 @@ class KeywordList extends Component {
     render() {
         return (
             <div
-                style = {{
-                    background: "transparent",
-                    border: "1px solid white"
-                }}>
-                <p>{this.props.type} 내 선택한 카테고리 내 키워드 순위 리스트</p>
+                className="keywordItemBox">
                 <Swiper
                     className= "keywordListVertical"
                     spaceBetween={20}
-                    slidesPerView={7}
+                    slidesPerView={4}
                     navigation
                     loop={true}
                     autoplay={true}
@@ -73,7 +69,8 @@ class KeywordList extends Component {
                     pagination={{ clickable: true }}
 
                 >
-                    {/* {this.renderLists()} */}
+                    {/* {this.renderLists()} 
+                    <p>{this.props.type} 내 선택한 카테고리 내 키워드 순위 리스트</p>*/}
 
                 <SwiperSlide>
                     <KeywordItemVertical
