@@ -57,22 +57,20 @@ class KeywordList extends Component {
     render() {
         return (
             <div
-                style = {{
-                    backgroundColor: "#d4d4d4",
-                    border: "1px solid white"
-                }}>
-                <p>{this.props.type} 내 선택한 카테고리 내 키워드 순위 리스트</p>
+                className="keywordItemBox">
                 <Swiper
                     className= "keywordList"
                     spaceBetween={20}
-                    slidesPerView={7}
+                    slidesPerView={4}
                     navigation
-                    loop
+                    loop={true}
+                    autoplay={true}
                     onSlideChange={() => console.log('slide change')}
                     pagination={{ clickable: true }}
 
                 >
-                    {/* {this.renderLists()} */}
+                    {/* {this.renderLists()} 
+                    <p>{this.props.type} 내 선택한 카테고리 내 키워드 순위 리스트</p>*/}
 
                 <SwiperSlide className="keywordItem">
                     <KeywordItem

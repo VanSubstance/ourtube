@@ -4,10 +4,13 @@ import { Bar, Line, Radar, Pie } from 'react-chartjs-2';
 import 'chartjs-plugin-datalabels';
 import { render } from 'react-dom';
 import WordCloud from 'react-d3-cloud';
+import axios, * as others from "axios";
+import moment from 'moment'
 
 class TrendResultPage extends Component {
 
     state = {
+        ip: "http://222.232.15.205:8082",
         keyword: this.props.match.params.keyword,
         options: {
             // 좋아요 싫어요 막대 그래프 옵션
@@ -171,20 +174,41 @@ class TrendResultPage extends Component {
             }
         },
         data: [
-            { text: '개', value: 1000 },
-            { text: '좆', value: 200 },
-            { text: '같은', value: 800 },
-            { text: '드디어', value: 12000 },
-            { text: '했네', value: 10 },
-            { text: '간단한', value: 10000 },
-            { text: '이걸', value: 15500 },
-            { text: '앰창', value: 25000}
         ],
         fontSizeMapper : word => Math.log2(word.value) * 5,
-        rotate : word => word.value % 360,
-        padding : 1,
-        width: 400,
-        height: 400
+        rotate : 0,
+        padding : 5,
+        width: 700,
+        height: 700,
+        font: "Arial"
+    }
+
+    getDataWordCloud = async () => {
+        axios.get(this.state.ip+'/data/topic/rank/today')
+            .then(({ data }) => {
+                data.forEach((value, index) => {
+                    if (true) {
+                        console.log("작동");
+                        this.setState(
+                            {
+                                data: this.state.data.concat(
+                                    {
+                                        text: value.topic,
+                                        value: value.resultCount
+                                    }
+                                    ),
+                            }
+                        )
+                    }
+                });
+            })
+            .catch(e => {
+                console.error(e);
+            });
+    }
+    
+    componentWillMount() {
+        this.getDataWordCloud();
     }
 
     componentDidMount() {
@@ -270,6 +294,7 @@ class TrendResultPage extends Component {
                         padding={this.state.padding}
                         height={this.state.height}
                         width={this.state.width}
+                        font = {this.state.font}
                     />
                 </div>
                 <div
