@@ -7,8 +7,8 @@ import com.my.spring.domain.ChannelDto;
 import com.my.spring.domain.ChannelStatDto;
 
 public interface ChannelService {
-	public List<String> getChannelIdsByTopic(String topic);
-	public List<String> getChannelIdsForStatisticsByTopic(String topic);
+	public List<String> getChannelIdsByGame(String game);
+	public List<String> getChannelIdsForStatisticsByGame(String game);
 	public String getDescriptionByChannelId(String id);
 	public void setChannelInfo(ChannelDto item);
 	public void setChain(ChainDto item);

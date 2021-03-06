@@ -6,5 +6,5 @@ import lombok.*;
 @Setter
 public class ChainDto {
 	private String id;
-	private String topic;
+	private String game;
 }

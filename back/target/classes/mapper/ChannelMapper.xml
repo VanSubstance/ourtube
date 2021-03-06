@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper
 	namespace = "com.my.spring.mapper.ChannelMapper">
-	<select id="getChannelIdsByTopic" parameterType="String" resultType="String">
-		select a.id from channel a, channelTopic b where a.id = b.id and b.Topic = #{topic}
+	<select id="getChannelIdsByGame" parameterType="String" resultType="String">
+		select a.id from channel a, channelGame b where a.id = b.id and b.game = #{game}
 	</select>
 	<select id="getDescriptionByChannelId" parameterType="String" resultType="String">
 		select description from channel where id = #{id}
 	</select>
-	<select id="getChannelIdsForStatisticsByTopic" parameterType="String" resultType="String">
-		select a.id from channel a, channelTopic b 
-		where a.id = b.id and b.topic = #{topic} and 
+	<select id="getChannelIdsForStatisticsByGame" parameterType="String" resultType="String">
+		select a.id from channel a, channelGame b 
+		where a.id = b.id and b.game = #{game} and 
 		a.id not in (select id from channelStatistics where infoDate = TO_DATE(SYSDATE, 'YY/MM/DD'))
 	</select>
 	<insert id="setChannelInfo" parameterType="com.my.spring.domain.ChannelDto">
@@ -18,8 +18,8 @@
 		values (#{item.id}, #{item.title}, #{item.thumbnail}, #{item.description}, #{item.publishedDate})
 	</insert>
 	<insert id="setChain" parameterType="com.my.spring.domain.ChainDto">
-		insert into channelTopic (id, topic)
-		values (#{item.id}, #{item.topic})
+		insert into channelGame (id, game)
+		values (#{item.id}, #{item.game})
 	</insert>
 	<insert id="setChannelStatistics" parameterType="com.my.spring.domain.ChannelStatDto">
 		insert into channelStatistics (id, infodate, videocount, viewcount, subscount)
@@ -32,7 +32,7 @@
 		select count(*) from channelstatistics where id = #{item.id} and infodate = #{item.infoDate}
 	</select>
 	<select id="checkChain" parameterType="com.my.spring.domain.ChainDto" resultType="Int">
-		select count(*) from channelTopic where topic = #{item.topic} and id = #{item.id}
+		select count(*) from channelGame where game = #{item.game} and id = #{item.id}
 	</select>
 	
 	<select id="getChannelInfoById" parameterType="java.util.List" resultType="com.my.spring.domain.ChannelDto">

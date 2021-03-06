@@ -19,8 +19,8 @@ public class VideoServiceImpl implements VideoService {
 	private VideoMapper mapper;
 
 	@Override
-	public List<String> getVideoIdsByTopic(String topic) {
-		return mapper.getVideoIdsByTopic(topic);
+	public List<String> getVideoIdsByGame(String game) {
+		return mapper.getVideoIdsByGame(game);
 	}
 
 	@Override
@@ -59,13 +59,13 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public List<String> getVideoIdsForStatisticsByTopic(String ctgr) {
-		return mapper.getVideoIdsForStatisticsByTopic(ctgr);
+	public List<String> getVideoIdsForStatisticsByGame(String game) {
+		return mapper.getVideoIdsForStatisticsByGame(game);
 	}
 
 	@Override
-	public List<String> getVideoIdsForCommentByTopic(String ctgr) {
-		return mapper.getVideoIdsForCommentByTopic(ctgr);
+	public List<String> getVideoIdsForCommentByGame(String game) {
+		return mapper.getVideoIdsForCommentByGame(game);
 	}
 
 	@Override

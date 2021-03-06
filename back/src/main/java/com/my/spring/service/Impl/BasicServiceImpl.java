@@ -9,6 +9,7 @@ import com.my.spring.domain.IdComplete;
 import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.TopicStatDto;
 import com.my.spring.domain.chains.TopicChain;
+import com.my.spring.domain.statistics.GameStatistic;
 import com.my.spring.mapper.BasicMapper;
 import com.my.spring.service.BasicService;
 
@@ -18,13 +19,23 @@ public class BasicServiceImpl implements BasicService {
 	BasicMapper mapper;
 
 	@Override
-	public int checkTopicStat(String topic) {
-		return mapper.checkTopicStat(topic);
+	public List<String> getGameFirst() {
+		return mapper.getGameFirst();
 	}
 
 	@Override
-	public void setTopicStat(TopicStatDto item) {
-		mapper.setTopicStat(item);
+	public List<String> getGameTop() {
+		return mapper.getGameTop();
+	}
+
+	@Override
+	public int checkGameStat(String title) {
+		return mapper.checkGameStat(title);
+	}
+
+	@Override
+	public void setGameStat(GameStatistic item) {
+		mapper.setGameStat(item);
 	}
 
 	@Override
@@ -53,8 +64,8 @@ public class BasicServiceImpl implements BasicService {
 	}
 
 	@Override
-	public List<TopicStatDto> getTopicListForToday() {
-		return mapper.getTopicListForToday();
+	public List<TopicStatDto> getGameListForToday() {
+		return mapper.getGameListForToday();
 	}
 
 	@Override

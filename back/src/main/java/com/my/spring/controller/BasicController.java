@@ -3,7 +3,6 @@ package com.my.spring.controller;
 import java.util.ArrayList;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +16,11 @@ import com.my.spring.domain.ChannelDto;
 import com.my.spring.domain.ChannelStatDto;
 import com.my.spring.domain.CommentDto;
 import com.my.spring.domain.IdComplete;
-import com.my.spring.domain.TopicStatDto;
 import com.my.spring.domain.TagDto;
-import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
 import com.my.spring.domain.WordDto;
-import com.my.spring.domain.chains.WordChain;
+import com.my.spring.domain.statistics.GameStatistic;
 import com.my.spring.service.BasicService;
 import com.my.spring.service.ChannelService;
 import com.my.spring.service.CommentService;
@@ -33,7 +30,7 @@ import com.my.spring.service.YoutubeService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("")
+@RequestMapping("/patch")
 public class BasicController {
 
 	@Autowired
@@ -49,7 +46,7 @@ public class BasicController {
 	@Autowired
 	private WordService serviceWord;
 
-	public void patchChannelByTopic(TopicDto topicDto, List<String> channelIdList) {
+	public void patchChannelByGame(String game, List<String> channelIdList) {
 		System.out.println("------------------------ 채널 데이터 작업 시작  ------------------------");
 
 		System.out.print("\t\t신규 채널 유효성 검사 | o -> 신규 등록 | x -> 이미 존재 | ");
@@ -66,7 +63,10 @@ public class BasicController {
 		}
 		channelIdList = temp;
 		System.out.println(" : 완료.");
-		List<ChannelDto> existedInfo = serviceChannel.getChannelInfoById(existed);
+		List<ChannelDto> existedInfo = new ArrayList<ChannelDto>();
+		if (existed.size() != 0) {
+			existedInfo = serviceChannel.getChannelInfoById(existed);
+		}
 
 		System.out.println("\t\t상위 채널 중 신규 id 리스트 -> 채널 기본 정보 & 채널 토픽 체인");
 		ArrayList<Object> data = serviceYoutube.callChannelInfosByChannelId(channelIdList);
@@ -77,7 +77,7 @@ public class BasicController {
 		for (ChannelDto channelDto : channelDtoList) {
 			ChainDto newChain = new ChainDto();
 			newChain.setId(channelDto.getId());
-			newChain.setTopic(topicDto.getTopic());
+			newChain.setGame(game);
 			chainChannel.add(newChain);
 			System.out.print("o");
 			if (channelDto.getDescription().length() >= 2000) {
@@ -90,7 +90,7 @@ public class BasicController {
 		for (ChannelDto channelDto : existedInfo) {
 			ChainDto newChain = new ChainDto();
 			newChain.setId(channelDto.getId());
-			newChain.setTopic(topicDto.getTopic());
+			newChain.setGame(game);
 			chainChannel.add(newChain);
 		}
 		System.out.println(" 완료.");
@@ -108,7 +108,7 @@ public class BasicController {
 		System.out.println(" 완료.");
 
 		System.out.print("\tDatebase -> 금일 통계 정보 갱신을 위한 채널 id 리스트: ");
-		channelIdList = serviceChannel.getChannelIdsForStatisticsByTopic(topicDto.getTopic());
+		channelIdList = serviceChannel.getChannelIdsForStatisticsByGame(game);
 		System.out.println(channelIdList.size() + " 개");
 		System.out.println("\t\t금일 통계 정보 갱신을 위한 채널 id 리스트 -> Youtube API -> 금일 채널 통계 정보");
 		data = serviceYoutube.callChannelStatsByChannelId(channelIdList);
@@ -123,7 +123,7 @@ public class BasicController {
 		System.out.println("------------------------ 채널 데이터 작업 종료  ------------------------");
 	}
 
-	public void patchVideoByTopic(TopicDto topicDto, List<String> videoIdList) {
+	public void patchVideoByGame(String game, List<String> videoIdList) {
 		System.out.println("------------------------ 비디오 데이터 작업 시작  ------------------------");
 
 		System.out.print("\t\t신규 비디오 유효성 검사 | o -> 신규 등록 | x -> 이미 존재 | ");
@@ -140,8 +140,10 @@ public class BasicController {
 		}
 		videoIdList = temp;
 		System.out.println(" : 완료.");
-		List<VideoDto> existedInfo = serviceVideo.getVideoInfoById(existed);
-
+		List<VideoDto> existedInfo = new ArrayList<VideoDto>();
+		if (existed.size() != 0) {
+			existedInfo = serviceVideo.getVideoInfoById(existed);
+		}
 		System.out.println("\t\t상위 비디오 중 신규 id 리스트 -> 비디오 기본 정보 & 태그 & 비디오 토픽 체인");
 		ArrayList<Object> data = serviceYoutube.callVideoInfosByVideoId(videoIdList);
 		List<VideoDto> videoDtoList = (List<VideoDto>) data.get(0);
@@ -151,7 +153,7 @@ public class BasicController {
 		for (VideoDto videoDto : videoDtoList) {
 			ChainDto newChain = new ChainDto();
 			newChain.setId(videoDto.getId());
-			newChain.setTopic(topicDto.getTopic());
+			newChain.setGame(game);
 			chainVideo.add(newChain);
 			System.out.print("o");
 			if (videoDto.getDescription().length() >= 2000) {
@@ -164,7 +166,7 @@ public class BasicController {
 		for (VideoDto videoDto : existedInfo) {
 			ChainDto newChain = new ChainDto();
 			newChain.setId(videoDto.getId());
-			newChain.setTopic(topicDto.getTopic());
+			newChain.setGame(game);
 			chainVideo.add(newChain);
 		}
 		System.out.println(" 완료.");
@@ -208,7 +210,7 @@ public class BasicController {
 		System.out.println(" 완료.");
 
 		System.out.print("\tDatebase -> 금일 통계 정보 갱신을 위한 비디오 id 리스트: ");
-		videoIdList = serviceVideo.getVideoIdsForStatisticsByTopic(topicDto.getTopic());
+		videoIdList = serviceVideo.getVideoIdsForStatisticsByGame(game);
 		System.out.println(videoIdList.size() + " 개");
 
 		System.out.println("\t\t금일 통계 정보 갱신을 위한 비디오 id 리스트 -> Youtube API -> 금일 비디오 통계 정보");
@@ -224,55 +226,38 @@ public class BasicController {
 		System.out.println("------------------------ 비디오 데이터 작업 종료  ------------------------");
 	}
 
-	public void patchVideoAndChannelByTopic(TopicDto topicDto) {
+	public void patchVideoAndChannelByGame(String game) {
 		System.out.println("------------------------ 데이터 작업 시작  ------------------------");
 		System.out.print("\tYoutube API -> 상위 비디오 id 리스트");
-		ArrayList<Object> data = serviceYoutube.callVideoIdsByTopic(topicDto);
+		ArrayList<Object> data = serviceYoutube.callVideoIdsByGame(game);
 		List<String> videoIdList = (List<String>) data.get(0);
 		List<String> channelIdList = (List<String>) data.get(1);
-		TopicStatDto topicStatDto = (TopicStatDto) data.get(2);
+		GameStatistic gameStat = (GameStatistic) data.get(2);
 		System.out.print(videoIdList.size() + " 개, 채널 id 리스트: ");
 		System.out.println(channelIdList.size() + " 개");
 
-		System.out.print("토픽 당일 데이터: ");
-		if (serviceBasic.checkTopicStat(topicStatDto.getTopic()) != 0) {
-			System.out.println("x");
+		System.out.print("게임 당일 데이터: ");
+		if (serviceBasic.checkGameStat(game) != 0) {
+			System.out.print("x");
 		} else {
-			System.out.println("o");
-			serviceBasic.setTopicStat(topicStatDto);
+			System.out.print("o");
+			serviceBasic.setGameStat(gameStat);
 		}
 		System.out.println(" :완료");
 
-		patchChannelByTopic(topicDto, channelIdList);
-		patchVideoByTopic(topicDto, videoIdList);
+		patchChannelByGame(game, channelIdList);
+		patchVideoByGame(game, videoIdList);
 
 		System.out.println("------------------------ 데이터 작업 종료  ------------------------");
 	}
 	
-	public void patchVideoAndChannelByGame() {
-		System.out.println("------------------------ 데이터 작업 시작  ------------------------");
-		System.out.print("\tYoutube API -> 상위 비디오 id 리스트");
-		ArrayList<Object> data = serviceYoutube.callVideoIdsByGame();
-		List<String> videoIdList = (List<String>) data.get(0);
-		List<String> channelIdList = (List<String>) data.get(1);
-		System.out.print(videoIdList.size() + " 개, 채널 id 리스트: ");
-		System.out.println(channelIdList.size() + " 개");
-
-		TopicDto topicDto = new TopicDto();
-		topicDto.setTopic("게임");
-		patchChannelByTopic(topicDto, channelIdList);
-		patchVideoByTopic(topicDto, videoIdList);
-
-		System.out.println("------------------------ 데이터 작업 종료  ------------------------");
-	}
-
 	public List<String> parseTags() {
 		List<String> result = new ArrayList<String>();
 		List<String> filter = serviceBasic.getNounFilter();
-		List<TopicDto> topicDtoList = serviceBasic.getTopics();
-		for (TopicDto topicDto : topicDtoList) {
-			System.out.println("토픽: " + topicDto.getTopic());
-			List<String> videoIdList = serviceVideo.getVideoIdsByTopic(topicDto.getTopic());
+		List<String> gameList = serviceBasic.getGameTop();
+		for (String game : gameList) {
+			System.out.println("게임: " + game);
+			List<String> videoIdList = serviceVideo.getVideoIdsByGame(game);
 			for (String videoId : videoIdList) {
 				System.out.print("\t비디오 id: " + videoId);
 				if (serviceWord.checkCompleteForTag(videoId) == 0) {
@@ -330,10 +315,10 @@ public class BasicController {
 	public List<String> parseChannels() {
 		List<String> result = new ArrayList<String>();
 		List<String> filter = serviceBasic.getNounFilter();
-		List<TopicDto> topicDtoList = serviceBasic.getTopics();
-		for (TopicDto topicDto : topicDtoList) {
-			System.out.println("토픽: " + topicDto.getTopic());
-			List<String> channelIdList = serviceChannel.getChannelIdsByTopic(topicDto.getTopic());
+		List<String> gameList = serviceBasic.getGameTop();
+		for (String game : gameList) {
+			System.out.println("게임: " + game);
+			List<String> channelIdList = serviceChannel.getChannelIdsByGame(game);
 			for (String channelId : channelIdList) {
 				System.out.print("\t채널 id: " + channelId + " : ");
 				if (serviceWord.checkCompleteForChannel(channelId) == 0) {
@@ -387,10 +372,10 @@ public class BasicController {
 	public List<String> parseVideos() {
 		List<String> result = new ArrayList<String>();
 		List<String> filter = serviceBasic.getNounFilter();
-		List<TopicDto> topicDtoList = serviceBasic.getTopics();
-		for (TopicDto topicDto : topicDtoList) {
-			System.out.println("토픽: " + topicDto.getTopic());
-			List<String> videoIdList = serviceVideo.getVideoIdsByTopic(topicDto.getTopic());
+		List<String> gameList = serviceBasic.getGameTop();
+		for (String game : gameList) {
+			System.out.println("게임: " + game);
+			List<String> videoIdList = serviceVideo.getVideoIdsByGame(game);
 			for (String videoId : videoIdList) {
 				System.out.print("\t비디오 id: " + videoId + " : ");
 				if (serviceWord.checkCompleteForVideo(videoId) == 0) {
@@ -463,57 +448,30 @@ public class BasicController {
 		}
 	}
 
-	@RequestMapping(value = "/patch/1", method = RequestMethod.GET)
-	public void patchDataByTopicTotal() {
-		List<TopicDto> topicDtoList = serviceBasic.getTopics();
-		for (TopicDto topicDto : topicDtoList) {
-			System.out.println("토픽: " + topicDto.getTopic());
-			patchVideoAndChannelByTopic(topicDto);
-			System.out.println("토픽: " + topicDto.getTopic() + " : 데이터 갱신 완료.");
+	@RequestMapping(value = "/first", method = RequestMethod.GET)
+	public void patchDataByGameFirst() {
+		List<String> gameList = serviceBasic.getGameFirst();
+		int mark = 0;
+		for (String game : gameList) {
+			System.out.println(mark);
+			System.out.println("게임: " + game);
+			patchVideoAndChannelByGame(game);
+			System.out.println("게임: " + game + " : 데이터 갱신 완료.");
+			mark ++;
 		}
 	}
 
-	@RequestMapping(value = "/patch/2/1", method = RequestMethod.GET)
-	public void patchDataByTopic1() {
-		List<TopicDto> topicDtoList = serviceBasic.getTopics();
-		int len = topicDtoList.size();
-		topicDtoList = topicDtoList.subList(0, len / 3);
-		for (TopicDto topicDto : topicDtoList) {
-			System.out.println("토픽: " + topicDto.getTopic());
-			patchVideoAndChannelByTopic(topicDto);
-			System.out.println("토픽: " + topicDto.getTopic() + " : 데이터 갱신 완료.");
+	@RequestMapping(value = "/top", method = RequestMethod.GET)
+	public void patchDataByGameTop() {
+		List<String> gameList = serviceBasic.getGameTop();
+		int mark = 0;
+		for (String game : gameList) {
+			System.out.println(mark);
+			System.out.println("게임: " + game);
+			patchVideoAndChannelByGame(game);
+			System.out.println("게임: " + game + " : 데이터 갱신 완료.");
+			mark ++;
 		}
-	}
-
-	@RequestMapping(value = "/patch/2/2", method = RequestMethod.GET)
-	public void patchDataByTopic2() {
-		List<TopicDto> topicDtoList = serviceBasic.getTopics();
-		int len = topicDtoList.size();
-		topicDtoList = topicDtoList.subList(len / 3, len * 2 / 3);
-		for (TopicDto topicDto : topicDtoList) {
-			System.out.println("토픽: " + topicDto.getTopic());
-			patchVideoAndChannelByTopic(topicDto);
-			System.out.println("토픽: " + topicDto.getTopic() + " : 데이터 갱신 완료.");
-		}
-	}
-
-	@RequestMapping(value = "/patch/2/3", method = RequestMethod.GET)
-	public void patchDataByTopic3() {
-		List<TopicDto> topicDtoList = serviceBasic.getTopics();
-		int len = topicDtoList.size();
-		topicDtoList = topicDtoList.subList(len * 2 / 3, len);
-		for (TopicDto topicDto : topicDtoList) {
-			System.out.println("토픽: " + topicDto.getTopic());
-			patchVideoAndChannelByTopic(topicDto);
-			System.out.println("토픽: " + topicDto.getTopic() + " : 데이터 갱신 완료.");
-		}
-	}
-
-	@RequestMapping(value = "/patch/game", method = RequestMethod.GET)
-	public void patchDataByGame() {
-			System.out.println("추가 갱신: 게임");
-			patchVideoAndChannelByGame();
-			System.out.println("추가 갱신: 게임 데이터 갱신 완료.");
 	}
 
 	@RequestMapping(value = "/parse/all")
@@ -535,7 +493,7 @@ public class BasicController {
 		System.out.println("----------------- 연관성 구축 종료 -----------------");
 	}
 
-	@RequestMapping(value = "/build/chain/all")
+	@RequestMapping(value = "/chain/all")
 	public void buildChains() {
 		List<String> videoIdList = serviceVideo.getVideoIdsInComplete();
 		List<String> channelIdList = serviceChannel.getChannelIdsInComplete();

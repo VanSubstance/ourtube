@@ -3,12 +3,24 @@
 <mapper
 	namespace = "com.my.spring.mapper.BasicMapper">
 	
-	<select id="checkTopicStat" parameterType="String" resultType="Int">
-		select count(*) from topicstatistics where topic = #{topic} and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+	<select id="getGameFirst" resultType="String">
+		select title from game 
+		where title not in (select title from gamestatistics where infodate = TO_DATE(SYSDATE, 'YY/MM/DD')) 
+		order by description desc
 	</select>
-	<insert id="setTopicStat" parameterType="com.my.spring.domain.TopicStatDto">
-		insert into topicstatistics (topic, infoDate, resultcount)
-		values (#{item.topic}, #{item.infoDate}, #{item.resultCount})
+	<select id="getGameTop" resultType="String">
+		select title from gamestatistics 
+		where infodate = TO_DATE(SYSDATE - 1, 'YY/MM/DD')) 
+		order by resultCount desc
+	</select>
+	
+	
+	<select id="checkGameStat" parameterType="String" resultType="Int">
+		select count(*) from gamestatistics where title = #{title} and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+	</select>
+	<insert id="setGameStat" parameterType="com.my.spring.domain.statistics.GameStatistic">
+		insert into gamestatistics (title, infoDate, resultcount)
+		values (#{item.title}, #{item.infoDate}, #{item.resultCount})
 	</insert>
 	<select id="getTopics" resultType="com.my.spring.domain.TopicDto">
 		select * from topictotal
@@ -50,8 +62,8 @@
 		order by hardness desc
 	</select>
 	
-	<select id="getTopicListForToday" resultType="com.my.spring.domain.TopicStatDto">
-		select * from topicstatistics
+	<select id="getGameListForToday" resultType="com.my.spring.domain.statistics.GameStatistic">
+		select * from gameStatistics
 		where infodate = TO_DATE(SYSDATE, ('YY/MM/DD'))
 		order by resultcount desc
 	</select>

@@ -2,20 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper
 	namespace = "com.my.spring.mapper.VideoMapper">
-	<select id="getVideoIdsByTopic" parameterType="String" resultType="String">
-		select a.id from video a, videoTopic b where a.id = b.id and b.topic = #{topic}
+	<select id="getVideoIdsByGame" parameterType="String" resultType="String">
+		select a.id from video a, videoGame b where a.id = b.id and b.game = #{game}
 	</select>
 	<select id="getDescriptionByVideoId" parameterType="String" resultType="String">
 		select description from video where id = #{id}
 	</select>
-	<select id="getVideoIdsForStatisticsByTopic" parameterType="String" resultType="String">
-		select a.id from Video a, videoTopic b 
-		where a.id = b.id and b.topic = #{topic} and 
+	<select id="getVideoIdsForStatisticsByGame" parameterType="String" resultType="String">
+		select a.id from Video a, videoGame b 
+		where a.id = b.id and b.game = #{game} and 
 		a.id not in (select id from VideoStatistics where infoDate = TO_DATE(SYSDATE, 'YY/MM/DD'))
 	</select>
-	<select id="getVideoIdsForCommentByTopic" parameterType="String" resultType="String">
-		select a.id from Video a, videoTopic b 
-		where a.id = b.id and b.topic = #{topic} and 
+	<select id="getVideoIdsForCommentByGame" parameterType="String" resultType="String">
+		select a.id from Video a, videoGame b 
+		where a.id = b.id and b.game = #{game} and 
 		a.id not in (select videoid id from comments group by videoid)
 	</select>
 	<select id="getVideoInfo" resultType="com.my.spring.domain.VideoDto">
@@ -35,8 +35,8 @@
 		values (#{item.id}, #{item.title}, #{item.thumbnail}, #{item.description}, #{item.publishedDate})
 	</insert>
 	<insert id="setChain" parameterType="com.my.spring.domain.ChainDto">
-		insert into videoTopic (id, topic)
-		values (#{item.id}, #{item.topic})
+		insert into videoGame (id, game)
+		values (#{item.id}, #{item.game})
 	</insert>
 	<insert id="setVideoStatistics" parameterType="com.my.spring.domain.VideoStatDto">
 		insert into VideoStatistics (id, infodate, likecount, dislikecount, viewcount, favoritecount, commentcount)
@@ -53,7 +53,7 @@
 		select count(*) from Videostatistics where id = #{item.id} and infodate = #{item.infoDate}
 	</select>
 	<select id="checkChain" parameterType="com.my.spring.domain.ChainDto" resultType="Int">
-		select count(*) from videoTopic where id = #{item.id} and topic = #{item.topic}
+		select count(*) from videoGame where id = #{item.id} and game = #{item.game}
 	</select>
 	<delete id="filterTagWord">
 		delete from tagword

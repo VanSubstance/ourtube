@@ -9,27 +9,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.my.spring.domain.TopicStatDto;
 import com.my.spring.domain.chains.TopicChain;
 import com.my.spring.service.BasicService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/process")
+@RequestMapping("/deploy")
 public class ProcessingController {
 	@Autowired
 	private BasicService serviceBasic;
-	
-	@RequestMapping(value = "/topic/chain/all")
-	public List<TopicChain> getTopicChains() {
-		System.out.println("토픽 체인 조회");
-		List<TopicChain> result = serviceBasic.getTopicChains();
-		return result;
+
+	@RequestMapping(value = "/game/rank/today")
+	public List<TopicStatDto> getTopicStatsforToday() {
+		System.out.println("금일 토픽 전체 랭킹 반환");
+		return serviceBasic.getGameListForToday();
 	}
-	
-	@RequestMapping(value = "/topic/chain/{topic}", method = RequestMethod.GET)
-	public List<TopicChain> getTopicChainsByTopic(@PathVariable String topic) {
-		System.out.println("토픽 체인 조회: " + topic);
-		return serviceBasic.getTopicChainsByTopic(topic);
-	}
-	
 }

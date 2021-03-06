@@ -14,6 +14,7 @@ public interface YoutubeService {
 	 * TopicStatDto
 	 * List<String> -> 채널 id 리스트
 	 */
+	public ArrayList<Object> callVideoIdsByGame(String game);
 	public ArrayList<Object> callVideoIdsByTopic(TopicDto topicDto);
 	public ArrayList<Object> callVideoIdsByGame();
 	

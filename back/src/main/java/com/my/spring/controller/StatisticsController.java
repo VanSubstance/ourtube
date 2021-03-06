@@ -148,9 +148,4 @@ public class StatisticsController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/topic/rank/today")
-	public List<TopicStatDto> getTopicStatsforToday() {
-		System.out.println("금일 토픽 전체 랭킹 반환");
-		return serviceBasic.getTopicListForToday();
-	}
 }
