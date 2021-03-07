@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.my.spring.domain.IdComplete;
 import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.TopicStatDto;
+import com.my.spring.domain.basics.Game;
+import com.my.spring.domain.chains.GameTopic;
 import com.my.spring.domain.chains.TopicChain;
 import com.my.spring.domain.statistics.GameStatistic;
 import com.my.spring.mapper.BasicMapper;
@@ -76,5 +78,25 @@ public class BasicServiceImpl implements BasicService {
 	@Override
 	public void setIdComplete(IdComplete item) {
 		mapper.setIdComplete(item);
+	}
+
+	@Override
+	public List<String> getGameNew() {
+		return mapper.getGameNew();
+	}
+
+	@Override
+	public void setGame(Game item) {
+		mapper.setGame(item);
+	}
+
+	@Override
+	public void setGameTopic(GameTopic item) {
+		mapper.setGameTopic(item);
+	}
+
+	@Override
+	public void setTopic(String topic) {
+		mapper.setTopic(topic);
 	}
 }

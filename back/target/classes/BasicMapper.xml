@@ -3,6 +3,11 @@
 <mapper
 	namespace = "com.my.spring.mapper.BasicMapper">
 	
+	<select id="getGameNew" resultType="String">
+		select title from game 
+		where title not in (select title from gamestatistics group by title) 
+		order by description desc
+	</select>
 	<select id="getGameFirst" resultType="String">
 		select title from game 
 		where title not in (select title from gamestatistics where infodate = TO_DATE(SYSDATE, 'YY/MM/DD')) 
@@ -10,10 +15,22 @@
 	</select>
 	<select id="getGameTop" resultType="String">
 		select title from gamestatistics 
-		where infodate = TO_DATE(SYSDATE - 1, 'YY/MM/DD')) 
+		where infodate = TO_DATE(SYSDATE - 1, 'YY/MM/DD')
 		order by resultCount desc
 	</select>
 	
+	<insert id="setGame" parameterType="com.my.spring.domain.basics.Game">
+		insert into game (title, description, thumbnail) 
+		values (#{item.title}, #{item.description}, #{item.thumbnail})
+	</insert>
+	<insert id="setGameTopic" parameterType="com.my.spring.domain.chains.GameTopic">
+		insert into gametopic (title, topic) 
+		values (#{item.title}, #{item.topic})
+	</insert>
+	
+	<insert id="setTopic" parameterType="String">
+		insert into topictotal (topic) values (#{topic})
+	</insert>
 	
 	<select id="checkGameStat" parameterType="String" resultType="Int">
 		select count(*) from gamestatistics where title = #{title} and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')

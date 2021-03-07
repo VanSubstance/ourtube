@@ -6,11 +6,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.my.spring.crawler.GameCrawler;
 import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.ChannelDto;
 import com.my.spring.domain.ChannelStatDto;
@@ -20,6 +24,8 @@ import com.my.spring.domain.TagDto;
 import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
 import com.my.spring.domain.WordDto;
+import com.my.spring.domain.basics.Game;
+import com.my.spring.domain.chains.GameTopic;
 import com.my.spring.domain.statistics.GameStatistic;
 import com.my.spring.service.BasicService;
 import com.my.spring.service.ChannelService;
@@ -28,10 +34,11 @@ import com.my.spring.service.VideoService;
 import com.my.spring.service.WordService;
 import com.my.spring.service.YoutubeService;
 
+@EnableScheduling
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/patch")
-public class BasicController {
+public class PatchController {
 
 	@Autowired
 	private BasicService serviceBasic;
@@ -45,7 +52,43 @@ public class BasicController {
 	private CommentService serviceComment;
 	@Autowired
 	private WordService serviceWord;
+	
+	private GameCrawler crawler;
 
+	@Scheduled(cron = "0 0 1 * * *")
+	public void patchGameFromYoutube() {
+		System.out.println("------------------------------- 게임 크롤링 시작 -------------------------------");
+		ArrayList<Object> data = crawler.crawl();
+		List<Game> games = (List<Game>) data.get(0);
+		List<GameTopic> gameTopics = (List<GameTopic>) data.get(1);
+		List<String> topics = (List<String>) data.get(2);
+		for (Game game : games) {
+			System.out.println("게임 등록.");
+			try {
+				serviceBasic.setGame(game);
+			} catch (DataIntegrityViolationException e) {
+				System.out.println("이미 존재");
+			}
+		}
+		for (GameTopic gameTopic : gameTopics) {
+			System.out.println("게임 토픽 체인 등록.");
+			try {
+				serviceBasic.setGameTopic(gameTopic);
+			} catch (DataIntegrityViolationException e) {
+				System.out.println("이미 존재");
+			}
+		}
+		for (String topic : topics) {
+			System.out.println("토픽 등록.");
+			try {
+				serviceBasic.setTopic(topic);
+			} catch (DataIntegrityViolationException e) {
+				System.out.println("이미 존재");
+			}
+		}
+		System.out.println("------------------------------- 게임 크롤링 종료 -------------------------------");
+	}
+	
 	public void patchChannelByGame(String game, List<String> channelIdList) {
 		System.out.println("------------------------ 채널 데이터 작업 시작  ------------------------");
 
@@ -447,6 +490,19 @@ public class BasicController {
 			}
 		}
 	}
+	
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
+	public void patchDataByGameNew() {
+		List<String> gameList = serviceBasic.getGameNew();
+		int mark = 0;
+		for (String game : gameList) {
+			System.out.println(mark);
+			System.out.println("게임: " + game);
+			patchVideoAndChannelByGame(game);
+			System.out.println("게임: " + game + " : 데이터 갱신 완료.");
+			mark ++;
+		}
+	}
 
 	@RequestMapping(value = "/first", method = RequestMethod.GET)
 	public void patchDataByGameFirst() {
@@ -501,4 +557,5 @@ public class BasicController {
 		buildChains(videoIdList, videoIdList, channelIdList);
 		System.out.println("----------------- 연관성 구축 종료 -----------------");
 	}
+	
 }
