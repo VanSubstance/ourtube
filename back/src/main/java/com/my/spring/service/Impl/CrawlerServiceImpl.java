@@ -1,4 +1,4 @@
-package com.my.spring.crawler;
+package com.my.spring.service.Impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +11,20 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.stereotype.Service;
 
 import com.my.spring.domain.basics.Game;
 import com.my.spring.domain.chains.GameTopic;
- 
-public class GameCrawler { 
+import com.my.spring.service.CrawlerService;
+
+@Service
+public class CrawlerServiceImpl implements CrawlerService {
+	
     private WebDriver driver;
     private String base_url;
- 
-    public ArrayList<Object> crawl() {
+    
+    @Override
+	public ArrayList<Object> crawlGame() {
         String WEB_DRIVER_ID = "webdriver.chrome.driver";
         String WEB_DRIVER_PATH = "C:/selenium_java/chromedriver.exe";
         //System Property SetUp
@@ -58,7 +63,10 @@ public class GameCrawler {
                     	gameTopic.setTitle(title);
                     	gameTopic.setTopic(topic.text());
                     	gameTopics.add(gameTopic);
-                    	topicList.add(topic.text());
+                    	topics.add(topic.text());
+                    	if (!topicList.contains(topic.text())) {
+                        	topicList.add(topic.text());
+                    	}
                     }
                     title = title.replaceAll("'", "\"");
                     description = description.replaceAll("'", "\"");
@@ -66,6 +74,7 @@ public class GameCrawler {
                     System.out.println("thumbnail   |\t" + thumbnail);
                     System.out.println("description |\t" + description);
                     System.out.println("topics      |\t" + topics);
+                    
                     Game game = new Game();
                     game.setTitle(title);
                     game.setDescription(description);
@@ -86,6 +95,6 @@ public class GameCrawler {
         result.add(gameTopics);
         result.add(topicList);
         return result;
-    }
- 
+	}
+
 }

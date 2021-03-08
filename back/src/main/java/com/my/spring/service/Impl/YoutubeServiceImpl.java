@@ -45,7 +45,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			"AIzaSyAFdfs807Tl-7PM8tb4ZDOqfC7vKSCSaRg",
 			"AIzaSyAQtHVKj5g7XtkJJh_Ipd5WlifxCOCwzsc", 
 			"AIzaSyCXiMrdsfLrPLtHRqhS5POORUzqrIK5_74"};
-	private static final int api = 3;
+	private static final int api = 0;
 
 	public YoutubeServiceImpl() {
 		getConnection();

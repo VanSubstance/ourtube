@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.my.spring.crawler.GameCrawler;
 import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.ChannelDto;
 import com.my.spring.domain.ChannelStatDto;
@@ -30,6 +29,7 @@ import com.my.spring.domain.statistics.GameStatistic;
 import com.my.spring.service.BasicService;
 import com.my.spring.service.ChannelService;
 import com.my.spring.service.CommentService;
+import com.my.spring.service.CrawlerService;
 import com.my.spring.service.VideoService;
 import com.my.spring.service.WordService;
 import com.my.spring.service.YoutubeService;
@@ -52,13 +52,14 @@ public class PatchController {
 	private CommentService serviceComment;
 	@Autowired
 	private WordService serviceWord;
-	
-	private GameCrawler crawler;
+	@Autowired
+	private CrawlerService serviceCrawler;
 
-	@Scheduled(cron = "0 0 1 * * *")
+//	@Scheduled(cron = "0 0 2 * * *")
+	@RequestMapping(value = "/crawler")
 	public void patchGameFromYoutube() {
 		System.out.println("------------------------------- 게임 크롤링 시작 -------------------------------");
-		ArrayList<Object> data = crawler.crawl();
+		ArrayList<Object> data = serviceCrawler.crawlGame();
 		List<Game> games = (List<Game>) data.get(0);
 		List<GameTopic> gameTopics = (List<GameTopic>) data.get(1);
 		List<String> topics = (List<String>) data.get(2);

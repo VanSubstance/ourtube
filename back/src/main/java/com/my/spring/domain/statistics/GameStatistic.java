@@ -1,6 +1,5 @@
 package com.my.spring.domain.statistics;
 
-import java.math.BigInteger;
 import java.sql.Date;
 
 import lombok.*;
