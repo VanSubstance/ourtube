@@ -49,14 +49,26 @@
 		where word = #{item.word} and id = #{item.id}
 	</update>
 	
-	<select id="getTagWordsByTopic" parameterType="String" resultType="com.my.spring.domain.words.NounDto">
-		select * from tagWord where id in (select id from videotopic where topic = #{topic}) order by length(word) desc
+	<select id="getTagWordsByGame" parameterType="String" resultType="com.my.spring.domain.words.NounDto">
+		select * from tagWord where id in (select id from videoGame where game = #{game}) order by length(word) desc
 	</select>
-	<select id="getChannelWordsByTopic" parameterType="String" resultType="com.my.spring.domain.words.NounDto">
-		select * from channelWord where id in (select id from channelTopic where topic = #{topic}) order by length(word) desc
+	<select id="getChannelWordsByGame" parameterType="String" resultType="com.my.spring.domain.words.NounDto">
+		select * from channelWord where id in (select id from channelGame where game = #{game}) order by length(word) desc
 	</select>
-	<select id="getVideoWordsByTopic" parameterType="String" resultType="com.my.spring.domain.words.NounDto">
-		select * from videoWord where id in (select id from videotopic where topic = #{topic}) order by length(word) desc
+	<select id="getVideoWordsByGame" parameterType="String" resultType="com.my.spring.domain.words.NounDto">
+		select * from videoWord where id in (select id from videoGame where game = #{game}) order by length(word) desc
+	</select>
+	
+	<select id="getWordsByGame" parameterType="String" resultType="com.my.spring.domain.words.NounDto">
+		select word, sum(count) count from (
+		select id, word, count from channelWord where id in (select id from channelGame where game = #{game})
+		union all
+		select id, word, count from tagWord where id in (select id from videoGame where game = #{game})
+		union all
+		select id, word, count from videoWord where id in (select id from videoGame where game = #{game})
+		) 
+		group by word
+		order by count desc
 	</select>
 	
 	<select id="checkWordUnique" parameterType="String" resultType="Int">

@@ -16,6 +16,9 @@ public interface VideoService {
 	public void setVideoInfo(VideoDto item);
 	public void setChain(ChainDto item);
 	public void setVideoStatistics(VideoStatDto item);
+	public VideoStatDto getAvgVideoStatisticsByGame(String game);
+	public VideoStatDto getTotalVideoStatisticsByTopic(String topic);
+	public List<Integer> getTotalViewsByGame(String game);
 	public void setVideoTag(TagDto item);
 	public int checkVideoInfo(String id);
 	public int checkChain(ChainDto item);

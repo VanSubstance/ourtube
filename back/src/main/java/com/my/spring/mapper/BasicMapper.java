@@ -31,4 +31,6 @@ public interface BasicMapper {
 	public List<TopicStatDto> getGameListForToday();
 	public int getIdCompleteById(@Param("id") String id);
 	public void setIdComplete(@Param("item") IdComplete item);
+	
+	public List<String> getTopicsByTopic(@Param("topic") String topic);
 }

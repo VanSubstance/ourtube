@@ -9,9 +9,13 @@
 		order by description desc
 	</select>
 	<select id="getGameFirst" resultType="String">
-		select title from game 
-		where title not in (select title from gamestatistics where infodate = TO_DATE(SYSDATE, 'YY/MM/DD')) 
-		order by description desc
+		select title from gamestatistics 
+		where infodate = TO_DATE(SYSDATE - 1, 'YY/MM/DD') 
+		and title not in (
+		    select title from gamestatistics
+		    where infodate = TO_DATE(SYSDATE, 'YY/MM/DD') 
+		)
+		order by resultcount desc
 	</select>
 	<select id="getGameTop" resultType="String">
 		select title from gamestatistics 
@@ -56,12 +60,21 @@
 	
 	<select id="getTopicChains" resultType="com.my.spring.domain.chains.TopicChain">
 		select topic1, topic2, count(*) hardness from
-		(select a.topic topic1, b.topic topic2 from videotopic a, videotopic b
-		where a.id = b.id and a.topic != b.topic
-		union all
-		select a.topic topic1, b.topic topic2 from channeltopic a, channeltopic b
-		where a.id = b.id and a.topic != b.topic) 
+		(select a.topic topic1, b.topic topic2 from gametopic a, gametopic b
+		where a.title = b.title and a.topic != b.topic
+		) 
 		group by topic1, topic2
+		order by hardness desc
+	</select>
+	<select id="getTopicsByTopic" parameterType="String" resultType="String">
+		select topic2 topic from (
+		    select topic1, topic2, count(*) hardness from (
+		        select a.topic topic1, b.topic topic2 from gametopic a, gametopic b
+		        where a.title = b.title and a.topic != b.topic
+		    ) 
+		group by topic1, topic2
+		)
+		where topic1 = '비디오 게임' and hardness > 10
 		order by hardness desc
 	</select>
 	

@@ -40,7 +40,7 @@ public class CrawlerServiceImpl implements CrawlerService {
         try {
             driver.get(base_url);
             WebElement body = driver.findElement(By.xpath("/html/body"));
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 5; i++) {
                 body.sendKeys(Keys.END);
                 Thread.sleep(1000);
             }

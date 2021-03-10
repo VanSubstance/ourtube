@@ -26,6 +26,7 @@ public interface WordService {
 	public List<NounDto> getTagWordsByTopic(String topic);
 	public List<NounDto> getChannelWordsByTopic(String topic);
 	public List<NounDto> getVideoWordsByTopic(String topic);
+	public List<NounDto> getWordsByGame(String game);
 	
 	public int checkWordUnique(String word);
 	public void setWordUnique(String word);

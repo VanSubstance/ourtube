@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.ChannelDto;
 import com.my.spring.domain.ChannelStatDto;
+import com.my.spring.domain.statistics.MaxAvgMedian;
 import com.my.spring.mapper.ChannelMapper;
 import com.my.spring.service.ChannelService;
 
@@ -77,5 +78,10 @@ public class ChannelServiceImpl implements ChannelService{
 	@Override
 	public List<String> getChannelIdsInComplete() {
 		return mapper.getChannelIdsInComplete();
+	}
+
+	@Override
+	public MaxAvgMedian getChannelMaxAvgMedianByTopic(String topic) {
+		return mapper.getChannelMaxAvgMedianByTopic(topic);
 	}
 }

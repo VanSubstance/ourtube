@@ -49,4 +49,16 @@
 		select id from channel where id not in (
 		select id from idComplete where type = 'channel')
 	</select>
+	
+	<select id="getChannelMaxAvgMedianByTopic" parameterType="String" resultType="com.my.spring.domain.statistics.MaxAvgMedian">
+		select round(max(subscount)) max, round(avg(subscount)) avg, round(PERCENTILE_CONT(0.5) within group (order by subscount)) median from channelstatistics
+		where id in (
+		    select id from channelgame
+		    where game in (
+		        select title as game from gametopic
+		        where topic = #{topic}
+		        group by title
+		    )
+		) and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+	</select>
 </mapper>

@@ -1,7 +1,6 @@
 package com.my.spring.service.Impl;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -101,5 +100,20 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	public List<String> getVideoIdsInComplete() {
 		return mapper.getVideoIdsInComplete();
+	}
+
+	@Override
+	public VideoStatDto getAvgVideoStatisticsByGame(String game) {
+		return mapper.getAvgVideoStatisticsByGame(game);
+	}
+
+	@Override
+	public VideoStatDto getTotalVideoStatisticsByTopic(String topic) {
+		return mapper.getTotalVideoStatisticsByTopic(topic);
+	}
+
+	@Override
+	public List<Integer> getTotalViewsByGame(String game) {
+		return mapper.getTotalViewsByGame(game);
 	}
 }

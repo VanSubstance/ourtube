@@ -25,9 +25,10 @@ public interface WordMapper {
 	public void updateWordFromVideo(@Param("item") WordDto item);
 	public int checkCompleteForVideo(@Param("id") String id);
 	
-	public List<NounDto> getTagWordsByTopic(@Param("topic") String topic);
-	public List<NounDto> getChannelWordsByTopic(@Param("topic") String topic);
-	public List<NounDto> getVideoWordsByTopic(@Param("topic") String topic);
+	public List<NounDto> getTagWordsByTopic(@Param("game") String game);
+	public List<NounDto> getChannelWordsByTopic(@Param("game") String game);
+	public List<NounDto> getVideoWordsByTopic(@Param("game") String game);
+	public List<NounDto> getWordsByGame(@Param("game") String game);
 	
 	public int checkWordUnique(@Param("word") String word);
 	public void setWordUnique(@Param("word") String word);

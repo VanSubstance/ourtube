@@ -18,6 +18,9 @@ public interface VideoMapper {
 	public void setVideoInfo(@Param("item") VideoDto item);
 	public void setChain(@Param("item") ChainDto item);
 	public void setVideoStatistics(@Param("item") VideoStatDto item);
+	public VideoStatDto getAvgVideoStatisticsByGame(@Param("game") String game);
+	public VideoStatDto getTotalVideoStatisticsByTopic(@Param("topic") String topic);
+	public List<Integer> getTotalViewsByGame(@Param("game") String game);
 	public void setVideoTag(@Param("item") TagDto item);
 	public int checkVideoInfo(@Param("id") String id);
 	public int checkChain(@Param("item") ChainDto item);

@@ -99,4 +99,9 @@ public class BasicServiceImpl implements BasicService {
 	public void setTopic(String topic) {
 		mapper.setTopic(topic);
 	}
+
+	@Override
+	public List<String> getTopicsByTopic(String topic) {
+		return mapper.getTopicsByTopic(topic);
+	}
 }

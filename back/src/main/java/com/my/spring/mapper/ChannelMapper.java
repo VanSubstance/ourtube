@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.ChannelDto;
 import com.my.spring.domain.ChannelStatDto;
+import com.my.spring.domain.statistics.MaxAvgMedian;
 
 public interface ChannelMapper {
 	public List<String> getChannelIdsByGame(@Param("game") String game);
@@ -21,4 +22,5 @@ public interface ChannelMapper {
 	public List<ChannelDto> getChannelInfoById(@Param("list") List<String> list);
 	public void filterChannelWord();
 	public List<String> getChannelIdsInComplete();
+	public MaxAvgMedian getChannelMaxAvgMedianByTopic(@Param("topic") String topic);
 }

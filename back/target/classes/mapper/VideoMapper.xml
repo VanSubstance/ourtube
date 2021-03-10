@@ -43,6 +43,36 @@
 		values (#{item.id}, #{item.infoDate}, #{item.likeCount}, 
 		#{item.dislikeCount}, #{item.viewCount}, #{item.favoriteCount}, #{item.commentCount})
 	</insert>
+	<select id="getAvgVideoStatisticsByGame" parameterType="String" resultType="com.my.spring.domain.VideoStatDto">
+		select sum(likecount) likecount, sum(dislikecount) dislikecount, sum(commentcount) commentcount from (
+		select id, round(avg(likecount)) likecount, round(avg(dislikecount)) dislikecount, round(avg(commentcount)) commentcount
+		from videostatistics 
+		where id in (select id from videoGame where game = #{game}) group by id
+		)
+	</select>
+	<select id="getTotalVideoStatisticsByTopic" parameterType="String" resultType="com.my.spring.domain.VideoStatDto">
+		select sum(viewcount) viewcount, sum(likecount) likecount, sum(dislikecount) dislikecount, sum(commentcount) commentcount from (
+		    select id, round(avg(viewcount)) viewcount, round(avg(likecount)) likecount, round(avg(dislikecount)) dislikecount, round(avg(commentcount)) commentcount
+		    from videostatistics 
+		        where id in (
+		            select id from videoGame where game in (
+		                select title as game from gametopic
+		                where topic = #{topic}
+		            )
+		        ) 
+		    group by id
+		)
+	</select>
+	<select id="getTotalViewsByGame" parameterType="String" resultType="Int">
+		select round(sum(viewcount)) viewcount
+		from videostatistics 
+		where id in (
+            select id from videoGame where game = #{game}
+        )
+        group by infodate
+        order by infodate desc
+	</select>
+	
 	<insert id="setVideoTag" parameterType="com.my.spring.domain.TagDto">
 		insert into tag (id, tag) values (#{item.id}, #{item.tag})
 	</insert>

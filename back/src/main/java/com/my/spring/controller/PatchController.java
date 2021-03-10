@@ -55,7 +55,7 @@ public class PatchController {
 	@Autowired
 	private CrawlerService serviceCrawler;
 
-//	@Scheduled(cron = "0 0 2 * * *")
+	@Scheduled(cron = "1 0 0 * * *")
 	@RequestMapping(value = "/crawler")
 	public void patchGameFromYoutube() {
 		System.out.println("------------------------------- 게임 크롤링 시작 -------------------------------");

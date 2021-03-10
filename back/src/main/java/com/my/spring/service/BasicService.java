@@ -29,4 +29,6 @@ public interface BasicService {
 	public List<TopicStatDto> getGameListForToday();
 	public int getIdCompleteById(String id);
 	public void setIdComplete(IdComplete item);
+	
+	public List<String> getTopicsByTopic(String topic);
 }

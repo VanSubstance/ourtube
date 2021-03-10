@@ -138,4 +138,9 @@ public class WordServiceImpl implements WordService {
 		mapper.setWordChainsById();
 	}
 
+	@Override
+	public List<NounDto> getWordsByGame(String game) {
+		return mapper.getWordsByGame(game);
+	}
+
 }
