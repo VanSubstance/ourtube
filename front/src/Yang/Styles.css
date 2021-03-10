@@ -345,6 +345,15 @@
     left: 660px;
     top: 291.502px;
 }
+._scrollSearchbox {
+    filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.161));
+    position: absolute;
+    overflow: visible;
+    width: 630px;
+    height: 37.702px;
+    left: 320px;
+    top: 230px;
+}
 
 #_Searchbox1 {
     fill: rgba(255, 255, 255, 1);
@@ -358,6 +367,15 @@
     height: 100px;
     left: 660px;
     top: 291.502px;
+}
+._scrollSearchbox1 {
+    filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.161));
+    position: absolute;
+    overflow: hidden;
+    width: 630px;
+    height: 100px;
+    left: 320px;
+    top: 230px;
 }
 
 #_275 {
@@ -1280,10 +1298,19 @@
     overflow-y: scroll;
     position: absolute;
     left: 285px;
-    top: 355px;
+    top: 354px;
     width: 958px;
     height: 270px;
     overflow-x: hidden;
+}
+
+#scrollHead {
+    color: rgb(255, 255, 255);
+    position: absolute;
+    left: 335px;
+    top: 200px;
+    width: 900px;
+    height: 270px;
 }
 #selectall {
     width: 25px;
@@ -1303,7 +1330,7 @@
     overflow: hidden;
     font-size: 15px;
     display: block;
-    width: 280px;
+    width: 120px;
  
     
 }
@@ -1402,6 +1429,14 @@
     height: 270px;
     left: 1260px;
     top: 314px;
+}
+#_scrollchip {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: -340px;
+    top: -73px;
+    
 }
 
 #_chip1 {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Styles.css';
 import Chip from '@material-ui/core/Chip';
 import ListFont from './ListFont';
+import WallPaperChip from './WallPaperChip';
 
 class ScollWallPaper extends Component {
     render() {
@@ -50,10 +51,62 @@ class ScollWallPaper extends Component {
                     <rect id="listbox" rx="0" ry="0" x="0" y="0" width="923" height="270">
                     </rect>
                 </svg>
-               
-                <ListFont >
-                </ListFont>
+                <div>
+                    <svg class="_scrollSearchbox1">
+                        <rect id="_Searchbox1" rx="0" ry="0" x="0" y="0" width="615" height="31.702">
+                        </rect>
+                    </svg>
+                </div>
+                <div
+                    className="_scrollSearchbox">
+                    <input
+                        className="searchInput"
+                        placeholder="검색어를 입력하세요"
+                        autoComplete="off"
+                        ref="searchBar"
+                        type="text"
+                        onChange={this.searchTracker} />
+                    <button className="searchButton" onClick={this.searchCtgr}>
+                        <img
+                            className="searchButtonImg"
+                            src="/Ex/searchbutton.png"></img>
+                    </button>
+                </div>
+                <ListFont ></ListFont>
+                <div id="_scrollchip">
+                    <Chip id="_chip1"
+                        className="chipStyles"
+                        label="chip"
+                        clickable
+                        component="button">
+                    </Chip>
+                    <Chip id="_chip2"
+                        className="chipStyles"
+                        label="chip"
+                        clickable
+                        component="button">
+                    </Chip>
+                    <Chip id="_chip3"
+                        className="chipStyles"
+                        label="chip"
+                        clickable
+                        component="button">
+                    </Chip>
+                    <Chip id="_chip4"
+                        className="chipStyles"
+                        label="chip"
+                        clickable
+                        component="button">
+                    </Chip>
+                    <Chip id="_chip5"
+                        className="chipStyles"
+                        label="chip"
+                        clickable
+                        component="button">
+                    </Chip>
+                </div>
                 
+
 
             </div>
         );

@@ -16,10 +16,6 @@ class ListFont extends Component {
         );
     }
 
-    checkFive = () => {
-        
-    }
-
     addRow = (dataRow, index) => {
         return (
             <tr align="center" >
@@ -29,7 +25,7 @@ class ListFont extends Component {
                     </form>
                 </td>
                 <td align="left">{index + 1}</td>
-                <td id="longfont">{dataRow.title}</td>
+                <td id="longfont" align="center">{dataRow.title}</td>
                 <td>{dataRow.viewCount}</td>
                 <td>{dataRow.score}</td>
                 <td>{dataRow.likeCount}</td>
@@ -38,11 +34,44 @@ class ListFont extends Component {
             </tr>
         );
     }
+
+    headTitle = (dataRow) => {
+        return (
+            <tr>
+                <th>{dataRow.rank}</th>
+                <th>{dataRow.keyword}</th>
+                <th>{dataRow.like}</th>
+                <th>{dataRow.unlike}</th>
+                <th>{dataRow.search}</th>
+                <th>{dataRow.video}</th>
+                <th>{dataRow.comment}</th>
+            </tr>
+
+        );
+    }
+
+
     render() {
         const X = "0 0 0.0 0";
+
         return (
             <body>
-                
+                <div>
+                    <table id="scrollHead" cellSpacing="0">
+                        {this.headTitle(
+                            {
+                                rank: "순위",
+                                keyword: "키워드",
+                                like: "좋아요",
+                                unlike: "싫어요",
+                                search: "검색량",
+                                video: "동영상",
+                                comment: "댓글수"
+                            }
+                        )}
+                    </table>
+                </div>
+
                 <div id="scrollbitch" >
                     <table id="scrollbitch2" cellSpacing="30">
                         {this.addRows(
@@ -198,7 +227,7 @@ class ListFont extends Component {
                     </table>
                 </div>
             </body>
-            
+
 
 
 
