@@ -28,7 +28,34 @@
     --web-scale-on-resize: true;
     --web-enable-deep-linking: true;
 }
-
+#scollWallpaper_ {
+    position: absolute;
+    width: 1920px;
+    height: 1500px;
+    background-color: rgba(255, 255, 255, 1);
+    overflow: hidden;
+    --web-view-name: ROBOTO 폰트 사용;
+    --web-view-id: ROBOTO__;
+    --web-scale-on-resize: true;
+    --web-enable-deep-linking: true;
+}
+#chartfont {
+    mix-blend-mode: normal;
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    overflow: hidden;
+    width: 115px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 15px;
+    color: rgba(255,255,255,1);
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+}
 #andy-holmes-rCbdp8VCYhQ-unspla {
     opacity: 0.8;
     position: absolute;
@@ -37,6 +64,15 @@
     left: 0px;
     top: 0px;
     overflow: visible;
+}
+#andy-holmes-rCbdp8VCYhQ-unspla1 {
+    opacity: 0.8;
+    position: absolute;
+    width: 1920px;
+    height: 1500px;
+    left: 0px;
+    top: 0px;
+    overflow: hidden;
 }
 
 #Gradient {
@@ -50,6 +86,17 @@
     position: absolute;
     width: 1920px;
     height: 936px;
+    transform: matrix(1, 0, 0, 1, 0, 0) rotate(180deg);
+    transform-origin: center;
+    left: 0px;
+    top: 0px;
+}
+.scollGradient {
+    mix-blend-mode: multiply;
+    overflow: hidden;
+    position: absolute;
+    width: 1920px;
+    height: 1500px;
     transform: matrix(1, 0, 0, 1, 0, 0) rotate(180deg);
     transform-origin: center;
     left: 0px;
@@ -246,7 +293,45 @@
     letter-spacing: 3px;
     text-transform: uppercase;
 }
-
+#scollOURTUBE {
+    left: 810px;
+    top: 103px;
+    position: absolute;
+    overflow: visible;
+    width: 301px;
+    white-space: nowrap;
+    text-align: center;
+    font-family: Yj BONMOKGAK;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 49px;
+    color: rgba(255,255,255,1);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+#scollbar {
+    fill: rgba(0,0,0,1);
+    opacity: 0.9;
+}
+.scollbar {
+    position: absolute;
+    overflow: visible;
+    width: 11px;
+    height: 270px;
+    left: 1232px;
+    top: 355px;
+}
+#scollball {
+    fill: rgba(255,255,255,1);
+}
+.scollball {
+    position: absolute;
+    overflow: visible;
+    width: 7px;
+    height: 33px;
+    left: 1234px;
+    top: 359px;
+}
 #_Searchbox {
     fill: rgba(255, 255, 255, 1);
 }
@@ -259,6 +344,15 @@
     height: 37.702px;
     left: 660px;
     top: 291.502px;
+}
+._scrollSearchbox {
+    filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.161));
+    position: absolute;
+    overflow: visible;
+    width: 630px;
+    height: 37.702px;
+    left: 320px;
+    top: 230px;
 }
 
 #_Searchbox1 {
@@ -273,6 +367,15 @@
     height: 100px;
     left: 660px;
     top: 291.502px;
+}
+._scrollSearchbox1 {
+    filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.161));
+    position: absolute;
+    overflow: hidden;
+    width: 630px;
+    height: 100px;
+    left: 320px;
+    top: 230px;
 }
 
 #_275 {
@@ -403,6 +506,14 @@
     height: 286px;
     left: 660px;
     top: 480px;
+    overflow: hidden;
+}
+._keywordList {
+    position: absolute;
+    width: 50px; 
+    height: 50px;
+    left: 500px;
+    top: 500px;
     overflow: hidden;
 }
 
@@ -1129,6 +1240,107 @@
     color: rgba(0, 220, 255, 1);
 }
 
+#listtop {
+    opacity: 0.9;
+    fill: rgba(0,0,0,1);
+}
+
+.listtop {
+    position: absolute;
+    overflow: visible;
+    width: 923px;
+    height: 41px;
+    left: 320px;
+    top: 315px;
+}
+
+#listtop2 {
+    fill: rgba(17,17,17,1);
+}
+.listtop2 {
+    position: absolute;
+    overflow: visible;
+    width: 923px;
+    height: 41px;
+    left: 320px;
+    top: 648px;
+}
+
+#exbox {
+    opacity: 0.6;
+    fill: rgba(17,17,17,1);
+}
+.exbox {
+    position: absolute;
+    overflow: visible;
+    width: 339px;
+    height: 772px;
+    left: 1260px;
+    top: 648px;
+}
+
+#listbox {
+    opacity: 0.8;
+    fill: rgba(17,17,17,1);
+    overflow: scroll;
+}
+.listbox {
+    position: absolute;
+    overflow-y: visible;
+    width: 923px;
+    height: 270px;
+    left: 320px;
+    top: 355px;
+    overflow: scroll;
+}
+#scrollbitch {
+    color: rgb(255, 255, 255);
+    overflow-y: scroll;
+    position: absolute;
+    left: 285px;
+    top: 354px;
+    width: 958px;
+    height: 270px;
+    overflow-x: hidden;
+}
+
+#scrollHead {
+    color: rgb(255, 255, 255);
+    position: absolute;
+    left: 335px;
+    top: 200px;
+    width: 900px;
+    height: 270px;
+}
+#selectall {
+    width: 25px;
+    height: 25px;
+    color: rgb(255, 255, 255);
+    left: 350px;
+    top: 350px; 
+}
+
+#scrollbitch2 {
+    border-spacing: 45px 30px;
+    
+}
+#longfont {
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 15px;
+    display: block;
+    width: 120px;
+ 
+    
+}
+#checkbox {
+    position: relative;
+    left: 20px;
+    top: 0px;
+
+
+}
 #_dc {
     left: 103.242px;
     top: 478.114px;
@@ -1198,6 +1410,34 @@
     left: 537px;
     top: 727px;
 }
+#_scollchip {   
+    width: 96px;
+    height: 32px;
+    left: 500px;
+    top: 500px;
+    overflow: hidden;
+}
+
+#rightbox {
+    opacity: 0.8;
+    fill: rgba(17,17,17,1);
+}
+.rightbox {
+    position: absolute;
+    overflow: visible;
+    width: 339px;
+    height: 270px;
+    left: 1260px;
+    top: 314px;
+}
+#_scrollchip {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: -340px;
+    top: -73px;
+    
+}
 
 #_chip1 {
     position: absolute;
@@ -1261,14 +1501,26 @@
     font-weight: 700;
     vertical-align: middle;
 }
+.keywordItemBox {
+    position: absolute;
+    margin-top: 50px;
+    background: transparent;
+    height: 500px;
+    overflow: hidden;
+}
+.keywordListVertical {
+    position: relative;
+    align-self: center;
+    height: 595px;
+    align-content: center;
+    overflow: hidden;
+}
 .searchButton {
-    border-radius: 0 3px 3px 0;
     border: none;
     position: absolute;
     right: 20px;
     top: 2px;
     height: 0px;
-    background: transparent;
     transition: all ease .4s;
     cursor: poingter;
 }
@@ -1276,6 +1528,7 @@
     position: relative;
     width: 23px;
     height: 23px;
+    align-content: center;
 }
 .chipStyles {
     margin: 15px 10px 5px 10px

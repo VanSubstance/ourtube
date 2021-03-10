@@ -10,31 +10,31 @@ class WallPaperChip extends Component {
             <div>
                 <Chip id="_chip1"
                     className="chipStyles"
-                    label="test"
+                    label="chip"
                     clickable
                     component="button">
                 </Chip>
                 <Chip id="_chip2"
                     className="chipStyles"
-                    label="test"
+                    label="chip"
                     clickable
                     component="button">
                 </Chip>
                 <Chip id="_chip3"
                     className="chipStyles"
-                    label="test"
+                    label="chip"
                     clickable
                     component="button">
                 </Chip>
                 <Chip id="_chip4"
                     className="chipStyles"
-                    label="test"
+                    label="chip"
                     clickable
                     component="button">
                 </Chip>
                 <Chip id="_chip5"
                     className="chipStyles"
-                    label="test"
+                    label="chip"
                     clickable
                     component="button">
                 </Chip>

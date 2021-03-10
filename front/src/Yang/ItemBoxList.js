@@ -14,11 +14,18 @@ class ItemBoxList extends Component {
             <div>
                 <Swiper id="_itemboxposition"
                     spaceBetween={20}
-                    slidesPerView={3}
                     navigation
-                    onSlideChange={() => console.log('slide change')}
                     pagination={{ clickable: true }}
-                >
+                    onSlideChange={() => console.log('slide change')}
+                    slidesPerView={4}>
+                    
+                
+                    <SwiperSlide id= "_itemboxdiv">
+                        <ItemBox></ItemBox>
+                    </SwiperSlide>
+                    <SwiperSlide id= "_itemboxdiv">
+                        <ItemBox></ItemBox>
+                    </SwiperSlide>
                     <SwiperSlide id= "_itemboxdiv">
                         <ItemBox></ItemBox>
                     </SwiperSlide>

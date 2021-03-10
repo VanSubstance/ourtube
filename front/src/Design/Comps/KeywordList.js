@@ -57,7 +57,7 @@ class KeywordList extends Component {
     render() {
         return (
             <div
-                className="keywordItemBox">
+                className="keywordList">
                 <Swiper
                     className= "keywordList"
                     spaceBetween={20}
