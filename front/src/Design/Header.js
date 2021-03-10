@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Home, About, User } from '../Yang';
+import { Home, About, User, MoonChartView } from '../Yang';
 import { MainPageSimple, TrendMainPage, AlltimeMainPage, TrendResultPage, AlltimeResultPage } from './';
 
 class App extends Component {
@@ -13,6 +13,7 @@ class App extends Component {
           <Route exact path='/home' component={Home} />
           <Route path='/about' component={About} />
           <Route path='/user' component={User} />
+          <Route path='/moon1' component={MoonChartView} />
           <Route exact path='/' component={MainPageSimple} />
 
           <Route
