@@ -72,10 +72,10 @@ class TrendMainPage extends Component {
                         tension: 0
                     },
                     // 선 그래프의 포인트 옵션
-                    point:{
+                    point: {
                         radius: 5,
                         backgroundColor: 'white',
-                        pointStyle:'rectRounded'
+                        pointStyle: 'rectRounded'
                     }
                 },
                 plugins: {
@@ -95,10 +95,10 @@ class TrendMainPage extends Component {
                     }]
                 },
                 elements: {
-                    point:{
+                    point: {
                         radius: 5,
                         backgroundColor: 'white',
-                        pointStyle:'rectRounded'
+                        pointStyle: 'rectRounded'
                     }
                 },
                 plugins: {
@@ -118,10 +118,10 @@ class TrendMainPage extends Component {
                     }]
                 },
                 elements: {
-                    point:{
+                    point: {
                         radius: 5,
                         backgroundColor: 'white',
-                        pointStyle:'rectRounded'
+                        pointStyle: 'rectRounded'
                     }
                 },
                 plugins: {
@@ -207,7 +207,7 @@ class TrendMainPage extends Component {
 
                 ],
                 labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월'
-                , '9월', '10월', '11월', '12월']
+                    , '9월', '10월', '11월', '12월']
             },
             // 동영상 신규 조회수 선 그래프 변수
             lineNumNewViews: {
@@ -370,9 +370,9 @@ class TrendMainPage extends Component {
         barNumSub.average = Math.floor(Math.random() * 10000);
         barNumSub.maximum = Math.floor(Math.random() * 10000);
 
-        return ({ 
-            barLikes: barLikes, 
-            lineRankPerMonth: lineRankPerMonth, 
+        return ({
+            barLikes: barLikes,
+            lineRankPerMonth: lineRankPerMonth,
             lineNumNewViews: lineNumNewViews,
             lineNumNewVid: lineNumNewVid,
             barNumSub: barNumSub
@@ -471,6 +471,13 @@ class TrendMainPage extends Component {
         this.refs.CtgrResults.refreshResults(element);
     }
 
+    searchCtgrPress = (e) => {
+        if (e.key === 'Enter') {
+            this.searchCtgr()
+            console.log();
+        }
+    }
+
     render() {
         return (
             <div
@@ -483,7 +490,12 @@ class TrendMainPage extends Component {
                     트렌드
                             </div>
 
-                <input style={this.state.searchBar} type="text" onChange={this.searchTracker} />
+                <input
+                    style={this.state.searchBar}
+                    type="text"
+                    onChange={this.searchTracker}
+                    onKeyPress= {this.searchCtgrPress}
+                />
                 <button style={this.state.logo} onClick={this.searchCtgr}> 검색 </button>
 
                 <Paper>
