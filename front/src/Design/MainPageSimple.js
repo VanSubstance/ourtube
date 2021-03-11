@@ -1,318 +1,174 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { KeywordList } from './Comps';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
-import Paper from '@material-ui/core/Paper';
 import "./Css/styles.css";
 
-class MainPageSimple extends Component {
+const MainPageSimple = (props) => {
+    const [searchVal, setSearchVal] = useState(
+        ""
+    );
+    
+    const [selectedCtgr, setSelectedCtgr] = useState(
+        ""
+    );
 
-    state = {
-        currentType: "트렌드",
-        searchVal: "",
-        selectedCtgr: "",
-        ctgrs: [],
-    }
+    const [ctgrs, setCtgrs] = useState([
+        
+    ]);
 
-    //렌더링을 하기 전에 작업을 해주는 것 :)
-    componentWillMount() {
-        this.searchCtgr();
-    }
+    // const getValues = () => {
+    //     this.setState({
+    //         searchType: this.props.searchType,
+    //     })
+    // };
+    // const selectCtgr = (element) => {
+    //     setSearchVal(element);
+    //     this.refs.CtgrResults.refreshResults(element);
+    // };
 
-    //렌더링을 끝낸 다음에 작업 :)
-    componentDidMount() {
-    }
-
-    getValues = () => {
-        this.setState({
-            searchType: this.props.searchType,
-        })
-    }
-    /** 
-     * 트렌드 <-> 올타임
-     * 변경 시 해당 타입에 따른 카테고리 호출
-     * 카테고리 1번째 자동 선택
-     * */
-    changeType = () => {
-        var target = "";
-        var color = "green";
-        if (this.state.currentType == "트렌드") {
-            target = "올타임";
-            color = "green";
-        } else {
-            target = "트렌드";
-            color = "red";
-        }
-        this.state.searchVal = "";
-        this.state.currentType = target;
-        this.refs.searchBar.value = "";
-        this.searchCtgr();
-    }
-    /**
-     * ------------------------------------------------------------------------------> 김종규
-     * 카테고리 선택
-     * 해당 카테고리에 따른 카테고리 리스트 새로고침
-     */
-    selectCtgr = (element) => {
-        this.setState({
-            selectedCtgr: element
-        });
-        this.refs.CtgrResults.refreshResults(element);
-    }
-
-    componentDidMount() {
-        this.getValues();
-        this.selectCtgr(this.state.ctgrs[0]);
-    }
-
-    searchTracker = (track) => {
-        this.setState({
-            searchVal: track.target.value
-        })
-    }
-    /**
-     * ------------------------------------------------------------------------------> 김종규
-     * 카테고리 검색 
-     * 검색 결과 반환
-     */
-    searchCtgr = () => {
+    // const searchTracker = (track) => {
+    //     this.setState({
+    //         searchVal: track.target.value
+    //     })
+    // };
+    const searchCtgr = () => {
         // searchVal -> 가장 핫한 카테고리 8선
-        if (this.state.searchVal === "") {
-            this.setState({
-                ctgrs: [
-                    "핫 " + "1",
-                    "핫 " + "2",
-                    "핫 " + "3",
-                    "핫 " + "4",
-                    "핫 " + "5",
-                    "핫 " + "6",
-                    "핫 " + "7",
-                    "핫 " + "8",
-                ],
-                selectedCtgr: "핫 " + "1",
-            });
+        if (searchVal === "") {
+            setCtgrs([
+                "핫 " + "1",
+                "핫 " + "2",
+                "핫 " + "3",
+                "핫 " + "4",
+                "핫 " + "5",
+                "핫 " + "6",
+                "핫 " + "7",
+                "핫 " + "8",
+            ]);
+            setSelectedCtgr("핫 " + "1");
         } else {
-            this.setState({
-                ctgrs: [
-                    this.state.searchVal + "1",
-                    this.state.searchVal + "2",
-                    this.state.searchVal + "3",
-                    this.state.searchVal + "4",
-                    this.state.searchVal + "5",
-                    this.state.searchVal + "6",
-                    this.state.searchVal + "7",
-                    this.state.searchVal + "8",
-                ],
-                selectedCtgr: this.state.searchVal + "1",
-            });
+            setCtgrs([
+                searchVal + "1",
+                searchVal + "2",
+                searchVal + "3",
+                searchVal + "4",
+                searchVal + "5",
+                searchVal + "6",
+                searchVal + "7",
+                searchVal + "8",
+            ]);
+            setSelectedCtgr(searchVal + "1");
         }
-    }
+    };
 
-    searchCtgrPress = (e) => {
+    const searchCtgrPress = (e) => {
         if(e.key === 'Enter') {
-          this.searchCtgr()
+          searchCtgr()
           console.log();
         }
-    }
+    };
 
-    render() {
-        return (
+    return (
+        <div
+            className="mainContainor">
+            <img
+                className="backGroundImg"
+                src="/Ex/backGroundIMG.PNG">
+            </img>
             <div
-                className="mainContainor">
-                <img
-                    className="backGroundImg"
-                    src="/Ex/backGroundIMG.PNG">
-                </img>
+                className="sectionContainor">
                 <div
-                    className="sectionContainor">
+                    className="mainLeftSection">
+                </div>
+                <div
+                    className="mainRightSection">
                     <div
-                        className="mainLeftSection">
-                    </div>
-                    <div
-                        className="mainRightSection">
-                        <div
-                            className="linkBox">
-                            <Link
-                                to={{
-                                    pathname: "/trend",
-                                    state: {
-                                        searchVal: this.state.searchVal
-                                    }
-                                }}
-                                className="chartLink"
-                            >Chart View
-                            </Link>
-                        </div>
-                        <div
-                            className="mainBannerBox">
-                            <a
-                                href="http://localhost:3012/"
-                                className="bannerA">
-                                <img
-                                    className="bannerImage"
-                                    src="/Ex/ourtubeLogo.PNG">
-                                </img>
-                            </a>
-                        </div>
-                        <div
-                            className="mainCategoriesBox">
-
-                            {/* <button
-                                    className = "trendImage">
-                                        <d1>TREND</d1>
-                                </button> */}
-
-                            {/* {
-                                this.state.currentType === "트렌드"
-                                    ? (
-                                        <button
-                                            className="logoTrend"
-                                            onClick={this.changeType}>
-                                            {this.state.currentType}
-                                        </button>
-                                    )
-                                    : (
-                                        <button
-                                            className="logoAlltime"
-                                            onClick={this.changeType}>
-                                            {this.state.currentType}
-                                        </button>s
-                                    )
-                            } */}
-                            <div
-                                className="searchBar">
-                                <input
-                                    className="searchInput"
-                                    placeholder="검색어를 입력하세요"
-                                    autoComplete="off"
-                                    ref="searchBar"
-                                    type="text"
-                                    maxlength="30"
-                                    onChange={this.searchTracker}
-                                    onKeyPress= {this.searchCtgrPress}
-                                />
-                                <button className="searchButton" onClick={this.searchCtgr}>
-                                    <img
-                                        className="searchButtonImg"
-                                        src="/Ex/searchbutton.png"></img>
-                                </button>
-                            </div>
-
-                            {/* {
-                                this.state.currentType === "트렌드"
-                                    ? (
-                                        <Link
-                                            to={{
-                                                pathname: "/trend",
-                                                state: {
-                                                    searchVal: this.state.searchVal
-                                                }
-                                            }}
-                                        >Chart View</Link>
-                                    )
-                                    : (
-                                        <Link
-                                            to={{
-                                                pathname: "/alltime",
-                                                state: {
-                                                    searchVal: this.state.searchVal
-                                                }
-                                            }}
-                                        >Chart View</Link>
-                                    )
-                            } */}
-
-                        </div>
-                        <div
-                            className="mainChipBox">
-
-                            <div
-                                className="chipBackground">
-                                {
-                                    this.state.ctgrs.map((element) => {
-                                        return (
-                                            <Chip
-                                                className="chipStyles"
-                                                label={element}
-                                                clickable
-                                                component="button"
-                                                onClick={() => this.selectCtgr(element)}>
-                                            </Chip>
-                                        );
-                                    })
+                        className="linkBox">
+                        <Link
+                            to={{
+                                pathname: "/trend",
+                                state: {
+                                    searchVal: searchVal
                                 }
-                            </div>
-
-                            {/* {
-                                this.state.searchType === "트렌드"
-                                    ? (
-                                        <div
-                                            className="chipBackground">
-                                            {
-                                                this.state.ctgrs.map((element) => {
-                                                    return (
-                                                        <Chip
-                                                            className="chipStyles"
-                                                            label={element}
-                                                            clickable
-                                                            component="button"
-                                                            onClick={() => this.selectCtgr(element)}>
-                                                        </Chip>
-                                                    );
-                                                })
-                                            }
-                                        </div>
-                                    )
-
-                                    올타임 Chip 관련 내용
-                                    : (
-                                        <div
-                                            className="chipBackground">
-                                            {
-                                                this.state.ctgrs.map((element) => {
-                                                    const path = "/alltime/" + element;
-                                                    return (
-                                                        <Chip
-                                                            className="chipStyles"
-                                                            label={element}
-                                                            clickable
-                                                            component="button"
-                                                            onClick={() => this.selectCtgr(element)}>
-                                                        </Chip>
-                                                    );
-                                                })
-                                            }
-                                        </div>
-                                    )
-                            } */}
-
-                        </div>
-                        <KeywordList
-                            type={this.state.currentType}
-                            ref="CtgrResults"
-                        >
-
-                        </KeywordList>
+                            }}
+                            className="chartLink"
+                        >Chart View
+                        </Link>
+                    </div>
+                    <div
+                        className="mainBannerBox">
+                        <a
+                            href="http://localhost:3012/"
+                            className="bannerA">
+                            <img
+                                className="bannerImage"
+                                src="/Ex/ourtubeLogo.PNG">
+                            </img>
+                        </a>
+                    </div>
+                    <div
+                        className="mainCategoriesBox">
                         <div
-                            className="testTxtTop">
-                                OURTUBE Analytics, Inc. © 2021
-                        </div>
-                        <div
-                         className="testTxtBottom">
-                            <d2>Ourtube is hosted by Ourtube  Analytics, Inc. Ourtube isn’t endorsed by Youtube and doesn’t reflect the views or opinions of youtube or anyone officially involved in producing or managing Youtube. youtube and Google are trademarks or registered trademarks of Google.Inc. Youtube ©  Google.Inc. </d2>
+                            className="searchBar">
+                            <input
+                                className="searchInput"
+                                placeholder="검색어를 입력하세요"
+                                autoComplete="off"
+                                type="text"
+                                maxlength="30"
+                                onChange = {(e) => {setSearchVal(e.target.value)}}
+                                onKeyPress = {(e) => {searchCtgrPress(e)}}
+                            />
+                            <button className="searchButton"
+                                onClick = {() => {searchCtgr()}}
+                            >
+                                <img
+                                    className="searchButtonImg"
+                                    src="/Ex/searchbutton.png"></img>
+                            </button>
                         </div>
                     </div>
-                </div>    
-                <footer
-                        className="footer">
+                    <div
+                        className="mainChipBox">
                         <div
-                            className="footerBox">
-                            <d1>FOOTER, 공지사항, 이용약관, 버그리포팅, 사이트 설명</d1>
+                            className="chipBackground">
+                            {
+                                ctgrs.map((element) => {
+                                    return (
+                                        <Chip
+                                            className="chipStyles"
+                                            label={element}
+                                            clickable
+                                            component="button">
+                                        </Chip>
+                                    );
+                                })
+                            }
                         </div>
-                </footer>
-            </div>
-        );
-    }
-}
+                    </div>
+                    <KeywordList
+                    >
+
+                    </KeywordList>
+                    <div
+                        className="testTxtTop">
+                            OURTUBE Analytics, Inc. © 2021
+                    </div>
+                    <div
+                        className="testTxtBottom">
+                        <d2>Ourtube is hosted by Ourtube  Analytics, Inc. Ourtube isn’t endorsed by Youtube and doesn’t reflect the views or opinions of youtube or anyone officially involved in producing or managing Youtube. youtube and Google are trademarks or registered trademarks of Google.Inc. Youtube ©  Google.Inc. </d2>
+                    </div>
+                </div>
+            </div>    
+            <footer
+                    className="footer">
+                    <div
+                        className="footerBox">
+                        <d1>FOOTER, 공지사항, 이용약관, 버그리포팅, 사이트 설명</d1>
+                    </div>
+            </footer>
+        </div>
+    );
+};
 
 export default MainPageSimple;
