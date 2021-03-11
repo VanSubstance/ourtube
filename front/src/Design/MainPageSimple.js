@@ -20,6 +20,26 @@ const MainPageSimple = (props) => {
         ]
     );
 
+    const [keywords, setKeywords] = useState(
+        [
+
+        ]
+    );
+
+    const getDatasetForKeyword = async() => {
+        axios.get('http://222.232.15.205:8082/deploy/game/list/' + selectedCtgr)
+            .then(({ data }) => {
+                if (data.length >= 10) {
+                    setKeywords(data.slice(0, 10));
+                } else {
+                    setKeywords(data);
+                }
+            })
+            .catch(e => {
+                console.error(e);
+            });
+    };
+
     const getDataset = async() => {
         axios.get('http://222.232.15.205:8082/deploy/topic/' + searchVal)
             .then(({ data }) => {
@@ -35,10 +55,10 @@ const MainPageSimple = (props) => {
     };
 
     const searchCtgr = () => {
-        // searchVal -> 가장 핫한 카테고리 8선
         if (searchVal === "") {
             getDataset();
             setSelectedCtgr("비디오 게임");
+            getDatasetForKeyword();
         } else {
             getDataset();
             setSelectedCtgr(searchVal);
@@ -46,6 +66,7 @@ const MainPageSimple = (props) => {
                 setSearchVal("비디오 게임");
                 getDataset();
                 setSelectedCtgr("비디오 게임");
+                getDatasetForKeyword();
             }
         }
     };
@@ -105,7 +126,7 @@ const MainPageSimple = (props) => {
                                 placeholder="검색어를 입력하세요"
                                 autoComplete="off"
                                 type="text"
-                                maxlength="30"
+                                maxLength="30"
                                 onKeyPress = {(e) => {searchCtgrPress(e)}}
                             />
                             <button className="searchButton"
@@ -135,17 +156,14 @@ const MainPageSimple = (props) => {
                             }
                         </div>
                     </div>
-                    <KeywordList
-                    >
-
-                    </KeywordList>
+                    <KeywordList keywords = {keywords}/>
                     <div
                         className="testTxtTop">
                             OURTUBE Analytics, Inc. © 2021
                     </div>
                     <div
                         className="testTxtBottom">
-                        <d2>Ourtube is hosted by Ourtube  Analytics, Inc. Ourtube isn’t endorsed by Youtube and doesn’t reflect the views or opinions of youtube or anyone officially involved in producing or managing Youtube. youtube and Google are trademarks or registered trademarks of Google.Inc. Youtube ©  Google.Inc. </d2>
+                        <h2>Ourtube is hosted by Ourtube  Analytics, Inc. Ourtube isn’t endorsed by Youtube and doesn’t reflect the views or opinions of youtube or anyone officially involved in producing or managing Youtube. youtube and Google are trademarks or registered trademarks of Google.Inc. Youtube ©  Google.Inc. </h2>
                     </div>
                 </div>
             </div>    
@@ -153,7 +171,7 @@ const MainPageSimple = (props) => {
                     className="footer">
                     <div
                         className="footerBox">
-                        <d1>FOOTER, 공지사항, 이용약관, 버그리포팅, 사이트 설명</d1>
+                        <h1>FOOTER, 공지사항, 이용약관, 버그리포팅, 사이트 설명</h1>
                     </div>
             </footer>
         </div>
