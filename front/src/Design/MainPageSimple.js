@@ -4,15 +4,12 @@ import axios, * as others from "axios";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import "./Css/styles.css";
+import LeftBox from './LeftBox';
 
 const MainPageSimple = (props) => {
     const [url, setUrl] = useState("http://222.232.15.205:8082");
 
     let [searchVal, setSearchVal] = useState(
-        "비디오 게임"
-    );
-    
-    let [selectedCtgr, setSelectedCtgr] = useState(
         "비디오 게임"
     );
 
@@ -29,11 +26,12 @@ const MainPageSimple = (props) => {
     );
     useEffect(() => {
         getDataset();
-        getDatasetForKeyword();
+        getDatasetForKeyword("비디오 게임");
     }, []);
 
-    const getDatasetForKeyword = async() => {
-        await axios.get(url + '/deploy/game/list/' + selectedCtgr)
+    const getDatasetForKeyword = async(ctgr) => {
+        console.log("키워드 데이터 반환:" + ctgr);
+        await axios.get(url + '/deploy/game/list/' + ctgr)
             .then(({ data }) => {
                 if (data.length >= 10) {
                     setKeywords(data.slice(0, 10));
@@ -63,17 +61,14 @@ const MainPageSimple = (props) => {
     const searchCtgr = () => {
         if (searchVal === "") {
             getDataset();
-            selectedCtgr = "비디오 게임";
-            getDatasetForKeyword();
+            getDatasetForKeyword("비디오 게임");
         } else {
             getDataset();
-            selectedCtgr = searchVal;
-            getDatasetForKeyword();
+            getDatasetForKeyword(searchVal);
             if (ctgrs.length == 0) {
                 searchVal = "비디오 게임";
                 getDataset();
-                selectedCtgr = "비디오 게임";
-                getDatasetForKeyword();
+                getDatasetForKeyword("비디오 게임");
             }
         }
     };
@@ -97,6 +92,7 @@ const MainPageSimple = (props) => {
                 className="sectionContainor">
                 <div
                     className="mainLeftSection">
+                        <LeftBox></LeftBox>
                 </div>
                 <div
                     className="mainRightSection">
@@ -117,7 +113,7 @@ const MainPageSimple = (props) => {
                         className="mainBannerBox">
                         <a
                             href="http://localhost:3012/"
-                            className="bannerA">
+                            className="bannerMain">
                             <img
                                 className="bannerImage"
                                 src="/Ex/ourtubeLogo.PNG">
@@ -156,6 +152,7 @@ const MainPageSimple = (props) => {
                                             className="chipStyles"
                                             label={element}
                                             clickable
+                                            onClick = {() => {getDatasetForKeyword(element)}}
                                             component="button">
                                         </Chip>
                                     );
@@ -170,7 +167,7 @@ const MainPageSimple = (props) => {
                     </div>
                     <div
                         className="testTxtBottom">
-                        <h2>Ourtube is hosted by Ourtube Analytics, Inc. Ourtube isn’t endorsed by Youtube and doesn’t reflect the views or opinions of youtube or anyone officially involved in producing or managing Youtube. youtube and Google are trademarks or registered trademarks of Google.Inc. Youtube ©  Google.Inc. </h2>
+                            Ourtube is hosted by Ourtube Analytics, Inc. Ourtube isn’t endorsed by Youtube and doesn’t reflect the views or opinions of youtube or anyone officially involved in producing or managing Youtube. youtube and Google are trademarks or registered trademarks of Google.Inc. Youtube ©  Google.Inc.
                     </div>
                 </div>
             </div>    
@@ -178,7 +175,7 @@ const MainPageSimple = (props) => {
                     className="footer">
                     <div
                         className="footerBox">
-                        <h1>FOOTER, 공지사항, 이용약관, 버그리포팅, 사이트 설명</h1>
+                        FOOTER, 공지사항, 이용약관, 버그리포팅, 사이트 설명
                     </div>
             </footer>
         </div>

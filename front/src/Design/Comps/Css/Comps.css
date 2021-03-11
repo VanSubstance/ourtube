@@ -36,13 +36,13 @@
 }
 
 .swiper-pagination {
-    bottom: 200px !important;
+    bottom: 0px !important;
     text-align: left !important;
 }
 
 .swiper-pagination-bullet {
-    width: 13px !important;
-    height: 13px !important;
+    width: 10px !important;
+    height: 10px !important;
     background: transparent !important;
     opacity: 1 !important;
     border: 2px solid white !important;
@@ -72,5 +72,56 @@
 .swiper-slide {
     width: 262px !important;
     height: 286px !important;
+    margin-right: 20px !important;
 }
 
+.swiper-container {
+    height: 350px !important;
+}
+
+.keywordThumbnail {
+    position: absolute;
+    width: 260px;
+    height: 280px;
+    margin: 0 auto;
+    z-index: -1;
+}
+
+.swiper-wrapper {
+    margin-top: 15px;
+}
+
+._itemBox {
+    overflow: visible;
+    position: absolute;
+    width: 260px;
+    height: 280px;
+    top: 0px;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+    background: transparent;
+    border: 1px solid white;
+}
+
+._itemBoxPath {
+    fill: transparent;
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 2px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+.keywordTitle {
+    text-align: center;
+    color: white;
+    font-size: 0.95em;
+}
+
+.keywordTitleBox {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 24px;
+    bottom: 0px;
+}
