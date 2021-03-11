@@ -6,12 +6,14 @@ import Chip from '@material-ui/core/Chip';
 import "./Css/styles.css";
 
 const MainPageSimple = (props) => {
+    const [url, setUrl] = useState("http://222.232.15.205:8082");
+
     const [searchVal, setSearchVal] = useState(
         "비디오 게임"
     );
     
     const [selectedCtgr, setSelectedCtgr] = useState(
-        ""
+        "비디오 게임"
     );
 
     const [ctgrs, setCtgrs] = useState(
@@ -27,7 +29,7 @@ const MainPageSimple = (props) => {
     );
 
     const getDatasetForKeyword = async() => {
-        axios.get('http://222.232.15.205:8082/deploy/game/list/' + selectedCtgr)
+        await axios.get(url + '/deploy/game/list/' + selectedCtgr)
             .then(({ data }) => {
                 if (data.length >= 10) {
                     setKeywords(data.slice(0, 10));
@@ -41,7 +43,7 @@ const MainPageSimple = (props) => {
     };
 
     const getDataset = async() => {
-        axios.get('http://222.232.15.205:8082/deploy/topic/' + searchVal)
+        await axios.get(url + '/deploy/topic/' + searchVal)
             .then(({ data }) => {
                 if (data.length >= 8) {
                     setCtgrs(data.slice(0, 7));
