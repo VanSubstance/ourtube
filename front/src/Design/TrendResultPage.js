@@ -18,9 +18,11 @@ class TrendResultPage extends Component {
                 maintainAspectRatio: false,
                 scales: {
                     xAxes: [{
+                        
                         stacked: true
                     }],
                     yAxes: [{
+                        maxZBarThickness: 100,
                         stacked: true,
                         ticks: {
                             beginAtZero: true
@@ -183,18 +185,22 @@ class TrendResultPage extends Component {
         font: "Arial"
     }
 
-    getDataWordCloud = async () => {
-        axios.get(this.state.ip+'/data/topic/rank/today')
+    getData = async () => {
+        axios.get(this.state.ip+'/deploy/wordcloud/리그%20오브%20레전드')
             .then(({ data }) => {
-                data.forEach((value, index) => {
-                    if (true) {
-                        console.log("작동");
+                this.state.datasets.barLikes.datasets[0].data = [
+                    data.statistics.likeCount,
+                    data.statistics.dislikeCount
+                ];
+                // console.log(this.state.datasets.barLikes.datasets[0].data);
+                data.words.map((value, index) => {
+                    if (this.state.data.length < 10) {
                         this.setState(
                             {
                                 data: this.state.data.concat(
                                     {
-                                        text: value.topic,
-                                        value: value.resultCount
+                                        text: value.word,
+                                        value: value.count
                                     }
                                     ),
                             }
@@ -208,7 +214,7 @@ class TrendResultPage extends Component {
     }
     
     componentWillMount() {
-        this.getDataWordCloud();
+        this.getData();
     }
 
     componentDidMount() {
@@ -217,15 +223,12 @@ class TrendResultPage extends Component {
 
     // 키워드로부터 정보 추출
     getDatasetFromKeyword = (keyword) => {
-        var barLikes = [];
+
         var lineView = [];
         var pieLikes = [];
         var lineRankPerWeek = [];
         var radarInfo = [];
 
-        // 평균 좋아요 / 싫어요 변수
-        barLikes.push(Math.floor(Math.random() * 1000));
-        barLikes.push(Math.floor(Math.random() * 400));
         // 선 그래프: 주별 동영상 1개 당 평균 누적 조회수
         for (var i = 0; i < 12; i++) {
             lineView.push(Math.floor(Math.random() * (10000 - 8000) + 8000));
@@ -243,7 +246,6 @@ class TrendResultPage extends Component {
         pieLikes.push(Math.floor(Math.random() * (10000 - 2000) + 2000));
         return (
             {
-                barLikes: barLikes,
                 lineView: lineView,
                 pieLikes: pieLikes,
                 lineRankPerWeek: lineRankPerWeek,
@@ -258,7 +260,6 @@ class TrendResultPage extends Component {
         var data = this.getDatasetFromKeyword(keyword);
 
         // 막대그래프: 평균 좋아요/싫어요
-        datasets.barLikes.datasets[0].data = data.barLikes;
         datasets.lineView.datasets[0].data = data.lineView;
         datasets.pieLikes.datasets[0].data = data.pieLikes;
         datasets.lineRankPerWeek.datasets[0].data = data.lineRankPerWeek;

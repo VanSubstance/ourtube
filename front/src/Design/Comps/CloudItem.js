@@ -11,7 +11,7 @@ class RankListItem extends Component {
         }
     }
     render () {
-        console.log(this.props.item);
+        
         return (
             <div 
                 className = "ItemThumbnail"
