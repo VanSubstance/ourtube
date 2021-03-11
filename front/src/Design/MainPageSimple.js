@@ -1,74 +1,65 @@
 import React, { useState } from 'react';
 import { KeywordList } from './Comps';
+import axios, * as others from "axios";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import "./Css/styles.css";
 
 const MainPageSimple = (props) => {
     const [searchVal, setSearchVal] = useState(
-        ""
+        "비디오 게임"
     );
     
     const [selectedCtgr, setSelectedCtgr] = useState(
         ""
     );
 
-    const [ctgrs, setCtgrs] = useState([
-        
-    ]);
+    const [ctgrs, setCtgrs] = useState(
+        [
 
-    // const getValues = () => {
-    //     this.setState({
-    //         searchType: this.props.searchType,
-    //     })
-    // };
-    // const selectCtgr = (element) => {
-    //     setSearchVal(element);
-    //     this.refs.CtgrResults.refreshResults(element);
-    // };
+        ]
+    );
 
-    // const searchTracker = (track) => {
-    //     this.setState({
-    //         searchVal: track.target.value
-    //     })
-    // };
+    const getDataset = async() => {
+        axios.get('http://222.232.15.205:8082/deploy/topic/' + searchVal)
+            .then(({ data }) => {
+                if (data.length >= 8) {
+                    setCtgrs(data.slice(0, 7));
+                } else {
+                    setCtgrs(data);
+                }
+            })
+            .catch(e => {
+                console.error(e);
+            });
+    };
+
     const searchCtgr = () => {
         // searchVal -> 가장 핫한 카테고리 8선
         if (searchVal === "") {
-            setCtgrs([
-                "핫 " + "1",
-                "핫 " + "2",
-                "핫 " + "3",
-                "핫 " + "4",
-                "핫 " + "5",
-                "핫 " + "6",
-                "핫 " + "7",
-                "핫 " + "8",
-            ]);
-            setSelectedCtgr("핫 " + "1");
+            getDataset();
+            setSelectedCtgr("비디오 게임");
         } else {
-            setCtgrs([
-                searchVal + "1",
-                searchVal + "2",
-                searchVal + "3",
-                searchVal + "4",
-                searchVal + "5",
-                searchVal + "6",
-                searchVal + "7",
-                searchVal + "8",
-            ]);
-            setSelectedCtgr(searchVal + "1");
+            getDataset();
+            setSelectedCtgr(searchVal);
+            if (ctgrs.length == 0) {
+                setSearchVal("비디오 게임");
+                getDataset();
+                setSelectedCtgr("비디오 게임");
+            }
         }
     };
 
     const searchCtgrPress = (e) => {
         if(e.key === 'Enter') {
-          searchCtgr()
+          setSearchVal(e.target.value);
+          searchCtgr();
           console.log();
         }
     };
 
     return (
+        getDataset(),
         <div
             className="mainContainor">
             <img
@@ -116,7 +107,6 @@ const MainPageSimple = (props) => {
                                 autoComplete="off"
                                 type="text"
                                 maxlength="30"
-                                onChange = {(e) => {setSearchVal(e.target.value)}}
                                 onKeyPress = {(e) => {searchCtgrPress(e)}}
                             />
                             <button className="searchButton"
