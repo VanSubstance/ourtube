@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import './Styles.css';
 import Chip from '@material-ui/core/Chip';
 import ListFont from './ListFont';
-import WallPaperChip from './WallPaperChip';
 
 class ScollWallPaper extends Component {
     render() {
-        const X = "0 0 261.987 286";
         return (
             <div >
 
