@@ -1,25 +1,28 @@
-import React, { useState }  from 'react';
+import React, { useState, useEffect }  from 'react';
 import axios, * as others from "axios";
 import './Styles.css';
 import { ListFont, TrendChip } from './Comps';
 
 const TrendMainPage = () => {
-    const [searchVal, setSearchVal] = useState(
+    let [searchVal, setSearchVal] = useState(
         "비디오 게임"
     );
     
-    const [selectedCtgr, setSelectedCtgr] = useState(
+    let [selectedCtgr, setSelectedCtgr] = useState(
         ""
     );
 
-    const [ctgrs, setCtgrs] = useState(
+    let [ctgrs, setCtgrs] = useState(
         [
 
         ]
     );
+    useEffect(() => {
+        getDataset();
+    }, []);
 
     const getDataset = async() => {
-        axios.get('http://222.232.15.205:8082/deploy/topic/' + searchVal)
+        await axios.get('http://222.232.15.205:8082/deploy/topic/' + searchVal)
             .then(({ data }) => {
                 if (data.length >= 8) {
                     setCtgrs(data.slice(0, 7));
@@ -37,21 +40,21 @@ const TrendMainPage = () => {
         // searchVal -> 가장 핫한 카테고리 8선
         if (searchVal === "") {
             getDataset();
-            setSelectedCtgr("비디오 게임");
+            selectedCtgr = "비디오 게임";
         } else {
             getDataset();
-            setSelectedCtgr(searchVal);
+            selectedCtgr = searchVal;
             if (ctgrs.length == 0) {
-                setSearchVal("비디오 게임");
+                searchVal = "비디오 게임";
                 getDataset();
-                setSelectedCtgr("비디오 게임");
+                selectedCtgr = "비디오 게임";
             }
         }
     };
 
     const searchCtgrPress = (e) => {
         if(e.key === 'Enter') {
-          setSearchVal(e.target.value);
+          searchVal = e.target.value;
           searchCtgr();
           console.log();
         }
