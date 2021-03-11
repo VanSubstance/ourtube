@@ -11,10 +11,6 @@ const MainPageSimple = (props) => {
     let [searchVal, setSearchVal] = useState(
         "비디오 게임"
     );
-    
-    let [selectedCtgr, setSelectedCtgr] = useState(
-        "비디오 게임"
-    );
 
     let [ctgrs, setCtgrs] = useState(
         [
@@ -29,11 +25,12 @@ const MainPageSimple = (props) => {
     );
     useEffect(() => {
         getDataset();
-        getDatasetForKeyword();
+        getDatasetForKeyword("비디오 게임");
     }, []);
 
-    const getDatasetForKeyword = async() => {
-        await axios.get(url + '/deploy/game/list/' + selectedCtgr)
+    const getDatasetForKeyword = async(ctgr) => {
+        console.log("키워드 데이터 반환:" + ctgr);
+        await axios.get(url + '/deploy/game/list/' + ctgr)
             .then(({ data }) => {
                 if (data.length >= 10) {
                     setKeywords(data.slice(0, 10));
@@ -63,17 +60,14 @@ const MainPageSimple = (props) => {
     const searchCtgr = () => {
         if (searchVal === "") {
             getDataset();
-            selectedCtgr = "비디오 게임";
-            getDatasetForKeyword();
+            getDatasetForKeyword("비디오 게임");
         } else {
             getDataset();
-            selectedCtgr = searchVal;
-            getDatasetForKeyword();
+            getDatasetForKeyword(searchVal);
             if (ctgrs.length == 0) {
                 searchVal = "비디오 게임";
                 getDataset();
-                selectedCtgr = "비디오 게임";
-                getDatasetForKeyword();
+                getDatasetForKeyword("비디오 게임");
             }
         }
     };
@@ -156,6 +150,7 @@ const MainPageSimple = (props) => {
                                             className="chipStyles"
                                             label={element}
                                             clickable
+                                            onClick = {() => {getDatasetForKeyword(element)}}
                                             component="button">
                                         </Chip>
                                     );
