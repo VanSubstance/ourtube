@@ -169,7 +169,7 @@ const MainPageSimple = (props) => {
                     </div>
                     <div
                         className="testTxtBottom">
-                        <h2>Ourtube is hosted by Ourtube  Analytics, Inc. Ourtube isn’t endorsed by Youtube and doesn’t reflect the views or opinions of youtube or anyone officially involved in producing or managing Youtube. youtube and Google are trademarks or registered trademarks of Google.Inc. Youtube ©  Google.Inc. </h2>
+                        <h2>Ourtube is hosted by Ourtube Analytics, Inc. Ourtube isn’t endorsed by Youtube and doesn’t reflect the views or opinions of youtube or anyone officially involved in producing or managing Youtube. youtube and Google are trademarks or registered trademarks of Google.Inc. Youtube ©  Google.Inc. </h2>
                     </div>
                 </div>
             </div>    

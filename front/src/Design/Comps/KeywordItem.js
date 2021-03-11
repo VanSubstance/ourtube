@@ -7,8 +7,8 @@ const KeywordItem = (props) => {
     return (
         <svg className="_138_cc_svg" viewBox="0 0 261.987 286">
             <path className="_138_cc_path" d="M 0 0 L 261.98681640625 0 L 261.98681640625 286 L 0 286 L 0 0 Z">
-                <p>{props.keyword.title}</p>
-                <p>{props.keyword.thumbnail}</p>
+                <div>{props.keyword.title}</div>
+                <div>{props.keyword.thumbnail}</div>
                     <Link to={"/trend/" + props.keyword.title}>자세히 보기</Link>
             </path>
         </svg>

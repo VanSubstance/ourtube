@@ -68,3 +68,9 @@
     background-color: rgba(255, 255, 255, 0.5) !important;
     color: white !important;
 }
+
+.swiper-slide {
+    width: 262px !important;
+    height: 286px !important;
+}
+
