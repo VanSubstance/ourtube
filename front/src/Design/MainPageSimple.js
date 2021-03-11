@@ -8,21 +8,21 @@ import "./Css/styles.css";
 const MainPageSimple = (props) => {
     const [url, setUrl] = useState("http://222.232.15.205:8082");
 
-    const [searchVal, setSearchVal] = useState(
+    let [searchVal, setSearchVal] = useState(
         "비디오 게임"
     );
     
-    const [selectedCtgr, setSelectedCtgr] = useState(
+    let [selectedCtgr, setSelectedCtgr] = useState(
         "비디오 게임"
     );
 
-    const [ctgrs, setCtgrs] = useState(
+    let [ctgrs, setCtgrs] = useState(
         [
 
         ]
     );
 
-    const [keywords, setKeywords] = useState(
+    let [keywords, setKeywords] = useState(
         [
 
         ]
@@ -63,15 +63,16 @@ const MainPageSimple = (props) => {
     const searchCtgr = () => {
         if (searchVal === "") {
             getDataset();
-            setSelectedCtgr("비디오 게임");
+            selectedCtgr = "비디오 게임";
             getDatasetForKeyword();
         } else {
             getDataset();
-            setSelectedCtgr(searchVal);
+            selectedCtgr = searchVal;
+            getDatasetForKeyword();
             if (ctgrs.length == 0) {
-                setSearchVal("비디오 게임");
+                searchVal = "비디오 게임";
                 getDataset();
-                setSelectedCtgr("비디오 게임");
+                selectedCtgr = "비디오 게임";
                 getDatasetForKeyword();
             }
         }
@@ -79,9 +80,9 @@ const MainPageSimple = (props) => {
 
     const searchCtgrPress = (e) => {
         if(e.key === 'Enter') {
-          setSearchVal(e.target.value);
+          searchVal = e.target.value;
           searchCtgr();
-          console.log();
+          console.log(searchVal);
         }
     };
 
