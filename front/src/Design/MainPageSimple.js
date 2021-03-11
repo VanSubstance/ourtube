@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { KeywordList } from './Comps';
 import axios, * as others from "axios";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
@@ -9,28 +9,29 @@ import LeftBox from './LeftBox';
 const MainPageSimple = (props) => {
     const [url, setUrl] = useState("http://222.232.15.205:8082");
 
-    const [searchVal, setSearchVal] = useState(
-        "비디오 게임"
-    );
-    
-    const [selectedCtgr, setSelectedCtgr] = useState(
+    let [searchVal, setSearchVal] = useState(
         "비디오 게임"
     );
 
-    const [ctgrs, setCtgrs] = useState(
+    let [ctgrs, setCtgrs] = useState(
         [
 
         ]
     );
 
-    const [keywords, setKeywords] = useState(
+    let [keywords, setKeywords] = useState(
         [
 
         ]
     );
+    useEffect(() => {
+        getDataset();
+        getDatasetForKeyword("비디오 게임");
+    }, []);
 
-    const getDatasetForKeyword = async() => {
-        await axios.get(url + '/deploy/game/list/' + selectedCtgr)
+    const getDatasetForKeyword = async(ctgr) => {
+        console.log("키워드 데이터 반환:" + ctgr);
+        await axios.get(url + '/deploy/game/list/' + ctgr)
             .then(({ data }) => {
                 if (data.length >= 10) {
                     setKeywords(data.slice(0, 10));
@@ -60,25 +61,23 @@ const MainPageSimple = (props) => {
     const searchCtgr = () => {
         if (searchVal === "") {
             getDataset();
-            setSelectedCtgr("비디오 게임");
-            getDatasetForKeyword();
+            getDatasetForKeyword("비디오 게임");
         } else {
             getDataset();
-            setSelectedCtgr(searchVal);
+            getDatasetForKeyword(searchVal);
             if (ctgrs.length == 0) {
-                setSearchVal("비디오 게임");
+                searchVal = "비디오 게임";
                 getDataset();
-                setSelectedCtgr("비디오 게임");
-                getDatasetForKeyword();
+                getDatasetForKeyword("비디오 게임");
             }
         }
     };
 
     const searchCtgrPress = (e) => {
         if(e.key === 'Enter') {
-          setSearchVal(e.target.value);
+          searchVal = e.target.value;
           searchCtgr();
-          console.log();
+          console.log(searchVal);
         }
     };
 
@@ -153,6 +152,7 @@ const MainPageSimple = (props) => {
                                             className="chipStyles"
                                             label={element}
                                             clickable
+                                            onClick = {() => {getDatasetForKeyword(element)}}
                                             component="button">
                                         </Chip>
                                     );
