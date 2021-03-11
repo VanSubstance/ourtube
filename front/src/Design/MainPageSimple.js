@@ -105,7 +105,7 @@ const MainPageSimple = (props) => {
                                 placeholder="검색어를 입력하세요"
                                 autoComplete="off"
                                 type="text"
-                                maxlength="30"
+                                maxLength="30"
                                 onKeyPress = {(e) => {searchCtgrPress(e)}}
                             />
                             <button className="searchButton"
@@ -135,17 +135,14 @@ const MainPageSimple = (props) => {
                             }
                         </div>
                     </div>
-                    <KeywordList
-                    >
-
-                    </KeywordList>
+                    <KeywordList/>
                     <div
                         className="testTxtTop">
                             OURTUBE Analytics, Inc. © 2021
                     </div>
                     <div
                         className="testTxtBottom">
-                        <d2>Ourtube is hosted by Ourtube  Analytics, Inc. Ourtube isn’t endorsed by Youtube and doesn’t reflect the views or opinions of youtube or anyone officially involved in producing or managing Youtube. youtube and Google are trademarks or registered trademarks of Google.Inc. Youtube ©  Google.Inc. </d2>
+                        <h2>Ourtube is hosted by Ourtube  Analytics, Inc. Ourtube isn’t endorsed by Youtube and doesn’t reflect the views or opinions of youtube or anyone officially involved in producing or managing Youtube. youtube and Google are trademarks or registered trademarks of Google.Inc. Youtube ©  Google.Inc. </h2>
                     </div>
                 </div>
             </div>    
@@ -153,7 +150,7 @@ const MainPageSimple = (props) => {
                     className="footer">
                     <div
                         className="footerBox">
-                        <d1>FOOTER, 공지사항, 이용약관, 버그리포팅, 사이트 설명</d1>
+                        <h1>FOOTER, 공지사항, 이용약관, 버그리포팅, 사이트 설명</h1>
                     </div>
             </footer>
         </div>
