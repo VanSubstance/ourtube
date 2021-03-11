@@ -59,7 +59,6 @@ const MainPageSimple = (props) => {
     };
 
     return (
-        getDataset(),
         <div
             className="mainContainor">
             <img
