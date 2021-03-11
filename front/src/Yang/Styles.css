@@ -517,29 +517,11 @@
     overflow: hidden;
 }
 
-#_itembox {
-    fill: transparent;
-    stroke: rgba(255, 255, 255, 1);
-    stroke-width: 2px;
-    stroke-linejoin: miter;
-    stroke-linecap: butt;
-    stroke-miterlimit: 4;
-    shape-rendering: auto;
-}
-
 #_itemboxdiv {
     width: 261.986px !important;
     height: 286px;
 }
 
-._itembox {
-    overflow: visible;
-    position: absolute;
-    width: 261.986px;
-    height: 286px;
-    top: 0px;
-    transform: matrix(1, 0, 0, 1, 0, 0);
-}
 
 #_276 {
     position: absolute;

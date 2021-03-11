@@ -78,7 +78,16 @@ const TrendMainPage = () => {
                 </path>
             </svg>
             <div id="scollOURTUBE">
-                <span>OURTUBE</span>
+                <div>
+                    <a
+                        href="http://localhost:3012/"
+                        className="bannerTrandMain">
+                        <img
+                            className="bannerImage"
+                            src="/Ex/ourtubeLogo.PNG">
+                        </img>
+                    </a>
+                </div>
             </div>
             <div>
                 <svg className="_scrollSearchbox1">

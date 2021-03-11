@@ -22,7 +22,7 @@ const KeywordList = (props) => {
                 loop={false}
                 autoplay={false}
                 pagination={{ clickable: true }}
-
+                observer={true}
             >
                 {
                     props.keywords.length === 0

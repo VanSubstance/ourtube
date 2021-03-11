@@ -4,6 +4,7 @@ import axios, * as others from "axios";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Chip from '@material-ui/core/Chip';
 import "./Css/styles.css";
+import LeftBox from './LeftBox';
 
 const MainPageSimple = (props) => {
     const [url, setUrl] = useState("http://222.232.15.205:8082");
@@ -92,6 +93,7 @@ const MainPageSimple = (props) => {
                 className="sectionContainor">
                 <div
                     className="mainLeftSection">
+                        <LeftBox></LeftBox>
                 </div>
                 <div
                     className="mainRightSection">
@@ -112,7 +114,7 @@ const MainPageSimple = (props) => {
                         className="mainBannerBox">
                         <a
                             href="http://localhost:3012/"
-                            className="bannerA">
+                            className="bannerMain">
                             <img
                                 className="bannerImage"
                                 src="/Ex/ourtubeLogo.PNG">
@@ -165,7 +167,7 @@ const MainPageSimple = (props) => {
                     </div>
                     <div
                         className="testTxtBottom">
-                        <h2>Ourtube is hosted by Ourtube Analytics, Inc. Ourtube isn’t endorsed by Youtube and doesn’t reflect the views or opinions of youtube or anyone officially involved in producing or managing Youtube. youtube and Google are trademarks or registered trademarks of Google.Inc. Youtube ©  Google.Inc. </h2>
+                            Ourtube is hosted by Ourtube Analytics, Inc. Ourtube isn’t endorsed by Youtube and doesn’t reflect the views or opinions of youtube or anyone officially involved in producing or managing Youtube. youtube and Google are trademarks or registered trademarks of Google.Inc. Youtube ©  Google.Inc.
                     </div>
                 </div>
             </div>    
@@ -173,7 +175,7 @@ const MainPageSimple = (props) => {
                     className="footer">
                     <div
                         className="footerBox">
-                        <h1>FOOTER, 공지사항, 이용약관, 버그리포팅, 사이트 설명</h1>
+                        FOOTER, 공지사항, 이용약관, 버그리포팅, 사이트 설명
                     </div>
             </footer>
         </div>

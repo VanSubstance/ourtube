@@ -7,8 +7,8 @@ class ItemBox extends Component {
         const X="0 0 261.987 286";
         return (
             <div>
-                <svg class="_itembox" viewBox={X}>
-                    <path id="_itembox" d="M 0 0 L 261.98681640625 0 L 261.98681640625 286 L 0 286 L 0 0 Z">
+                <svg class="_itemBox" viewBox={X}>
+                    <path id="_itemBox" d="M 0 0 L 261.98681640625 0 L 261.98681640625 286 L 0 286 L 0 0 Z">
                     </path>
                 </svg>                
                 <SubBox></SubBox>
