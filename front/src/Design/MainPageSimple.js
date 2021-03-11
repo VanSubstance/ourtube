@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { KeywordList } from './Comps';
 import axios, * as others from "axios";
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
@@ -27,6 +27,10 @@ const MainPageSimple = (props) => {
 
         ]
     );
+    useEffect(() => {
+        getDataset();
+        getDatasetForKeyword();
+    }, []);
 
     const getDatasetForKeyword = async() => {
         await axios.get(url + '/deploy/game/list/' + selectedCtgr)
