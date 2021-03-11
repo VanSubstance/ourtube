@@ -17,10 +17,10 @@ const KeywordList = (props) => {
             <Swiper
                 className= "keywordList"
                 spaceBetween={20}
-                slidesPerView={4}
+                slidesPerView={5}
                 navigation
-                loop={true}
-                autoplay={true}
+                loop={false}
+                autoplay={false}
                 pagination={{ clickable: true }}
 
             >

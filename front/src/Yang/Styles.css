@@ -10,12 +10,12 @@
     --web-view-ids: ROBOTO__;
 }
 
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     border: none;
-}
+} */
 
 #Wallpaper_ {
     position: absolute;
@@ -1439,7 +1439,7 @@
     
 }
 
-#_chip1 {
+/* #_chip1 {
     position: absolute;
     width: 96px;
     height: 32px;
@@ -1478,8 +1478,8 @@
     left: 1170px;
     top: 330px;
     overflow: hidden;
-}
-.searchBar {
+} */
+/* .searchBar {
     position: relative;
     border: none;
     background-color: white;
@@ -1547,7 +1547,7 @@
     position: relative;
     width: 100%;
     margin: 0 auto;
-}
+} */
 
 #Container {
     position: absolute;
@@ -1634,7 +1634,7 @@
     transform: matrix(1, 0, 0, 1, 0, 0);
 }
 
-#_chipfont {
+/* #_chipfont {
     left: 15px;
     top: 10px;
     position: absolute;
@@ -1650,7 +1650,7 @@
     font-size: 13px;
     color: rgba(0, 0, 0, 0.871);
     letter-spacing: 0.18px;
-}
+} */
 
 #_231 {
     position: absolute;
