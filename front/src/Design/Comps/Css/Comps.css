@@ -12,23 +12,16 @@
     top: 0px;
     overflow: visible;
 }
-.keywordListVertical {
+.keywordListHorizontal {
     position: relative;
     align-self: center;
     height: 595px;
+    width: 1243px;
     align-content: center;
 }
-.keywordItemVertical {
-    position: relative;
-    width: 260px;
-    height: 285px;
-    background-color: rgb(255, 222, 255);
-    border: 3px solid white;
-    color: black;
-    margin: 10px;
-    font-family: Arial;
-    text-align: center;
-}
+
+/* no middle */
+/* width: 1555px; */
 
 .keywordMarginBox {
     width: 100%;
@@ -88,7 +81,7 @@
 }
 
 .swiper-wrapper {
-    margin-top: 15px;
+    margin-top: 15px !important;
 }
 
 ._itemBox {
@@ -125,3 +118,11 @@
     height: 24px;
     bottom: 0px;
 }
+/* 
+.swiper-slide {
+    opacity: 1;
+}
+
+.swiper-slide-visible {
+    opacity: 0.25;
+} */

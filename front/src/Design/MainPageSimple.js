@@ -171,13 +171,13 @@ const MainPageSimple = (props) => {
                     </div>
                 </div>
             </div>    
-            <footer
+            {/* <footer
                     className="footer">
                     <div
                         className="footerBox">
                         FOOTER, 공지사항, 이용약관, 버그리포팅, 사이트 설명
                     </div>
-            </footer>
+            </footer> */}
         </div>
     );
 };
