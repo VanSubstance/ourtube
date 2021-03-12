@@ -5,22 +5,24 @@ const KeywordItem = (props) => {
     return (
         <div
         className="_itemBox"
-        onClick ={() => {
-            props.clickEvent(props.keyword);
-        }}
         // viewBox="0 0 261.987 286"
         >
             <img
                 className="keywordThumbnail"
-                src={props.keyword.thumbnail}>
+                src={props.keyword.thumbnail}
+                onClick ={() => {
+                props.clickEvent(props.keyword);
+            }}>
             </img>
-            <div
-                className="keywordTitleBox">
+            <a href={/trend/ + props.keyword.title}>
                 <div
-                    className="keywordTitle">
-                    {props.keyword.title}
+                    className="keywordTitleBox">
+                    <div
+                        className="keywordTitle">
+                        {props.keyword.title}
+                    </div>
                 </div>
-            </div>
+            </a>
             {/* <path className="_itemBoxPath" d="M 0 0 L 261.98681640625 0 L 261.98681640625 286 L 0 286 L 0 0 Z">
             </path> */}
         </div>

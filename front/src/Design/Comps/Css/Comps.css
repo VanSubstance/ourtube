@@ -78,6 +78,7 @@
     height: 280px;
     margin: 0 auto;
     z-index: -1;
+    cursor: pointer;
 }
 
 .swiper-wrapper {
