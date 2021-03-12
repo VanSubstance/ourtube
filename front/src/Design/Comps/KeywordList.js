@@ -12,12 +12,10 @@ SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 const KeywordList = (props) => {
     return (
-        <div
-            className="keywordList">
+        <div>
             <Swiper
-                className= "keywordList"
                 spaceBetween={20}
-                slidesPerView={5}
+                slidesPerView={4}
                 navigation
                 loop={false}
                 autoplay={false}
