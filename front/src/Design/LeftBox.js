@@ -10,8 +10,6 @@ class LeftBox extends Component {
             <div>
                 <div id="__Leftbox">
                     <svg class="__Leftbox">
-                        <rect id="__Leftbox" rx="0" ry="0" x="0" y="0" width="640" height="936">
-                        </rect>
                     </svg>
                 </div>
                 <div id="_boxpostion">

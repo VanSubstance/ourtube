@@ -23,6 +23,7 @@
 }
 
 .mainRightSection {
+    overflow: hidden;
     float: right;
     position: relative;
     right: 0;
@@ -78,7 +79,7 @@
     object-fit: cover;
 }
 
-.bannerA{
+.bannerMain{
     position: relative;
     top: 55px;
     margin: 0 auto;
@@ -206,7 +207,13 @@
     left: 470px;
     bottom: 20px;
     color: white;
-    font-size: 70%;
+    font-size: 0.7em;
     font-weight: 400;
     width: 61%;
+    font-weight: normal !important;
+}
+
+.bannerTrendMain {
+    position: relative;
+    margin: 0 auto;
 }

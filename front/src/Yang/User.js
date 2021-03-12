@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Styles.css';
+// import './Styles.css';
 import { ItemBoxList } from '.';
 import LeftBox from './LeftBox';
 import WallPaper from './WallPaper';
