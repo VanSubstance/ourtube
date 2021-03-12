@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import { Bar, Line, Radar } from 'react-chartjs-2';
+import React from 'react';
 import './Css/Comps.css';
 
 const KeywordItem = (props) => {
     return (
         <div
         className="_itemBox"
+        onClick ={() => {
+            props.clickEvent(props.keyword);
+        }}
         // viewBox="0 0 261.987 286"
         >
             <img

@@ -43,7 +43,8 @@ const KeywordList = (props) => {
                             return (
                                 <SwiperSlide>
                                     <KeywordItem
-                                        keyword={element}>
+                                        keyword={element}
+                                        clickEvent = {props.clickEvent}>
                                     </KeywordItem>
                                 </SwiperSlide>
                             );
