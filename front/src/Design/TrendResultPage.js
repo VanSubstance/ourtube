@@ -1,342 +1,77 @@
 import React, { Component } from 'react';
-import { KeywordThumbnail, Cloud } from './Comps';
-import { Bar, Line, Radar, Pie } from 'react-chartjs-2';
-import 'chartjs-plugin-datalabels';
-import { render } from 'react-dom';
-import WordCloud from 'react-d3-cloud';
-import axios, * as others from "axios";
-import moment from 'moment'
+import './Styles.css';
+import { ListFont, TrendChip } from './Comps';
 
 class TrendResultPage extends Component {
-
-    state = {
-        ip: "http://222.232.15.205:8082",
-        keyword: this.props.match.params.keyword,
-        options: {
-            // 좋아요 싫어요 막대 그래프 옵션
-            barLikes: {
-                maintainAspectRatio: false,
-                scales: {
-                    xAxes: [{
-                        
-                        stacked: true
-                    }],
-                    yAxes: [{
-                        maxZBarThickness: 100,
-                        stacked: true,
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            },
-            // 선 그래프: 주별 동영상 1개 당 평균 누적 조회수
-            lineView: {
-                maintainAspectRatio: false,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                        }
-                    }],
-                    xAxes: [{
-                        ticks: {
-                            reverse: true
-                        }
-                    }]
-                },
-                plugins: {
-                    datalabels: {
-                        display: false
-                    }
-                }
-            },
-            // 파이 그래프: 조회수 ~ 좋아요 / 싫어요 비율
-            pieLikes: {
-                maintainAspectRatio: false,
-            },
-            // 선 그래프: 주별 순위
-            lineRankPerWeek: {
-                maintainAspectRatio: false,
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            reverse: true
-                        }
-                    }],
-                    xAxes: [{
-                        ticks: {
-                            reverse: true
-                        }
-                    }]
-                },
-                elements: {
-                    line: {
-                        tension: 0
-                    },
-                    point: {
-                        pointStyle: 'rectRounded',
-                        radius: 3,
-                        backgroundColor: 'red',
-                        borderWidth: 5
-                    }
-                },
-                plugins: {
-                    datalabels: {
-                        display: false
-                    }
-                }
-            },
-            radarInfo: {
-                maintainAspectRatio: false,
-                scale: {
-                    angleLines: {
-                        display: false
-                    },
-                    ticks: {
-                        display: false,
-                        beginAtZero: true,
-                        min: 0,
-                        max: 10000,
-                        stepSize: 1000,
-                    }
-                },
-                plugins: {
-                    datalabels: {
-                        display: false
-                    }
-                }
-            }
-        },
-        datasets: {
-            // 좋아요 싫어요 막대 그래프 변수
-            barLikes: {
-                datasets: [
-                    {
-                        // 좋아요 / 싫어요 데이터셋 위치
-                        label: "좋아요/싫어요 개수",
-                        data: [],
-                        backgroundColor: "#ff3399"
-                    }
-                ],
-                // 라벨 데이터셋 위치
-                labels: ['좋아요', '싫어요']
-            },
-            // 선 그래프: 주별 동영상 1개 당 평균 누적 조회수
-            lineView: {
-                datasets: [
-                    {
-                        label: "조회수",
-                        data: [],
-                        fill: false,
-                        borderColor: "#ff3399",
-                        borderWidth: 1
-                    }
-
-                ],
-                labels: ['1주', '2주', '3주', '4주', '5주', '6주', '7주', '8주', '9주', '10주', '11주', '12주']
-            },
-            // 파이 그래프: 조회수 ~ 좋아요 / 싫어요 비율
-            pieLikes: {
-                datasets: [
-                    {
-                        // 좋아요 / 싫어요 데이터셋 위치
-                        label: "비율",
-                        backgroundColor: ["#00cc99", "#ff3399"],
-                        data: []
-                    }
-                ],
-                // 라벨 데이터셋 위치
-                labels: ['좋아요', '싫어요', '없음']
-            },
-            // 선 그래프: 주별 순위
-            lineRankPerWeek: {
-                datasets: [
-                    {
-                        label: "순위",
-                        data: [],
-                        fill: false,
-                        borderColor: "red"
-                    },
-                ],
-                labels: ['1주', '2주', '3주', '4주', '5주', '6주', '7주', '8주', '9주', '10주', '11주', '12주']
-            },
-            radarInfo: {
-                datasets: [
-                    {
-                        label: '레이더 테스트',
-                        backgroundColor: '#F6465B77',
-                        borderColor: '#F42941',
-                        borderWidth: 2,
-                        data: []
-                    }
-                ],
-                labels: ['test1', 'test2', 'test3', 'test4', 'test5']
-            }
-        },
-        data: [
-        ],
-        fontSizeMapper : word => Math.log2(word.value) * 5,
-        rotate : 0,
-        padding : 5,
-        width: 700,
-        height: 700,
-        font: "Arial"
-    }
-
-    getData = async () => {
-        axios.get(this.state.ip+'/deploy/wordcloud/리그%20오브%20레전드')
-            .then(({ data }) => {
-                this.state.datasets.barLikes.datasets[0].data = [
-                    data.statistics.likeCount,
-                    data.statistics.dislikeCount
-                ];
-                // console.log(this.state.datasets.barLikes.datasets[0].data);
-                data.words.map((value, index) => {
-                    if (this.state.data.length < 10) {
-                        this.setState(
-                            {
-                                data: this.state.data.concat(
-                                    {
-                                        text: value.word,
-                                        value: value.count
-                                    }
-                                    ),
-                            }
-                        )
-                    }
-                });
-            })
-            .catch(e => {
-                console.error(e);
-            });
-    }
-    
-    componentWillMount() {
-        this.getData();
-    }
-
-    componentDidMount() {
-        this.setDataset();
-    }
-
-    // 키워드로부터 정보 추출
-    getDatasetFromKeyword = (keyword) => {
-
-        var lineView = [];
-        var pieLikes = [];
-        var lineRankPerWeek = [];
-        var radarInfo = [];
-
-        // 선 그래프: 주별 동영상 1개 당 평균 누적 조회수
-        for (var i = 0; i < 12; i++) {
-            lineView.push(Math.floor(Math.random() * (10000 - 8000) + 8000));
-        }
-        // 선 그래프: 주별 순위
-        for (var i = 0; i < 12; i++) {
-            lineRankPerWeek.push(Math.floor(Math.random() * (20 - 1) + 1));
-        }
-        for (var i = 0; i < 5; i++) {
-            radarInfo.push(Math.floor(Math.random() * (10000 - 2000) + 1000));
-        }
-        // 평균 좋아요 / 싫어요 변수
-        pieLikes.push(Math.floor(Math.random() * (10000 - 2000) + 2000));
-        pieLikes.push(Math.floor(Math.random() * (5000 - 500) + 500));
-        pieLikes.push(Math.floor(Math.random() * (10000 - 2000) + 2000));
-        return (
-            {
-                lineView: lineView,
-                pieLikes: pieLikes,
-                lineRankPerWeek: lineRankPerWeek,
-                radarInfo: radarInfo
-            }
-        );
-    }
-
-    // 각 컴포넌트에 변수 전달
-    setDataset = () => {
-        const { datasets, keyword } = this.state;
-        var data = this.getDatasetFromKeyword(keyword);
-
-        // 막대그래프: 평균 좋아요/싫어요
-        datasets.lineView.datasets[0].data = data.lineView;
-        datasets.pieLikes.datasets[0].data = data.pieLikes;
-        datasets.lineRankPerWeek.datasets[0].data = data.lineRankPerWeek;
-        datasets.radarInfo.datasets[0].data = data.radarInfo;
-
-        // 키워드 썸네일
-        this.refs.KeywordThumbnail.setThumbnailInfo();
-    }
-
-
     render() {
         return (
-            <div>
-                <p>
-                    트렌드 키워드 세부 페이지
-                </p>
-                <p>
-                    키워드: {this.state.keyword}
-                </p>
-                <Cloud
-                    ref="Cloud" keyword={this.state.keyword}>
+            <div >
+                {/* //배경 및 그라데이션  */}
+                <div id="scollWallpaper_">
+                    <img id="andy-holmes-rCbdp8VCYhQ-unspla1" src="./Ex/andy-holmes-rCbdp8VCYhQ-unspla.png"
+                        srcset="./andy-holmes-rCbdp8VCYhQ-unspla.png 1x, ./andy-holmes-rCbdp8VCYhQ-unspla@2x.png 2x" />
+                </div>
+                <svg class="scollGradient" viewBox="0 0 1920 1500">
+                    <linearGradient id="_137_bn" spreadMethod="pad" x1="0.952" x2="0.071" y1="0.067" y2="0.886">
+                        <stop offset="0" stop-color="#f60" stop-opacity="1"></stop>
+                        <stop offset="0.1673" stop-color="#cf8845" stop-opacity="1"></stop>
+                        <stop offset="0.3389" stop-color="#b79967" stop-opacity="1"></stop>
+                        <stop offset="0.4937" stop-color="#b4838b" stop-opacity="1"></stop>
+                        <stop offset="0.6735" stop-color="#b16ab4" stop-opacity="1"></stop>
+                        <stop offset="0.7991" stop-color="#7c84b9" stop-opacity="1"></stop>
+                        <stop offset="1" stop-color="#28adc2" stop-opacity="1"></stop>
+                    </linearGradient>
+                    <path id="Gradient" d="M 0 0 L 1920 0 L 1920 1500 L 0 1500 L 0 0 Z">
+                    </path>
+                </svg>
+                <div id="scollOURTUBE">
+                    <span>OURTUBE</span>
+                </div>
+                {/* <TrendChip></TrendChip> */}
+                <svg class="listtop">
+                    <rect id="listtop" rx="0" ry="0" x="0" y="0" width="923" height="41">
+                    </rect>
+                </svg>
+                <svg class="listbox1">
+                    <rect id="listbox" rx="0" ry="0" x="0" y="0" width="923" height="287">
+                    </rect>
+                </svg>
+                <svg class="rightbox">
+                    <rect id="rightbox" rx="0" ry="0" x="0" y="0" width="339" height="156">
+                    </rect>
+                </svg>
+                <svg class="exbox">
+                    <rect id="exbox" rx="0" ry="0" x="0" y="0" width="339" height="772">
+                    </rect>
+                </svg>
+                <svg class="thirdtop">
+                    <rect id="thirdtop" rx="0" ry="0" x="0" y="0" width="456" height="41">
+                    </rect>
+                </svg>
+                <svg class="thirdbox">
+                    <rect id="thirdbox" rx="0" ry="0" x="0" y="0" width="456" height="196">
+                    </rect>
+                </svg>
+                <span id="thirdfont1">신규 조회수</span>
+                <svg class="thirdtop2">
+                    <rect id="thirdtop2" rx="0" ry="0" x="0" y="0" width="456" height="41">
+                    </rect>
+                </svg>
 
-                </Cloud>
-                <KeywordThumbnail ref="KeywordThumbnail">
-
-                </KeywordThumbnail>
-                <div>
-                    <p> Word Cloud Test </p>
-                    <WordCloud
-                        data={this.state.data}
-                        fontSizeMapper={this.state.fontSizeMapper}
-                        rotate={this.state.rotate}
-                        padding={this.state.padding}
-                        height={this.state.height}
-                        width={this.state.width}
-                        font = {this.state.font}
-                    />
-                </div>
-                <div
-                    style={this.state.chart}>
-                    <p> 막대 그래프: 동영상 1개 당 평균 좋아요 / 싫어요 </p>
-                    <Bar
-                        data={this.state.datasets.barLikes}
-                        options={this.state.options.barLikes}
-                    />
-                </div>
-                <div
-                    style={this.state.chart}>
-                    <p> 선 그래프: 주별 동영상 1개 당 평균 누적 조회수 </p>
-                    <Line
-                        data={this.state.datasets.lineView}
-                        options={this.state.options.lineView}
-                    />
-                </div>
-                <div>
-                    <p> 파이 그래프: 조회수 ~ 좋아요 / 싫어요 비율 </p>
-                    <Pie
-                        data={this.state.datasets.pieLikes}
-                        options={this.state.options.pieLikes}
-                    />
-                </div>
-                <div
-                    style={this.state.chart}>
-                    <p> 선 그래프: 주별 순위 </p>
-                    <Line
-                        data={this.state.datasets.lineRankPerWeek}
-                        options={this.state.options.lineRankPerWeek}
-                    />
-                </div>
-                <div
-                    style={this.state.chart}>
-                    <p> 레이더 그래프 </p>
-                    <Radar
-                        data={this.state.datasets.radarInfo}
-                        options={this.state.options.radarInfo}
-                    />
-                </div>
+                <svg class="thirdbox2">
+                    <rect id="thirdbox2" rx="0" ry="0" x="0" y="0" width="456" height="196">
+                    </rect>
+                </svg>
+                <span id="thirdfont2">신규 동영상수</span>
+                <svg class="fourthtop">
+                    <rect id="fourthtop" rx="0" ry="0" x="0" y="0" width="923" height="41">
+                    </rect>
+                </svg>
+                <svg class="fourthbox">
+                    <rect id="fourthbox" rx="0" ry="0" x="0" y="0" width="923" height="196">
+                    </rect>
+                </svg>
+                <span id="fourthfont">채널 구독자수</span>
             </div>
         );
     }
