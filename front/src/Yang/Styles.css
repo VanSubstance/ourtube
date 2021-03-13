@@ -103,10 +103,10 @@
     top: 0px;
 }
 
-#__Leftbox {
+/* #__Leftbox {
     opacity: 0.7;
     fill: rgba(0, 0, 0, 1);
-}
+} */
 
 .__Leftbox {
     position: absolute;
@@ -140,26 +140,6 @@
     left: 76px;
     top: 52.221px;
     overflow: visible;
-}
-
-#_Mainbox {
-    fill: transparent;
-    stroke: rgba(255, 255, 255, 1);
-    stroke-width: 2px;
-    stroke-linejoin: miter;
-    stroke-linecap: butt;
-    stroke-miterlimit: 4;
-    shape-rendering: auto;
-}
-
-._Mainbox {
-    overflow: visible;
-    position: absolute;
-    width: 307.779px;
-    height: 307.779px;
-    left: 0px;
-    top: 0px;
-    transform: matrix(1, 0, 0, 1, 0, 0);
 }
 
 #_gamename {

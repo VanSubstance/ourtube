@@ -43,13 +43,13 @@
 }
 
 .linkBox {
-    position: fixed;
+    position: absolute;
     right: 10px;
     top: 10px;
     background-color: rgba(0, 0, 0, 0.5);
     width: 120px;
     height: 60px;
-    border: 1px solid white;
+    /* border: 1px solid white; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -102,6 +102,7 @@
 .searchBar {
     position: relative;
     border: none;
+    outline: none;
     background-color: white;
     width: 600px; height: 32px;
     font-size: 15px;
@@ -116,29 +117,51 @@
     background: transparent;
     height: 30px;
     width: 576px;
-    padding: 0px 12px;
+    padding: 1px 12px 1px 12px;
     font-size: 14px;
     color: black;
     font-weight: 700;
     vertical-align: middle;
 }
 
+.searchInput:hover {
+    outline: none;
+}
+
+.searchInput:focus {
+    outline: none;
+}
+
 .searchButton {
-    border-radius: 0 3px 3px 0;
+    /* border-radius: 0 3px 3px 0; */
     border: none;
     position: absolute;
     right: 0;
     top: 0;
-    height: 30px;
-    background: transparent;
+    height: 32px;
+    background: white;
     transition: all ease .4s;
     cursor: pointer;
+}
+
+.searchButton:hover {
+    mix-blend-mode: difference;
+}
+
+.searchButton:focus {
+    mix-blend-mode: difference;
 }
 
 .searchButtonImg {
     position: relative;
     width: 25px;
     height: 25px;
+}
+
+.searchButtonImg:hover {
+}
+
+.searchButtonImg:focus {
 }
 
 .mainChipBox {
@@ -148,6 +171,10 @@
 
 .chipStyles {
     margin: 20px 20px 5px 0px
+}
+
+.MuiChip-root {
+    background-color: white !important;
 }
 
 .chipBackground {
@@ -216,4 +243,31 @@
 .bannerTrendMain {
     position: relative;
     margin: 0 auto;
+}
+
+/* ._boxPosition {
+    position: absolute;
+    width: 308px;
+    height: 308px;
+    overflow: visible;
+} */
+
+#_Mainbox {
+    border: 1px solid white;
+}
+
+._Mainbox {
+    overflow: visible;
+    position: absolute;
+    width: 308px;
+    height: 308px;
+    left: 76px;
+    top: 52.221px;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+    border: 1px solid white;
+}
+
+.leftThumnail {
+    width: 308px;
+    height: 308px;
 }
