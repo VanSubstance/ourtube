@@ -4,12 +4,10 @@ import "./Styles.css";
 import moment from "moment";
 
 const LeftBoxFont = (props) => {
-    const [dateTarget, setDateTarget] = useState(
-        {
-            right: moment().format('yyyy-MM-DD'),
-            left: moment().subtract(1, 'days').format('yyyy-MM-DD')
-        }
-    );
+  const [dateTarget, setDateTarget] = useState({
+    right: moment().format("yyyy-MM-DD"),
+    left: moment().subtract(1, "days").format("yyyy-MM-DD"),
+  });
 
   return (
     <div>
@@ -54,7 +52,11 @@ const LeftBoxFont = (props) => {
         <span>1</span>
       </div>
       <div id="_pastranknumber2">
-        <span>{props.data[dateTarget.left].viewCount}</span>
+        <span>
+          {props.data[dateTarget.left] !== undefined
+            ? props.data[dateTarget.left].viewCount
+            : 0}
+        </span>
       </div>
       <div id="_pastranknumber3">
         <span>3</span>
@@ -66,7 +68,11 @@ const LeftBoxFont = (props) => {
         <span>5</span>
       </div>
       <div id="_nowranknumber2">
-        <span>{props.data[dateTarget.right].viewCount}</span>
+        <span>
+          {props.data[dateTarget.right] !== undefined
+            ? props.data[dateTarget.right].viewCount
+            : 0}
+        </span>
       </div>
       <div id="_nowranknumber3">
         <span>7</span>
