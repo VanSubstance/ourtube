@@ -15,7 +15,7 @@ const LeftBox = (props) => {
               id="_Mainbox"
               d="M 0 0 L 307.779296875 0 L 307.779296875 307.779296875 L 0 307.779296875 L 0 0 Z"
             >
-              {props.keyword != undefined ? (
+              {props.keyword !== undefined ? (
                 <img src={props.keyword.thumbnail}></img>
               ) : (
                 <img src="https://upload.wikimedia.org/wikipedia/commons/9/92/Question_mark_alternate_inverted.svg"></img>
@@ -54,7 +54,7 @@ const LeftBox = (props) => {
             ></path>
           </svg>
         </div>
-        <LeftBoxFont keyword={props.keyword}></LeftBoxFont>
+        <LeftBoxFont keyword={props.keyword} data = {props.data}></LeftBoxFont>
       </div>
   );
 };

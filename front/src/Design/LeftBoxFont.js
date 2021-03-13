@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import "./Styles.css";
+import moment from "moment";
 
 const LeftBoxFont = (props) => {
+    const [dateTarget, setDateTarget] = useState(
+        {
+            right: moment().format('yyyy-MM-DD'),
+            left: moment().subtract(1, 'days').format('yyyy-MM-DD')
+        }
+    );
+
   return (
     <div>
       <div id="_gamestyle">
         <span>장르 나열</span>
       </div>
       <div id="_gamename">
-        {props.keyword != undefined ? (
+        {props.keyword !== undefined ? (
           <span>{props.keyword.title}</span>
         ) : (
           <span>없음</span>
@@ -42,28 +51,28 @@ const LeftBoxFont = (props) => {
         <span>02/03</span>
       </div>
       <div id="_pastranknumber1">
-        <span>25</span>
+        <span>1</span>
       </div>
       <div id="_pastranknumber2">
-        <span>25</span>
+        <span>{props.data[dateTarget.left].viewCount}</span>
       </div>
       <div id="_pastranknumber3">
-        <span>25</span>
+        <span>3</span>
       </div>
       <div id="_pastranknumber4">
-        <span>25</span>
+        <span>4</span>
       </div>
       <div id="_nowranknumber1">
-        <span>25</span>
+        <span>5</span>
       </div>
       <div id="_nowranknumber2">
-        <span>25</span>
+        <span>{props.data[dateTarget.right].viewCount}</span>
       </div>
       <div id="_nowranknumber3">
-        <span>25</span>
+        <span>7</span>
       </div>
       <div id="_nowranknumber4">
-        <span>25</span>
+        <span>8</span>
       </div>
     </div>
   );

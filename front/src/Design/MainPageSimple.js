@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { KeywordList } from "./Comps";
-import axios, * as others from "axios";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import axios from "axios";
+import { BrowserRouter as Link } from "react-router-dom";
 import Chip from "@material-ui/core/Chip";
 import "./Css/styles.css";
 import LeftBox from "./LeftBox";
 
 const MainPageSimple = (props) => {
-  const [url, setUrl] = useState("http://222.232.15.205:8082");
+  const [url] = useState("http://222.232.15.205:8082");
 
-  let [searchVal, setSearchVal] = useState("비디오 게임");
+  let [searchVal] = useState("비디오 게임");
 
   let [ctgrs, setCtgrs] = useState([]);
 
@@ -27,11 +27,16 @@ const MainPageSimple = (props) => {
       "https://upload.wikimedia.org/wikipedia/commons/9/92/Question_mark_alternate_inverted.svg",
   });
 
+  let [dataLeft, setDataLeft] = useState(
+      [
+
+      ]
+  );
+
   const selectKeyword = async (keyword) => {
-    console.log("들어갈 정보: " + keyword.title);
     selectedKeyword = keyword;
     await setSelectedKeyword(keyword);
-    console.log("들어간 정보: " + selectedKeyword.title);
+    getDatasetForLeftByGame(selectedKeyword.title);
   };
 
   useEffect(() => {
@@ -71,6 +76,17 @@ const MainPageSimple = (props) => {
       });
   };
 
+  const getDatasetForLeftByGame = async (title) => {
+    await axios
+      .get(url + "/deploy/game/main/" + title)
+      .then(({ data }) => {
+        setDataLeft(data);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
   const searchCtgr = () => {
     if (searchVal === "") {
       getDataset();
@@ -78,7 +94,7 @@ const MainPageSimple = (props) => {
     } else {
       getDataset();
       getDatasetForKeyword(searchVal);
-      if (ctgrs.length == 0) {
+      if (ctgrs.length === 0) {
         searchVal = "비디오 게임";
         getDataset();
         getDatasetForKeyword("비디오 게임");
@@ -99,7 +115,7 @@ const MainPageSimple = (props) => {
       <img className="backGroundImg" src="/Ex/backGroundIMG.PNG"></img>
       <div className="sectionContainor">
         <div className="mainLeftSection">
-          <LeftBox keyword={selectedKeyword}></LeftBox>
+          <LeftBox keyword={selectedKeyword} data = {dataLeft}></LeftBox>
         </div>
         <div className="mainRightSection">
           <div className="linkBox">
