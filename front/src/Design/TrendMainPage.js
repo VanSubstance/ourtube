@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Styles.css";
 import Chip from "@material-ui/core/Chip";
 import { ListFont } from "./Comps";
+import { Bar } from "react-chartjs-2";
 
 const TrendMainPage = () => {
   const [url] = useState("http://222.232.15.205:8082");
@@ -14,6 +15,29 @@ const TrendMainPage = () => {
   let [ctgrs, setCtgrs] = useState([]);
 
   let [keywords, setKeywords] = useState([]);
+
+  const [dataBar, setDataBar] = useState({
+    labels: ["좋아요", "싫어요"],
+    datasets: [
+      {
+        data: [1000, 2000],
+        backgroundColor: ["red", "blue"],
+      },
+    ],
+  });
+
+  const [optionBar, setOptionBar] = useState({
+    maintainAspectRatio: false,
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+  });
 
   useEffect(() => {
     getDataset();
@@ -108,7 +132,7 @@ const TrendMainPage = () => {
       <div id="scollOURTUBE">
         <div>
           <a href="http://localhost:3012/" className="bannerTrandMain">
-            <img className="bannerImage" src="/Ex/ourtubeLogo.PNG"></img>
+            <img className="bannerImage" src="/Ex/ourtubeLogoWhite.PNG"></img>
           </a>
         </div>
       </div>
@@ -296,7 +320,8 @@ const TrendMainPage = () => {
           height="41"
         ></rect>
       </svg>
-      <svg className="fourthBox">
+      <div className="fourthbox">
+          <Bar data={dataBar} options = {optionBar} />
         <rect
           id="fourthBox"
           rx="0"
@@ -306,8 +331,8 @@ const TrendMainPage = () => {
           width="923"
           height="196"
         ></rect>
-      </svg>
-      <span id="fourthFont">채널 구독자수</span>
+      </div>
+      <span id="fourthfont">채널 구독자수</span>
     </div>
   );
 };

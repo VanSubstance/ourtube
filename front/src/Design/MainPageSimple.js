@@ -118,7 +118,15 @@ const MainPageSimple = (props) => {
           <LeftBox keyword={selectedKeyword} data = {dataLeft}></LeftBox>
         </div>
         <div className="mainRightSection">
-          <div className="linkBox">
+          <a 
+            className="linkBox"
+            href={/trend/}>
+              <div
+                  className="chartLink">
+                    Chart View
+              </div>
+          </a>
+          {/* <div className="linkBox">
             <Link
               to={{
                 pathname: "/trend",
@@ -130,10 +138,10 @@ const MainPageSimple = (props) => {
             >
               Chart View
             </Link>
-          </div>
+          </div> */}
           <div className="mainBannerBox">
             <a href="http://localhost:3012/" className="bannerMain">
-              <img className="bannerImage" src="/Ex/ourtubeLogo.PNG"></img>
+              <img className="bannerImage" src="/Ex/ourtubeLogoWhite.PNG"></img>
             </a>
           </div>
           <div className="mainCategoriesBox">
@@ -189,11 +197,11 @@ const MainPageSimple = (props) => {
           </div>
         </div>
       </div>
-      <footer className="footer">
+      {/* <footer className="footer">
         <div className="footerBox">
           FOOTER, 공지사항, 이용약관, 버그리포팅, 사이트 설명
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 };
