@@ -27,29 +27,29 @@ class TrendResultPage extends Component {
                 <div id="scollOURTUBE">
                     <span>OURTUBE</span>
                 </div>
-                <svg className="Reswipebox">
-                    <rect id="Reswipebox" rx="0" ry="0" x="0" y="0" width="934" height="41">
+                <svg className="ReSwipeBox">
+                    <rect id="ReSwipeBox" rx="0" ry="0" x="0" y="0" width="934" height="41">
                     </rect>
                 </svg>
-                <div id="swiperfont">
+                <div id="swiperFont">
                     <span>이 주의 조회수 1위</span>
                     <span>이 주의 조회수 1위</span>
                     <span>이 주의 조회수 1위</span>
                 </div>
                 {/* <TrendChip></TrendChip> */}
-                <svg className="listtop">
-                    <rect id="listtop" rx="0" ry="0" x="0" y="0" width="923" height="41">
+                <svg className="listTop">
+                    <rect id="listTop" rx="0" ry="0" x="0" y="0" width="923" height="41">
                     </rect>
                 </svg>
                 <div id="cloudfont">
                     <span>텍스트 클라우드</span>
                 </div>
-                <svg className="listbox1">
-                    <rect id="listbox" rx="0" ry="0" x="0" y="0" width="923" height="287">
+                <svg className="listBox1">
+                    <rect id="listBox" rx="0" ry="0" x="0" y="0" width="923" height="287">
                     </rect>
                 </svg>
-                <svg className="rightbox">
-                    <rect id="rightbox" rx="0" ry="0" x="0" y="0" width="339" height="156">
+                <svg className="rightBox">
+                    <rect id="rightBox" rx="0" ry="0" x="0" y="0" width="339" height="156">
                     </rect>
                 </svg>
                 <svg className="Rerightbox2">
@@ -64,33 +64,33 @@ class TrendResultPage extends Component {
                     <rect id="Resecondtop" x="622" width="300" height="41">
                     </rect>
                 </svg>
-                <div id="Resecondtopfont1">
+                <div id="reSecondTopFont1">
                     <span>좋아요 싫어요 평균</span>
                 </div>
-                <div id="Resecondtopfont2">
+                <div id="reSecondTopFont2">
                     <span>활동별 비율</span>
                 </div>
-                <div id="Resecondtopfont3">
+                <div id="reSecondTopFont3">
                     <span>좋아요 싫어요 평균</span>
                 </div>
-                <svg className="Resecondbox">
-                    <rect id="Resecondbox" x="0" y="0" width="300" height="206">
+                <svg className="reSecondBox">
+                    <rect id="reSecondBox" x="0" y="0" width="300" height="206">
                     </rect>
-                    <rect id="Resecondbox" x="311" y="0" width="300" height="205">
+                    <rect id="reSecondBox" x="311" y="0" width="300" height="205">
                     </rect>
-                    <rect id="Resecondbox" x="622" y="0" width="300" height="206">
-                    </rect>
-                </svg>
-                <svg className="Rethirdtop">
-                    <rect id="_Rethirdtop" x="0" y="0" width="456" height="41">
-                    </rect>
-                    <rect id="Rethirdtop" x="467" y="0" width="456" height="41">
+                    <rect id="reSecondBox" x="622" y="0" width="300" height="206">
                     </rect>
                 </svg>
-                <svg className="Rethirdbox">
-                    <rect id="Rethirdbox" x="0" y="0" width="456" height="196">
+                <svg className="reThirdTop">
+                    <rect id="reThirdTop" x="0" y="0" width="456" height="41">
                     </rect>
-                    <rect id="Rethirdbox" x="467" y="0" width="456" height="196">
+                    <rect id="reThirdTop" x="467" y="0" width="456" height="41">
+                    </rect>
+                </svg>
+                <svg className="reThirdBox">
+                    <rect id="reThirdBox" x="0" y="0" width="456" height="196">
+                    </rect>
+                    <rect id="reThirdBox" x="467" y="0" width="456" height="196">
                     </rect>
                 </svg>
             </div>

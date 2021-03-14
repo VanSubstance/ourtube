@@ -1238,12 +1238,12 @@
     color: rgba(0, 220, 255, 1);
 }
 
-#listtop {
+#listTop {
     opacity: 1 !important;
     fill: rgba(17,17,17,1);
 }
 
-.listtop {
+.listTop {
     position: absolute;
     overflow: visible;
     width: 923px;
@@ -1277,12 +1277,12 @@
     top: 648px;
 }
 
-#listbox {
+#listBox {
     opacity: 0.8;
     fill: rgba(17,17,17,1);
     overflow: scroll;
 }
-.listbox {
+.listBox {
     position: absolute;
     overflow-y: visible;
     width: 923px;
@@ -1291,7 +1291,7 @@
     top: 355px;
     overflow: scroll;
 }
-.listbox1 {
+.listBox1 {
     position: absolute;
 	overflow: visible;
 	width: 923px;
@@ -1429,11 +1429,11 @@
     overflow: hidden;
 }
 
-#rightbox {
+#rightBox {
     opacity: 0.8;
     fill: rgba(17,17,17,1);
 }
-.rightbox {
+.rightBox {
     position: absolute;
     overflow: visible;
     width: 339px;
@@ -1489,16 +1489,6 @@
     left: 1170px;
     top: 330px;
     overflow: hidden;
-}
-.searchBar {
-    position: relative;
-    border: none;
-    background-color: white;
-    width: 500px; height: 40px;
-    font-size: 15px;
-    padding: 0px;
-    margin: 0 auto;
-    text-align: left;
 }
 .searchInput {
     position: relative;
@@ -2527,10 +2517,10 @@
     left: 320px;
     top: 931px;
 }
-#thirdtop2 {
+#thirdTop2 {
     fill: rgba(17,17,17,1);
 }
-.thirdtop2 {
+.thirdTop2 {
     position: absolute;
     overflow: visible;
     width: 456px;
@@ -2550,11 +2540,11 @@
     left: 320px;
     top: 972px;
 }
-#thirdbox2 {
+#thirdBox2 {
     opacity: 0.8;
     fill: rgba(17,17,17,1);
 }
-.thirdbox2 {
+.thirdBox2 {
     position: absolute;
     overflow: visible;
     width: 456px;
@@ -2562,10 +2552,10 @@
     left: 787px;
     top: 972px;
 }
-#fourthtop {
+#fourthTop {
     fill: rgba(17,17,17,1);
 }
-.fourthtop {
+.fourthTop {
     position: absolute;
     overflow: visible;
     width: 923px;
@@ -2573,11 +2563,11 @@
     left: 320px;
     top: 1183px;
 }
-#fourthbox {
+#fourthBox {
     opacity: 0.8;
     fill: rgba(17,17,17,1);
 }
-.fourthbox {
+.fourthBox {
     position: absolute;
     overflow: visible;
     width: 923px;
@@ -2656,7 +2646,7 @@
     text-transform: uppercase;
 }
 
-#fourthfont {
+#fourthFont {
     mix-blend-mode: normal;
     left: 718px;
     top: 1190px;
@@ -2673,7 +2663,7 @@
     letter-spacing: 0.3px;
     text-transform: uppercase;
 }
-#thirdfont1 {
+#thirdFont1 {
     mix-blend-mode: normal;
     left: 499px;
     top: 940px;
@@ -2690,7 +2680,7 @@
     letter-spacing: 1px;
     text-transform: uppercase;
 }
-#thirdfont2 {
+#thirdFont2 {
     mix-blend-mode: normal;
     left: 957px;
     top: 940px;
@@ -2755,11 +2745,11 @@
     left: 320px;
 
 }
-#Resecondbox {
+#reSecondBox {
     opacity: 0.8;
     fill: rgba(17,17,17,1);
 }
-.Resecondbox {
+.reSecondBox {
     position: absolute;
     overflow: visible;
     width: 299px;
@@ -2767,10 +2757,10 @@
     left: 320px;
     top: 698px;
 }
-#Rethirdtop {
+#reThirdTop {
     opacity: 1 !important;
 }
-.Rethirdtop {
+.reThirdTop {
     position: absolute;
     overflow: visible;
     width: 456px;
@@ -2778,11 +2768,11 @@
     left: 320px;
     top: 918px;
 }
-#Reswipebox {
+#ReSwipeBox {
     opacity: 0.7;
     fill: rgba(17,17,17,1);
 }
-.Reswipebox {
+.ReSwipeBox {
     position: absolute;
     overflow: visible;
     width: 934px;
@@ -2790,11 +2780,11 @@
     left: 665px;
     top: 256px;
 }
-#Rethirdbox {
+#reThirdBox {
     opacity: 0.8;
     fill: rgba(17,17,17,1);
 }
-.Rethirdbox {
+.reThirdBox {
     position: absolute;
     overflow: visible;
     width: 456px;
@@ -2802,7 +2792,7 @@
     left: 320px;
     top: 959px;
 }
-#swiperfont {
+#swiperFont {
     mix-blend-mode: normal;
     left: 850px;
     top: 262px;
@@ -2832,7 +2822,7 @@
     color: rgba(255,255,255,1);
     letter-spacing: 1px;
 }
-#Resecondtopfont1 {
+#reSecondTopFont1 {
     left: 390px;
     top: 666px;
     position: absolute;
@@ -2847,7 +2837,7 @@
     letter-spacing: 1px;
     text-transform: uppercase;
 }
-#Resecondtopfont2 {
+#reSecondTopFont2 {
     left: 735px;
     top: 666px;
     position: absolute;
@@ -2862,7 +2852,7 @@
     letter-spacing: 1px;
     text-transform: uppercase;
 }
-#Resecondtopfont3 {
+#reSecondTopFont3 {
     left: 1014px;
     top: 666px;
     position: absolute;

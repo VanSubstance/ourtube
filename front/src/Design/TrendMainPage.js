@@ -260,10 +260,10 @@ const TrendMainPage = () => {
           height="196"
         ></rect>
       </svg>
-      <span id="thirdfont1">신규 조회수</span>
-      <svg className="thirdtop2">
+      <span id="thirdFont1">신규 조회수</span>
+      <svg className="thirdTop2">
         <rect
-          id="thirdtop2"
+          id="thirdTop2"
           rx="0"
           ry="0"
           x="0"
@@ -273,9 +273,9 @@ const TrendMainPage = () => {
         ></rect>
       </svg>
 
-      <svg className="thirdbox2">
+      <svg className="thirdBox2">
         <rect
-          id="thirdbox2"
+          id="thirdBox2"
           rx="0"
           ry="0"
           x="0"
@@ -284,10 +284,10 @@ const TrendMainPage = () => {
           height="196"
         ></rect>
       </svg>
-      <span id="thirdfont2">신규 동영상수</span>
-      <svg className="fourthtop">
+      <span id="thirdFont2">신규 동영상수</span>
+      <svg className="fourthTop">
         <rect
-          id="fourthtop"
+          id="fourthTop"
           rx="0"
           ry="0"
           x="0"
@@ -296,9 +296,9 @@ const TrendMainPage = () => {
           height="41"
         ></rect>
       </svg>
-      <svg className="fourthbox">
+      <svg className="fourthBox">
         <rect
-          id="fourthbox"
+          id="fourthBox"
           rx="0"
           ry="0"
           x="0"
@@ -307,7 +307,7 @@ const TrendMainPage = () => {
           height="196"
         ></rect>
       </svg>
-      <span id="fourthfont">채널 구독자수</span>
+      <span id="fourthFont">채널 구독자수</span>
     </div>
   );
 };
