@@ -144,12 +144,12 @@ const TrendMainPage = () => {
           <img className="searchButtonImg" src="/Ex/searchbutton.png"></img>
         </button>
       </div>
-          <div className="mainChipBox">
-            <div className="chipBackground">
+          <div className="mainChipBox5">
+            <div className="chipBackground5">
               {ctgrs.map((element) => {
                 return (
                   <Chip
-                    className="chipStyles"
+                    className="mainChipSyle"
                     label={element}
                     clickable
                     onClick={() => {

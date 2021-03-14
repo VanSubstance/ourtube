@@ -1,3 +1,4 @@
+import { TableHead } from '@material-ui/core';
 import React, { Component } from 'react';
 import '../Styles.css';
 
@@ -20,7 +21,7 @@ const ListFont = (props) => {
             <tr align="center" >
                 <td id="checkbox">
                     <form action='a.jsp' >
-                        <input type='checkbox' name='checkboxList' onClick={(e) => {checkFunction(e)}} value='checkbox' />
+                        <input type='checkbox' name='checkboxList' onClick={(e) => { checkFunction(e) }} value='checkbox' />
                     </form>
                 </td>
                 <td align="left">{index + 1}</td>
@@ -52,25 +53,28 @@ const ListFont = (props) => {
         <div>
             <div>
                 <table id="scrollHead1" cellSpacing="0">
-                    {headTitle(
-                        {
-                            rank: "순위",
-                            keyword: "키워드",
-                            like: "좋아요",
-                            unlike: "싫어요",
-                            search: "검색량",
-                            video: "동영상",
-                            comment: "댓글수"
-                        }
-                    )}
+                    <thead>
+                        {headTitle(
+                            {
+                                rank: "순위",
+                                keyword: "키워드",
+                                like: "좋아요",
+                                unlike: "싫어요",
+                                search: "검색량",
+                                video: "동영상",
+                                comment: "댓글수"
+                            }
+                        )}
+                    </thead>
                 </table>
             </div>
 
             <div id="scrollbitch" >
-                <table id="scrollbitch2" cellSpacing="30">
-                    {addRows(props.keywords
-                    )}
-
+                <table id="scrollbitch2" cellSpacing="0">
+                    <tbody>
+                        {addRows(props.keywords
+                        )}
+                    </tbody>
                 </table>
             </div>
         </div>

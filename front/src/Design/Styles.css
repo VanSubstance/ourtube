@@ -1330,7 +1330,9 @@
 
 #scrollbitch2 {
     border-spacing: 45px 30px;
-    width: 970px;
+    width: 950px;
+    
+    
     
 }
 #longfont {
@@ -2874,4 +2876,24 @@
     color: rgba(255,255,255,1);
     letter-spacing: 1px;
     text-transform: uppercase;
+}
+.mainChipSyle {
+    margin: 20px 20px 5px 0px
+}
+.mainChipBox5 {
+    position: absolute;
+    /*margin: 0 auto;*/
+    left: 320px;
+    top: 253px;
+    
+}
+.chipBackground5 {
+    width: 100%;
+    height: 60px;
+    background: transparent;
+    /* border: 1px solid white; */
+    align-content: left;
+    display: flex;
+    justify-content: left;
+    
 }
