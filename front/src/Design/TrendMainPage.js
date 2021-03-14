@@ -94,7 +94,7 @@ const TrendMainPage = () => {
             </div>
             <div>
                 <svg className="_scrollSearchbox1">
-                    <rect id="_Searchbox1" rx="0" ry="0" x="0" y="0" width="615" height="31.702">
+                    <rect id="_Searchbox1" rx="0" ry="0" x="0" y="0" width="680" height="31.702">
                     </rect>
                 </svg>
             </div>

@@ -9,7 +9,7 @@
 :root {
     --web-view-ids: ROBOTO__;
 }
-/* 
+
 * {
     margin: 0;
     padding: 0;
@@ -363,7 +363,7 @@
     filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.161));
     position: absolute;
     overflow: hidden;
-    width: 630px;
+    width: 680px;
     height: 100px;
     left: 660px;
     top: 291.502px;
@@ -372,8 +372,6 @@
     filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.161));
     position: absolute;
     overflow: hidden;
-    width: 630px;
-    height: 100px;
     left: 320px;
     top: 230px;
 }
@@ -1241,8 +1239,8 @@
 }
 
 #listtop {
-    opacity: 0.9;
-    fill: rgba(0,0,0,1);
+    opacity: 1 !important;
+    fill: rgba(17,17,17,1);
 }
 
 .listtop {
@@ -1454,8 +1452,8 @@
     position: absolute;
     width: 96px;
     height: 32px;
-    left: 650px;
-    top: 330px;
+    left: 660px;
+    top: 327px;
     overflow: hidden;
 }
 #_chip2 {
@@ -2730,4 +2728,150 @@
     font-weight: bold;
     font-size: 27px;
     color: rgba(0,246,255,1);
-} */
+}
+#Rerightbox2 {
+    opacity: 0.8;
+    fill: rgba(17,17,17,1);
+}
+.Rerightbox2 {
+    position: absolute;
+    overflow: visible;
+    width: 339px;
+    height: 286px;
+    left: 1260px;
+    top: 486px;
+}
+#Resecondtop {
+    color: rgba(17,17,17,1);
+}
+.Resecondtop {
+    position: absolute;
+    overflow: visible;
+    width: 300px;
+    height: 41px;
+    top: 657px;
+    left: 320px;
+
+}
+#Resecondbox {
+    opacity: 0.8;
+    fill: rgba(17,17,17,1);
+}
+.Resecondbox {
+    position: absolute;
+    overflow: visible;
+    width: 299px;
+    height: 206px;
+    left: 320px;
+    top: 698px;
+}
+#Rethirdtop {
+    opacity: 1 !important;
+}
+.Rethirdtop {
+    position: absolute;
+    overflow: visible;
+    width: 456px;
+    height: 41px;
+    left: 320px;
+    top: 918px;
+}
+#Reswipebox {
+    opacity: 0.7;
+    fill: rgba(17,17,17,1);
+}
+.Reswipebox {
+    position: absolute;
+    overflow: visible;
+    width: 934px;
+    height: 41px;
+    left: 665px;
+    top: 256px;
+}
+#Rethirdbox {
+    opacity: 0.8;
+    fill: rgba(17,17,17,1);
+}
+.Rethirdbox {
+    position: absolute;
+    overflow: visible;
+    width: 456px;
+    height: 196px;
+    left: 320px;
+    top: 959px;
+}
+#swiperfont {
+    mix-blend-mode: normal;
+    left: 850px;
+    top: 262px;
+    position: absolute;
+    overflow: visible;
+    white-space: nowrap;
+    text-align: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    color: rgba(255,255,255,1);
+    letter-spacing: 1px;
+}
+#cloudfont {
+    left: 701px;
+    top: 321px;
+    position: absolute;
+    overflow: visible;
+    width: 159px;
+    white-space: nowrap;
+    text-align: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    color: rgba(255,255,255,1);
+    letter-spacing: 1px;
+}
+#Resecondtopfont1 {
+    left: 390px;
+    top: 666px;
+    position: absolute;
+    overflow: visible;
+    white-space: nowrap;
+    text-align: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
+    color: rgba(255,255,255,1);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+#Resecondtopfont2 {
+    left: 735px;
+    top: 666px;
+    position: absolute;
+    overflow: visible;
+    white-space: nowrap;
+    text-align: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
+    color: rgba(255,255,255,1);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+#Resecondtopfont3 {
+    left: 1014px;
+    top: 666px;
+    position: absolute;
+    overflow: visible;
+    white-space: nowrap;
+    text-align: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
+    color: rgba(255,255,255,1);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}

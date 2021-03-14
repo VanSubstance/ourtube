@@ -5,13 +5,13 @@ import { ListFont, TrendChip } from './Comps';
 class TrendResultPage extends Component {
     render() {
         return (
-            <div >
+            <div>
                 {/* //배경 및 그라데이션  */}
                 <div id="scollWallpaper_">
                     <img id="andy-holmes-rCbdp8VCYhQ-unspla1" src="./Ex/andy-holmes-rCbdp8VCYhQ-unspla.png"
                         srcset="./andy-holmes-rCbdp8VCYhQ-unspla.png 1x, ./andy-holmes-rCbdp8VCYhQ-unspla@2x.png 2x" />
                 </div>
-                <svg class="scollGradient" viewBox="0 0 1920 1500">
+                <svg className="scollGradient" viewBox="0 0 1920 1500">
                     <linearGradient id="_137_bn" spreadMethod="pad" x1="0.952" x2="0.071" y1="0.067" y2="0.886">
                         <stop offset="0" stop-color="#f60" stop-opacity="1"></stop>
                         <stop offset="0.1673" stop-color="#cf8845" stop-opacity="1"></stop>
@@ -27,51 +27,72 @@ class TrendResultPage extends Component {
                 <div id="scollOURTUBE">
                     <span>OURTUBE</span>
                 </div>
+                <svg className="Reswipebox">
+                    <rect id="Reswipebox" rx="0" ry="0" x="0" y="0" width="934" height="41">
+                    </rect>
+                </svg>
+                <div id="swiperfont">
+                    <span>이 주의 조회수 1위</span>
+                    <span>이 주의 조회수 1위</span>
+                    <span>이 주의 조회수 1위</span>
+                </div>
                 {/* <TrendChip></TrendChip> */}
-                <svg class="listtop">
+                <svg className="listtop">
                     <rect id="listtop" rx="0" ry="0" x="0" y="0" width="923" height="41">
                     </rect>
                 </svg>
-                <svg class="listbox1">
+                <div id="cloudfont">
+                    <span>텍스트 클라우드</span>
+                </div>
+                <svg className="listbox1">
                     <rect id="listbox" rx="0" ry="0" x="0" y="0" width="923" height="287">
                     </rect>
                 </svg>
-                <svg class="rightbox">
+                <svg className="rightbox">
                     <rect id="rightbox" rx="0" ry="0" x="0" y="0" width="339" height="156">
                     </rect>
                 </svg>
-                <svg class="exbox">
-                    <rect id="exbox" rx="0" ry="0" x="0" y="0" width="339" height="772">
+                <svg className="Rerightbox2">
+                    <rect id="Rerightbox2" rx="0" ry="0" x="0" y="0" width="339" height="286">
                     </rect>
                 </svg>
-                <svg class="thirdtop">
-                    <rect id="thirdtop" rx="0" ry="0" x="0" y="0" width="456" height="41">
+                <svg className="Resecondtop">
+                    <rect id="Resecondtop" x="0" width="300" height="41">
+                    </rect>
+                    <rect id="Resecondtop" x="311" width="300" height="41">
+                    </rect>
+                    <rect id="Resecondtop" x="622" width="300" height="41">
                     </rect>
                 </svg>
-                <svg class="thirdbox">
-                    <rect id="thirdbox" rx="0" ry="0" x="0" y="0" width="456" height="196">
+                <div id="Resecondtopfont1">
+                    <span>좋아요 싫어요 평균</span>
+                </div>
+                <div id="Resecondtopfont2">
+                    <span>활동별 비율</span>
+                </div>
+                <div id="Resecondtopfont3">
+                    <span>좋아요 싫어요 평균</span>
+                </div>
+                <svg className="Resecondbox">
+                    <rect id="Resecondbox" x="0" y="0" width="300" height="206">
+                    </rect>
+                    <rect id="Resecondbox" x="311" y="0" width="300" height="205">
+                    </rect>
+                    <rect id="Resecondbox" x="622" y="0" width="300" height="206">
                     </rect>
                 </svg>
-                <span id="thirdfont1">신규 조회수</span>
-                <svg class="thirdtop2">
-                    <rect id="thirdtop2" rx="0" ry="0" x="0" y="0" width="456" height="41">
+                <svg className="Rethirdtop">
+                    <rect id="_Rethirdtop" x="0" y="0" width="456" height="41">
+                    </rect>
+                    <rect id="Rethirdtop" x="467" y="0" width="456" height="41">
                     </rect>
                 </svg>
-
-                <svg class="thirdbox2">
-                    <rect id="thirdbox2" rx="0" ry="0" x="0" y="0" width="456" height="196">
+                <svg className="Rethirdbox">
+                    <rect id="Rethirdbox" x="0" y="0" width="456" height="196">
+                    </rect>
+                    <rect id="Rethirdbox" x="467" y="0" width="456" height="196">
                     </rect>
                 </svg>
-                <span id="thirdfont2">신규 동영상수</span>
-                <svg class="fourthtop">
-                    <rect id="fourthtop" rx="0" ry="0" x="0" y="0" width="923" height="41">
-                    </rect>
-                </svg>
-                <svg class="fourthbox">
-                    <rect id="fourthbox" rx="0" ry="0" x="0" y="0" width="923" height="196">
-                    </rect>
-                </svg>
-                <span id="fourthfont">채널 구독자수</span>
             </div>
         );
     }
