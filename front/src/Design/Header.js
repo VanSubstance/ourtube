@@ -16,7 +16,15 @@ const App = () => {
 
         <Route
           exact path='/trend'
-          render={({location}) => <TrendMainPage searchType="트렌드" searchVal = {location.state.searchVal}></TrendMainPage>}>
+          render={({location}) => 
+            location.state !== undefined
+            ? (
+              <TrendMainPage searchType="트렌드" searchVal = {location.state.searchVal}></TrendMainPage>
+            )
+            : (
+              <TrendMainPage searchType="트렌드" searchVal = "비디오 게임"></TrendMainPage>
+            )
+          }>
         </Route>
 
         <Route

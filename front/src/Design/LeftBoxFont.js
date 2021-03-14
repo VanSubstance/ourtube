@@ -43,10 +43,18 @@ const LeftBoxFont = (props) => {
         <span>아울스코어</span>
       </div>
       <div id="_now">
-        <span>02/10</span>
+        <span>
+          {props.data[dateTarget.right] !== undefined
+            ? dateTarget.right
+            : 0}
+            </span>
       </div>
       <div id="_past">
-        <span>02/03</span>
+        <span>
+          {props.data[dateTarget.left] !== undefined
+            ? dateTarget.left
+            : 0}
+            </span>
       </div>
       <div id="_pastranknumber1">
         <span>1</span>
