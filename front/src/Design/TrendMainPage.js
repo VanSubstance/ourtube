@@ -149,7 +149,7 @@ const TrendMainPage = () => {
               {ctgrs.map((element) => {
                 return (
                   <Chip
-                    className="mainChipSyle"
+                    className="mainChipSyle5"
                     label={element}
                     clickable
                     onClick={() => {
