@@ -132,7 +132,7 @@ const TrendMainPage = () => {
       <div id="scollOURTUBE">
         <div>
           <a href="http://localhost:3012/" className="bannerTrandMain">
-            <img className="bannerImage" src="/Ex/ourtubeLogo.PNG"></img>
+            <img className="bannerImage" src="/Ex/ourtubeLogoWhite.PNG"></img>
           </a>
         </div>
       </div>
@@ -168,23 +168,23 @@ const TrendMainPage = () => {
           <img className="searchButtonImg" src="/Ex/searchbutton.png"></img>
         </button>
       </div>
-      <div className="mainChipBox">
-        <div className="chipBackground">
-          {ctgrs.map((element) => {
-            return (
-              <Chip
-                className="chipStyles"
-                label={element}
-                clickable
-                onClick={() => {
-                  getDatasetForKeyword(element);
-                }}
-                component="button"
-              ></Chip>
-            );
-          })}
-        </div>
-      </div>
+          <div className="mainChipBox5">
+            <div className="chipBackground5">
+              {ctgrs.map((element) => {
+                return (
+                  <Chip
+                    className="mainChipSyle5"
+                    label={element}
+                    clickable
+                    onClick={() => {
+                      getDatasetForKeyword(element);
+                    }}
+                    component="button"
+                  ></Chip>
+                );
+              })}
+            </div>
+          </div>
       <svg className="listtop">
         <rect
           id="listtop"
