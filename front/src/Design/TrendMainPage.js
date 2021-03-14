@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Styles.css";
 import Chip from "@material-ui/core/Chip";
 import { ListFont } from "./Comps";
+import { Bar } from "react-chartjs-2";
 
 const TrendMainPage = () => {
   const [url] = useState("http://222.232.15.205:8082");
@@ -14,6 +15,29 @@ const TrendMainPage = () => {
   let [ctgrs, setCtgrs] = useState([]);
 
   let [keywords, setKeywords] = useState([]);
+
+  const [dataBar, setDataBar] = useState({
+    labels: ["좋아요", "싫어요"],
+    datasets: [
+      {
+        data: [1000, 2000],
+        backgroundColor: ["red", "blue"],
+      },
+    ],
+  });
+
+  const [optionBar, setOptionBar] = useState({
+    maintainAspectRatio: false,
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+  });
 
   useEffect(() => {
     getDataset();
@@ -144,23 +168,23 @@ const TrendMainPage = () => {
           <img className="searchButtonImg" src="/Ex/searchbutton.png"></img>
         </button>
       </div>
-          <div className="mainChipBox">
-            <div className="chipBackground">
-              {ctgrs.map((element) => {
-                return (
-                  <Chip
-                    className="chipStyles"
-                    label={element}
-                    clickable
-                    onClick={() => {
-                      getDatasetForKeyword(element);
-                    }}
-                    component="button"
-                  ></Chip>
-                );
-              })}
-            </div>
-          </div>
+      <div className="mainChipBox">
+        <div className="chipBackground">
+          {ctgrs.map((element) => {
+            return (
+              <Chip
+                className="chipStyles"
+                label={element}
+                clickable
+                onClick={() => {
+                  getDatasetForKeyword(element);
+                }}
+                component="button"
+              ></Chip>
+            );
+          })}
+        </div>
+      </div>
       <svg className="listtop">
         <rect
           id="listtop"
@@ -296,7 +320,8 @@ const TrendMainPage = () => {
           height="41"
         ></rect>
       </svg>
-      <svg className="fourthbox">
+      <div className="fourthbox">
+          <Bar data={dataBar} options = {optionBar} />
         <rect
           id="fourthbox"
           rx="0"
@@ -306,8 +331,8 @@ const TrendMainPage = () => {
           width="923"
           height="196"
         ></rect>
-      </svg>
-      <span id="fourthfont">채널 구독자수</span>
+      </div>
+      <span id="fourthfont">채널 구독자수</span>      
     </div>
   );
 };
