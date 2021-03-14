@@ -23,14 +23,14 @@ const KeywordItem = (props) => {
                     </div>
                 </div>
             </a>
-            {/* <path className="_itemBoxPath" d="M 0 0 L 261.98681640625 0 L 261.98681640625 286 L 0 286 L 0 0 Z">
-            </path> */}
         </div>
     );
 }
 
 export default KeywordItem;
 
+            {/* <path className="_itemBoxPath" d="M 0 0 L 261.98681640625 0 L 261.98681640625 286 L 0 286 L 0 0 Z">
+            </path> */}
 
 // <img
 // className="backGroundImg"

@@ -108,7 +108,7 @@ const TrendMainPage = () => {
       <div id="scollOURTUBE">
         <div>
           <a href="http://localhost:3012/" className="bannerTrandMain">
-            <img className="bannerImage" src="/Ex/ourtubeLogo.PNG"></img>
+            <img className="bannerImage" src="/Ex/ourtubeLogoWhite.PNG"></img>
           </a>
         </div>
       </div>

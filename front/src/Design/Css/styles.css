@@ -1,4 +1,5 @@
 .mainContainor {
+    overflow: hidden;
     position: absolute;
     z-index: -1;
     width: 100%;
@@ -9,7 +10,6 @@
 .sectionContainor {
     width: 1903px;
     height: 969px;
-
 }
 
 .mainLeftSection {
@@ -23,12 +23,11 @@
 }
 
 .mainRightSection {
+    left: 660px;
+    margin-right: 0px;
     overflow: hidden;
-    float: right;
-    position: relative;
-    right: 0;
-    left: auto;
-    width: 1243px;
+    position: absolute;
+    width: 1260px;
     height: 969px;
 }
 
@@ -37,7 +36,7 @@
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    width: 1903px;
+    width: 1920px;
     height: 969px;
     z-index: -1;
 }
@@ -49,23 +48,28 @@
     background-color: rgba(0, 0, 0, 0.5);
     width: 120px;
     height: 60px;
-    /* border: 1px solid white; */
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 99999;
+    text-decoration: none;
 }
 
 .chartLink {
     position: relative;
-    top: 5px;
-    width: 120px;
-    height: 40px;
     text-align: center;
     color: white;
-    font-size: larger;
     text-decoration: none;
     cursor: pointer;
+}
+
+.chartLink:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.chartLink:focus{
+    color: white;
+    text-decoration: none;
 }
 
 .mainBannerBox {
@@ -87,16 +91,14 @@
 
 .bannerImage{
     position: relative;
-    width: 224px;
-    height: 40px;
+    width: 298px;
+    height: 65px;
 }
 
 .mainCategoriesBox {
     position: relative;
-    /*text-align: center;*/
     width: 100%;
     height: fit-content;
-    /* border: 1px solid white; */
 }
 
 .searchBar {
@@ -107,7 +109,6 @@
     width: 600px; height: 32px;
     font-size: 15px;
     padding: 0px;
-    /*margin: 0 auto;*/
     text-align: left;
 }
 
@@ -145,11 +146,15 @@
 }
 
 .searchButton:hover {
+    outline: none;
     mix-blend-mode: difference;
+    transition: all ease .4s;
 }
 
 .searchButton:focus {
+    outline: none;
     mix-blend-mode: difference;
+    transition: all ease .4s;
 }
 
 .searchButtonImg {
