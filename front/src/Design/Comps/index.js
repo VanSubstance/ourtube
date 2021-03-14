@@ -5,4 +5,3 @@ export {default as KeywordListVertical} from './KeywordListVertical';
 export {default as KeywordThumbnail} from './KeywordThumbnail';
 export {default as Cloud} from './Cloud';
 export { default as ListFont } from './ListFont';
-export { default as TrendChip } from './TrendChip'
