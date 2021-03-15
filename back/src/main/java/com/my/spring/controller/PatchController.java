@@ -55,14 +55,13 @@ public class PatchController {
 	@Autowired
 	private CrawlerService serviceCrawler;
 
-	@Scheduled(cron = "1 0 0 * * *")
+//	@Scheduled(cron = "1 0 0 * * *")
 	@RequestMapping(value = "/crawler")
 	public void patchGameFromYoutube() {
 		System.out.println("------------------------------- 게임 크롤링 시작 -------------------------------");
 		ArrayList<Object> data = serviceCrawler.crawlGame();
 		List<Game> games = (List<Game>) data.get(0);
 		List<GameTopic> gameTopics = (List<GameTopic>) data.get(1);
-		List<String> topics = (List<String>) data.get(2);
 		for (Game game : games) {
 			System.out.println("게임 등록.");
 			try {
@@ -72,17 +71,9 @@ public class PatchController {
 			}
 		}
 		for (GameTopic gameTopic : gameTopics) {
-			System.out.println("게임 토픽 체인 등록.");
+			System.out.println("체인 등록");
 			try {
 				serviceBasic.setGameTopic(gameTopic);
-			} catch (DataIntegrityViolationException e) {
-				System.out.println("이미 존재");
-			}
-		}
-		for (String topic : topics) {
-			System.out.println("토픽 등록.");
-			try {
-				serviceBasic.setTopic(topic);
 			} catch (DataIntegrityViolationException e) {
 				System.out.println("이미 존재");
 			}
@@ -105,7 +96,6 @@ public class PatchController {
 				temp.add(channelId);
 			}
 		}
-		channelIdList = temp;
 		System.out.println(" : 완료.");
 		List<ChannelDto> existedInfo = new ArrayList<ChannelDto>();
 		if (existed.size() != 0) {
@@ -113,7 +103,7 @@ public class PatchController {
 		}
 
 		System.out.println("\t\t상위 채널 중 신규 id 리스트 -> 채널 기본 정보 & 채널 토픽 체인");
-		ArrayList<Object> data = serviceYoutube.callChannelInfosByChannelId(channelIdList);
+		ArrayList<Object> data = serviceYoutube.callChannelInfosByChannelId(temp);
 		List<ChannelDto> channelDtoList = (List<ChannelDto>) data.get(0);
 		List<ChainDto> chainChannel = new ArrayList<ChainDto>();
 
@@ -139,7 +129,7 @@ public class PatchController {
 		}
 		System.out.println(" 완료.");
 
-		System.out.print("\t\t\t채널 토픽 체인 -> Database | o -> 신규 등록 | x -> 이미 존재 | ");
+		System.out.print("\t\t\t채널 게임 체인 -> Database | o -> 신규 등록 | x -> 이미 존재 | ");
 		System.out.print(chainChannel.size() + " 개\n\t\t\t");
 		for (ChainDto chainDto : chainChannel) {
 			if (serviceChannel.checkChain(chainDto) != 0) {
@@ -150,10 +140,7 @@ public class PatchController {
 			}
 		}
 		System.out.println(" 완료.");
-
-		System.out.print("\tDatebase -> 금일 통계 정보 갱신을 위한 채널 id 리스트: ");
-		channelIdList = serviceChannel.getChannelIdsForStatisticsByGame(game);
-		System.out.println(channelIdList.size() + " 개");
+		
 		System.out.println("\t\t금일 통계 정보 갱신을 위한 채널 id 리스트 -> Youtube API -> 금일 채널 통계 정보");
 		data = serviceYoutube.callChannelStatsByChannelId(channelIdList);
 		System.out.println();
@@ -182,14 +169,13 @@ public class PatchController {
 				temp.add(videoId);
 			}
 		}
-		videoIdList = temp;
 		System.out.println(" : 완료.");
 		List<VideoDto> existedInfo = new ArrayList<VideoDto>();
 		if (existed.size() != 0) {
 			existedInfo = serviceVideo.getVideoInfoById(existed);
 		}
 		System.out.println("\t\t상위 비디오 중 신규 id 리스트 -> 비디오 기본 정보 & 태그 & 비디오 토픽 체인");
-		ArrayList<Object> data = serviceYoutube.callVideoInfosByVideoId(videoIdList);
+		ArrayList<Object> data = serviceYoutube.callVideoInfosByVideoId(temp);
 		List<VideoDto> videoDtoList = (List<VideoDto>) data.get(0);
 		List<ChainDto> chainVideo = new ArrayList<ChainDto>();
 
@@ -224,7 +210,7 @@ public class PatchController {
 		}
 		System.out.println(" 완료.");
 
-		System.out.print("\t\t\t비디오 토픽 체인 -> Database | o -> 신규 등록 | x -> 이미 존재 | ");
+		System.out.print("\t\t\t비디오 게임 체인 -> Database | o -> 신규 등록 | x -> 이미 존재 | ");
 		System.out.print(chainVideo.size() + " 개\n\t\t\t");
 		for (ChainDto chainDto : chainVideo) {
 			if (serviceVideo.checkChain(chainDto) != 0) {
@@ -252,11 +238,7 @@ public class PatchController {
 			}
 		}
 		System.out.println(" 완료.");
-
-		System.out.print("\tDatebase -> 금일 통계 정보 갱신을 위한 비디오 id 리스트: ");
-		videoIdList = serviceVideo.getVideoIdsForStatisticsByGame(game);
-		System.out.println(videoIdList.size() + " 개");
-
+		
 		System.out.println("\t\t금일 통계 정보 갱신을 위한 비디오 id 리스트 -> Youtube API -> 금일 비디오 통계 정보");
 		data = serviceYoutube.callVideoStatsByVideoId(videoIdList);
 		System.out.println();

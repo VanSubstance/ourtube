@@ -78,7 +78,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			base.setLocation("37.55718,126.99006");
 			base.setLocationRadius("325km");
 			// 검색 결과 제목으로 정렬
-			base.setOrder("relevance");
+			base.setOrder("viewCount");
 			// 검색 범위 한국으로 한정
 			base.setRegionCode("KR");
 			// 토픽 아이디 한정

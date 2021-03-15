@@ -6,7 +6,6 @@
 	<select id="getGameNew" resultType="String">
 		select title from game 
 		where title not in (select title from gamestatistics group by title) 
-		order by description desc
 	</select>
 	<select id="getGameFirst" resultType="String">
 		select title from gamestatistics 
@@ -20,12 +19,11 @@
 	<select id="getGameTop" resultType="String">
 		select title from gamestatistics 
 		where infodate = TO_DATE(SYSDATE - 1, 'YY/MM/DD')
-		order by resultCount desc
 	</select>
 	
 	<insert id="setGame" parameterType="com.my.spring.domain.basics.Game">
-		insert into game (title, description, thumbnail) 
-		values (#{item.title}, #{item.description}, #{item.thumbnail})
+		insert into game (title, thumbnail) 
+		values (#{item.title}, #{item.thumbnail})
 	</insert>
 	<insert id="setGameTopic" parameterType="com.my.spring.domain.chains.GameTopic">
 		insert into gametopic (title, topic) 
@@ -74,7 +72,7 @@
 		    ) 
 		group by topic1, topic2
 		)
-		where topic1 = '비디오 게임' and hardness > 10
+		where topic1 = #{topic}
 		order by hardness desc
 	</select>
 	
@@ -96,6 +94,38 @@
 		select * from gameStatistics
 		where infodate = TO_DATE(SYSDATE, ('YY/MM/DD'))
 		order by resultcount desc
+	</select>
+	
+	<select id="getGamesByTopic" parameterType="String" resultType="com.my.spring.domain.basics.Game">
+		<![CDATA[
+		select * from game a, (
+		    select rownum ind, title from (
+		        select * from gamestatistics b
+		        where 
+		        b.title in (
+		            select title from gametopic where topic = #{topic}
+		        ) 
+		        and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+		        order by b.resultcount desc
+		        ) where ROWNUM <= 10
+		    ) b
+	    where a.title = b.title
+	    order by b.ind
+		]]>
+	</select>
+	
+	<select id="getGameDataForMainByGame" parameterType="String" resultType="com.my.spring.domain.statistics.GameDataForMain">
+		select infodate,
+		round(avg(viewcount)) viewcount, 
+		round(avg(likecount)) likecount, 
+		round(avg(dislikecount)) dislikecount, 
+		round(avg(commentcount)) commentcount from videostatistics
+		where id in (
+		    select id from videogame
+		    where game = #{title}
+		    )
+		group by infodate
+		order by infodate desc
 	</select>
 	
 	<select id="getIdCompleteById" parameterType="String" resultType="Int">

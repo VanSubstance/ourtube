@@ -6,10 +6,7 @@ import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.stereotype.Service;
 
@@ -21,80 +18,182 @@ import com.my.spring.service.CrawlerService;
 public class CrawlerServiceImpl implements CrawlerService {
 	
     private WebDriver driver;
+    private WebDriver driverRecommend;
     private String base_url;
-    
-    @Override
+
+	@Override
 	public ArrayList<Object> crawlGame() {
+		List<String> notGames = new ArrayList<String>();
+		notGames.add("Just Chatting");
+		notGames.add("음악");
+		notGames.add("먹방");
+		notGames.add("토크쇼 & 팟케스트");
+		notGames.add("과학 & 기술");
+		notGames.add("제작 & 공예");
+		notGames.add("정치");
+		notGames.add("함께 시청하기");
+		notGames.add("ASMR");
+		notGames.add("Stocks And Bonds");
+		notGames.add("Slots");
+		notGames.add("Art");
+		notGames.add("Games + Demos");
+		notGames.add("토크 쇼");
         String WEB_DRIVER_ID = "webdriver.chrome.driver";
         String WEB_DRIVER_PATH = "C:/selenium_java/chromedriver.exe";
         //System Property SetUp
         System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
         //Driver SetUp
         driver = new ChromeDriver();
-        base_url = "https://www.youtube.com/gaming/games";
+        driver.manage().window().maximize();
+        base_url = "https://www.twitch.tv/directory?sort=VIEWER_COUNT";
         ArrayList<Object> result = new ArrayList<Object>();
         List<Game> games = new ArrayList<Game>();
-        List<GameTopic> gameTopics = new ArrayList<GameTopic>();
-        List<String> topicList = new ArrayList<String>();
+        List<GameTopic> gametopics = new ArrayList<GameTopic>();
         
+        System.out.println("\n\n시청자 순\n");
         try {
             driver.get(base_url);
-            WebElement body = driver.findElement(By.xpath("/html/body"));
-            for (int i = 0; i < 5; i++) {
-                body.sendKeys(Keys.END);
-                Thread.sleep(1000);
-            }
+            Thread.sleep(2000);
             Document soup = Jsoup.parse(driver.getPageSource());
-            for (Element tag : soup.select("div#game")) {
+            for (Element tag : soup.select("div.tw-box-art-card")) {
             	System.out.println("-------------------------------------------------------------------------------");
-            	String link = "https://www.youtube.com/" + tag.select("a").toString().split("href=\"")[1].split("\">")[0] + "/about";
-            	String title = tag.select("yt-formatted-string#title").text();
-                System.out.println("title       |\t" + title);
-                System.out.println("link        |\t" + link);
+            	String title = tag.select("h3").text();
+            	String thumbnail = tag.select("img.tw-image").attr("src");
+            	String nextUrl = "https://www.twitch.tv" + tag.select("a.tw-box-art-card__link.tw-link").attr("href");
                 WebDriver driverDetail = new ChromeDriver();
                 try {
-                    driverDetail.get(link);
-                    Document soupDetail = Jsoup.parse(driverDetail.getPageSource());
-                    String thumbnail = soupDetail.select("img#img").toString().split(" src=\"")[1].split("\">")[0];
-                    String description = soupDetail.select("yt-formatted-string#description").text();
                     List<String> topics = new ArrayList<String>();
-                    for (Element topic : soupDetail.select("span.style-scope.ytd-badge-supported-renderer")) {
-                    	GameTopic gameTopic = new GameTopic();
-                    	gameTopic.setTitle(title);
-                    	gameTopic.setTopic(topic.text());
-                    	gameTopics.add(gameTopic);
+                    driverDetail.get(nextUrl);
+                    Thread.sleep(4000);
+                    Document soupDetail = Jsoup.parse(driverDetail.getPageSource());
+                    for (Element topic : soupDetail.select("div.tw-flex.tw-flex-column.tw-justify-content-center").select("div.tw-align-items-center.tw-flex.tw-font-size-7.tw-tag__content")) {
                     	topics.add(topic.text());
-                    	if (!topicList.contains(topic.text())) {
-                        	topicList.add(topic.text());
-                    	}
                     }
-                    title = title.replaceAll("'", "\"");
-                    description = description.replaceAll("'", "\"");
-                    
-                    System.out.println("thumbnail   |\t" + thumbnail);
-                    System.out.println("description |\t" + description);
-                    System.out.println("topics      |\t" + topics);
-                    
-                    Game game = new Game();
-                    game.setTitle(title);
-                    game.setDescription(description);
-                    game.setThumbnail(thumbnail);
-                    games.add(game);
+                    System.out.println();
+                    String googleUrl = "https://www.google.com/search?q=" + title;
+                    WebDriver driverTranslation = new ChromeDriver();
+                    try {
+                    	driverTranslation.get(googleUrl);
+                        Thread.sleep(2000);
+                        Document soupTranslation = Jsoup.parse(driverTranslation.getPageSource());
+                        if (soupTranslation.select("h2.qrShPb.kno-ecr-pt.PZPZlf.mfMhoc.hNKfZe").select("span").text().length() != 0) {
+                            String titleTranslated = soupTranslation.select("h2.qrShPb.kno-ecr-pt.PZPZlf.mfMhoc.hNKfZe").select("span").text();
+                            titleTranslated = titleTranslated.split(" \\(")[0];
+                            title = titleTranslated;
+                        } else if (soupTranslation.select("h2.qrShPb.kno-ecr-pt.PZPZlf.mfMhoc").select("span").text().length() != 0) {
+                            String titleTranslated = soupTranslation.select("h2.qrShPb.kno-ecr-pt.PZPZlf.mfMhoc").select("span").text();
+                            titleTranslated = titleTranslated.split(" \\(")[0];
+                            title = titleTranslated;
+                        }
+
+                        if (!notGames.contains(title)) {
+                            System.out.println("제목: " + title);
+                            System.out.println("썸네일: " + thumbnail);
+                            System.out.println("토픽: " + topics);
+                            Game newGame = new Game();
+                            newGame.setTitle(title);
+                            newGame.setThumbnail(thumbnail);
+                            games.add(newGame);
+                            for (String topic : topics) {
+                            	GameTopic newGameTopic = new GameTopic();
+                            	newGameTopic.setTitle(title);
+                            	newGameTopic.setTopic(topic);
+                            	gametopics.add(newGameTopic);
+                            }
+                        }
+                    } catch (Exception e) {
+    	                e.printStackTrace();
+    	            } finally {
+    	            	driverTranslation.close();
+    	            }
 	            } catch (Exception e) {
 	                e.printStackTrace();
 	            } finally {
 	                driverDetail.close();
 	            }
+            	System.out.println("-------------------------------------------------------------------------------");
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             driver.close();
         }
-        result.add(games);
-        result.add(gameTopics);
-        result.add(topicList);
-        return result;
-	}
 
+        driverRecommend = new ChromeDriver();
+        driverRecommend.manage().window().maximize();
+        base_url = "https://www.twitch.tv/directory?sort=RELEVANCE";
+        System.out.println("\n\n추천 순\n");
+        try {
+        	driverRecommend.get(base_url);
+            Thread.sleep(2000);
+            Document soup = Jsoup.parse(driverRecommend.getPageSource());
+            System.out.println("게임 개수: " + soup.select("div.tw-box-art-card").size());
+            for (Element tag : soup.select("div.tw-box-art-card")) {
+            	System.out.println("-------------------------------------------------------------------------------");
+            	String title = tag.select("h3").text();
+            	String thumbnail = tag.select("img.tw-image").attr("src");
+            	String nextUrl = "https://www.twitch.tv" + tag.select("a.tw-box-art-card__link.tw-link").attr("href");
+                WebDriver driverDetail = new ChromeDriver();
+                try {
+                    List<String> topics = new ArrayList<String>();
+                    driverDetail.get(nextUrl);
+                    Thread.sleep(2000);
+                    Document soupDetail = Jsoup.parse(driverDetail.getPageSource());
+                    for (Element topic : soupDetail.select("div.tw-flex.tw-flex-column.tw-justify-content-center").select("div.tw-align-items-center.tw-flex.tw-font-size-7.tw-tag__content")) {
+                    	topics.add(topic.text());
+                    }
+                    System.out.println();
+                    String googleUrl = "https://www.google.com/search?q=" + title;
+                    WebDriver driverTranslation = new ChromeDriver();
+                    try {
+                    	driverTranslation.get(googleUrl);
+                        Thread.sleep(2000);
+                        Document soupTranslation = Jsoup.parse(driverTranslation.getPageSource());
+                        if (soupTranslation.select("h2.qrShPb.kno-ecr-pt.PZPZlf.mfMhoc.hNKfZe").select("span").text().length() != 0) {
+                            String titleTranslated = soupTranslation.select("h2.qrShPb.kno-ecr-pt.PZPZlf.mfMhoc.hNKfZe").select("span").text();
+                            titleTranslated = titleTranslated.split(" \\(")[0];
+                            title = titleTranslated;
+                        } else if (soupTranslation.select("h2.qrShPb.kno-ecr-pt.PZPZlf.mfMhoc").select("span").text().length() != 0) {
+                            String titleTranslated = soupTranslation.select("h2.qrShPb.kno-ecr-pt.PZPZlf.mfMhoc").select("span").text();
+                            titleTranslated = titleTranslated.split(" \\(")[0];
+                            title = titleTranslated;
+                        }
+
+                        if (!notGames.contains(title)) {
+                            System.out.println("제목: " + title);
+                            System.out.println("썸네일: " + thumbnail);
+                            System.out.println("토픽: " + topics);
+                            Game newGame = new Game();
+                            newGame.setTitle(title);
+                            newGame.setThumbnail(thumbnail);
+                            games.add(newGame);
+                            for (String topic : topics) {
+                            	GameTopic newGameTopic = new GameTopic();
+                            	newGameTopic.setTitle(title);
+                            	newGameTopic.setTopic(topic);
+                            	gametopics.add(newGameTopic);
+                            }
+                        }
+                    } catch (Exception e) {
+    	                e.printStackTrace();
+    	            } finally {
+    	            	driverTranslation.close();
+    	            }
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            } finally {
+	                driverDetail.close();
+	            }
+            	System.out.println("-------------------------------------------------------------------------------");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        	driverRecommend.close();
+        }
+        result.add(games);
+        result.add(gametopics);
+		return result;
+	}
+    
 }

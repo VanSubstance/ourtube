@@ -8,6 +8,7 @@ import com.my.spring.domain.TopicStatDto;
 import com.my.spring.domain.basics.Game;
 import com.my.spring.domain.chains.GameTopic;
 import com.my.spring.domain.chains.TopicChain;
+import com.my.spring.domain.statistics.GameDataForMain;
 import com.my.spring.domain.statistics.GameStatistic;
 
 public interface BasicService {
@@ -18,6 +19,8 @@ public interface BasicService {
 	public void setGame(Game item);
 	public void setGameTopic(GameTopic item);
 	public void setTopic(String topic);
+	
+	public List<GameDataForMain> getGameDataForMainByGame(String title);
 	
 	public int checkGameStat(String title);
 	public void setGameStat(GameStatistic item);
@@ -31,4 +34,5 @@ public interface BasicService {
 	public void setIdComplete(IdComplete item);
 	
 	public List<String> getTopicsByTopic(String topic);
+	public List<Game> getGamesByTopic(String topic);
 }

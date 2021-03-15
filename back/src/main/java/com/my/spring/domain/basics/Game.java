@@ -7,5 +7,4 @@ import lombok.*;
 public class Game {
 	private String title;
 	private String thumbnail;
-	private String description;
 }

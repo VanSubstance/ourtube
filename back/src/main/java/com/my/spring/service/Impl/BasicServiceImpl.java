@@ -11,6 +11,7 @@ import com.my.spring.domain.TopicStatDto;
 import com.my.spring.domain.basics.Game;
 import com.my.spring.domain.chains.GameTopic;
 import com.my.spring.domain.chains.TopicChain;
+import com.my.spring.domain.statistics.GameDataForMain;
 import com.my.spring.domain.statistics.GameStatistic;
 import com.my.spring.mapper.BasicMapper;
 import com.my.spring.service.BasicService;
@@ -103,5 +104,15 @@ public class BasicServiceImpl implements BasicService {
 	@Override
 	public List<String> getTopicsByTopic(String topic) {
 		return mapper.getTopicsByTopic(topic);
+	}
+
+	@Override
+	public List<Game> getGamesByTopic(String topic) {
+		return mapper.getGamesByTopic(topic);
+	}
+
+	@Override
+	public List<GameDataForMain> getGameDataForMainByGame(String title) {
+		return mapper.getGameDataForMainByGame(title);
 	}
 }

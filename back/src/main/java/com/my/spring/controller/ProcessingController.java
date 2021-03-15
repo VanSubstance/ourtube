@@ -1,8 +1,11 @@
 package com.my.spring.controller;
 
-import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.my.spring.domain.TopicStatDto;
 import com.my.spring.domain.VideoStatDto;
+import com.my.spring.domain.basics.Game;
+import com.my.spring.domain.statistics.GameDataForMain;
 import com.my.spring.domain.statistics.MaxAvgMedian;
 import com.my.spring.domain.words.NounDto;
 import com.my.spring.service.BasicService;
@@ -35,13 +40,43 @@ public class ProcessingController {
 
 	@RequestMapping(value = "/game/rank/today")
 	public List<TopicStatDto> getTopicStatsforToday() {
-		System.out.println("±›¿œ ≈‰«» ¿¸√º ∑©≈∑ π›»Ø");
+		System.out.println("Í∏àÏùº Í≤åÏûÑ Ï†ÑÏ≤¥ Îû≠ÌÇπ Î∞òÌôò");
 		return serviceBasic.getGameListForToday();
+	}
+
+	@RequestMapping(value = "/topic/**", method = RequestMethod.GET)
+	public List<String> getTopicsByTopic(HttpServletRequest request) {
+		System.out.println("Í¥ÄÎ†® ÌÜ†ÌîΩ Î¶¨Ïä§Ìä∏ Î∞òÌôò");
+	    String requestURL = request.getRequestURL().toString();
+	    String topic = requestURL.split("/topic/")[1];
+	    try {
+			topic = URLDecoder.decode(topic, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    System.out.println(topic);
+		return serviceBasic.getTopicsByTopic(topic);
+	}
+
+	@RequestMapping(value = "/game/list/**", method = RequestMethod.GET)
+	public List<Game> getGamesByTopic(HttpServletRequest request) {
+		System.out.println("ÌÜ†ÌîΩ ÏÇ∞Ìïò ÌÇ§ÏõåÎìú 10Í∞ú Î¶¨Ïä§Ìä∏ Î∞òÌôò");
+	    String requestURL = request.getRequestURL().toString();
+	    String topic = requestURL.split("/game/list/")[1];
+	    try {
+			topic = URLDecoder.decode(topic, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    System.out.println(topic);
+		return serviceBasic.getGamesByTopic(topic);
 	}
 	
 	@RequestMapping(value = "/keyword/{keyword}", method = RequestMethod.GET)
 	public HashMap<String, Object> getDataForWordcloudByKeyword(@PathVariable String keyword) {
-		System.out.println("øˆµÂ ≈¨∂ÛøÏµÂ µ•¿Ã≈Õ π›»Ø: " + keyword);
+		System.out.println("ÏõåÎìú ÌÅ¥ÎùºÏö∞Îìú Îç∞Ïù¥ÌÑ∞ Î∞òÌôò: " + keyword);
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		List<NounDto> words = serviceWord.getWordsByGame(keyword);
 		VideoStatDto avg = serviceVideo.getAvgVideoStatisticsByGame(keyword);
@@ -55,22 +90,31 @@ public class ProcessingController {
 	}
 	
 	@RequestMapping(value = "/chart/{topic}", method = RequestMethod.GET)
-	public List<HashMap<String, Object>> getDataForChartViewByTopic(@PathVariable String topic) {
-		System.out.println("¬˜∆Æ µ•¿Ã≈Õ π›»Ø: " + topic);
-		List<HashMap<String, Object>> result = new ArrayList<HashMap<String,Object>>();
+	public HashMap<String, HashMap<String, Object>> getDataForChartViewByTopic(@PathVariable String topic) {
+		System.out.println("Ï∞®Ìä∏ Îç∞Ïù¥ÌÑ∞ Î∞òÌôò: " + topic);
+		HashMap<String, HashMap<String, Object>> result = new HashMap<String, HashMap<String, Object>>();
 		List<String> topics = serviceBasic.getTopicsByTopic(topic);
 		for (String topicRel : topics) {
 			HashMap<String, Object> value = new HashMap<String, Object>();
 			VideoStatDto resultVideo = serviceVideo.getTotalVideoStatisticsByTopic(topicRel);
 			MaxAvgMedian maxAvgMedian = serviceChannel.getChannelMaxAvgMedianByTopic(topicRel);
-			value.put("ctgr", topicRel);
 			value.put("viewCount", resultVideo.getViewCount());
 			value.put("dislikeCount", resultVideo.getDislikeCount());
 			value.put("commentCount", resultVideo.getCommentCount());
 			value.put("max", maxAvgMedian.getMax());
 			value.put("avg", maxAvgMedian.getAvg());
 			value.put("median", maxAvgMedian.getMedian());
-			result.add(value);
+			result.put(topicRel, value);
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/game/main/{title}", method = RequestMethod.GET)
+	public HashMap<String, GameDataForMain> getDatasForGame(@PathVariable String title) {
+		System.out.println("Î©îÏù∏ ÌôîÎ©¥ Ï¢åÏ∏° Îç∞Ïù¥ÌÑ∞ Î∞òÌôò");
+		HashMap<String, GameDataForMain> result = new HashMap<String, GameDataForMain>();
+		for (GameDataForMain item : serviceBasic.getGameDataForMainByGame(title)) {
+			result.put(item.getInfoDate().toString(), item);
 		}
 		return result;
 	}
