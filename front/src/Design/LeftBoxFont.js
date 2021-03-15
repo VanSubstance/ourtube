@@ -4,10 +4,12 @@ import "./Styles.css";
 import moment from "moment";
 
 const LeftBoxFont = (props) => {
-  const [dateTarget, setDateTarget] = useState({
-    right: moment().format("yyyy-MM-DD"),
-    left: moment().subtract(1, "days").format("yyyy-MM-DD"),
-  });
+  const [dateTarget, setDateTarget] = useState(
+    {
+      right: moment().format("yyyy-MM-DD"),
+      left: moment().subtract(1, "days").format("yyyy-MM-DD"),
+    }
+  );
 
   return (
     <div>

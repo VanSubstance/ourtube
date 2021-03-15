@@ -5,7 +5,6 @@ const KeywordItem = (props) => {
     return (
         <div
         className="_itemBox"
-        // viewBox="0 0 261.987 286"
         >
             <img
                 className="keywordThumbnail"

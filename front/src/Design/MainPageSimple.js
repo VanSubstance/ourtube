@@ -9,7 +9,7 @@ import LeftBox from "./LeftBox";
 const MainPageSimple = (props) => {
   const [url] = useState("http://222.232.15.205:8082");
 
-  let [searchVal] = useState("비디오 게임");
+  let [searchVal] = useState("FPS");
 
   let [ctgrs, setCtgrs] = useState([]);
 
@@ -28,9 +28,9 @@ const MainPageSimple = (props) => {
   });
 
   let [dataLeft, setDataLeft] = useState(
-      [
+    [
 
-      ]
+    ]
   );
 
   const selectKeyword = async (keyword) => {
@@ -41,7 +41,7 @@ const MainPageSimple = (props) => {
 
   useEffect(() => {
     getDataset();
-    getDatasetForKeyword("비디오 게임");
+    getDatasetForKeyword("FPS");
   }, []);
 
   const getDatasetForKeyword = async (ctgr) => {
@@ -90,14 +90,14 @@ const MainPageSimple = (props) => {
   const searchCtgr = () => {
     if (searchVal === "") {
       getDataset();
-      getDatasetForKeyword("비디오 게임");
+      getDatasetForKeyword("FPS");
     } else {
       getDataset();
       getDatasetForKeyword(searchVal);
       if (ctgrs.length === 0) {
-        searchVal = "비디오 게임";
+        searchVal = "FPS";
         getDataset();
-        getDatasetForKeyword("비디오 게임");
+        getDatasetForKeyword("FPS");
       }
     }
   };
@@ -115,15 +115,15 @@ const MainPageSimple = (props) => {
       <img className="backGroundImg" src="/Ex/backGroundIMG.PNG"></img>
       <div className="sectionContainor">
         <div className="mainLeftSection">
-          <LeftBox keyword={selectedKeyword} data = {dataLeft}></LeftBox>
+          <LeftBox keyword={selectedKeyword} data={dataLeft}></LeftBox>
         </div>
         <div className="mainRightSection">
-          <a 
-            className="linkBox"
-            href={/trend/}>
-              <div
-                  className="chartLink">
-                    Chart View
+          <a
+            className="chartLinkBox"
+            href="http://localhost:3012/trend">
+            <div
+              className="chartLink">
+              Chart View
               </div>
           </a>
           {/* <div className="linkBox">
