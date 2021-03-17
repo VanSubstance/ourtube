@@ -115,7 +115,11 @@ const MainPageSimple = (props) => {
       <img className="backGroundImg" src="/Ex/backGroundIMG.PNG"></img>
       <div className="sectionContainor">
         <div className="mainLeftSection">
-          <LeftBox keyword={selectedKeyword} data={dataLeft}></LeftBox>
+          <LeftBox
+            clickEvent = {props.clickEvent}
+            keyword = {selectedKeyword}
+            data = {dataLeft}>
+          </LeftBox>
         </div>
         <div className="mainRightSection">
           <a
@@ -126,19 +130,6 @@ const MainPageSimple = (props) => {
               Chart View
               </div>
           </a>
-          {/* <div className="linkBox">
-            <Link
-              to={{
-                pathname: "/trend",
-                state: {
-                  searchVal: searchVal,
-                },
-              }}
-              className="chartLink"
-            >
-              Chart View
-            </Link>
-          </div> */}
           <div className="mainBannerBox">
             <a href="http://localhost:3012/" className="bannerMain">
               <img className="bannerImage" src="/Ex/ourtubeLogoWhite.PNG"></img>

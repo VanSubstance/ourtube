@@ -140,7 +140,7 @@
     overflow: visible;
 }
 
-#_Mainbox {
+/* #_Mainbox {
     fill: transparent;
     stroke: rgba(255, 255, 255, 1);
     stroke-width: 2px;
@@ -158,7 +158,7 @@
     left: 0px;
     top: 0px;
     transform: matrix(1, 0, 0, 1, 0, 0);
-}
+} */
 
 #_gamename {
     mix-blend-mode: normal;

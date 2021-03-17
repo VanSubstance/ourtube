@@ -224,7 +224,7 @@
     position: absolute;
     text-align: right;
     margin-right: 20px;
-    left: 360px;
+    right: 0px;
     bottom: 55px;
     color: white;
     font-size: 100%;
@@ -236,11 +236,10 @@
     position: absolute;
     text-align: right;
     margin-right: 20px;
-    left: 470px;
+    right: 0px;
     bottom: 20px;
     color: white;
     font-size: 0.7em;
-    font-weight: 400;
     width: 61%;
     font-weight: normal !important;
 }
@@ -250,18 +249,11 @@
     margin: 0 auto;
 }
 
-/* ._boxPosition {
-    position: absolute;
-    width: 308px;
-    height: 308px;
-    overflow: visible;
-} */
-
-#_Mainbox {
+#mp_thumbnailBox {
     border: 1px solid white;
 }
 
-._Mainbox {
+.mp_thumbnailBox {
     overflow: visible;
     position: absolute;
     width: 308px;
@@ -272,15 +264,15 @@
     border: 1px solid white;
 }
 
-.leftThumnail {
+.mp_leftThumnail {
     width: 308px;
     height: 308px;
 }
 
-.MP_lookWellBox {
+.mP_lookWellBox {
     position: absolute;
     left: 475px;
-    top: 900px;
+    top: 920px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -288,9 +280,233 @@
 }
 
 .mP_lookWell {
+    font-size: 1em;
+    font-weight: bold;
     position: relative;
     text-align: center;
     color: white;
     text-decoration: none;
     cursor: pointer;
+}
+
+.mp_LeftBoxContents {
+}
+
+.mp_ChangeMarks {
+    
+}
+
+#_rankchange {
+    fill: rgb(17, 223, 255);
+}
+
+._rankchange {
+    overflow: visible;
+    position: absolute;
+    width: 16.354px;
+    height: 16.583px;
+    left: 542px;
+    top: 500px;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+#_viewchange {
+    fill: rgba(255, 72, 72, 1);
+}
+
+._viewchange {
+    overflow: visible;
+    position: absolute;
+    width: 16.355px;
+    height: 16.583px;
+    transform: matrix(1, 0, 0, 1, 542.0007, 594.3589) rotate(180deg);
+    left: 0px;
+    top: 15px;
+}
+
+#_scorechange {
+    fill: rgba(0, 220, 255, 1);
+}
+
+._scorechange {
+    overflow: visible;
+    position: absolute;
+    width: 16.354px;
+    height: 10.583px;
+    left: 542px;
+    top: 835px;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+#_videochange {
+    fill: rgba(255, 255, 255, 1);
+}
+
+._videochange {
+    position: absolute;
+    overflow: visible;
+    width: 27px;
+    height: 5px;
+    left: 537px;
+    top: 727px;
+}
+
+#_past {
+    opacity: 0.6;
+    left: 218px;
+    top: 418px;
+    position: absolute;
+    overflow: visible;
+    width: 40px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 1);
+}
+
+
+#_pastranknumber1 {
+    opacity: 0.6;
+    left: 218px;
+    top: 480px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_pastranknumber2 {
+    opacity: 0.6;
+    left: 218px;
+    top: 590px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_pastranknumber3 {
+    opacity: 0.6;
+    left: 218px;
+    top: 700px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_pastranknumber4 {
+    opacity: 0.6;
+    left: 218px;
+    top: 810px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_now {
+    left: 403px;
+    top: 418px;
+    position: absolute;
+    overflow: visible;
+    width: 40px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: _now;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_nowranknumber1 {
+    opacity: 1;
+    left: 403px;
+    top: 480px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_nowranknumber2 {
+    opacity: 1;
+    left: 403px;
+    top: 590px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_nowranknumber3 {
+    opacity: 1;
+    left: 403px;
+    top: 700px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_nowranknumber4 {
+    opacity: 1;
+    left: 403px;
+    top: 810px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
 }

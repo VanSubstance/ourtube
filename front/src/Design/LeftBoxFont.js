@@ -12,9 +12,14 @@ const LeftBoxFont = (props) => {
   );
 
   return (
-    <div>
+    <div
+      className="mp_LeftBoxContents">
       <div id="_gamestyle">
-        <span>장르 나열</span>
+        {props.keyword !== undefined ? (
+          <span>{props.keyword.ctgr}</span>
+        ) : (
+          <span>없음</span>
+        )}
       </div>
       <div id="_gamename">
         {props.keyword !== undefined ? (
@@ -36,13 +41,13 @@ const LeftBoxFont = (props) => {
         <span>순위</span>
       </div>
       <div id="_leftboxmainfont2">
-        <span>조회수</span>
+        <span>평균 조회수</span>
       </div>
       <div id="_leftboxmainfont3">
         <span>신규 동영상</span>
       </div>
       <div id="_leftboxmainfont4">
-        <span>아울스코어</span>
+        <span>아울 스코어</span>
       </div>
       <div id="_now">
         <span>
@@ -89,6 +94,38 @@ const LeftBoxFont = (props) => {
       </div>
       <div id="_nowranknumber4">
         <span>8</span>
+      </div>
+      <div
+        className="mp_ChangeMarks">
+        <svg className="_rankchange">
+          <path
+            id="_rankchange"
+            d="M 8.17737865447998 0 L 16.35475921630859 10.58249282836914 L 0 10.58249282836914 Z"
+          ></path>
+        </svg>
+        <svg className="_viewchange">
+          <path
+            id="_viewchange"
+            d="M 8.17737865447998 0 L 16.35475921630859 10.58249282836914 L 0 10.58249282836914 Z"
+          ></path>
+        </svg>
+        <svg className="_videochange">
+          <rect
+            id="_videochange"
+            rx="0"
+            ry="0"
+            x="0"
+            y="0"
+            width="27"
+            height="5"
+          ></rect>
+        </svg>
+        <svg className="_scorechange">
+          <path
+            id="_scorechange"
+            d="M 8.17737865447998 0 L 16.35475921630859 10.58249282836914 L 0 10.58249282836914 Z"
+          ></path>
+        </svg>
       </div>
     </div>
   );
