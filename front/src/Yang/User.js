@@ -11,10 +11,6 @@ class User extends Component {
                 <ItemBoxList></ItemBoxList>
                 <LeftBox></LeftBox>                
             </body>
-
-
-
-
         );
     }
 }

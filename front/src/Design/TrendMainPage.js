@@ -370,7 +370,7 @@ const TrendMainPage = () => {
           height="41"
         ></rect>
       </svg>
-      <div className="fourthbox">
+      <div className="fourthBox">
         <Bar data={barInfo.data} options={barInfo.options} />
         <rect
           id="fourthbox"

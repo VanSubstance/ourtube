@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./Styles.css";
 import "./Css/leftbox.css"
 import moment from "moment";
 
@@ -54,7 +55,7 @@ const LeftBoxFont = (props) => {
           {props.data[dateTarget.right] !== undefined
             ? dateTarget.right
             : 0}
-            </span>
+        </span>
       </div>
       <div id="_past">
         <span>
@@ -97,7 +98,8 @@ const LeftBoxFont = (props) => {
       </div>
       <div
         className="mp_ChangeMarks">
-        <svg className="_rankchange">
+        <svg
+          className="_rankchange">
           <path
             id="_rankchange"
             d="M 8.17737865447998 0 L 16.35475921630859 10.58249282836914 L 0 10.58249282836914 Z"
@@ -132,3 +134,31 @@ const LeftBoxFont = (props) => {
 };
 
 export default LeftBoxFont;
+
+// {
+//   props.data[dateTarget.left] !== undefined
+//     ? (props.data[dateTarget.right] !== undefined
+//       ? (props.data[dateTarget.left].viewCount < props.data[dateTarget.right].viewCount
+//         ? <path
+//           id="_rankchange"
+//           d="M 8.17737865447998 0 L 16.35475921630859 10.58249282836914 L 0 10.58249282836914 Z"
+//         ></path>
+//         : (props.data[dateTarget.left].viewCount === props.data[dateTarget.right].viewCount
+//           ? <rect
+//             id="_videochange"
+//             rx="0"
+//             ry="0"
+//             x="0"
+//             y="0"
+//             width="27"
+//             height="5"
+//           ></rect>
+//           : <path
+//             id="_viewchange"
+//             d="M 8.17737865447998 0 L 16.35475921630859 10.58249282836914 L 0 10.58249282836914 Z"
+//           ></path>
+//         )
+//       )
+//       : (console.log('우측 데이터 없음')))
+//     : (console.log('좌측 데이터 없음'))
+// }
