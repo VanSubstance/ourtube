@@ -8,7 +8,7 @@ import { Bar } from "react-chartjs-2";
 const TrendMainPage = () => {
   const [url] = useState("http://222.232.15.205:8082");
 
-  let [searchVal, setSearchVal] = useState("비디오 게임");
+  let [searchVal, setSearchVal] = useState("FPS");
 
   let [selectedCtgr, setSelectedCtgr] = useState("");
 
@@ -113,14 +113,14 @@ const TrendMainPage = () => {
   const searchCtgr = () => {
     if (searchVal === "") {
       getDataset();
-      getDatasetForKeyword("비디오 게임");
+      getDatasetForKeyword("FPS");
     } else {
       getDataset();
       getDatasetForKeyword(searchVal);
       if (ctgrs.length === 0) {
-        searchVal = "비디오 게임";
+        searchVal = "FPS";
         getDataset();
-        getDatasetForKeyword("비디오 게임");
+        getDatasetForKeyword("FPS");
       }
     }
   };
