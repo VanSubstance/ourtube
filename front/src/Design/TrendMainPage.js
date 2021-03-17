@@ -8,7 +8,7 @@ import { Bar } from "react-chartjs-2";
 const TrendMainPage = () => {
   const [url] = useState("http://222.232.15.205:8082");
 
-  let [searchVal, setSearchVal] = useState("비디오 게임");
+  let [searchVal, setSearchVal] = useState("FPS");
 
   let [selectedCtgr, setSelectedCtgr] = useState("");
 
@@ -16,28 +16,64 @@ const TrendMainPage = () => {
 
   let [keywords, setKeywords] = useState([]);
 
-  const [dataBar, setDataBar] = useState({
-    labels: ["좋아요", "싫어요"],
-    datasets: [
-      {
-        data: [1000, 2000],
-        backgroundColor: ["red", "blue"],
-      },
-    ],
-  });
-
-  const [optionBar, setOptionBar] = useState({
-    maintainAspectRatio: false,
-    scales: {
-      yAxes: [
+  const [barInfo, setBarInfo] = useState({
+    data: {
+      labels: [],
+      datasets: [
         {
-          ticks: {
-            beginAtZero: true,
-          },
+          data: [],
+          backgroundColor: ["red", "blue"],
+          background: "",
+          label: ["핫3", "핫4"],
         },
       ],
     },
+    options: {
+      maintainAspectRatio: false,
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+    },
   });
+
+  const setDataBarEx = (data) => {
+    let dataBar = [];
+    data.foreach((value, key) => {
+        dataBar.push(value.viweCount);
+    });
+    const newInfo = {
+      data: {
+        labels: [data.key],
+        datasets: [
+          {
+            data: dataBar,
+            backgroundColor: ["red", "blue"],
+            background: "",
+            label: ["조회수"],
+          },
+        ],
+      },
+      options: {
+        maintainAspectRatio: false,
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          ],
+        },
+      },
+    };
+    setBarInfo(newInfo);
+  };
 
   useEffect(() => {
     getDataset();
@@ -59,17 +95,32 @@ const TrendMainPage = () => {
       });
   };
 
+  const getDataBar = async () => {
+    await axios
+      .get("http://222.232.15.205:8082/deploy/chart/" + searchVal)
+      .then(({ data }) => {
+        if (data.length >= 5) {
+          setDataBarEx(data.slice(0, 5));
+        } else {
+          setDataBarEx(data);
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
   const searchCtgr = () => {
     if (searchVal === "") {
       getDataset();
-      getDatasetForKeyword("비디오 게임");
+      getDatasetForKeyword("FPS");
     } else {
       getDataset();
       getDatasetForKeyword(searchVal);
       if (ctgrs.length === 0) {
-        searchVal = "비디오 게임";
+        searchVal = "FPS";
         getDataset();
-        getDatasetForKeyword("비디오 게임");
+        getDatasetForKeyword("FPS");
       }
     }
   };
@@ -168,23 +219,23 @@ const TrendMainPage = () => {
           <img className="searchButtonImg" src="/Ex/searchbutton.png"></img>
         </button>
       </div>
-          <div className="mainChipBox5">
-            <div className="chipBackground5">
-              {ctgrs.map((element) => {
-                return (
-                  <Chip
-                    className="mainChipSyle5"
-                    label={element}
-                    clickable
-                    onClick={() => {
-                      getDatasetForKeyword(element);
-                    }}
-                    component="button"
-                  ></Chip>
-                );
-              })}
-            </div>
-          </div>
+      <div className="mainChipBox5">
+        <div className="chipBackground5">
+          {ctgrs.map((element) => {
+            return (
+              <Chip
+                className="mainChipSyle5"
+                label={element}
+                clickable
+                onClick={() => {
+                  getDatasetForKeyword(element);
+                }}
+                component="button"
+              ></Chip>
+            );
+          })}
+        </div>
+      </div>
       <svg className="listtop">
         <rect
           id="listtop"
@@ -284,10 +335,10 @@ const TrendMainPage = () => {
           height="196"
         ></rect>
       </svg>
-      <span id="thirdFont1">신규 조회수</span>
-      <svg className="thirdTop2">
+      <span id="thirdfont1">신규 조회수</span>
+      <svg className="thirdtop2">
         <rect
-          id="thirdTop2"
+          id="thirdtop2"
           rx="0"
           ry="0"
           x="0"
@@ -297,9 +348,9 @@ const TrendMainPage = () => {
         ></rect>
       </svg>
 
-      <svg className="thirdBox2">
+      <svg className="thirdbox2">
         <rect
-          id="thirdBox2"
+          id="thirdbox2"
           rx="0"
           ry="0"
           x="0"
@@ -308,10 +359,10 @@ const TrendMainPage = () => {
           height="196"
         ></rect>
       </svg>
-      <span id="thirdFont2">신규 동영상수</span>
-      <svg className="fourthTop">
+      <span id="thirdfont2">신규 동영상수</span>
+      <svg className="fourthtop">
         <rect
-          id="fourthTop"
+          id="fourthtop"
           rx="0"
           ry="0"
           x="0"
@@ -321,9 +372,9 @@ const TrendMainPage = () => {
         ></rect>
       </svg>
       <div className="fourthbox">
-          <Bar data={dataBar} options = {optionBar} />
+        <Bar data={barInfo.data} options={barInfo.options} />
         <rect
-          id="fourthBox"
+          id="fourthbox"
           rx="0"
           ry="0"
           x="0"
