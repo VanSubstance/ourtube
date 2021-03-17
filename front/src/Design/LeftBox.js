@@ -1,6 +1,5 @@
 import React from "react";
-import "./Styles.css";
-import "./Css/styles.css";
+import "./Css/leftbox.css"
 import { LeftBoxFont } from "./";
 
 const LeftBox = (props) => {
@@ -8,7 +7,7 @@ const LeftBox = (props) => {
   return (
     <div
       className="mp_LeftBox">
-      <div className="mp_thumbnailBox">
+      <div className="mp_leftThumbnailBox">
         {props.keyword != undefined ? (
           <img
             className="mp_leftThumnail"
@@ -38,6 +37,7 @@ const LeftBox = (props) => {
       <LeftBoxFont
         keyword={props.keyword}
         data={props.data}
+        ctgr = {props.ctgr}
         clickEvent = {props.clickEvent}>
       </LeftBoxFont>
     </div>

@@ -103,11 +103,6 @@
     top: 0px;
 }
 
-/* #__Leftbox {
-    opacity: 0.7;
-    fill: rgba(0, 0, 0, 1);
-} */
-
 .__Leftbox {
     position: absolute;
     overflow: visible;
@@ -117,22 +112,6 @@
     top: 0px;
 }
 
-#_gamestyle {
-    opacity: 0.65;
-    left: 76px;
-    top: 30.886px;
-    position: absolute;
-    overflow: visible;
-    width: 157px;
-    white-space: nowrap;
-    text-align: left;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: lighter;
-    font-size: 11px;
-    color: rgba(255, 255, 255, 1);
-}
-
 #_boxpostion {
     position: absolute;
     width: 307.779px;
@@ -140,24 +119,6 @@
     left: 76px;
     top: 52.221px;
     overflow: visible;
-}
-
-#_gamename {
-    mix-blend-mode: normal;
-    left: 406px;
-    top: 176px;
-    position: absolute;
-    overflow: visible;
-    width: 153px;
-    white-space: nowrap;
-    text-align: left;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 20px;
-    color: rgba(255, 255, 255, 1);
-    letter-spacing: 0.1px;
-    text-transform: uppercase;
 }
 
 #_glorystyle1 {
@@ -863,63 +824,6 @@
     white-space: nowrap;
     text-align: left;
     font-family: Spoqa Han Sans Neo;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 17px;
-    color: rgba(255, 255, 255, 1);
-}
-
-#_leftboxmainfont1 {
-    left: 76px;
-    top: 500px;
-    position: absolute;
-    overflow: visible;
-    width: 83px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 17px;
-    color: rgba(255, 255, 255, 1);
-}
-#_leftboxmainfont2 {
-    left: 76px;
-    top: 610px;
-    position: absolute;
-    overflow: visible;
-    width: 83px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 17px;
-    color: rgba(255, 255, 255, 1);
-}
-#_leftboxmainfont3 {
-    left: 76px;
-    top: 720px;
-    position: absolute;
-    overflow: visible;
-    width: 83px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 17px;
-    color: rgba(255, 255, 255, 1);
-}
-#_leftboxmainfont4 {
-    left: 76px;
-    top: 830px;
-    position: absolute;
-    overflow: visible;
-    width: 83px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Roboto;
     font-style: normal;
     font-weight: bold;
     font-size: 17px;

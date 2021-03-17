@@ -4,31 +4,39 @@ import './Css/Comps.css';
 const KeywordItem = (props) => {
     return (
         <div
-        className="_itemBox"
-        >
+            className="_itemBox">
             <img
                 className="keywordThumbnail"
                 src={props.keyword.thumbnail}
-                onClick ={() => {
-                props.clickEvent(props.keyword);
-            }}>
+                onClick={() => {
+                    props.clickEvent(props.keyword);
+                }}>
             </img>
-            <a href={/trend/ + props.keyword.title}>
+            <div
+                className="keywordTitleBox"
+                onClick={() => {
+                    props.clickEvent(props.keyword);
+                }}>
                 <div
-                    className="keywordTitleBox">
-                    <div
-                        className="keywordTitle">
-                        {props.keyword.title}
-                    </div>
+                    className="keywordTitle">
+                    {props.keyword.title}
                 </div>
-            </a>
+            </div>
+            {/* <a
+                className="keywordTitleBox"
+                href={/trend/ + props.keyword.title}>
+                <div
+                    className="keywordTitle">
+                    {props.keyword.title}
+                </div>
+            </a> */}
         </div>
     );
 }
 
 export default KeywordItem;
 
-            {/* <path className="_itemBoxPath" d="M 0 0 L 261.98681640625 0 L 261.98681640625 286 L 0 286 L 0 0 Z">
+{/* <path className="_itemBoxPath" d="M 0 0 L 261.98681640625 0 L 261.98681640625 286 L 0 286 L 0 0 Z">
             </path> */}
 
 // <img

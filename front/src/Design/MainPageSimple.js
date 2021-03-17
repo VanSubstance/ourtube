@@ -13,6 +13,8 @@ const MainPageSimple = (props) => {
 
   let [ctgrs, setCtgrs] = useState([]);
 
+  let [selectedCtgr, setSelectedCtgr] = useState("FPS");
+
   let [keywords, setKeywords] = useState([
     {
       title: "초기값",
@@ -50,9 +52,11 @@ const MainPageSimple = (props) => {
       .then(({ data }) => {
         if (data.length >= 10) {
           setKeywords(data.slice(0, 10));
+          setSelectedCtgr(ctgr);
           selectKeyword(data[0]);
         } else {
           setKeywords(data);
+          setSelectedCtgr(ctgr);
           selectKeyword(data[0]);
         }
       })
@@ -118,6 +122,7 @@ const MainPageSimple = (props) => {
           <LeftBox
             clickEvent = {props.clickEvent}
             keyword = {selectedKeyword}
+            ctgr = {selectedCtgr}
             data = {dataLeft}>
           </LeftBox>
         </div>
@@ -171,13 +176,13 @@ const MainPageSimple = (props) => {
                     onClick={() => {
                       getDatasetForKeyword(element);
                     }}
-                    component="button"
-                  ></Chip>
+                    component="button">
+                  </Chip>
                 );
               })}
             </div>
           </div>
-          <KeywordList keywords={keywords} clickEvent={selectKeyword} />
+          <KeywordList keywords={keywords} clickEvent={selectKeyword}/>
           <div className="testTxtTop">OURTUBE Analytics, Inc. © 2021</div>
           <div className="testTxtBottom">
             Ourtube is hosted by Ourtube Analytics, Inc. Ourtube isn’t endorsed

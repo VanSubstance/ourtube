@@ -16,6 +16,7 @@ const KeywordList = (props) => {
             <Swiper
                 spaceBetween={20}
                 slidesPerView={4.51}
+                slidesPerGroup={1}
                 navigation
                 loop={false}
                 autoplay={false}

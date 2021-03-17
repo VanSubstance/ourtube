@@ -115,22 +115,6 @@
     top: 0px;
 }
 
-#_gamestyle {
-    opacity: 0.65;
-    left: 76px;
-    top: 30.886px;
-    position: absolute;
-    overflow: visible;
-    width: 157px;
-    white-space: nowrap;
-    text-align: left;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: lighter;
-    font-size: 11px;
-    color: rgba(255, 255, 255, 1);
-}
-
 #_boxpostion {
     position: absolute;
     width: 307.779px;
@@ -138,44 +122,6 @@
     left: 76px;
     top: 52.221px;
     overflow: visible;
-}
-
-/* #_Mainbox {
-    fill: transparent;
-    stroke: rgba(255, 255, 255, 1);
-    stroke-width: 2px;
-    stroke-linejoin: miter;
-    stroke-linecap: butt;
-    stroke-miterlimit: 4;
-    shape-rendering: auto;
-}
-
-._Mainbox {
-    overflow: visible;
-    position: absolute;
-    width: 307.779px;
-    height: 307.779px;
-    left: 0px;
-    top: 0px;
-    transform: matrix(1, 0, 0, 1, 0, 0);
-} */
-
-#_gamename {
-    mix-blend-mode: normal;
-    left: 406px;
-    top: 176px;
-    position: absolute;
-    overflow: visible;
-    width: 153px;
-    white-space: nowrap;
-    text-align: left;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 20px;
-    color: rgba(255, 255, 255, 1);
-    letter-spacing: 0.1px;
-    text-transform: uppercase;
 }
 
 #_glorystyle1 {
@@ -903,63 +849,6 @@
     color: rgba(255, 255, 255, 1);
 }
 
-#_leftboxmainfont1 {
-    left: 76px;
-    top: 500px;
-    position: absolute;
-    overflow: visible;
-    width: 83px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 17px;
-    color: rgba(255, 255, 255, 1);
-}
-#_leftboxmainfont2 {
-    left: 76px;
-    top: 610px;
-    position: absolute;
-    overflow: visible;
-    width: 83px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 17px;
-    color: rgba(255, 255, 255, 1);
-}
-#_leftboxmainfont3 {
-    left: 76px;
-    top: 720px;
-    position: absolute;
-    overflow: visible;
-    width: 83px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 17px;
-    color: rgba(255, 255, 255, 1);
-}
-#_leftboxmainfont4 {
-    left: 76px;
-    top: 830px;
-    position: absolute;
-    overflow: visible;
-    width: 83px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 17px;
-    color: rgba(255, 255, 255, 1);
-}
-
 #__c {
     left: 76px;
     top: 702px;
@@ -974,144 +863,6 @@
     font-size: 17px;
     color: rgba(255, 255, 255, 1);
 }
-
-#_past {
-    opacity: 0.6;
-    left: 225px;
-    top: 418px;
-    position: absolute;
-    overflow: visible;
-    width: 40px;
-    white-space: nowrap;
-    text-align: left;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 14px;
-    color: rgba(255, 255, 255, 1);
-}
-
-#_pastranknumber1 {
-    opacity: 0.6;
-    left: 218px;
-    top: 480px;
-    position: absolute;
-    overflow: visible;
-    width: 46px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Spoqa Han Sans Neo;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 38px;
-    color: rgba(255, 255, 255, 1);
-}
-#_pastranknumber2 {
-    opacity: 0.6;
-    left: 218px;
-    top: 590px;
-    position: absolute;
-    overflow: visible;
-    width: 46px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Spoqa Han Sans Neo;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 38px;
-    color: rgba(255, 255, 255, 1);
-}
-#_pastranknumber3 {
-    opacity: 0.6;
-    left: 218px;
-    top: 700px;
-    position: absolute;
-    overflow: visible;
-    width: 46px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Spoqa Han Sans Neo;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 38px;
-    color: rgba(255, 255, 255, 1);
-}
-#_pastranknumber4 {
-    opacity: 0.6;
-    left: 218px;
-    top: 810px;
-    position: absolute;
-    overflow: visible;
-    width: 46px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Spoqa Han Sans Neo;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 38px;
-    color: rgba(255, 255, 255, 1);
-}
-#_nowranknumber1 {
-    opacity: 1;
-    left: 403px;
-    top: 480px;
-    position: absolute;
-    overflow: visible;
-    width: 46px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Spoqa Han Sans Neo;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 38px;
-    color: rgba(255, 255, 255, 1);
-}
-#_nowranknumber2 {
-    opacity: 1;
-    left: 403px;
-    top: 590px;
-    position: absolute;
-    overflow: visible;
-    width: 46px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Spoqa Han Sans Neo;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 38px;
-    color: rgba(255, 255, 255, 1);
-}
-#_nowranknumber3 {
-    opacity: 1;
-    left: 403px;
-    top: 700px;
-    position: absolute;
-    overflow: visible;
-    width: 46px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Spoqa Han Sans Neo;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 38px;
-    color: rgba(255, 255, 255, 1);
-}
-#_nowranknumber4 {
-    opacity: 1;
-    left: 403px;
-    top: 810px;
-    position: absolute;
-    overflow: visible;
-    width: 46px;
-    white-space: nowrap;
-    text-align: center;
-    font-family: Spoqa Han Sans Neo;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 38px;
-    color: rgba(255, 255, 255, 1);
-}
-
 
 #ID581 {
     opacity: 0.6;
@@ -1514,21 +1265,7 @@
     align-content: center;
     overflow: hidden;
 }
-/* .searchButton {
-    border: none;
-    position: absolute;
-    right: 20px;
-    top: 2px;
-    height: 0px;
-    transition: all ease .4s;
-    cursor: poingter;
-}
-.searchButtonImg {
-    position: relative;
-    width: 23px;
-    height: 23px;
-    align-content: center;
-} */
+
 .chipStyles {
     margin: 15px 10px 5px 10px
 }

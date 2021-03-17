@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Styles.css";
+import "./Css/leftbox.css"
 import moment from "moment";
 
 const LeftBoxFont = (props) => {
@@ -15,8 +15,8 @@ const LeftBoxFont = (props) => {
     <div
       className="mp_LeftBoxContents">
       <div id="_gamestyle">
-        {props.keyword !== undefined ? (
-          <span>{props.keyword.ctgr}</span>
+        {props.ctgr !== undefined ? (
+          <span>{props.ctgr}</span>
         ) : (
           <span>없음</span>
         )}
@@ -61,7 +61,7 @@ const LeftBoxFont = (props) => {
           {props.data[dateTarget.left] !== undefined
             ? dateTarget.left
             : 0}
-            </span>
+        </span>
       </div>
       <div id="_pastranknumber1">
         <span>1</span>
