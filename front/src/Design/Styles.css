@@ -2299,6 +2299,7 @@
     height: 196px;
     left: 320px;
     top: 1224px;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 #rightboxfont {
     mix-blend-mode: normal;

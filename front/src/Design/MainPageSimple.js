@@ -29,11 +29,9 @@ const MainPageSimple = (props) => {
       "https://upload.wikimedia.org/wikipedia/commons/9/92/Question_mark_alternate_inverted.svg",
   });
 
-  let [dataLeft, setDataLeft] = useState(
-    [
-
-    ]
-  );
+  let [dataLeft, setDataLeft] = useState({
+    viewcount: "0",
+  });
 
   const selectKeyword = async (keyword) => {
     selectedKeyword = keyword;
