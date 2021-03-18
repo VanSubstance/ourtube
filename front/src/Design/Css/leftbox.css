@@ -1,11 +1,13 @@
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-jp.css);
+
 .mp_leftThumbnailBox {
     overflow: hidden;
     position: absolute;
     width: 308px;
     height: 308px;
     left: 76px;
-    top: 52.221px;
-    transform: matrix(1, 0, 0, 1, 0, 0);
+    top: 52px;
     border: 1px solid white;
 }
 
@@ -16,8 +18,8 @@
 
 .mP_lookWellBox {
     position: absolute;
-    left: 475px;
-    top: 920px;
+    left: 505px;
+    top: 900px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,8 +39,13 @@
 .mp_LeftBoxContents {
 }
 
-.mp_ChangeMarks {
-
+#_gameName {
+    position: absolute;
+    left: 406px;
+    top: 175px;
+    color: white;
+    font-size: 1.1em;
+    font-family: "Spoqa Han Sans Neo", serif;
 }
 
 #_gamestyle {
@@ -50,30 +57,66 @@
     width: 157px;
     white-space: nowrap;
     text-align: left;
-    font-family: Roboto;
+    font-family: "Roboto";
     font-style: normal;
     font-weight: lighter;
     font-size: 11px;
     color: rgba(255, 255, 255, 1);
 }
 
-#_gamename {
-    mix-blend-mode: normal;
-    left: 406px;
-    top: 176px;
+
+#_glorystyle1 {
+    mix-blend-mode: color-dodge;
+    left: 426px;
+    top: 52px;
     position: absolute;
     overflow: visible;
-    width: 153px;
+    width: 89px;
     white-space: nowrap;
     text-align: left;
-    font-family: Roboto;
+    font-family: "Spoqa Han Sans Neo", serif;
     font-style: normal;
     font-weight: normal;
-    font-size: 20px;
+    font-size: 10px;
     color: rgba(255, 255, 255, 1);
     letter-spacing: 0.1px;
     text-transform: uppercase;
 }
+#_glorystyle2 {
+    mix-blend-mode: color-dodge;
+    left: 426px;
+    top: 70px;
+    position: absolute;
+    overflow: visible;
+    width: 89px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: "Spoqa Han Sans Neo", serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 1);
+    letter-spacing: 0.1px;
+    text-transform: uppercase;
+}
+#_glorystyle3 {
+    mix-blend-mode: color-dodge;
+    left: 426px;
+    top: 88px;
+    position: absolute;
+    overflow: visible;
+    width: 89px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: "Spoqa Han Sans Neo", serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 1);
+    letter-spacing: 0.1px;
+    text-transform: uppercase;
+}
+
 
 #_leftboxmainfont1 {
     left: 76px;
@@ -83,7 +126,7 @@
     width: 83px;
     white-space: nowrap;
     text-align: center;
-    font-family: Roboto;
+    font-family: "Spoqa Han Sans Neo", serif;
     font-style: normal;
     font-weight: bold;
     font-size: 17px;
@@ -97,7 +140,7 @@
     width: 83px;
     white-space: nowrap;
     text-align: center;
-    font-family: Roboto;
+    font-family: "Spoqa Han Sans Neo", serif;
     font-style: normal;
     font-weight: bold;
     font-size: 17px;
@@ -111,7 +154,7 @@
     width: 83px;
     white-space: nowrap;
     text-align: center;
-    font-family: Roboto;
+    font-family: "Spoqa Han Sans Neo", serif;
     font-style: normal;
     font-weight: bold;
     font-size: 17px;
@@ -125,67 +168,81 @@
     width: 83px;
     white-space: nowrap;
     text-align: center;
-    font-family: Roboto;
+    font-family: "Spoqa Han Sans Neo", serif;
     font-style: normal;
     font-weight: bold;
     font-size: 17px;
     color: rgba(255, 255, 255, 1);
 }
 
+.mp_ChangeMarks {
+    position: absolute;
+    left: 550px;
+    top: 480px;
+    height: 380px;
+    width: 50px;
+    vertical-align: middle;
+}
 
-#_rankchange {
+#mp_RankChange {
     fill: rgb(17, 223, 255);
 }
 
-._rankchange {
+.mp_RankChange {
+    height: 20px;
+    width: 20px;
     overflow: visible;
     position: absolute;
-    width: 16.354px;
-    height: 16.583px;
-    left: 542px;
-    top: 500px;
-    transform: matrix(1, 0, 0, 1, 0, 0);
+    top: 9%;
+    left: 52%;
 }
 
-#_viewchange {
-    fill: rgba(255, 72, 72, 1);
-}
-
-._viewchange {
-    overflow: visible;
-    position: absolute;
-    width: 16.355px;
-    height: 16.583px;
-    transform: matrix(1, 0, 0, 1, 542.0007, 594.3589) rotate(180deg);
-    left: 0px;
-    top: 15px;
-}
-
-#_scorechange {
+#mp_UpArrow {
+    width: 17px;
+    height: 17px;
     fill: rgba(0, 220, 255, 1);
+    transform:translate(-50%,-50%);
 }
 
-._scorechange {
+.mp_ViewChange {
+    height: 20px;
+    width: 20px;
     overflow: visible;
     position: absolute;
-    width: 16.354px;
-    height: 10.583px;
-    left: 542px;
-    top: 835px;
-    transform: matrix(1, 0, 0, 1, 0, 0);
+    top: 38%;
+    left: 52%;
 }
 
-#_videochange {
-    fill: rgba(255, 255, 255, 1);
+#mp_DownArrow {
+    fill: rgba(255, 72, 72, 1);
+    width: 17px;
+    height: 17px;
+    transform:translate(35%, 0%) rotate(180deg);
 }
 
-._videochange {
-    position: absolute;
+.mp_ScoreChange {
+    height: 20px;
+    width: 20px;
     overflow: visible;
+    position: absolute;
+    top: 67%;
+    left: 52%;
+}
+
+#mp_NoChangeBar {
     width: 27px;
     height: 5px;
-    left: 537px;
-    top: 727px;
+    fill: rgba(255, 255, 255, 1);
+    transform:translate(-75%,-40%)
+}
+
+.mp_VideoChange {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    overflow: visible;
+    top: 96%;
+    left: 52%;
 }
 
 #_past {

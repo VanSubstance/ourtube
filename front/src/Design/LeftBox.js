@@ -18,15 +18,27 @@ const LeftBox = (props) => {
           </img>
         )}
       </div>
+      <LeftBoxFont
+        keyword={props.keyword}
+        data={props.data}
+        ctgr={props.ctgr}
+        clickEvent={props.clickEvent}>
+      </LeftBoxFont>
       <a
         className="mP_lookWellBox"
         href={/trend/ + props.keyword.title}>
         <div
           className="mP_lookWell">
-            자세히 보기
+          자세히 보기
         </div>
       </a>
-      {/* <a
+    </div>
+  );
+};
+
+export default LeftBox;
+
+{/* <a
         className="mP_lookWellBox"
         href={/trend/ + props.keyword.title}>
         <div
@@ -34,14 +46,3 @@ const LeftBox = (props) => {
           자세히 보기
         </div>
       </a> */}
-      <LeftBoxFont
-        keyword={props.keyword}
-        data={props.data}
-        ctgr = {props.ctgr}
-        clickEvent = {props.clickEvent}>
-      </LeftBoxFont>
-    </div>
-  );
-};
-
-export default LeftBox;

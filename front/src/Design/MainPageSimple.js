@@ -118,10 +118,10 @@ const MainPageSimple = (props) => {
       <div className="sectionContainor">
         <div className="mainLeftSection">
           <LeftBox
-            clickEvent = {props.clickEvent}
-            keyword = {selectedKeyword}
-            ctgr = {selectedCtgr}
-            data = {dataLeft}>
+            clickEvent={props.clickEvent}
+            keyword={selectedKeyword}
+            ctgr={selectedCtgr}
+            data={dataLeft}>
           </LeftBox>
         </div>
         <div className="mainRightSection">
@@ -158,7 +158,7 @@ const MainPageSimple = (props) => {
               >
                 <img
                   className="searchButtonImg"
-                  src="/Ex/searchbutton.png"
+                  src="/Ex/searchButtonBlack.png"
                 ></img>
               </button>
             </div>
@@ -180,7 +180,7 @@ const MainPageSimple = (props) => {
               })}
             </div>
           </div>
-          <KeywordList keywords={keywords} clickEvent={selectKeyword}/>
+          <KeywordList keywords={keywords} clickEvent={selectKeyword} />
           <div className="testTxtTop">OURTUBE Analytics, Inc. © 2021</div>
           <div className="testTxtBottom">
             Ourtube is hosted by Ourtube Analytics, Inc. Ourtube isn’t endorsed

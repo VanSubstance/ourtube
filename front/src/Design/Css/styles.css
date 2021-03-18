@@ -23,8 +23,8 @@
 }
 
 .mainRightSection {
+    margin-left: 20px;
     left: 20px;
-    margin-right: 0px;
     overflow: hidden;
     position: relative;
     width: 1260px;
@@ -52,6 +52,20 @@
     align-items: center;
     justify-content: center;
     text-decoration: none;
+    font-family: "Roboto";
+    transition: linear .1s;
+}
+
+.chartLinkBox:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    outline: 2px solid white;
+    outline-offset: -2px;
+}
+
+.chartLinkBox:focus {
+    background-color: rgba(0, 0, 0, 0.8);
+    outline: 2px solid white;
+    outline-offset: -2px;
 }
 
 .chartLink {
@@ -136,9 +150,18 @@
     position: absolute;
     right: 0;
     top: 0;
+    width: fit-content;
     height: 32px;
     background: white;
     cursor: pointer;
+    transition: linear .1s;
+}
+
+.searchButton::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
 }
 
 .searchButton:hover {
@@ -152,16 +175,21 @@
 }
 
 .searchButtonImg {
+    vertical-align: middle;
+    margin: 0 auto;
     position: relative;
-    width: 25px;
-    height: 25px;
+    width: 24px;
+    height: 24px;
+    /* background-image: url( "../Icons/searchButtonBlack.png" ); */
 }
 
-.searchButtonImg:hover {
+/* .searchButtonImg:hover {
+    background: url( "../Icons/searchButtonWhite.png" ) no-repeat;
 }
 
 .searchButtonImg:focus {
-}
+    background: url( "../Icons/searchButtonWhite.png" ) no-repeat;
+} */
 
 .mainChipBox {
     position: relative;
@@ -224,7 +252,7 @@
 .testTxtTop {
     position: absolute;
     text-align: right;
-    margin-right: 20px;
+    margin-right: 15px;
     right: 0px;
     bottom: 55px;
     color: white;
@@ -236,7 +264,7 @@
 .testTxtBottom {
     position: absolute;
     text-align: right;
-    margin-right: 20px;
+    margin-right: 15px;
     right: 0px;
     bottom: 20px;
     color: white;

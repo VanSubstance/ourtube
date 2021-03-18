@@ -121,58 +121,6 @@
     overflow: visible;
 }
 
-#_glorystyle1 {
-    mix-blend-mode: color-dodge;
-    left: 426px;
-    top: 52px;
-    position: absolute;
-    overflow: visible;
-    width: 89px;
-    white-space: nowrap;
-    text-align: left;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 10px;
-    color: rgba(255, 255, 255, 1);
-    letter-spacing: 0.1px;
-    text-transform: uppercase;
-}
-#_glorystyle2 {
-    mix-blend-mode: color-dodge;
-    left: 426px;
-    top: 70px;
-    position: absolute;
-    overflow: visible;
-    width: 89px;
-    white-space: nowrap;
-    text-align: left;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 10px;
-    color: rgba(255, 255, 255, 1);
-    letter-spacing: 0.1px;
-    text-transform: uppercase;
-}
-#_glorystyle3 {
-    mix-blend-mode: color-dodge;
-    left: 426px;
-    top: 88px;
-    position: absolute;
-    overflow: visible;
-    width: 89px;
-    white-space: nowrap;
-    text-align: left;
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 10px;
-    color: rgba(255, 255, 255, 1);
-    letter-spacing: 0.1px;
-    text-transform: uppercase;
-}
-
 #____bu {
     mix-blend-mode: color-dodge;
     left: 426px;
