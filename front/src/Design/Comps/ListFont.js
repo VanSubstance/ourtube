@@ -18,7 +18,7 @@ const ListFont = (props) => {
 
     const addRow = (dataRow, index) => {
         return (
-            <tr align="center" >
+            <tr align="left" >
                 <td id="checkbox">
                     <form action='a.jsp' >
                         <input type='checkbox' name='checkboxList' onClick={(e) => { checkFunction(e) }} value='checkbox' />
@@ -26,7 +26,7 @@ const ListFont = (props) => {
                 </td>
                 <td align="left">{index + 1}</td>
                 <td id="longfont" align="center">{dataRow.title}</td>
-                <td>{dataRow.viewCount}</td>
+                <td >{dataRow.viewCount}</td>
                 <td>{dataRow.score}</td>
                 <td>{dataRow.likeCount}</td>
                 <td>{dataRow.dislikeCount}</td>

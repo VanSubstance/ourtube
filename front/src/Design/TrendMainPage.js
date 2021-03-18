@@ -8,7 +8,7 @@ import { Bar } from "react-chartjs-2";
 const TrendMainPage = () => {
   const [url] = useState("http://222.232.15.205:8082");
 
-  let [searchVal, setSearchVal] = useState("비디오 게임");
+  let [searchVal, setSearchVal] = useState("FPS");
 
   let [selectedCtgr, setSelectedCtgr] = useState("");
 
@@ -18,12 +18,11 @@ const TrendMainPage = () => {
 
   const [barInfo, setBarInfo] = useState({
     data: {
-      labels: [],
+      labels: ['1','2','3','4','5'],
       datasets: [
         {
-          data: [10,100],
-          backgroundColor: ["red", "blue"],
-          label: ["핫3", "핫4"],
+          data: [11000,12000,13000,14000,15000],
+          backgroundColor: ["red", "blue","yellow","black","purple"],
         },
       ],
     },
@@ -112,14 +111,14 @@ const TrendMainPage = () => {
   const searchCtgr = () => {
     if (searchVal === "") {
       getDataset();
-      getDatasetForKeyword("비디오 게임");
+      getDatasetForKeyword("FPS");
     } else {
       getDataset();
       getDatasetForKeyword(searchVal);
       if (ctgrs.length === 0) {
-        searchVal = "비디오 게임";
+        searchVal = "FPS";
         getDataset();
-        getDatasetForKeyword("비디오 게임");
+        getDatasetForKeyword("FPS");
       }
     }
   };
@@ -334,10 +333,10 @@ const TrendMainPage = () => {
           height="196"
         ></rect>
       </svg>
-      <span id="thirdfont1">신규 조회수</span>
-      <svg className="thirdtop2">
+      <span id="thirdFont1">신규 조회수</span>
+      <svg className="thirdTop2">
         <rect
-          id="thirdtop2"
+          id="thirdTop2"
           rx="0"
           ry="0"
           x="0"
@@ -347,9 +346,9 @@ const TrendMainPage = () => {
         ></rect>
       </svg>
 
-      <svg className="thirdbox2">
+      <svg className="thirdBox2">
         <rect
-          id="thirdbox2"
+          id="thirdBox2"
           rx="0"
           ry="0"
           x="0"
@@ -358,10 +357,10 @@ const TrendMainPage = () => {
           height="196"
         ></rect>
       </svg>
-      <span id="thirdfont2">신규 동영상수</span>
-      <svg className="fourthtop">
+      <span id="thirdFont2">신규 동영상수</span>
+      <svg className="fourthTop">
         <rect
-          id="fourthtop"
+          id="fourthTop"
           rx="0"
           ry="0"
           x="0"
@@ -373,7 +372,7 @@ const TrendMainPage = () => {
       <div className="fourthBox">
         <Bar data={barInfo.data} options={barInfo.options} />
         <rect
-          id="fourthbox"
+          id="fourthBox"
           rx="0"
           ry="0"
           x="0"
@@ -382,7 +381,7 @@ const TrendMainPage = () => {
           height="196"
         ></rect>
       </div>
-      <span id="fourthfont">채널 구독자수</span>
+      <span id="fourthFont">채널 구독자수</span>
     </div>
   );
 };
