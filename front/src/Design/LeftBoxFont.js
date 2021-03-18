@@ -12,6 +12,20 @@ const LeftBoxFont = (props) => {
     }
   );
 
+  //SI단위로 숫자를 세어주는 함수, x에 값을 삽입
+  const siRound = (x) => {
+    if (x<1e3) return x+'';
+    const digits = Math.log10(x) | 0
+    const tier = digits/3 | 0
+    let str = (x / 10**(tier*3)).toFixed(2-(digits%3))
+    // Turn "10.00" into "10.0" and "100.0" into "100"
+    str = str.replace(/^(.{3})\..+|^(.{4}).+/, '$1$2')
+    if (str.length>4) { ///Add this check
+      siRound(str)
+    }
+    return str + (['','k','M','G','T'])[tier]
+}
+
   return (
     <div
       className="mp_LeftBoxContents">
@@ -47,7 +61,7 @@ const LeftBoxFont = (props) => {
           <span>순위</span>
         </div>
         <div id="_leftboxmainfont2">
-          <span>평균 조회수</span>
+          <span>총 조회수</span>
         </div>
         <div id="_leftboxmainfont3">
           <span>검색량</span>
@@ -75,13 +89,13 @@ const LeftBoxFont = (props) => {
         <div id="_pastranknumber2">
           <span>
             {props.data[dateTarget.left] !== undefined
-              ? props.data[dateTarget.left].viewCount
+              ? siRound(props.data[dateTarget.left].viewCount)
               : 0}
           </span>
         </div>
         <div id="_pastranknumber3">
           <span>{props.data[dateTarget.left] !== undefined
-              ? props.data[dateTarget.left].resultCount
+              ? siRound(props.data[dateTarget.left].resultCount)
               : 0}</span>
         </div>
         <div id="_pastranknumber4">
@@ -93,13 +107,13 @@ const LeftBoxFont = (props) => {
         <div id="_nowranknumber2">
           <span>
             {props.data[dateTarget.right] !== undefined
-              ? props.data[dateTarget.right].viewCount
+              ? siRound(props.data[dateTarget.right].viewCount)
               : 0}
           </span>
         </div>
         <div id="_nowranknumber3">
           <span>{props.data[dateTarget.right] !== undefined
-              ? props.data[dateTarget.right].resultCount
+              ? siRound(props.data[dateTarget.right].resultCount)
               : 0}</span>
         </div>
         <div id="_nowranknumber4">

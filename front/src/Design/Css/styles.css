@@ -180,7 +180,6 @@
     position: relative;
     width: 24px;
     height: 24px;
-    /* background-image: url( "../Icons/searchButtonBlack.png" ); */
 }
 
 /* .searchButtonImg:hover {
@@ -204,9 +203,9 @@
     background-color: white !important;
 }
 
-.MuiChip-root:hover {
+/* .MuiChip-root:hover {
     background-color: grey !important;
-}
+} */
 
 .MuiChip-root:focus {
     background-color: grey !important;

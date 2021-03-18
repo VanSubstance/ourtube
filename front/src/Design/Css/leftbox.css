@@ -17,23 +17,32 @@
 }
 
 .mP_lookWellBox {
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 1);
     position: absolute;
-    left: 505px;
+    left: 500px;
     top: 900px;
+    width: 100px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
+    transition: linear .1s;
+}
+
+.mP_lookWellBox:focus {
+    background-color: grey;
 }
 
 .mP_lookWell {
-    font-size: 1em;
-    font-weight: bold;
+    font-size: 0.95em;
     position: relative;
     text-align: center;
-    color: white;
+    color: black;
     text-decoration: none;
     cursor: pointer;
+    font-family: "Spoqa Han Sans Neo", serif;
 }
 
 .mp_LeftBoxContents {

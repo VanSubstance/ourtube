@@ -238,7 +238,7 @@ return (
           searchCtgr();
         }}
       >
-        <img className="searchButtonImg" src="/Ex/searchbutton.png"></img>
+        <img className="searchButtonImg" src="/Ex/searchbuttonBlack.png"></img>
       </button>
     </div>
     <div className="mainChipBox5">
