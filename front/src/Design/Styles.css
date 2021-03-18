@@ -2124,6 +2124,7 @@
     height: 227px;
     left: 320px;
     top: 689px;
+    background-color: rgba(17,17,17, 0.7);
 }
 #thirdtop {
     fill: rgba(17,17,17,1);
@@ -2193,7 +2194,7 @@
     height: 196px;
     left: 320px;
     top: 1224px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(17,17,17, 0.7);
 }
 #rightboxfont {
     mix-blend-mode: normal;
