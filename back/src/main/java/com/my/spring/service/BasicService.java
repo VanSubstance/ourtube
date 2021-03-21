@@ -6,21 +6,25 @@ import com.my.spring.domain.IdComplete;
 import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.TopicStatDto;
 import com.my.spring.domain.basics.Game;
+import com.my.spring.domain.basics.GameSearch;
 import com.my.spring.domain.chains.GameTopic;
 import com.my.spring.domain.chains.TopicChain;
 import com.my.spring.domain.statistics.GameDataForMain;
+import com.my.spring.domain.statistics.GameDataForTrendMain;
 import com.my.spring.domain.statistics.GameStatistic;
 
 public interface BasicService {
-	public List<String> getGameNew();
-	public List<String> getGameFirst();
-	public List<String> getGameTop();
+	public List<String> getGameQ();
+	public String getTitleByQ(String q);
+	public List<String> getAllTitle();
 
 	public void setGame(Game item);
+	public void setGameInGameSearch(String title);
 	public void setGameTopic(GameTopic item);
 	public void setTopic(String topic);
 	
 	public List<GameDataForMain> getGameDataForMainByGame(String title);
+	public GameDataForMain getGameDateForTrendMainByGame(String title);
 	
 	public int checkGameStat(String title);
 	public void setGameStat(GameStatistic item);
@@ -35,4 +39,6 @@ public interface BasicService {
 	
 	public List<String> getTopicsByTopic(String topic);
 	public List<Game> getGamesByTopic(String topic);
+	public List<String> getAllGamesByTopic(String topic);
+
 }

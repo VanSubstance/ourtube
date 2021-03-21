@@ -45,7 +45,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			"AIzaSyAFdfs807Tl-7PM8tb4ZDOqfC7vKSCSaRg",
 			"AIzaSyAQtHVKj5g7XtkJJh_Ipd5WlifxCOCwzsc", 
 			"AIzaSyCXiMrdsfLrPLtHRqhS5POORUzqrIK5_74"};
-	private static final int api = 0;
+	private static final int api = 3;
 
 	public YoutubeServiceImpl() {
 		getConnection();
@@ -64,7 +64,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 	
 	// search.list: 100
 	@Override
-	public ArrayList<Object> callVideoIdsByGame(String title) {
+	public ArrayList<Object> callVideoIdsByGame(String title, int api) {
 		ArrayList<Object> result = new ArrayList<Object>();
 		List<String> videoIdList = new ArrayList();
 		List<String> channelIdList = new ArrayList();

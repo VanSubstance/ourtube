@@ -1,14 +1,10 @@
 package com.my.spring.domain.statistics;
 
-import java.sql.Date;
-
 import lombok.*;
 
 @Setter
 @Getter
-public class GameDataForMain {
-	private String title;
-	private Date infoDate;
+public class GameDataForTrendMain {
 	private int resultCount;
 	private int viewCount;
 	private int likeCount;

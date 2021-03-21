@@ -2,6 +2,8 @@ package com.my.spring.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,16 +39,20 @@ public class ProcessingController {
 	private VideoService serviceVideo;
 	@Autowired
 	private ChannelService serviceChannel;
+	
+	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	String requestedTime;
 
 	@RequestMapping(value = "/game/rank/today")
 	public List<TopicStatDto> getTopicStatsforToday() {
-		System.out.println("금일 게임 전체 랭킹 반환");
+		System.out.println("금일 게임 전체 랭킹 반환: " + requestedTime);
 		return serviceBasic.getGameListForToday();
 	}
 
 	@RequestMapping(value = "/topic/**", method = RequestMethod.GET)
 	public List<String> getTopicsByTopic(HttpServletRequest request) {
-		System.out.println("관련 토픽 리스트 반환");
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println("관련 토픽 리스트 반환: " + requestedTime);
 	    String requestURL = request.getRequestURL().toString();
 	    String topic = requestURL.split("/topic/")[1];
 	    try {
@@ -61,7 +67,8 @@ public class ProcessingController {
 
 	@RequestMapping(value = "/game/list/**", method = RequestMethod.GET)
 	public List<Game> getGamesByTopic(HttpServletRequest request) {
-		System.out.println("토픽 산하 키워드 10개 리스트 반환");
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println("토픽 산하 키워드 10개 리스트 반환: " + requestedTime);
 	    String requestURL = request.getRequestURL().toString();
 	    String topic = requestURL.split("/game/list/")[1];
 	    try {
@@ -76,7 +83,8 @@ public class ProcessingController {
 	
 	@RequestMapping(value = "/keyword/{keyword}", method = RequestMethod.GET)
 	public HashMap<String, Object> getDataForWordcloudByKeyword(@PathVariable String keyword) {
-		System.out.println("워드 클라우드 데이터 반환: " + keyword);
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println("워드 클라우드 데이터 반환: " + keyword + " : " + requestedTime);
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		List<NounDto> words = serviceWord.getWordsByGame(keyword);
 		VideoStatDto avg = serviceVideo.getAvgVideoStatisticsByGame(keyword);
@@ -91,7 +99,8 @@ public class ProcessingController {
 	
 	@RequestMapping(value = "/chart/{topic}", method = RequestMethod.GET)
 	public HashMap<String, HashMap<String, Object>> getDataForChartViewByTopic(@PathVariable String topic) {
-		System.out.println("차트 데이터 반환: " + topic);
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println("차트 데이터 반환: " + topic + " : " + requestedTime);
 		HashMap<String, HashMap<String, Object>> result = new HashMap<String, HashMap<String, Object>>();
 		List<String> topics = serviceBasic.getTopicsByTopic(topic);
 		for (String topicRel : topics) {
@@ -111,11 +120,32 @@ public class ProcessingController {
 	
 	@RequestMapping(value = "/game/main/{title}", method = RequestMethod.GET)
 	public HashMap<String, GameDataForMain> getDatasForGame(@PathVariable String title) {
-		System.out.println("메인 화면 좌측 데이터 반환");
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println("메인 화면 좌측 데이터 반환: " + requestedTime);
 		HashMap<String, GameDataForMain> result = new HashMap<String, GameDataForMain>();
 		for (GameDataForMain item : serviceBasic.getGameDataForMainByGame(title)) {
 			result.put(item.getInfoDate().toString(), item);
 		}
+		return result;
+	}
+
+	@RequestMapping(value = "/game/all/title", method = RequestMethod.GET)
+	public List<String> getGameListForToday() {
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println("게임 제목 전체 반환: " + requestedTime);
+		return serviceBasic.getAllTitle();
+	}
+	
+	@RequestMapping(value = "/games/trendmain/{topic}", method =  RequestMethod.GET)
+	public HashMap<String, GameDataForMain> getDataForTrendMainPage(@PathVariable String topic) {
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println("토픽에 따른 트렌드 메인 페이지 게임 데이터: " + topic + " : " + requestedTime);
+		HashMap<String, GameDataForMain> result = new HashMap<String, GameDataForMain>();
+		List<String> games = serviceBasic.getAllGamesByTopic(topic);
+		for (String game: games) {
+			result.put(game, serviceBasic.getGameDateForTrendMainByGame(game));
+		}
+		
 		return result;
 	}
 }
