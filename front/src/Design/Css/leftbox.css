@@ -29,6 +29,12 @@
     justify-content: center;
     text-decoration: none;
     transition: linear .1s;
+    outline: 2px solid transparent;
+    
+}
+
+.mP_lookWellBox:hover {
+    background-color: grey;
 }
 
 .mP_lookWellBox:focus {

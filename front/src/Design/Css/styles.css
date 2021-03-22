@@ -54,6 +54,7 @@
     text-decoration: none;
     font-family: "Roboto";
     transition: linear .1s;
+    outline: 2px solid transparent;
 }
 
 .chartLinkBox:hover {
@@ -203,9 +204,9 @@
     background-color: white !important;
 }
 
-/* .MuiChip-root:hover {
+.MuiChip-root:hover {
     background-color: grey !important;
-} */
+}
 
 .MuiChip-root:focus {
     background-color: grey !important;

@@ -114,7 +114,7 @@ const MainPageSimple = (props) => {
 
   return (
     <div className="mainContainor">
-      <img className="backGroundImg" src="/Ex/backGroundIMG.PNG"></img>
+      <img className="backGroundImg" src="/Ex/mainBackGroundIMG.PNG"></img>
       <div className="sectionContainor">
         <div className="mainLeftSection">
           <LeftBox

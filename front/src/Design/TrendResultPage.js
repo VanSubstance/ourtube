@@ -1,69 +1,197 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import './Styles.css';
 import './Css/TrendResultPage.css';
 import { ListFont, TrendChip } from './Comps';
+import axios from "axios";
+import Chip from "@material-ui/core/Chip";
+import { Bar, Line } from "react-chartjs-2";
 
-class TrendResultPage extends Component {
-    render() {
-        return (
+
+const TrendResultPage = () => {
+
+    const [url] = useState("http://222.232.15.205:8082");
+
+    let [searchVal, setSearchVal] = useState("FPS");
+
+    let [selectedCtgr, setSelectedCtgr] = useState("");
+
+    let [ctgrs, setCtgrs] = useState([]);
+
+    let [keywords, setKeywords] = useState([]);
+
+    const [barInfo, setBarInfo] = useState({
+        data: {
+            labels: ['1', '2', '3', '4', '5'],
+            datasets: [
+                {
+                    data: [11000, 12000, 13000, 14000, 15000],
+                    backgroundColor: ["red", "blue", "yellow", "black", "purple"],
+                },
+            ],
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [
+                    {
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                    },
+                ],
+            },
+        },
+    });
+
+    const [lineInfo, setLineInfo] = useState({
+        data: {
+            labels: ['1', '2', '3', '4', '5'],
+            datasets: [
+                {
+                    data: [11000, 12000, 13000, 14000, 15000],
+                    borderColor: "red"
+                }
+            ],
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                yAxes: [
+                    {
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                    },
+                ],
+            },
+        }
+    })
+
+    const setDataBarEx = (data) => {
+        let dataBar = [];
+        data.foreach((value, key) => {
+            dataBar.push(value.viweCount);
+        });
+        const newInfo = {
+            data: {
+                labels: [data.key],
+                datasets: [
+                    {
+                        data: dataBar,
+                        backgroundColor: ["red", "blue"],
+                        background: "",
+                        label: ["조회수"],
+                    },
+                ],
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true,
+                            },
+                        },
+                    ],
+                },
+            },
+        };
+        setBarInfo(newInfo);
+    };
+
+    useEffect(() => {
+        getDataset();
+        getDatasetForKeyword(searchVal);
+    }, []);
+
+    const getDataset = async () => {
+        await axios
+            .get("http://222.232.15.205:8082/deploy/topic/" + searchVal)
+            .then(({ data }) => {
+                if (data.length >= 8) {
+                    setCtgrs(data.slice(0, 7));
+                } else {
+                    setCtgrs(data);
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+    };
+
+    const getDataBar = async () => {
+        await axios
+            .get("http://222.232.15.205:8082/deploy/chart/" + searchVal)
+            .then(({ data }) => {
+                if (data.length >= 5) {
+                    setDataBarEx(data.slice(0, 5));
+                } else {
+                    setDataBarEx(data);
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+    };
+
+    const searchCtgr = () => {
+        if (searchVal === "") {
+            getDataset();
+            getDatasetForKeyword("FPS");
+        } else {
+            getDataset();
+            getDatasetForKeyword(searchVal);
+            if (ctgrs.length === 0) {
+                searchVal = "FPS";
+                getDataset();
+                getDatasetForKeyword("FPS");
+            }
+        }
+    };
+
+    const getDatasetForKeyword = async (ctgr) => {
+        await axios
+            .get(url + "/deploy/game/list/" + ctgr)
+            .then(({ data }) => {
+                if (data.length >= 10) {
+                    setKeywords(data.slice(0, 10));
+                } else {
+                    setKeywords(data);
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
+    };
+
+    const searchCtgrPress = (e) => {
+        if (e.key === "Enter") {
+            searchVal = e.target.value;
+            searchCtgr();
+            console.log();
+        }
+    };
+
+    return (
+        <div
+            className="trp_MainWarpper">
             <div
-                className="trp_mainContainer">
-                <div id="header">
-                    <div
-                        className="trp_BannerBox">
-                        <a
-                            className="trp_BannerA"
-                            href="http://localhost:3012/">
-                            <img
-                                className="trp_BannerImage"
-                                src="/Ex/ourtubeLogoWhite.PNG">
-                            </img>
-                        </a>
-                    </div>
-                    <div
-                        className="trp_InfoBar">
-                            <div
-                                className="trp_CtgrChip">
-                                    RPG
-                            </div>
-                            <div
-                                className="trp_CtgrChip">
-                                    AOS
-                            </div>
-                            <div
-                                className="trp_CtgrChip">
-                                    액션
-                            </div>
-                            <div
-                                className="trp_BadgeBar">
-                                    <div
-                                        className="trp_BadgeChip">
-                                        이 주의 조회수 1위
-                                    </div>
-                                    <div
-                                        className="trp_BadgeChip">
-                                        이 주의 신규 동영상 1위
-                                    </div>
-                                    <div
-                                        className="trp_BadgeChip">
-                                        이 주의 최고 RPG 게임
-                                    </div>
-                                    <div
-                                        className="trp_BadgeChip">
-                                        양승혁의 골짜기
-                                    </div>
-                            </div>
-                    </div>
-                </div>
-                {/* //배경 및 그라데이션  */}
-                <div id="scollWallpaper_">
-                    <img
-                        id="andy-holmes-rCbdp8VCYhQ-unspla1"
-                        src="./Ex/andy-holmes-rCbdp8VCYhQ-unspla.png"
-                        srcSet="./Ex/andy-holmes-rCbdp8VCYhQ-unspla.png 1x, ./Ex/andy-holmes-rCbdp8VCYhQ-unspla@2x.png 2x"
-                    />
-                </div>
-                <svg className="scollGradient" viewBox="0 0 1920 1500">
+                className="trp_BackGroundPanel">
+            </div>
+            <div
+                className="trp_BackGroundPanelLine">
+            </div>
+
+            {/* //배경 및 그라데이션  */}
+
+            <div id="trp_ScollWallPaper">
+                <img
+                    className="trp_ScrollWallPaperImg"
+                    src="/Ex/andy-holmes-rCbdp8VCYhQ-unspla@2x.png"
+                    srcSet="/Ex/andy-holmes-rCbdp8VCYhQ-unspla@2x.png">
+                </img>
+                <svg className="trp_scollGradient" viewBox="0 0 1920 1500">
                     <linearGradient
                         id="_137_bn"
                         spreadMethod="pad"
@@ -81,70 +209,174 @@ class TrendResultPage extends Component {
                         <stop offset="1" stopColor="#28adc2" stopOpacity="1"></stop>
                     </linearGradient>
                     <path
-                        id="Gradient"
+                        id="trp_Gradient"
                         d="M 0 0 L 1920 0 L 1920 1500 L 0 1500 L 0 0 Z"
                     ></path>
                 </svg>
-                {/* <TrendChip></TrendChip> */}
-                <svg className="listTop">
-                    <rect id="listTop" rx="0" ry="0" x="0" y="0" width="923" height="41">
-                    </rect>
-                </svg>
-                <div id="cloudfont">
-                    <span>텍스트 클라우드</span>
-                </div>
-                <svg className="listBox1">
-                    <rect id="listBox" rx="0" ry="0" x="0" y="0" width="923" height="287">
-                    </rect>
-                </svg>
-                <svg className="rightBox">
-                    <rect id="rightBox" rx="0" ry="0" x="0" y="0" width="339" height="156">
-                    </rect>
-                </svg>
-                <svg className="Rerightbox2">
-                    <rect id="Rerightbox2" rx="0" ry="0" x="0" y="0" width="339" height="286">
-                    </rect>
-                </svg>
-                <svg className="Resecondtop">
-                    <rect id="Resecondtop" x="0" width="300" height="41">
-                    </rect>
-                    <rect id="Resecondtop" x="311" width="300" height="41">
-                    </rect>
-                    <rect id="Resecondtop" x="622" width="300" height="41">
-                    </rect>
-                </svg>
-                <div id="reSecondTopFont1">
-                    <span>좋아요 싫어요 평균</span>
-                </div>
-                <div id="reSecondTopFont2">
-                    <span>활동별 비율</span>
-                </div>
-                <div id="reSecondTopFont3">
-                    <span>좋아요 싫어요 평균</span>
-                </div>
-                <svg className="reSecondBox">
-                    <rect id="reSecondBox" x="0" y="0" width="300" height="206">
-                    </rect>
-                    <rect id="reSecondBox" x="311" y="0" width="300" height="205">
-                    </rect>
-                    <rect id="reSecondBox" x="622" y="0" width="300" height="206">
-                    </rect>
-                </svg>
-                <svg className="reThirdTop">
-                    <rect id="reThirdTop" x="0" y="0" width="456" height="41">
-                    </rect>
-                    <rect id="reThirdTop" x="467" y="0" width="456" height="41">
-                    </rect>
-                </svg>
-                <svg className="reThirdBox">
-                    <rect id="reThirdBox" x="0" y="0" width="456" height="196">
-                    </rect>
-                    <rect id="reThirdBox" x="467" y="0" width="456" height="196">
-                    </rect>
-                </svg>
             </div>
-        );
-    }
-}
+
+            {/* 헤더 */}
+
+            <div id="header">
+                <div
+                    className="trp_BannerBox">
+                    <a
+                        className="trp_BannerA"
+                        href="http://localhost:3012/">
+                        <img
+                            className="trp_BannerImage"
+                            src="/Ex/ourtubeLogoWhite.PNG">
+                        </img>
+                    </a>
+                </div>
+                <div
+                    className="trp_InfoBar">
+                    <div
+                        className="trp_CtgrChip">
+                        RPG
+                    </div>
+                    <div
+                        className="trp_CtgrChip">
+                        AOS
+                    </div>
+                    <div
+                        className="trp_CtgrChip">
+                        액션
+                    </div>
+                    <div
+                        className="trp_BadgeBar">
+                        <div
+                            className="trp_BadgeChip">
+                            이 주의 조회수 1위
+                            </div>
+                        <div
+                            className="trp_BadgeChip">
+                            이 주의 신규 동영상 1위
+                            </div>
+                        <div
+                            className="trp_BadgeChip">
+                            이 주의 최고 RPG 게임
+                            </div>
+                        <div
+                            className="trp_BadgeChip">
+                            양승혁의 골짜기
+                            </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* 컨테이너 */}
+
+            <div id="container">
+                <div
+                    className="trp_LeftBox">
+                    <div
+                        className="trp_TextCloudBox">
+                        <div
+                            className="trp_BoxNameBar">
+                            텍스트 클라우드
+                        </div>
+                    </div>
+                    <div
+                        className="trp_CommentListBox">
+                        <div
+                            className="trp_BoxNameBar">
+                            연관 댓글 순위
+                        </div>
+                        <div
+                            className="trp_CommentList">
+                            <div
+                                className="trp_CLChip_1">
+                                순위
+                            </div>
+                            <div
+                                className="trp_CLChip_2">
+                                내용
+                            </div>
+                            <div
+                                className="trp_CLChip_3">
+                                빈도
+                            </div>
+                            <div
+                                className="trp_CLChip_4">
+                                테스트
+                            </div>
+                            <div
+                                className="trp_CLChip_4">
+                                테스트
+                            </div>
+                            <div
+                                className="trp_CLChip_4">
+                                테스트
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        className="trp_GraphBox_1">
+                        <div
+                            className="trp_BoxNameBar">
+                            좋아요 싫어요 평균
+                        </div>
+                    </div>
+                    <div
+                        className="trp_GraphBox_2">
+                        <div
+                            className="trp_BoxNameBar">
+                            활동 비
+                        </div>
+                    </div>
+                    <div
+                        className="trp_GraphBox_3">
+                        <div
+                            className="trp_BoxNameBar">
+                            피드백 지수
+                        </div>
+                    </div>
+                    <div
+                        className="trp_GraphBox_4">
+                        <div
+                            className="trp_BoxNameBar">
+                            키워드 관련 동영상 평균 누적 조회
+                        </div>
+                    </div>
+                    <div
+                        className="trp_GraphBox_5">
+                        <div
+                            className="trp_BoxNameBar">
+                            키워드 관련 동영상 활동 횟수
+                        </div>
+                    </div>
+                    <div
+                        className="trp_GraphBox_6">
+                        <div
+                            className="trp_BoxNameBar">
+                            주별 순위
+                        </div>
+                    </div>
+                </div>
+                <div
+                    className="trp_RightBox">
+                    <div
+                        className="trp_ProfileBox">
+                    </div>
+                    <div
+                        className="trp_RadarBox">
+                        <div
+                            className="trp_BoxNameBar">
+                            레이더 그래프
+                        </div>
+                    </div>
+                    <div
+                        className="trp_KWDRecommend">
+                        <div
+                            className="trp_BoxNameBar">
+                            추천 키워드
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 export default TrendResultPage;

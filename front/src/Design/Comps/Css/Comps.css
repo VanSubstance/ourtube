@@ -108,6 +108,7 @@
     transform: matrix(1, 0, 0, 1, 0, 0);
     background: transparent;
     transition: linear .1s;
+    outline: 2px solid transparent;
     /* outline: 5px solid black;
     outline-offset: -5px; */
 }
