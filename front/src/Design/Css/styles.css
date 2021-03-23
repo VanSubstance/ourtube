@@ -250,7 +250,7 @@
 }
 
 .testTxtTop {
-    position: absolute;
+    position: fixed;
     text-align: right;
     margin-right: 15px;
     right: 0px;
@@ -259,10 +259,11 @@
     font-size: 100%;
     font-weight: 400;
     width: 70%;
+    z-index: -1;
 }
 
 .testTxtBottom {
-    position: absolute;
+    position: fixed;
     text-align: right;
     margin-right: 15px;
     right: 0px;
@@ -270,7 +271,9 @@
     color: white;
     font-size: 0.7em;
     width: 61%;
+    width: 790px;
     font-weight: normal !important;
+    z-index: -1;
 }
 
 .bannerTrendMain {

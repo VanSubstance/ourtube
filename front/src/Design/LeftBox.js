@@ -29,7 +29,7 @@ const LeftBox = (props) => {
         href={/trend/ + props.keyword.title}>
         <div
           className="mP_lookWell">
-          자세히 보기
+          상세 정보
         </div>
       </a>
     </div>

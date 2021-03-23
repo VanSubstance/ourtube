@@ -11,168 +11,6 @@ const TrendResultPage = () => {
 
     const [url] = useState("http://222.232.15.205:8082");
 
-    let [searchVal, setSearchVal] = useState("FPS");
-
-    let [selectedCtgr, setSelectedCtgr] = useState("");
-
-    let [ctgrs, setCtgrs] = useState([]);
-
-    let [keywords, setKeywords] = useState([]);
-
-    const [barInfo, setBarInfo] = useState({
-        data: {
-            labels: ['1', '2', '3', '4', '5'],
-            datasets: [
-                {
-                    data: [11000, 12000, 13000, 14000, 15000],
-                    backgroundColor: ["red", "blue", "yellow", "black", "purple"],
-                },
-            ],
-        },
-        options: {
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true,
-                        },
-                    },
-                ],
-            },
-        },
-    });
-
-    const [lineInfo, setLineInfo] = useState({
-        data: {
-            labels: ['1', '2', '3', '4', '5'],
-            datasets: [
-                {
-                    data: [11000, 12000, 13000, 14000, 15000],
-                    borderColor: "red"
-                }
-            ],
-        },
-        options: {
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true,
-                        },
-                    },
-                ],
-            },
-        }
-    })
-
-    const setDataBarEx = (data) => {
-        let dataBar = [];
-        data.foreach((value, key) => {
-            dataBar.push(value.viweCount);
-        });
-        const newInfo = {
-            data: {
-                labels: [data.key],
-                datasets: [
-                    {
-                        data: dataBar,
-                        backgroundColor: ["red", "blue"],
-                        background: "",
-                        label: ["조회수"],
-                    },
-                ],
-            },
-            options: {
-                maintainAspectRatio: false,
-                scales: {
-                    yAxes: [
-                        {
-                            ticks: {
-                                beginAtZero: true,
-                            },
-                        },
-                    ],
-                },
-            },
-        };
-        setBarInfo(newInfo);
-    };
-
-    useEffect(() => {
-        getDataset();
-        getDatasetForKeyword(searchVal);
-    }, []);
-
-    const getDataset = async () => {
-        await axios
-            .get("http://222.232.15.205:8082/deploy/topic/" + searchVal)
-            .then(({ data }) => {
-                if (data.length >= 8) {
-                    setCtgrs(data.slice(0, 7));
-                } else {
-                    setCtgrs(data);
-                }
-            })
-            .catch((e) => {
-                console.error(e);
-            });
-    };
-
-    const getDataBar = async () => {
-        await axios
-            .get("http://222.232.15.205:8082/deploy/chart/" + searchVal)
-            .then(({ data }) => {
-                if (data.length >= 5) {
-                    setDataBarEx(data.slice(0, 5));
-                } else {
-                    setDataBarEx(data);
-                }
-            })
-            .catch((e) => {
-                console.error(e);
-            });
-    };
-
-    const searchCtgr = () => {
-        if (searchVal === "") {
-            getDataset();
-            getDatasetForKeyword("FPS");
-        } else {
-            getDataset();
-            getDatasetForKeyword(searchVal);
-            if (ctgrs.length === 0) {
-                searchVal = "FPS";
-                getDataset();
-                getDatasetForKeyword("FPS");
-            }
-        }
-    };
-
-    const getDatasetForKeyword = async (ctgr) => {
-        await axios
-            .get(url + "/deploy/game/list/" + ctgr)
-            .then(({ data }) => {
-                if (data.length >= 10) {
-                    setKeywords(data.slice(0, 10));
-                } else {
-                    setKeywords(data);
-                }
-            })
-            .catch((e) => {
-                console.error(e);
-            });
-    };
-
-    const searchCtgrPress = (e) => {
-        if (e.key === "Enter") {
-            searchVal = e.target.value;
-            searchCtgr();
-            console.log();
-        }
-    };
-
     return (
         <div
             className="trp_MainWarpper">
@@ -191,7 +29,11 @@ const TrendResultPage = () => {
                     src="/Ex/andy-holmes-rCbdp8VCYhQ-unspla@2x.png"
                     srcSet="/Ex/andy-holmes-rCbdp8VCYhQ-unspla@2x.png">
                 </img>
-                <svg className="trp_scollGradient" viewBox="0 0 1920 1500">
+                <svg className="trp_scollGradient"
+                    width="1920px"
+                    height="1500px"
+                    viewBox="0 0 1920 1500"
+                    preserveAspectRatio="xMidyMin meet">
                     <linearGradient
                         id="_137_bn"
                         spreadMethod="pad"
