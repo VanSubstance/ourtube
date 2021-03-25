@@ -7,11 +7,12 @@ import Chip from "@material-ui/core/Chip";
 import { Bar, Line } from "react-chartjs-2";
 
 
-const TrendResultPage = () => {
+const TrendResultPage = (props) => {
 
     const [url] = useState("http://222.232.15.205:8082");
 
     return (
+        console.log(props.match.params.keyword),
         <div
             className="trp_MainWarpper">
             <div
