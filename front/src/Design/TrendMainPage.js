@@ -8,7 +8,7 @@ import { Bar, Line } from "react-chartjs-2";
 const TrendMainPage = () => {
   const [url] = useState("http://222.232.15.205:8082");
 
-  let [searchVal, setSearchVal] = useState("FPS");
+  let [searchVal] = useState("FPS");
 
   let [selectedCtgr, setSelectedCtgr] = useState("");
 
@@ -16,7 +16,7 @@ const TrendMainPage = () => {
 
   let [keywords, setKeywords] = useState([]);
 
-  let [selectedKeywords, setSelectedKeywords] = useState([]);
+  let [selectedKeywords] = useState([]);
 
   const [barInfo, setBarInfo] = useState({
     data: {
