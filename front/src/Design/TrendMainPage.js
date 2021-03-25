@@ -16,6 +16,8 @@ const TrendMainPage = () => {
 
   let [keywords, setKeywords] = useState([]);
 
+  let [selectedKeywords, setSelectedKeywords] = useState([]);
+
   const [barInfo, setBarInfo] = useState({
     data: {
       labels: ['1', '2', '3', '4', '5'],
@@ -149,6 +151,15 @@ useEffect(() => {
   getDataset();
   getDatasetForKeyword(searchVal);
 }, []);
+
+const checkKeywords = (keyword, method) => {
+  if (method == 0) {
+    selectedKeywords = selectedKeywords.concat(keyword);
+  } else {
+    selectedKeywords = selectedKeywords.filter(k => k != keyword);
+  }
+  console.log(selectedKeywords);
+}
 
 const getDataset = async () => {
   await axios
@@ -328,7 +339,7 @@ return (
         height="270"
       ></rect>
     </svg>
-    <ListFont keywords={keywords}></ListFont>
+    <ListFont keywords={keywords} func = {checkKeywords}></ListFont>
     <svg className="rightbox">
       <rect
         id="rightbox"
