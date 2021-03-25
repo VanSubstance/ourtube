@@ -40,7 +40,7 @@ const TrendMainPage = () => {
     },
   });
 
-  const [lineInfo, setLineInfo] = useState({
+  const [lineRankInfo, setlineRankInfo] = useState({
     data: {
       labels: ['1', '2', '3', '4', '5'],
       datasets: [
@@ -62,7 +62,55 @@ const TrendMainPage = () => {
         ],
       },
     }
-    })
+  });
+  
+  const [lineViewInfo, setlineViewInfo] = useState({
+    data: {
+      labels: ['1', '2', '3', '4', '5'],
+      datasets: [
+        {
+          data: [11000, 12000, 13000, 14000, 15000],
+          borderColor: "blue"
+        }
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+    }
+  });
+  
+  const [line3Info, setline3Info] = useState({
+    data: {
+      labels: ['1', '2', '3', '4', '5'],
+      datasets: [
+        {
+          data: [11000, 12000, 13000, 14000, 15000],
+          borderColor: "white"
+        }
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+            },
+          },
+        ],
+      },
+    }
+  });
 
 const setDataBarEx = (data) => {
   let dataBar = [];
@@ -312,8 +360,9 @@ return (
         height="41"
       ></rect>
     </svg>
+    <span id="secondboxfont">키워드 월별 순위변동</span>
     <div className="secondbox">
-      <Line data={lineInfo.data} options={lineInfo.options} />
+      <Line data={lineRankInfo.data} options={lineRankInfo.options} />
       <rect
         id="secondbox"
         rx="0"
@@ -324,7 +373,6 @@ return (
         height="227"
       ></rect>
     </div>
-    <span id="secondboxfont">키워드 월별 순위변동</span>
     <svg className="exbox">
       <rect
         id="exbox"
@@ -347,7 +395,8 @@ return (
         height="41"
       ></rect>
     </svg>
-    <svg className="thirdbox">
+    <div className="thirdbox">
+      <Line data={lineViewInfo.data} options={lineViewInfo.options} />
       <rect
         id="thirdbox"
         rx="0"
@@ -357,7 +406,7 @@ return (
         width="456"
         height="196"
       ></rect>
-    </svg>
+    </div>
     <span id="thirdFont1">신규 조회수</span>
     <svg className="thirdTop2">
       <rect
@@ -371,7 +420,8 @@ return (
       ></rect>
     </svg>
 
-    <svg className="thirdBox2">
+    <div className="thirdBox2">
+      <Line data={line3Info.data} options={line3Info.options} />
       <rect
         id="thirdBox2"
         rx="0"
@@ -381,7 +431,7 @@ return (
         width="456"
         height="196"
       ></rect>
-    </svg>
+    </div>
     <span id="thirdFont2">신규 동영상수</span>
     <svg className="fourthTop">
       <rect
