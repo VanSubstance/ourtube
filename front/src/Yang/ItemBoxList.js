@@ -17,7 +17,7 @@ class ItemBoxList extends Component {
                     navigation
                     pagination={{ clickable: true }}
                     onSlideChange={() => console.log('slide change')}
-                    slidesPerView={4}>
+                    slidesPerView={4.5}>
                     
                 
                     <SwiperSlide id= "_itemboxdiv">

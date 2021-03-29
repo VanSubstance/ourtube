@@ -25,11 +25,11 @@ const LeftBox = (props) => {
         clickEvent={props.clickEvent}>
       </LeftBoxFont>
       <a
-        className="mP_lookWellBox"
+        className="mp_lookWellBox"
         href={/trend/ + props.keyword.title}>
         <div
-          className="mP_lookWell">
-          상세 정보
+          className="mp_lookWell">
+          자세히 보기
         </div>
       </a>
     </div>

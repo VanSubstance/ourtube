@@ -9,7 +9,6 @@
     left: 76px;
     top: 52px;
     border: 1px solid white;
-    z-index: 2;
 }
 
 .mp_leftThumnail {
@@ -17,11 +16,11 @@
     height: 308px;
 }
 
-.mP_lookWellBox {
+.mp_lookWellBox {
     position: absolute;
     background-color: rgba(255, 255, 255, 1);
-    left: 370px;
-    top: 300px;
+    left: 275px;
+    top: 310px;
     width: 100px;
     height: 40px;
     display: flex;
@@ -30,23 +29,24 @@
     text-decoration: none;
     transition: linear .1s;
     outline: 2px solid transparent;
-    z-index: 1;
-    
+    border-radius: 10px;
+    color: black;
 }
 
-.mP_lookWellBox:hover {
-    left: 380px;
+.mp_lookWellBox:hover {
+    background-color: rgb(99, 99, 99);
+    color: white;
 }
 
-.mP_lookWellBox:focus {
-    background-color: grey;
+.mp_lookWellBox:focus {
+    background-color: white;
+    color: black;
 }
 
-.mP_lookWell {
+.mp_lookWell {
     font-size: 0.95em;
     position: relative;
     text-align: center;
-    color: black;
     text-decoration: none;
     cursor: pointer;
     font-family: "Spoqa Han Sans Neo", serif;
