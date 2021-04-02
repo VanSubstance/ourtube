@@ -19,10 +19,10 @@
 .mp_lookWellBox {
     position: absolute;
     background-color: rgba(255, 255, 255, 1);
-    left: 275px;
-    top: 310px;
+    left: 400px;
+    top: 325px;
     width: 100px;
-    height: 40px;
+    height: 35px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -34,13 +34,13 @@
 }
 
 .mp_lookWellBox:hover {
-    background-color: rgb(99, 99, 99);
+    background-color: rgb(130, 130, 130);
     color: white;
 }
 
 .mp_lookWellBox:focus {
-    background-color: white;
-    color: black;
+    background-color: rgb(70, 70, 70);
+    color: white;
 }
 
 .mp_lookWell {
@@ -60,14 +60,14 @@
     left: 406px;
     top: 175px;
     color: white;
-    font-size: 1.1em;
+    font-size: 1.5em;
     font-family: "Spoqa Han Sans Neo", serif;
+    z-index: 10;
 }
 
 #_gamestyle {
-    opacity: 0.65;
     left: 76px;
-    top: 30.886px;
+    top: 25px;
     position: absolute;
     overflow: visible;
     width: 157px;
@@ -75,16 +75,16 @@
     text-align: left;
     font-family: "Roboto";
     font-style: normal;
-    font-weight: lighter;
-    font-size: 11px;
+    font-size: 14px;
     color: rgba(255, 255, 255, 1);
+    z-index: 10;
 }
 
 
 #_glorystyle1 {
     mix-blend-mode: color-dodge;
-    left: 426px;
-    top: 52px;
+    left: 406px;
+    top: 64px;
     position: absolute;
     overflow: visible;
     width: 89px;
@@ -93,15 +93,27 @@
     font-family: "Spoqa Han Sans Neo", serif;
     font-style: normal;
     font-weight: normal;
-    font-size: 10px;
+    font-size: 15px;
     color: rgba(255, 255, 255, 1);
     letter-spacing: 0.1px;
     text-transform: uppercase;
+    z-index: 10;
 }
+
+.mp_GloryFlag1 {
+    opacity: 0.8;
+    position: absolute;
+    height: 100px;
+    width: 240px;
+    left: 350px;
+    top: 25px;
+    z-index: -1;
+}
+
 #_glorystyle2 {
     mix-blend-mode: color-dodge;
-    left: 426px;
-    top: 70px;
+    left: 406px;
+    top: 94px;
     position: absolute;
     overflow: visible;
     width: 89px;
@@ -110,29 +122,49 @@
     font-family: "Spoqa Han Sans Neo", serif;
     font-style: normal;
     font-weight: normal;
-    font-size: 10px;
-    color: rgba(255, 255, 255, 1);
-    letter-spacing: 0.1px;
-    text-transform: uppercase;
-}
-#_glorystyle3 {
-    mix-blend-mode: color-dodge;
-    left: 426px;
-    top: 88px;
-    position: absolute;
-    overflow: visible;
-    width: 89px;
-    white-space: nowrap;
-    text-align: left;
-    font-family: "Spoqa Han Sans Neo", serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 10px;
+    font-size: 15px;
     color: rgba(255, 255, 255, 1);
     letter-spacing: 0.1px;
     text-transform: uppercase;
 }
 
+.mp_GloryFlag2 {
+    opacity: 0.8;
+    position: absolute;
+    height: 100px;
+    width: 240px;
+    left: 350px;
+    top: 55px;
+    z-index: -1;
+}
+
+#_glorystyle3 {
+    mix-blend-mode: color-dodge;
+    left: 406px;
+    top: 124px;
+    position: absolute;
+    overflow: visible;
+    width: 89px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: "Spoqa Han Sans Neo", serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 1);
+    letter-spacing: 0.1px;
+    text-transform: uppercase;
+}
+
+.mp_GloryFlag3 {
+    opacity: 0.8;
+    position: absolute;
+    height: 100px;
+    width: 220px;
+    left: 350px;
+    top: 85px;
+    z-index: -1;
+}
 
 #_leftboxmainfont1 {
     left: 76px;
@@ -273,7 +305,7 @@
     font-family: Roboto;
     font-style: normal;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 18px;
     color: rgba(255, 255, 255, 1);
 }
 
@@ -353,7 +385,7 @@
     font-family: _now;
     font-style: normal;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 18px;
     color: rgba(255, 255, 255, 1);
 }
 

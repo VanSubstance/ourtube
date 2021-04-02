@@ -64,6 +64,7 @@ const TrendResultPage = (props) => {
             labels: [(dataViewCountsDate.infoDate), '2', '3', '4', '5'],
             datasets: [
                 {
+                    label: (props.match.params.keyword),
                     data: [11000, 12000, 13000, 14000, 15000],
                     backgroundColor: ["red", "blue", "yellow", "black", "purple"],
                 },
@@ -74,28 +75,29 @@ const TrendResultPage = (props) => {
                 padding: {
                     top: 0,
                     left: 10,
-                    right: 10,
-                    bottom: 0
+                    right: 165,
+                    bottom: 15
                 },
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true,
+                            },
                         },
-                    },
-                ],
+                    ],
+                },
             },
-        },
-    }
-});
+        }
+    });
 
     const [lineRankInfo, setlineRankInfo] = useState({
         data: {
             labels: ['1', '2', '3', '4', '5'],
             datasets: [
                 {
+                    label: (props.match.params.keyword),
                     data: [11000, 12000, 13000, 14000, 15000],
                     borderColor: "red"
                 }
@@ -109,25 +111,26 @@ const TrendResultPage = (props) => {
                     right: 20,
                     bottom: 260
                 },
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true,
+                            },
                         },
-                    },
-                ],
-            },
+                    ],
+                },
+            }
         }
-    }
-});
+    });
 
     const [lineViewInfo, setlineViewInfo] = useState({
         data: {
             labels: ['1', '2', '3', '4', '5'],
             datasets: [
                 {
+                    label: (props.match.params.keyword),
                     data: [11000, 12000, 13000, 14000, 15000],
                     borderColor: "blue"
                 }
@@ -141,25 +144,26 @@ const TrendResultPage = (props) => {
                     right: 20,
                     bottom: 20
                 },
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true,
+                            },
                         },
-                    },
-                ],
-            },
+                    ],
+                },
+            }
         }
-    }
-});
+    });
 
     const [line3Info, setline3Info] = useState({
         data: {
             labels: ['1', '2', '3', '4', '5'],
             datasets: [
                 {
+                    label: (props.match.params.keyword),
                     data: [11000, 12000, 13000, 14000, 15000],
                     borderColor: "white"
                 }
@@ -173,19 +177,19 @@ const TrendResultPage = (props) => {
                     right: 20,
                     bottom: 20
                 },
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [
+                        {
+                            ticks: {
+                                beginAtZero: true,
+                            },
                         },
-                    },
-                ],
-            },
+                    ],
+                },
+            }
         }
-    }
-});
+    });
 
     const [radarInfo, setradarInfo] = useState({
         data: {
@@ -195,8 +199,8 @@ const TrendResultPage = (props) => {
                     fill: false,
                     label: (props.match.params.keyword),
                     data: [45, 60, 79, 83, 97],
-                    backgroundColor: 'rgba(255, 255, 255, 1)',
-                    borderColor: 'rgba(255, 255, 255, 1)',
+                    backgroundColor: 'rgba(0, 0, 0, 0)',
+                    borderColor: 'rgba(0, 0, 0, 1)',
                     borderWidth: 1,
                 },
             ],
@@ -204,7 +208,7 @@ const TrendResultPage = (props) => {
         options: {
             legend: {
                 labels: {
-                    fontColor: 'rgba(255, 255, 255, 1)'
+                    fontColor: 'rgba(0, 0, 0, 1)'
                 },
             },
             reponsive: true,
@@ -234,9 +238,9 @@ const TrendResultPage = (props) => {
     });
 
     Chart.defaults.global.defaultFontFamily = "Roboto"
-    Chart.defaults.global.defaultFontColor = "rgba(255, 255, 255, 1)"
-    Chart.defaults.global.defaultColor = "rgba(255, 255, 255, 1)"
-    
+    Chart.defaults.global.defaultFontColor = "rgba(0, 0, 0, 1)"
+    Chart.defaults.global.defaultColor = "rgba(0, 0, 0, 1)"
+
 
     return (
         <div
@@ -390,9 +394,12 @@ const TrendResultPage = (props) => {
                             className="trp_BoxNameBar">
                             좋아요 싫어요 평균
                         </div>
-                        <Bar
-                            data={barInfo.data}
-                            options={barInfo.options} />
+                        <div
+                            className="trp_BarGraphContainer">
+                            <Bar
+                                data={barInfo.data}
+                                options={barInfo.options} />
+                        </div>
                     </div>
                     <div
                         className="trp_GraphBox_2">
@@ -400,9 +407,12 @@ const TrendResultPage = (props) => {
                             className="trp_BoxNameBar">
                             활동 비
                         </div>
-                        <Bar
-                            data={barInfo.data}
-                            options={barInfo.options} />
+                        <div
+                            className="trp_BarGraphContainer">
+                            <Bar
+                                data={barInfo.data}
+                                options={barInfo.options} />
+                        </div>
                     </div>
                     <div
                         className="trp_GraphBox_3">
@@ -410,9 +420,12 @@ const TrendResultPage = (props) => {
                             className="trp_BoxNameBar">
                             피드백 지수
                         </div>
-                        <Bar
-                            data={barInfo.data}
-                            options={barInfo.options} />
+                        <div
+                            className="trp_BarGraphContainer">
+                            <Bar
+                                data={barInfo.data}
+                                options={barInfo.options} />
+                        </div>
                     </div>
                     <div
                         className="trp_GraphBox_4">
@@ -479,6 +492,16 @@ const TrendResultPage = (props) => {
                             className="trp_BoxNameBar">
                             추천 키워드
                         </div>
+                    </div>
+                    <div
+                        className="trp_TxtTop">OURTUBE Analytics, Inc. © 2021</div>
+                    <div
+                        className="trp_TxtBottom">
+                        Ourtube is hosted by Ourtube Analytics, Inc. Ourtube isn’t endorsed
+                        by Youtube and doesn’t reflect the views or opinions of youtube or
+                        anyone officially involved in producing or managing Youtube. youtube
+                        and Google are trademarks or registered trademarks of Google.Inc.
+                        Youtube © Google.Inc.
                     </div>
                 </div>
             </div>

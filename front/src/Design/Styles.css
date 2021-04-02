@@ -862,21 +862,6 @@
     color: rgba(255, 255, 255, 1);
 }
 
-#_now {
-    left: 408px;
-    top: 418px;
-    position: absolute;
-    overflow: visible;
-    width: 40px;
-    white-space: nowrap;
-    text-align: left;
-    font-family: _now;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 14px;
-    color: rgba(255, 255, 255, 1);
-}
-
 #ID1 {
     left: 416px;
     top: 463px;

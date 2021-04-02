@@ -48,12 +48,24 @@ const LeftBoxFont = (props) => {
         <div id="_glorystyle1">
           <span>이 주의 최고 조회수</span>
         </div>
+        <img
+          className="mp_GloryFlag1"
+          src="/Ex/BadgeFlagBlue.png">
+        </img>
         <div id="_glorystyle2">
           <span>이 주의 최고 동영상</span>
         </div>
+        <img
+          className="mp_GloryFlag2"
+          src="/Ex/BadgeFlagBlue.png">
+        </img>
         <div id="_glorystyle3">
           <span>이 주의 최고 게임</span>
         </div>
+        <img
+          className="mp_GloryFlag3"
+          src="/Ex/BadgeFlagBlue.png">
+        </img>
       </div>
       <div
         className="mp_LeftBoxBottom">

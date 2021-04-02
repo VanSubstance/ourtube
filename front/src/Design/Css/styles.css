@@ -9,7 +9,7 @@
 
 .sectionContainor {
     width: 1920px;
-    height: 969px;
+    height: 100%;
 }
 
 .mainLeftSection {
@@ -19,7 +19,8 @@
     left: 0;
     right: auto;
     width: 640px;
-    height: 969px;
+    height: 100%;
+    z-index: 0;
 }
 
 .mainRightSection {
@@ -32,12 +33,14 @@
 }
 
 .backGroundImg {
-    position: absolute;
+    position: fixed;
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    width: 1920px;
-    height: 969px;
+    width: 100%;
+    min-width: 1903px;
+    height: 100%;
+    min-height: 969px;
     z-index: -1;
 }
 
@@ -205,11 +208,13 @@
 }
 
 .MuiChip-root:hover {
-    background-color: grey !important;
+    background-color: rgb(130, 130, 130) !important;
+    color: white !important;
 }
 
 .MuiChip-root:focus {
-    background-color: grey !important;
+    background-color: rgb(70, 70, 70) !important;
+    color: white !important;
 }
 
 .chipBackground {
