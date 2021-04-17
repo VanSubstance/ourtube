@@ -96,7 +96,10 @@ const LeftBoxFont = (props) => {
           </span>
         </div>
         <div id="_pastranknumber1">
-          <span>1</span>
+          <span>
+            {props.data[dateTarget.left] !== undefined
+              ? siRound(props.data[dateTarget.left].rank)
+              : 0}</span>
         </div>
         <div id="_pastranknumber2">
           <span>
@@ -111,10 +114,16 @@ const LeftBoxFont = (props) => {
               : 0}</span>
         </div>
         <div id="_pastranknumber4">
-          <span>4</span>
+          <span>
+            {props.data[dateTarget.left] !== undefined
+              ? siRound(props.data[dateTarget.left].ourScore)
+              : 0}</span>
         </div>
         <div id="_nowranknumber1">
-          <span>5</span>
+          <span>
+            {props.data[dateTarget.right] !== undefined
+              ? siRound(props.data[dateTarget.right].rank)
+              : 0}</span>
         </div>
         <div id="_nowranknumber2">
           <span>
@@ -129,7 +138,9 @@ const LeftBoxFont = (props) => {
               : 0}</span>
         </div>
         <div id="_nowranknumber4">
-          <span>8</span>
+          <span>{props.data[dateTarget.right] !== undefined
+              ? siRound(props.data[dateTarget.right].ourSocre)
+              : 0}</span>
         </div>
         <div
           className="mp_ChangeMarks">
