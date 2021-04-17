@@ -132,4 +132,9 @@ public class BasicServiceImpl implements BasicService {
 		return mapper.getAllGamesByTopic(topic);
 	}
 
+	@Override
+	public void setWeightsGameTodayByGame(GameStatistic item) {
+		mapper.setWeightsGameTodayByGame(item);
+	}
+
 }

@@ -15,21 +15,19 @@ public interface YoutubeService {
 	 * List<String> -> 채널 id 리스트
 	 */
 	public ArrayList<Object> callVideoIdsByGame(String game, int api);
-	public ArrayList<Object> callVideoIdsByTopic(TopicDto topicDto);
-	public ArrayList<Object> callVideoIdsByGame();
 	
 	/**
 	 * 채널 id 리스트 -> 채널 기본 정보 & 체인 정보
 	 * List<ChannelDto>
 	 * List<ChainDto>
 	 */
-	public ArrayList<Object> callChannelInfosByChannelId(List<String> channelIdList);
+	public ArrayList<Object> callChannelInfosByChannelId(List<String> channelIdList, int api);
 	
 	/**
 	 * 채널 id 리스트 -> 해당일 채널 통계 정보
 	 * List<ChannelStatDto>
 	 */
-	public ArrayList<Object> callChannelStatsByChannelId(List<String> channelIdList);
+	public ArrayList<Object> callChannelStatsByChannelId(List<String> channelIdList, int api);
 	
 	/**
 	 * 비디오 id 리스트 -> 비디오 기본 정보 & 체인 정보 & 태그 정보
@@ -37,19 +35,19 @@ public interface YoutubeService {
 	 * List<ChainDto>
 	 * List<TagDto>
 	 */
-	public ArrayList<Object> callVideoInfosByVideoId(List<String> videoIdList);
+	public ArrayList<Object> callVideoInfosByVideoId(List<String> videoIdList, int api);
 	
 	/**
 	 * 비디오 id 리스트 -> 해당일 채널 통계 정보
 	 * List<VideoStatDto>
 	 */
-	public ArrayList<Object> callVideoStatsByVideoId(List<String> videoIdList);
+	public ArrayList<Object> callVideoStatsByVideoId(List<String> videoIdList, int api);
 	
 	/**
 	 * 비디오 id 리스트 -> 댓글 정보
 	 * List<CommentDto>
 	 */
-	public ArrayList<Object> callCommentsByVideoId(List<String> videoIdList);
+	public ArrayList<Object> callCommentsByVideoId(List<String> videoIdList, int api);
 
 	
 }

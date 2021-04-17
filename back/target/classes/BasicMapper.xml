@@ -4,7 +4,12 @@
 	namespace = "com.my.spring.mapper.BasicMapper">
 
 	<select id="getGameQ" resultType="String">
-		select Q from gamesearch where q is not null
+		select Q from gamesearch 
+		where q is not null 
+		and title not in (
+			select title from gameStatistics
+			where infodate = TO_DATE(SYSDATE, ('YY/MM/DD'))
+		)
 	</select>
 	<select id="getTitleByQ" parameterType="String" resultType="String">
 		select title from gamesearch where q = #{q}
@@ -95,13 +100,17 @@
 		<![CDATA[
 		select * from game a, (
 		    select rownum ind, title from (
-		        select * from gamestatistics b
+		        select * from (
+		            select a.*, rownum rank from gamestatistics a
+		            where infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+		            order by ourscore desc
+				) b
 		        where 
 		        b.title in (
 		            select title from gametopic where topic = #{topic}
 		        ) 
 		        and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
-		        order by b.resultcount desc
+		        order by b.rank asc
 		        ) where ROWNUM <= 10
 		    ) b
 	    where a.title = b.title
@@ -111,19 +120,23 @@
 	
 	<select id="getAllGamesByTopic" parameterType="String" resultType="String">
 		<![CDATA[
-		select a.title from game a, (
+		select * from game a, (
 		    select rownum ind, title from (
-		        select * from gamestatistics b
+		        select * from (
+		            select a.*, rownum rank from gamestatistics a
+		            where infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+		            order by ourscore desc
+				) b
 		        where 
 		        b.title in (
 		            select title from gametopic where topic = #{topic}
 		        ) 
 		        and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
-		        order by b.resultcount desc
+		        order by b.rank asc
 		        )
 		    ) b
-	    where a.title = b.title
-	    order by b.ind
+		where a.title = b.title
+		order by b.ind
 		]]>
 	</select>
 	
@@ -147,7 +160,7 @@
 	</select>
 	
 	<select id="getGameDataForMainByGame" parameterType="String" resultType="com.my.spring.domain.statistics.GameDataForMain">
-		select b.*, d.resultcount from (
+		select b.*, d.resultcount, d.ourscore, d.rank from (
 		    select 
 		    a.infodate,
 		    round(sum(a.viewcount)) viewcount, 
@@ -160,7 +173,13 @@
 		        )
 		    group by a.infodate
 		    order by a.infodate desc) b
-		inner join gamestatistics d on d.title = #{title} and d.infodate = b.infodate
+		inner join (
+		    select * from (
+				select a.*, rownum rank from gamestatistics a
+				where infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+				order by ourscore desc
+				)
+		    ) d on d.title = #{title} and d.infodate = b.infodate
 	</select>
 	
 	<select id="getIdCompleteById" parameterType="String" resultType="Int">
@@ -171,4 +190,10 @@
 		insert into IdComplete (type, id)
 		values (#{item.type}, #{item.id})
 	</insert>
+	
+	<update id="setWeightsGameTodayByGame" parameterType="com.my.spring.domain.statistics.GameStatistic">
+		update gamestatistics set w1 = #{item.w1}, w2 = #{item.w2}, w3 = #{item.w3}, w4 = #{item.w4}, w5 = #{item.w5}, ourScore = #{item.ourScore}
+		where title = #{item.title} and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+	</update>
+	
 </mapper>

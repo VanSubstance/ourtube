@@ -41,4 +41,5 @@ public interface BasicService {
 	public List<Game> getGamesByTopic(String topic);
 	public List<String> getAllGamesByTopic(String topic);
 
+	public void setWeightsGameTodayByGame(GameStatistic item);
 }

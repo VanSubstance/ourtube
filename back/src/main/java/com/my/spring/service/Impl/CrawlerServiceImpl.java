@@ -214,4 +214,46 @@ public class CrawlerServiceImpl implements CrawlerService {
 		return result;
 	}
 
+	@Override
+	public ArrayList<Object> crawlGameVidsManual(String gameQ) {
+		String WEB_DRIVER_ID = "webdriver.chrome.driver";
+		String WEB_DRIVER_PATH = "C:/selenium_java/chromedriver.exe";
+		// System Property SetUp
+		System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+		// Driver SetUp
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		base_url = "https://www.youtube.com/results?search_query=" + gameQ;
+		ArrayList<Object> result = new ArrayList<Object>();
+		List<String> videoIdList = new ArrayList();
+		List<String> channelIdList = new ArrayList();
+
+		try {
+			driver.get(base_url);
+			Thread.sleep(2000);
+			Document soup = Jsoup.parse(driver.getPageSource());
+			for (Element tag : soup.select("a#video-title")) {
+				String vidId = tag.attr("href");
+				vidId = vidId.replace("/watch?v=", "").split("&qq=")[0];
+				videoIdList.add(vidId);
+				System.out.println("비디오: " + vidId);
+			}
+			for (Element tag : soup.select("div#channel-info")) {
+				String channelId = tag.select("a").attr("href");
+				channelId = channelId.replace("/channel/", "");
+				if (!channelId.contains("/user/")) {
+					channelIdList.add(channelId);
+					System.out.println("채널: " + channelId);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			driver.close();
+		}
+		result.add(videoIdList);
+		result.add(channelIdList);
+		return result;
+	}
+
 }

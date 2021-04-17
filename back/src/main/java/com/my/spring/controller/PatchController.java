@@ -1,17 +1,22 @@
 package com.my.spring.controller;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.my.spring.domain.ChainDto;
@@ -24,13 +29,13 @@ import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
 import com.my.spring.domain.WordDto;
 import com.my.spring.domain.basics.Game;
-import com.my.spring.domain.basics.GameSearch;
 import com.my.spring.domain.chains.GameTopic;
 import com.my.spring.domain.statistics.GameStatistic;
 import com.my.spring.service.BasicService;
 import com.my.spring.service.ChannelService;
 import com.my.spring.service.CommentService;
 import com.my.spring.service.CrawlerService;
+import com.my.spring.service.StatisticService;
 import com.my.spring.service.VideoService;
 import com.my.spring.service.WordService;
 import com.my.spring.service.YoutubeService;
@@ -55,9 +60,12 @@ public class PatchController {
 	private WordService serviceWord;
 	@Autowired
 	private CrawlerService serviceCrawler;
+	@Autowired
+	private StatisticService serviceStatistic;
 	
-	@Scheduled(cron = "1 0 0 * * *")
-	@RequestMapping(value = "/crawler")
+	private final int hour = 1;
+	
+	@Scheduled(cron = "1 0 " + hour + " * * *")
 	public void patchGameFromYoutube() {
 		System.out.println("------------------------------- 게임 크롤링 시작 -------------------------------");
 		ArrayList<Object> data = serviceCrawler.crawlGame();
@@ -83,22 +91,122 @@ public class PatchController {
 		System.out.println("------------------------------- 게임 크롤링 종료 -------------------------------");
 	}
 
-	@Scheduled(cron = "1 20 0 * * *")
-	@RequestMapping(value = "/first", method = RequestMethod.GET)
+	@Scheduled(cron = "1 20 " + hour + " * * *")
 	public void patchDataByGameFirst() {
 		List<String> gameQList = serviceBasic.getGameQ();
 		int mark = 0;
 		for (String gameQ : gameQList) {
 			System.out.println(mark);
 			System.out.println("게임: " + gameQ);
-			patchVideoAndChannelByGame(gameQ, 1);
+			patchVideoAndChannelByGame(gameQ, mark % 2);
 			System.out.println("게임: " + gameQ + " : 데이터 갱신 완료.");
 			mark ++;
 		}
 	}
 	
-	@Scheduled(cron = "1 40 0 * * *")
-	@RequestMapping(value = "/parse/all")
+	@Scheduled(cron = "1 40 " + hour + " * * *")
+	public void calculatePercentile() {
+		System.out.println("변수 계산 -------------");
+		SimpleRegression regression = new SimpleRegression();
+		List<String> GamesOrderByView = serviceStatistic.getGamesByDate();
+		List<String> GamesOrderByComment = serviceStatistic.getGamesOrderByComment();
+		List<Double> w3s = serviceStatistic.getLikeRatioByDate();
+		HashMap<String, GameStatistic> gameStats = new HashMap<String, GameStatistic>();
+		for (String title : GamesOrderByView) {
+			System.out.println("\t" + title);
+			int seq = GamesOrderByView.indexOf(title);
+			GameStatistic gameStat = new GameStatistic();
+			gameStat.setTitle(title);
+			
+			// w1 계산
+			// w1: 당일 평균 총합 조회수 해당 게임 백분율
+			double w1 = (double) seq
+					/ (double) GamesOrderByView.size();
+			w1 -= 0.5;
+			if (w1 < 0.0) {
+				w1 = - Math.pow(Math.abs(w1), 1.0/3.0);
+			} else {
+				w1 = Math.pow(w1, 1.0/3.0);
+			}
+			gameStat.setW1(w1);
+			
+			// w2 계산
+			// w2: 해당 게임 근 14일간 각 일 종합 조회수 기준 선형 계수
+			List<Integer> y = serviceStatistic.getRecentViewsByGame(title);
+			double[][] data = new double[14][2];
+			for (int i = 0; i < y.size(); i++) {
+				data[i][0] = i;
+				data[i][1] = y.get(i);
+			}
+			regression.addData(data);
+			double w2 = regression.getSlope()/10000;
+			if (w2 > 100.0) w2 = 100.0;
+			if (w2 < -100.0) w2 = -100.0;
+			gameStat.setW2(w2);
+			
+			// w3 계산
+			// w3: 해당 게임 당일 총 좋싫비 (총합 좋아요 / 총합 싫어요)
+			double w3 = w3s.get(seq);
+			if (w3 > 100.0) w3 = 100.0;
+			if (w3 < 1.0) w3 = 1.0;
+			gameStat.setW3(w3);
+			
+			// w4 계산
+			// w4: 해당 게임 당일 총합 댓글 백분율
+			double w4 = (double) GamesOrderByComment.indexOf(title)
+					/ (double) GamesOrderByComment.size();
+			w4 -= 0.5;
+			if (w4 < 0.0) {
+				w4 = - Math.pow(Math.abs(w4), 1.0/3.0);
+			} else {
+				w4 = Math.pow(w4, 1.0/3.0);
+			}
+			gameStat.setW4(w4);
+			
+			// w5 계산
+			// w5: 해당 게임 근 14일간 각 일 종합 취합 댓글 수 기준 선형 계수
+			regression = new SimpleRegression();
+			y = serviceStatistic.getRecentCommentCountsByGame(title);
+			data = new double[14][2];
+			for (int i = 0; i < y.size(); i++) {
+				data[i][0] = i;
+				data[i][1] = y.get(i);
+			}
+			regression.addData(data);
+			double w5 = regression.getSlope()/10;
+			if (w5 > 30.0) w5 = 30.0;
+			if (w5 < -30.0) w5 = -30.0;
+			gameStat.setW5(w5);
+			
+			System.out.println(gameStat.getTitle());
+			System.out.println(gameStat.getW1());
+			System.out.println(gameStat.getW2());
+			System.out.println(gameStat.getW3());
+			System.out.println(gameStat.getW4());
+			System.out.println(gameStat.getW5());
+			
+			// OurScore 계산
+			double ourScore = 0.0;
+			
+			gameStat.setOurScore(ourScore);
+			
+			gameStats.put(title, gameStat);
+			
+//			// 삽입
+//			serviceBasic.setWeightsGameTodayByGame(gameStat);
+			
+		}
+
+		System.out.println("변수 계산 종료 -------------\n");
+	}
+
+	@Scheduled(cron = "1 45 " + hour + " * * *")
+	public void calculateOurScore() {
+		System.out.println("----------------- OurScore 계산 -----------------");
+		
+	}
+	
+	@Scheduled(cron = "1 50 " + hour + " * * *")
 	public void parseWords() {
 		new ArrayList<String>();
 		new ArrayList<String>();
@@ -148,7 +256,7 @@ public class PatchController {
 		}
 
 		System.out.println("\t\t상위 채널 중 신규 id 리스트 -> 채널 기본 정보 & 채널 토픽 체인");
-		ArrayList<Object> data = serviceYoutube.callChannelInfosByChannelId(temp);
+		ArrayList<Object> data = serviceYoutube.callChannelInfosByChannelId(temp, 2);
 		List<ChannelDto> channelDtoList = (List<ChannelDto>) data.get(0);
 		List<ChainDto> chainChannel = new ArrayList<ChainDto>();
 
@@ -187,7 +295,7 @@ public class PatchController {
 		System.out.println(" 완료.");
 		
 		System.out.println("\t\t금일 통계 정보 갱신을 위한 채널 id 리스트 -> Youtube API -> 금일 채널 통계 정보");
-		data = serviceYoutube.callChannelStatsByChannelId(channelIdList);
+		data = serviceYoutube.callChannelStatsByChannelId(channelIdList, 2);
 		System.out.println();
 		List<ChannelStatDto> channelStatList = (List<ChannelStatDto>) data.get(0);
 		System.out.print("\t\t\t금일 채널 통계 정보 -> Database | o -> 등록 | ");
@@ -224,7 +332,7 @@ public class PatchController {
 			existedInfo = serviceVideo.getVideoInfoById(existed);
 		}
 		System.out.println("\t\t상위 비디오 중 신규 id 리스트 -> 비디오 기본 정보 & 태그 & 비디오 토픽 체인");
-		ArrayList<Object> data = serviceYoutube.callVideoInfosByVideoId(temp);
+		ArrayList<Object> data = serviceYoutube.callVideoInfosByVideoId(temp, 2);
 		List<VideoDto> videoDtoList = (List<VideoDto>) data.get(0);
 		List<ChainDto> chainVideo = new ArrayList<ChainDto>();
 
@@ -272,7 +380,7 @@ public class PatchController {
 		System.out.println(" 완료.");
 
 		System.out.print("\t\t\t댓글 -> Database | o -> 신규 등록 | x -> 이미 존재 | ");
-		data = serviceYoutube.callCommentsByVideoId(videoIdList);
+		data = serviceYoutube.callCommentsByVideoId(videoIdList, 3);
 		List<CommentDto> commentDtoList = (List<CommentDto>) data.get(0);
 		System.out.print(commentDtoList.size() + " 개\n\t\t\t");
 		for (CommentDto commentDto : commentDtoList) {
@@ -283,13 +391,16 @@ public class PatchController {
 				if (commentDto.getText().length() >= 2000) {
 					commentDto.setText(commentDto.getText().substring(0, 2000));
 				}
-				serviceComment.setComment(commentDto);
+				System.out.println(commentDto.getText());
+				if (commentDto.getText().length() != 0) {
+					serviceComment.setComment(commentDto);
+				}
 			}
 		}
 		System.out.println(" 완료.");
 		
 		System.out.println("\t\t금일 통계 정보 갱신을 위한 비디오 id 리스트 -> Youtube API -> 금일 비디오 통계 정보");
-		data = serviceYoutube.callVideoStatsByVideoId(videoIdList);
+		data = serviceYoutube.callVideoStatsByVideoId(videoIdList, 3);
 		System.out.println();
 		List<VideoStatDto> videoStatList = (List<VideoStatDto>) data.get(0);
 		System.out.print("\t\t\t금일 비디오 통계 정보 -> Database | o -> 등록 | ");
@@ -312,6 +423,13 @@ public class PatchController {
 		List<String> videoIdList = (List<String>) data.get(0);
 		List<String> channelIdList = (List<String>) data.get(1);
 		GameStatistic gameStat = (GameStatistic) data.get(2);
+		data = serviceCrawler.crawlGameVidsManual(gameQ);
+		videoIdList.addAll((List<String>) data.get(0));
+		channelIdList.addAll((List<String>) data.get(1));
+		Set<String> container = new HashSet<String>(videoIdList);
+		videoIdList = new ArrayList<String>(container);
+		container = new HashSet<String>(channelIdList);
+		channelIdList = new ArrayList<String>(container);
 		System.out.print(videoIdList.size() + " 개, 채널 id 리스트: ");
 		System.out.println(channelIdList.size() + " 개");
 

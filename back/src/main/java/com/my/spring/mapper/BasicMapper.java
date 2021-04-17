@@ -42,4 +42,6 @@ public interface BasicMapper {
 	public List<String> getTopicsByTopic(@Param("topic") String topic);
 	public List<Game> getGamesByTopic(@Param("topic") String topic);
 	public List<String> getAllGamesByTopic(@Param("topic") String topic);
+	
+	public void setWeightsGameTodayByGame(@Param("item") GameStatistic item);
 }

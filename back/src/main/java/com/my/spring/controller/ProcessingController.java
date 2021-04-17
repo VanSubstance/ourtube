@@ -68,7 +68,7 @@ public class ProcessingController {
 	@RequestMapping(value = "/game/list/**", method = RequestMethod.GET)
 	public List<Game> getGamesByTopic(HttpServletRequest request) {
 		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
-		System.out.println("토픽 산하 키워드 10개 리스트 반환: " + requestedTime);
+		System.out.print("토픽 산하 키워드 10개 리스트 반환: ");
 	    String requestURL = request.getRequestURL().toString();
 	    String topic = requestURL.split("/game/list/")[1];
 	    try {
@@ -77,7 +77,7 @@ public class ProcessingController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    System.out.println(topic);
+	    System.out.println(topic + " : " + requestedTime);
 		return serviceBasic.getGamesByTopic(topic);
 	}
 	
@@ -121,7 +121,7 @@ public class ProcessingController {
 	@RequestMapping(value = "/game/main/{title}", method = RequestMethod.GET)
 	public HashMap<String, GameDataForMain> getDatasForGame(@PathVariable String title) {
 		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
-		System.out.println("메인 화면 좌측 데이터 반환: " + requestedTime);
+		System.out.println("메인 화면 좌측 데이터 반환: " + title + " : " + requestedTime);
 		HashMap<String, GameDataForMain> result = new HashMap<String, GameDataForMain>();
 		for (GameDataForMain item : serviceBasic.getGameDataForMainByGame(title)) {
 			result.put(item.getInfoDate().toString(), item);

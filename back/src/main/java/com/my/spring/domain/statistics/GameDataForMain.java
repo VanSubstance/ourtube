@@ -14,4 +14,6 @@ public class GameDataForMain {
 	private int likeCount;
 	private int dislikeCount;
 	private int commentCount;
+	private double ourScore;
+	private int rank;
 }
