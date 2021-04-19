@@ -105,6 +105,7 @@ public class PatchController {
 	}
 	
 	@Scheduled(cron = "1 40 " + hour + " * * *")
+	@RequestMapping(value = "/calc/weight")
 	public void calculatePercentile() {
 		System.out.println("변수 계산 -------------");
 		SimpleRegression regression = new SimpleRegression();
@@ -185,25 +186,18 @@ public class PatchController {
 			System.out.println(gameStat.getW4());
 			System.out.println(gameStat.getW5());
 			
-			// OurScore 계산
-			double ourScore = 0.0;
-			
-			gameStat.setOurScore(ourScore);
+			// OurScore 계산			
+			gameStat.calcScore();
+			System.out.println("Score: " + gameStat.getOurScore());
 			
 			gameStats.put(title, gameStat);
 			
-//			// 삽입
-//			serviceBasic.setWeightsGameTodayByGame(gameStat);
+			// 삽입
+			serviceBasic.setWeightsGameTodayByGame(gameStat);
 			
 		}
 
 		System.out.println("변수 계산 종료 -------------\n");
-	}
-
-	@Scheduled(cron = "1 45 " + hour + " * * *")
-	public void calculateOurScore() {
-		System.out.println("----------------- OurScore 계산 -----------------");
-		
 	}
 	
 	@Scheduled(cron = "1 50 " + hour + " * * *")
