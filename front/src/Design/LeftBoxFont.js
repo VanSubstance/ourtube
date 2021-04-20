@@ -83,8 +83,7 @@ const LeftBoxFont = (props) => {
         </div>
         <div id="_now">
           <span>
-            {dateTarget.right,
-            console.log(props.data)}
+            {dateTarget.right}
           </span>
         </div>
         <div id="_past">
