@@ -124,6 +124,7 @@ public class ProcessingController {
 		System.out.println("메인 화면 좌측 데이터 반환: " + title + " : " + requestedTime);
 		HashMap<String, GameDataForMain> result = new HashMap<String, GameDataForMain>();
 		for (GameDataForMain item : serviceBasic.getGameDataForMainByGame(title)) {
+			item.setOurScore(Math.round(item.getOurScore()*100)/100.0);
 			result.put(item.getInfoDate().toString(), item);
 		}
 		return result;

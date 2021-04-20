@@ -161,25 +161,46 @@
 	
 	<select id="getGameDataForMainByGame" parameterType="String" resultType="com.my.spring.domain.statistics.GameDataForMain">
 		select b.*, d.resultcount, d.ourscore, d.rank from (
-		    select 
-		    a.infodate,
-		    round(sum(a.viewcount)) viewcount, 
-		    round(sum(a.likecount)) likecount, 
-		    round(sum(a.dislikecount)) dislikecount, 
-		    round(sum(a.commentcount)) commentcount from videostatistics a
-		    where id in (
-		        select id from videogame c
-		        where c.game = #{title}
-		        )
-		    group by a.infodate
-		    order by a.infodate desc) b
-		inner join (
-		    select * from (
-				select a.*, rownum rank from gamestatistics a
-				where infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
-				order by ourscore desc
-				)
-		    ) d on d.title = #{title} and d.infodate = b.infodate
+				    select 
+				    a.infodate,
+				    round(sum(a.viewcount)) viewcount, 
+				    round(sum(a.likecount)) likecount, 
+				    round(sum(a.dislikecount)) dislikecount, 
+				    round(sum(a.commentcount)) commentcount from videostatistics a
+				    where id in (
+				        select id from videogame c
+				        where c.game = #{title}
+				        )
+				    group by a.infodate
+				    order by a.infodate desc) b
+				inner join (
+				    select * from (
+						select a.*, rownum rank from gamestatistics a
+						where infodate = TO_DATE(SYSDATE-1, 'YY/MM/DD')
+						order by ourscore desc
+						)
+				    ) d on d.title = #{title} and d.infodate = b.infodate
+		union
+		select b.*, d.resultcount, d.ourscore, d.rank from (
+				    select 
+				    a.infodate,
+				    round(sum(a.viewcount)) viewcount, 
+				    round(sum(a.likecount)) likecount, 
+				    round(sum(a.dislikecount)) dislikecount, 
+				    round(sum(a.commentcount)) commentcount from videostatistics a
+				    where id in (
+				        select id from videogame c
+				        where c.game = #{title}
+				        )
+				    group by a.infodate
+				    order by a.infodate desc) b
+				inner join (
+				    select * from (
+						select a.*, rownum rank from gamestatistics a
+						where infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+						order by ourscore desc
+						)
+				    ) d on d.title = #{title} and d.infodate = b.infodate
 	</select>
 	
 	<select id="getIdCompleteById" parameterType="String" resultType="Int">
