@@ -1,0 +1,411 @@
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-jp.css);
+
+.trp_MainWarpper {
+    min-width: 1290px;
+    overflow: visible;
+    margin: 0 auto;
+}
+
+.trp_BackGroundPanel{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* .trp_BackGroundPanelLine{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1290px;
+    height: 1500px;
+    background-color: grey;
+} */
+
+#trp_ScrollWallPaper {
+    z-index: -1;
+    /* --web-view-name: ROBOTO 폰트 사용;
+    --web-view-id: ROBOTO__;
+    --web-scale-on-resize: true;
+    --web-enable-deep-linking: true; */
+}
+
+.trp_ScrollWallPaperImg {
+    position: fixed;
+    opacity: 1;
+    width: 100%;
+    min-width: 1903px;
+    height: 100%;
+    min-height: 969px;
+    overflow: hidden;
+}
+
+#trp_Gradient {
+    position: absolute;
+    left: 50%;
+    opacity: 0.7;
+    fill: url(#_137_bn);
+}
+
+.trp_Gradient {
+    mix-blend-mode: multiply;
+    overflow: visible;
+    position: absolute;
+    width: 1920px;
+    height: 936px;
+    transform: matrix(1, 0, 0, 1, 0, 0) rotate(180deg);
+    transform-origin: center;
+}
+
+.trp_scollGradient {
+    mix-blend-mode: multiply;
+    overflow: hidden;
+    position: absolute;
+    width: 1920px;
+    height: 1500px;
+    transform: matrix(1, 0, 0, 1, 0, 0) rotate(180deg) translateX(17px);
+    transform-origin: center;
+}
+
+#header {
+    position: relative;
+    z-index: 2000;
+}
+
+.trp_BannerBox {
+    position: relative;
+    width: 300px;
+    height: 65px;
+    margin: 0 auto;
+    padding: 80px 525px 80px 525px
+}
+
+.trp_BannerA {
+    position: relative;
+}
+
+.trp_BannerImage {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    width: 298px;
+    height: 65px;
+}
+
+.trp_InfoBar {
+    overflow: visible;
+    margin: 0 auto;
+    position: relative;
+    padding: 5px 30px 5px 30px;
+    height: 40px;
+    width: 1290px;
+}
+
+.trp_CtgrChip {
+    float: left;
+    padding: 7px 0px 7px 0px;
+    height: 26px;
+    width: 105px;
+    background-color: rgba(0, 0, 0, 0.7);
+    margin-left: 15px;
+    text-align: center;
+    font-size: 1em;
+    font-family: "Spoqa Han Sans Neo" , "Roboto";
+    color: white;
+}
+
+.trp_BadgeBar {
+    float: left;
+    padding: 0px 40px 0px 40px;
+    height: 40px;
+    width: 850px;
+    background-color: rgba(0, 0, 0, 0.7);
+    text-align: center;
+    font-size: 1em;
+    font-family: "Spoqa Han Sans Neo" , "Roboto";
+    color: white;
+}
+
+.trp_BadgeChip{
+    float: left;
+    padding: 7px 0px 7px 0px;
+    height: 26px;
+    margin: 0px 10px 0px 10px;
+    text-align: center;
+    font-size: 1em;
+    font-family: "Spoqa Han Sans Neo" , "Roboto";
+    color: white;
+}
+
+#container {
+    position: relative;
+    width: 1290px;
+    padding: 10px 30px;
+    margin: 0 auto;
+    display: flex !important;
+}
+
+.trp_LeftBox {
+    position: relative;
+    float: left;
+    width: 930px;
+}
+
+.trp_RightBox {
+    overflow: visible;
+    position: relative;
+    float: left;
+    width: 345px;
+    margin-left: 15px;
+}
+
+.trp_TextCloudBox {
+    float: left;
+    width: 675px;
+    height: 360px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.trp_PFBox {
+    overflow: hidden;
+    width: 100%;
+    height: 160px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.trp_PFThumbnailCircle {
+    overflow: hidden;
+    position: relative;
+    float: left;
+    margin: 15px 0px 15px 10px;
+    width: 126px;
+    height: 126px;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+.trp_PFThumbnail {
+    display: table;
+    margin: 0 auto;
+    width: 126px;
+    height: 126px;
+}
+
+.trp_PFKeywordName {    
+    float: left;
+    padding: 30px 0px 0px 10px;
+    height: 25px;
+    width: 195px;
+    text-align: left;
+    font-size: 1.1em;
+    font-family: "Spoqa Han Sans Neo" , "Roboto";
+    color: white;
+}
+
+.trp_PFKeywordYear {    
+    float: left;
+    padding: 15px 0px 0px 10px;
+    height: 20px;
+    width: 195px;
+    text-align: left;
+    font-size: 0.9em;
+    font-family: "Spoqa Han Sans Neo" , "Roboto";
+    color: white;
+}
+
+.trp_PFKeywordCompony {    
+    float: left;
+    padding: 15px 0px 0px 10px;
+    height: 20px;
+    width: 195px;
+    text-align: left;
+    font-size: 0.9em;
+    font-family: "Spoqa Han Sans Neo" , "Roboto";
+    color: white;
+}
+
+.trp_BoxNameBar {
+    width: 100%;
+    padding: 7px 0px 7px 0px;
+    height: 26px;
+    background-color: rgba(0, 0, 0, 0.7);
+    text-align: center;
+    font-size: 1em;
+    font-family: "Spoqa Han Sans Neo" , "Roboto";
+    color: white;
+}
+
+.trp_CommentListBox {
+    float: left;
+    margin-left: 15px;
+    width: 240px;
+    height: 360px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.trp_CommentList {
+    overflow: auto;
+    float: right;
+    width: 240px;
+    height: 320px;
+    text-align: center;
+    font-family: "Spoqa Han Sans Neo" , "Roboto";
+    color: white;
+    font-size: 0.8em;
+}
+
+.trp_CommentList::-webkit-scrollbar {
+    margin-top: 30px;
+    width: 10px;
+}
+
+.trp_CommentList::-webkit-scrollbar-button {
+}
+
+.trp_CommentList::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.trp_CommentList::-webkit-scrollbar-track-piece {
+}
+
+.trp_CommentList::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.95);
+    width: 10px;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+}
+
+.trp_CommentList::-webkit-scrollbar-corner {
+}
+
+.trp_CLChip_L {
+    float: left;
+    padding: 7px 0px 7px 0px;
+    width: 40px;
+    height: 20px;
+}
+
+.trp_CLChip_M {
+    float: left;
+    padding: 7px 0px 7px 0px;
+    width: 130px;
+    height: 20px;
+}
+
+.trp_CLChip_R {
+    float: left;
+    padding: 7px 0px 7px 0px;
+    width: 60px;
+    height: 20px;
+}
+
+.trp_CLChip_4 {
+    float: left;
+    padding: 7px 0px 7px 0px;
+    width: 100%;
+    height: 200px;
+}
+
+.trp_GraphBox_1 {
+    float: left;
+    width: 300px;
+    height: 250px;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 15px 15px 0px 0px;
+}
+
+.trp_GraphBox_2 {
+    float: left;
+    width: 300px;
+    height: 250px;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 15px 15px 0px 0px;
+}
+
+.trp_GraphBox_3 {
+    float: left;
+    width: 300px;
+    height: 250px;
+    margin: 15px 0px 0px 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.trp_GraphBox_4 {
+    float: left;
+    width: 457.5px;
+    height: 250px;
+    margin: 15px 15px 0px 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.trp_GraphBox_5 {
+    float: left;
+    width: 457.5px;
+    height: 250px;
+    margin: 15px 0px 0px 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.trp_GraphBox_6 {
+    float: left;
+    width: 100%;
+    height: 250px;
+    margin: 15px 0px 0px 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.trp_BarGraphContainer {
+    width: 457.5px;
+    height: 210px;
+}
+
+.trp_RadarBox {
+    float: left;
+    width: 100%;
+    height: 325px;
+    margin: 15px 0px 0px 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.trp_RadarContainer {
+    overflow: hidden;
+    width: 345px;
+    height: 285px;
+}
+
+.trp_KWDRecommend {
+    float: left;
+    width: 100%;
+    height: 605px;
+    margin: 15px 0px 0px 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.trp_TxtTop {
+    float: right;
+    position: relative;
+    text-align: right;
+    margin-right: 15px;
+    margin-top: 200px;
+    bottom: 0px;
+    color: white;
+    font-size: 100%;
+    font-weight: 400;
+    width: 70%;
+}
+
+.trp_TxtBottom {
+    float: right;
+    position: relative;
+    text-align: right;
+    margin-right: 15px;
+    margin-top: 15px;
+    bottom: 0px;
+    color: white;
+    font-size: 100%;
+    font-weight: 400;
+    width: 1100px;
+}

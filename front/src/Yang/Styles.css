@@ -1,0 +1,2047 @@
+
+.mediaViewInfo {
+    --web-view-name: ROBOTO 폰트 사용;
+    --web-view-id: ROBOTO__;
+    --web-scale-on-resize: true;
+    --web-enable-deep-linking: true;
+}
+
+:root {
+    --web-view-ids: ROBOTO__;
+}
+
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: none;
+} */
+
+#Wallpaper_ {
+    position: absolute;
+    width: 1920px;
+    height: 936px;
+    background-color: rgba(255, 255, 255, 1);
+    overflow: hidden;
+    --web-view-name: ROBOTO 폰트 사용;
+    --web-view-id: ROBOTO__;
+    --web-scale-on-resize: true;
+    --web-enable-deep-linking: true;
+}
+
+#chartfont {
+    mix-blend-mode: normal;
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    overflow: hidden;
+    width: 115px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 15px;
+    color: rgba(255,255,255,1);
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+}
+
+.__Leftbox {
+    position: absolute;
+    overflow: visible;
+    width: 640px;
+    height: 936px;
+    left: 0px;
+    top: 0px;
+}
+
+#_boxpostion {
+    position: absolute;
+    width: 307.779px;
+    height: 307.779px;
+    left: 76px;
+    top: 52.221px;
+    overflow: visible;
+}
+
+#____bu {
+    mix-blend-mode: color-dodge;
+    left: 426px;
+    top: 77px;
+    position: absolute;
+    overflow: visible;
+    width: 89px;
+    white-space: nowrap;
+    text-align: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 1);
+    letter-spacing: 0.1px;
+    text-transform: uppercase;
+}
+
+#_106 {
+    fill: rgba(255, 170, 0, 1);
+}
+
+._106 {
+    position: absolute;
+    overflow: visible;
+    width: 15px;
+    height: 15px;
+    left: 408px;
+    top: 52px;
+}
+
+#_107 {
+    fill: rgba(255, 170, 0, 1);
+}
+
+._107 {
+    position: absolute;
+    overflow: visible;
+    width: 15px;
+    height: 15px;
+    left: 408px;
+    top: 77px;
+}
+
+#OURTUBE {
+    mix-blend-mode: normal;
+    left: 625px;
+    top: 165px;
+    position: absolute;
+    overflow: visible;
+    width: 301px;
+    white-space: nowrap;
+    text-align: center;
+    font-family: Yj BONMOKGAK;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 49px;
+    color: rgba(255, 255, 255, 1);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+#scollOURTUBE {
+    left: 810px;
+    top: 103px;
+    position: absolute;
+    overflow: visible;
+    width: 301px;
+    white-space: nowrap;
+    text-align: center;
+    font-family: Yj BONMOKGAK;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 49px;
+    color: rgba(255,255,255,1);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+#scollbar {
+    fill: rgba(0,0,0,1);
+    opacity: 0.9;
+}
+.scollbar {
+    position: absolute;
+    overflow: visible;
+    width: 11px;
+    height: 270px;
+    left: 1232px;
+    top: 355px;
+}
+#scollball {
+    fill: rgba(255,255,255,1);
+}
+.scollball {
+    position: absolute;
+    overflow: visible;
+    width: 7px;
+    height: 33px;
+    left: 1234px;
+    top: 359px;
+}
+#_Searchbox {
+    fill: rgba(255, 255, 255, 1);
+}
+
+._Searchbox {
+    filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.161));
+    position: absolute;
+    overflow: visible;
+    width: 630px;
+    height: 37.702px;
+    left: 660px;
+    top: 291.502px;
+}
+._scrollSearchbox {
+    filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.161));
+    position: absolute;
+    overflow: visible;
+    width: 630px;
+    height: 37.702px;
+    left: 320px;
+    top: 230px;
+}
+
+#_Searchbox1 {
+    fill: rgba(255, 255, 255, 1);
+}
+
+._Searchbox1 {
+    filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.161));
+    position: absolute;
+    overflow: hidden;
+    width: 630px;
+    height: 100px;
+    left: 660px;
+    top: 291.502px;
+}
+._scrollSearchbox1 {
+    filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.161));
+    position: absolute;
+    overflow: hidden;
+    width: 630px;
+    height: 100px;
+    left: 320px;
+    top: 230px;
+}
+
+#_275 {
+    position: absolute;
+    width: 24.237px;
+    height: 24.237px;
+    left: 1234.764px;
+    top: 291.502px;
+    overflow: visible;
+}
+
+#_274 {
+    position: absolute;
+    width: 24.237px;
+    height: 24.237px;
+    left: 0px;
+    top: 0px;
+    overflow: visible;
+}
+
+#_77 {
+    transform: translate(-1234.764px, -291.502px) matrix(1, 0, 0, 1, 1235.5029, 297.8613) rotate(45deg);
+    transform-origin: center;
+    position: absolute;
+    width: 22.758px;
+    height: 11.519px;
+    left: 0px;
+    top: 0px;
+    overflow: visible;
+}
+
+#_5 {
+    fill: rgba(0, 0, 0, 1);
+}
+
+._5 {
+    overflow: visible;
+    position: absolute;
+    width: 16.289px;
+    height: 16.29px;
+    left: 0px;
+    top: 0px;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+#_113 {
+    fill: rgba(0, 0, 0, 1);
+}
+
+._113 {
+    overflow: visible;
+    position: absolute;
+    width: 9.495px;
+    height: 9.495px;
+    left: 11.937px;
+    top: 11.804px;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+#__54 {
+    position: absolute;
+    width: 302.786px;
+    height: 302.786px;
+    left: 78.444px;
+    top: 55.481px;
+    overflow: visible;
+}
+
+#_273 {
+    position: absolute;
+    width: 261.987px;
+    height: 286px;
+    left: 660px;
+    top: 399px;
+    overflow: visible;
+}
+
+#_845 {
+    opacity: 0.64;
+    fill: rgba(1, 1, 1, 1);
+}
+
+._845 {
+    position: absolute;
+    overflow: visible;
+    width: 259.87px;
+    height: 24.101px;
+    left: 1.002px;
+    top: 261.899px;
+}
+
+#___9 {
+    left: 97.002px;
+    top: 266.449px;
+    position: absolute;
+    overflow: visible;
+    width: 70px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#__50 {
+    opacity: 0.8;
+    position: absolute;
+    width: 259.982px;
+    height: 259.983px;
+    left: 1.002px;
+    top: 1.68px;
+    overflow: visible;
+}
+
+#_itemboxposition {
+    position: absolute;
+    width: 1260px;
+    height: 286px;
+    left: 660px;
+    top: 400px;
+    overflow: hidden;
+}
+#_itemboxposition1 {
+    position: absolute;
+    width: 1260px;
+    height: 286px;
+    left: 660px;
+    top: 480px;
+    overflow: hidden;
+}
+._keywordList {
+    position: absolute;
+    width: 50px; 
+    height: 50px;
+    left: 500px;
+    top: 500px;
+    overflow: hidden;
+}
+
+#_itemboxdiv {
+    width: 261.986px !important;
+    height: 286px;
+}
+
+
+#_276 {
+    position: absolute;
+    width: 261.987px;
+    height: 286px;
+    left: 950.014px;
+    top: 399px;
+    overflow: visible;
+}
+
+
+#_subposition {
+    opacity: 0.6;
+    fill: rgba(1, 1, 1, 1);
+}
+
+._subposition {
+    position: absolute;
+    overflow: visible;
+    width: 259.87px;
+    height: 24.101px;
+    left: 1px;
+    top: 261px;
+}
+
+#___9_cd {
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    overflow: visible;
+    width: 70px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#__50_ce {
+    opacity: 0.8;
+    position: absolute;
+    width: 259.982px;
+    height: 259.983px;
+    left: 1.003px;
+    top: 1.68px;
+    overflow: visible;
+}
+
+#_220_cf {
+    position: absolute;
+    width: 261.987px;
+    height: 286px;
+    left: 0px;
+    top: 0px;
+    overflow: visible;
+}
+
+#_138_cg {
+    fill: transparent;
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 2px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+._138_cg {
+    overflow: visible;
+    position: absolute;
+    width: 261.986px;
+    height: 286px;
+    left: 0px;
+    top: 0px;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+#_277 {
+    position: absolute;
+    width: 261.987px;
+    height: 286px;
+    left: 1240.029px;
+    top: 399px;
+    overflow: visible;
+}
+
+#_845_ci {
+    opacity: 0.64;
+    fill: rgba(1, 1, 1, 1);
+}
+
+._845_ci {
+    position: absolute;
+    overflow: visible;
+    width: 259.87px;
+    height: 24.101px;
+    left: 1.002px;
+    top: 261.899px;
+}
+
+#___9_cj {
+    left: 97.002px;
+    top: 266.449px;
+    position: absolute;
+    overflow: visible;
+    width: 70px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#__50_ck {
+    opacity: 0.8;
+    position: absolute;
+    width: 259.982px;
+    height: 259.983px;
+    left: 1.002px;
+    top: 1.68px;
+    overflow: visible;
+}
+
+#_220_cl {
+    position: absolute;
+    width: 261.987px;
+    height: 286px;
+    left: 0px;
+    top: 0px;
+    overflow: visible;
+}
+
+#_138_cm {
+    fill: transparent;
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 2px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+._138_cm {
+    overflow: visible;
+    position: absolute;
+    width: 261.986px;
+    height: 286px;
+    left: 0px;
+    top: 0px;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+#_278 {
+    position: absolute;
+    width: 261.987px;
+    height: 286px;
+    left: 1530.043px;
+    top: 399px;
+    overflow: visible;
+}
+
+#_845_co {
+    opacity: 0.64;
+    fill: rgba(1, 1, 1, 1);
+}
+
+._845_co {
+    position: absolute;
+    overflow: visible;
+    width: 259.87px;
+    height: 24.101px;
+    left: 1.002px;
+    top: 261.899px;
+}
+
+#_subboxfont {
+    left: 97.002px;
+    top: 263px;
+    position: absolute;
+    overflow: visible;
+    width: 70px;
+    white-space: nowrap;
+    text-align: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#__50_cq {
+    opacity: 0.8;
+    position: absolute;
+    width: 259.982px;
+    height: 259.983px;
+    left: 1.002px;
+    top: 1.68px;
+    overflow: visible;
+}
+
+#_220_cr {
+    position: absolute;
+    width: 261.987px;
+    height: 286px;
+    left: 0px;
+    top: 0px;
+    overflow: visible;
+}
+
+#_138_cs {
+    fill: transparent;
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 2px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+._138_cs {
+    overflow: visible;
+    position: absolute;
+    width: 261.986px;
+    height: 286px;
+    left: 0px;
+    top: 0px;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+#_279 {
+    position: absolute;
+    width: 261.987px;
+    height: 286px;
+    left: 1820.057px;
+    top: 399px;
+    overflow: visible;
+}
+
+#_845_cu {
+    opacity: 0.64;
+    fill: rgba(1, 1, 1, 1);
+}
+
+._845_cu {
+    position: absolute;
+    overflow: visible;
+    width: 259.87px;
+    height: 24.101px;
+    left: 1.003px;
+    top: 261.899px;
+}
+
+#___9_cv {
+    left: 0px;
+    top: 327px;
+    position: absolute;
+    overflow: visible;
+    width: 70px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 1);
+}
+#___8_cv {
+    left: -290px;
+    top: 327px;
+    position: absolute;
+    overflow: visible;
+    width: 70px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 1);
+}
+#___7_cv {
+    left: 290px;
+    top: 327px;
+    position: absolute;
+    overflow: visible;
+    width: 70px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 1);
+}
+#___6_cv {
+    left: 580px;
+    top: 327px;
+    position: absolute;
+    overflow: visible;
+    width: 70px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#__50_cw {
+    opacity: 0.8;
+    position: absolute;
+    width: 259.982px;
+    height: 259.983px;
+    left: 1.003px;
+    top: 1.68px;
+    overflow: visible;
+}
+
+#_220_cx {
+    position: absolute;
+    width: 261.987px;
+    height: 286px;
+    left: 0px;
+    top: 0px;
+    overflow: visible;
+}
+
+#_138_cy {
+    fill: transparent;
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 2px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+._138_cy {
+    overflow: visible;
+    position: absolute;
+    width: 261.986px;
+    height: 286px;
+    left: 0px;
+    top: 0px;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+#_dc {
+    left: 95px;
+    top: 587px;
+    position: absolute;
+    overflow: visible;
+    width: 48px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 17px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#__c {
+    left: 76px;
+    top: 702px;
+    position: absolute;
+    overflow: visible;
+    width: 83px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 17px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#ID581 {
+    opacity: 0.6;
+    left: 210px;
+    top: 572px;
+    position: absolute;
+    overflow: visible;
+    width: 69px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#ID25_c {
+    opacity: 0.6;
+    left: 222px;
+    top: 685px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#ID89 {
+    opacity: 0.6;
+    left: 222px;
+    top: 796px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#ID1 {
+    left: 416px;
+    top: 463px;
+    position: absolute;
+    overflow: visible;
+    width: 24px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(0, 220, 255, 1);
+}
+
+#ID498 {
+    left: 393px;
+    top: 572px;
+    position: absolute;
+    overflow: visible;
+    width: 69px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 72, 72, 1);
+}
+
+#ID25_da {
+    left: 405px;
+    top: 685px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#ID98 {
+    left: 405px;
+    top: 796px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(0, 220, 255, 1);
+}
+
+#listtop {
+    opacity: 0.9;
+    fill: rgba(0,0,0,1);
+}
+
+.listtop {
+    position: absolute;
+    overflow: visible;
+    width: 923px;
+    height: 41px;
+    left: 320px;
+    top: 315px;
+}
+
+#listtop2 {
+    fill: rgba(17,17,17,1);
+}
+.listtop2 {
+    position: absolute;
+    overflow: visible;
+    width: 923px;
+    height: 41px;
+    left: 320px;
+    top: 648px;
+}
+
+#exbox {
+    opacity: 0.6;
+    fill: rgba(17,17,17,1);
+}
+.exbox {
+    position: absolute;
+    overflow: visible;
+    width: 339px;
+    height: 772px;
+    left: 1260px;
+    top: 648px;
+}
+
+#listbox {
+    opacity: 0.8;
+    fill: rgba(17,17,17,1);
+    overflow: scroll;
+}
+.listbox {
+    position: absolute;
+    overflow-y: visible;
+    width: 923px;
+    height: 270px;
+    left: 320px;
+    top: 355px;
+    overflow: scroll;
+}
+#scrollbitch {
+    color: rgb(255, 255, 255);
+    overflow-y: scroll;
+    position: absolute;
+    left: 285px;
+    top: 354px;
+    width: 958px;
+    height: 270px;
+    overflow-x: hidden;
+}
+
+#scrollHead {
+    color: rgb(255, 255, 255);
+    position: absolute;
+    left: 335px;
+    top: 200px;
+    width: 900px;
+    height: 270px;
+}
+#selectall {
+    width: 25px;
+    height: 25px;
+    color: rgb(255, 255, 255);
+    left: 350px;
+    top: 350px; 
+}
+
+#scrollbitch2 {
+    border-spacing: 45px 30px;
+    
+}
+#longfont {
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 15px;
+    display: block;
+    width: 120px;
+ 
+    
+}
+#checkbox {
+    position: relative;
+    left: 20px;
+    top: 0px;
+
+
+}
+#_dc {
+    left: 103.242px;
+    top: 478.114px;
+    position: absolute;
+    overflow: visible;
+    width: 32px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 17px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_scollchip {   
+    width: 96px;
+    height: 32px;
+    left: 500px;
+    top: 500px;
+    overflow: hidden;
+}
+
+#rightbox {
+    opacity: 0.8;
+    fill: rgba(17,17,17,1);
+}
+.rightbox {
+    position: absolute;
+    overflow: visible;
+    width: 339px;
+    height: 270px;
+    left: 1260px;
+    top: 314px;
+}
+#_scrollchip {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: -340px;
+    top: -73px;
+    
+}
+
+/* #_chip1 {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: 650px;
+    top: 330px;
+    overflow: hidden;
+}
+#_chip2 {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: 780px;
+    top: 330px;
+    overflow: hidden;
+}
+#_chip3 {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: 910px;
+    top: 330px;
+    overflow: hidden;
+}
+#_chip4 {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: 1040px;
+    top: 330px;
+    overflow: hidden;
+}
+#_chip5 {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: 1170px;
+    top: 330px;
+    overflow: hidden;
+} */
+/* .searchBar {
+    position: relative;
+    border: none;
+    background-color: white;
+    width: 500px; height: 40px;
+    font-size: 15px;
+    padding: 0px;
+    margin: 0 auto;
+    text-align: left;
+}
+.searchInput {
+    position: relative;
+    border: none;
+    background: none;
+    height: 30px;
+    width: 615px;
+    padding: 4px 6px;
+    font-size: 15px;
+    color: black;
+    font-weight: 700;
+    vertical-align: middle;
+}
+.keywordItemBox {
+    position: absolute;
+    margin-top: 50px;
+    background: transparent;
+    height: 500px;
+    overflow: hidden;
+}
+.keywordListVertical {
+    position: relative;
+    align-self: center;
+    height: 595px;
+    align-content: center;
+    overflow: hidden;
+}
+.searchButton {
+    border: none;
+    position: absolute;
+    right: 20px;
+    top: 2px;
+    height: 0px;
+    transition: all ease .4s;
+    cursor: poingter;
+}
+.searchButtonImg {
+    position: relative;
+    width: 23px;
+    height: 23px;
+    align-content: center;
+}
+.chipStyles {
+    margin: 15px 10px 5px 10px
+}
+.chipBackground {
+    width: 100%;
+    height: 60px;
+    background-color: #d4d4d4;
+    margin: 0 auto;
+    border: 1px solid white;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+}
+.mainChipBox {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+} */
+
+#Container {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+    overflow: visible;
+}
+
+#_Elevation {
+    fill: rgba(255, 255, 255, 1);
+}
+
+._Elevation {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+}
+
+#_Color_l_Container {
+    opacity: 0.12;
+    fill: rgba(0, 0, 0, 0.871);
+}
+
+._Color_l_Container {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+}
+
+#States {
+    fill: transparent;
+}
+
+.States {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+}
+
+#Trailing_Icon {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 70px;
+    top: 7px;
+    overflow: visible;
+}
+
+#Boundary {
+    fill: transparent;
+}
+
+.Boundary {
+    position: absolute;
+    overflow: visible;
+    width: 18px;
+    height: 18px;
+    left: 0px;
+    top: 0px;
+}
+
+#_Color {
+    fill: rgba(0, 0, 0, 0.6);
+}
+
+._Color {
+    overflow: visible;
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    left: 2px;
+    top: 2px;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+/* #_chipfont {
+    left: 15px;
+    top: 10px;
+    position: absolute;
+    overflow: visible;
+    width: 49px;
+    white-space: nowrap;
+    line-height: 19px;
+    margin-top: -3px;
+    text-align: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.871);
+    letter-spacing: 0.18px;
+} */
+
+#_231 {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: 130px;
+    top: 0px;
+    overflow: visible;
+}
+
+#Container_dr {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+    overflow: visible;
+}
+
+#_Elevation_ds {
+    fill: rgba(255, 255, 255, 1);
+}
+
+._Elevation_ds {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: -0.001px;
+    top: 0px;
+}
+
+#_Color_l_Container_dt {
+    opacity: 0.12;
+    fill: rgba(0, 0, 0, 0.871);
+}
+
+._Color_l_Container_dt {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: -0.001px;
+    top: 0px;
+}
+
+#States_du {
+    fill: transparent;
+}
+
+.States_du {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: -0.001px;
+    top: 0px;
+}
+
+#Trailing_Icon_dv {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 69.999px;
+    top: 7px;
+    overflow: visible;
+}
+
+#Boundary_dw {
+    fill: transparent;
+}
+
+.Boundary_dw {
+    position: absolute;
+    overflow: visible;
+    width: 18px;
+    height: 18px;
+    left: 0px;
+    top: 0px;
+}
+
+#_Color_dx {
+    fill: rgba(0, 0, 0, 0.6);
+}
+
+._Color_dx {
+    overflow: visible;
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    left: 2px;
+    top: 2px;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+#_Label_dy {
+    left: 12.999px;
+    top: 6px;
+    position: absolute;
+    overflow: visible;
+    width: 49px;
+    white-space: nowrap;
+    line-height: 19px;
+    margin-top: -3px;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.871);
+    letter-spacing: 0.18px;
+}
+
+#_232 {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: 862px;
+    top: 328px;
+    overflow: visible;
+}
+
+#Container_d {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+    overflow: visible;
+}
+
+#_Elevation_d {
+    fill: rgba(255, 255, 255, 1);
+}
+
+._Elevation_d {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+}
+
+#_Color_l_Container_d {
+    opacity: 0.12;
+    fill: rgba(0, 0, 0, 0.871);
+}
+
+._Color_l_Container_d {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+}
+
+#States_d {
+    fill: transparent;
+}
+
+.States_d {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+}
+
+#Trailing_Icon_d {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 70px;
+    top: 7px;
+    overflow: visible;
+}
+
+#Boundary_d {
+    fill: transparent;
+}
+
+.Boundary_d {
+    position: absolute;
+    overflow: visible;
+    width: 18px;
+    height: 18px;
+    left: 0px;
+    top: 0px;
+}
+
+#_Color_d {
+    fill: rgba(0, 0, 0, 0.6);
+}
+
+._Color_d {
+    overflow: visible;
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    left: 2px;
+    top: 2px;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+#_Label_d {
+    left: 12px;
+    top: 6px;
+    position: absolute;
+    overflow: visible;
+    width: 49px;
+    white-space: nowrap;
+    line-height: 19px;
+    margin-top: -3px;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.871);
+    letter-spacing: 0.18px;
+}
+
+#_233 {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: 962px;
+    top: 328px;
+    overflow: visible;
+}
+
+#Container_ea {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+    overflow: visible;
+}
+
+#_Elevation_ea {
+    fill: rgba(255, 255, 255, 1);
+}
+
+._Elevation_ea {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+}
+
+#_Color_l_Container_eb {
+    opacity: 0.12;
+    fill: rgba(0, 0, 0, 0.871);
+}
+
+._Color_l_Container_eb {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+}
+
+#States_ec {
+    fill: transparent;
+}
+
+.States_ec {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+}
+
+#Trailing_Icon_ed {
+    position: absolute;
+    width: 17px;
+    height: 18px;
+    left: 71px;
+    top: 7px;
+    overflow: visible;
+}
+
+#Boundary_ee {
+    fill: transparent;
+}
+
+.Boundary_ee {
+    position: absolute;
+    overflow: visible;
+    width: 17px;
+    height: 18px;
+    left: 0px;
+    top: 0px;
+}
+
+#_Color_ef {
+    fill: rgba(0, 0, 0, 0.6);
+}
+
+._Color_ef {
+    overflow: visible;
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    left: 2px;
+    top: 2px;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+#_Label_eg {
+    left: 13px;
+    top: 6px;
+    position: absolute;
+    overflow: visible;
+    width: 49px;
+    white-space: nowrap;
+    line-height: 19px;
+    margin-top: -3px;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.871);
+    letter-spacing: 0.18px;
+}
+
+#_234 {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: 1063px;
+    top: 328px;
+    overflow: visible;
+}
+
+#Container_ei {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+    overflow: visible;
+}
+
+#_Elevation_ej {
+    fill: rgba(255, 255, 255, 1);
+}
+
+._Elevation_ej {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+}
+
+#_Color_l_Container_ek {
+    opacity: 0.12;
+    fill: rgba(0, 0, 0, 0.871);
+}
+
+._Color_l_Container_ek {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+}
+
+#States_el {
+    fill: transparent;
+}
+
+.States_el {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+}
+
+#Trailing_Icon_em {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 70px;
+    top: 7px;
+    overflow: visible;
+}
+
+#Boundary_en {
+    fill: transparent;
+}
+
+.Boundary_en {
+    position: absolute;
+    overflow: visible;
+    width: 18px;
+    height: 18px;
+    left: 0px;
+    top: 0px;
+}
+
+#_Color_eo {
+    fill: rgba(0, 0, 0, 0.6);
+}
+
+._Color_eo {
+    overflow: visible;
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    left: 2px;
+    top: 2px;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+#_Label_ep {
+    left: 13px;
+    top: 6px;
+    position: absolute;
+    overflow: visible;
+    width: 49px;
+    white-space: nowrap;
+    line-height: 19px;
+    margin-top: -3px;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.871);
+    letter-spacing: 0.18px;
+}
+
+#_235 {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: 1164.001px;
+    top: 328px;
+    overflow: visible;
+}
+
+#Container_er {
+    position: absolute;
+    width: 96px;
+    height: 32px;
+    left: 0px;
+    top: 0px;
+    overflow: visible;
+}
+
+#_Elevation_es {
+    fill: rgba(255, 255, 255, 1);
+}
+
+._Elevation_es {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: -0.001px;
+    top: 0px;
+}
+
+#_Color_l_Container_et {
+    opacity: 0.12;
+    fill: rgba(0, 0, 0, 0.871);
+}
+
+._Color_l_Container_et {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: -0.001px;
+    top: 0px;
+}
+
+#States_eu {
+    fill: transparent;
+}
+
+.States_eu {
+    position: absolute;
+    overflow: visible;
+    width: 96px;
+    height: 32px;
+    left: -0.001px;
+    top: 0px;
+}
+
+#Trailing_Icon_ev {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 69.999px;
+    top: 7px;
+    overflow: visible;
+}
+
+#Boundary_ew {
+    fill: transparent;
+}
+
+.Boundary_ew {
+    position: absolute;
+    overflow: visible;
+    width: 18px;
+    height: 18px;
+    left: 0px;
+    top: 0px;
+}
+
+#_Color_ex {
+    fill: rgba(0, 0, 0, 0.6);
+}
+
+._Color_ex {
+    overflow: visible;
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    left: 2px;
+    top: 2px;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+#_Label_ey {
+    left: 12.999px;
+    top: 6px;
+    position: absolute;
+    overflow: visible;
+    width: 49px;
+    white-space: nowrap;
+    line-height: 19px;
+    margin-top: -3px;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.871);
+    letter-spacing: 0.18px;
+}
+
+#_121 {
+    fill: rgba(255, 255, 255, 1);
+}
+
+._121 {
+    overflow: visible;
+    position: absolute;
+    width: 77.234px;
+    height: 30.176px;
+    transform: matrix(1, 0, 0, 1, -11.4008, 526.036) rotate(-90deg);
+    transform-origin: center;
+    left: 0px;
+    top: 0px;
+}
+
+#_880 {
+    opacity: 0.49;
+    fill: rgba(255, 255, 255, 1);
+}
+
+._880 {
+    position: absolute;
+    overflow: visible;
+    width: 55px;
+    height: 114px;
+    left: -1px;
+    top: 486px;
+}
+
+#this_web_site_is_mfoakhorakwho {
+    left: 1132px;
+    top: 1025px;
+    position: absolute;
+    overflow: visible;
+    width: 789px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#COPY_WRITE {
+    left: 1040px;
+    top: 1025px;
+    position: absolute;
+    overflow: visible;
+    width: 789px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_150 {
+    opacity: 0.49;
+    fill: rgba(255, 255, 255, 1);
+}
+
+._150 {
+    overflow: visible;
+    position: absolute;
+    width: 151.392px;
+    height: 51.717px;
+    left: 1744px;
+    top: 15.452px;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+}
+
+#_205 {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    left: -285px;
+    top: 465px;
+    overflow: visible;
+}
+
+#_92 {
+    fill: rgba(255, 255, 255, 1);
+}
+
+._92 {
+    position: absolute;
+    overflow: visible;
+    width: 13px;
+    height: 13px;
+    left: -5px;
+    top: -150px;
+}
+
+#_95 {
+    fill: transparent;
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 1.5px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+._95 {
+    position: absolute;
+    overflow: visible;
+    width: 14.5px;
+    height: 14.5px;
+    left: 40px;
+    top: -150px;
+}
+
+#_98 {
+    fill: transparent;
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 1.5px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+._98 {
+    position: absolute;
+    overflow: visible;
+    width: 13.5px;
+    height: 14.5px;
+    left: 80px;
+    top: -150px;
+}
+
+#_93 {
+    fill: transparent;
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 1.5px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+._93 {
+    position: absolute;
+    overflow: visible;
+    width: 12.5px;
+    height: 14.5px;
+    left: 120px;
+    top: -150px;
+}
+
+#_96 {
+    fill: transparent;
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 1.5px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+._96 {
+    position: absolute;
+    overflow: visible;
+    width: 14.5px;
+    height: 14.5px;
+    left: 160px;
+    top: -150px;
+}
+
+#_99 {
+    fill: transparent;
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 1.5px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+._99 {
+    position: absolute;
+    overflow: visible;
+    width: 14.5px;
+    height: 14.5px;
+    left: 200px;
+    top: -150px;
+}
+
+#_94 {
+    fill: transparent;
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 1.5px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+._94 {
+    position: absolute;
+    overflow: visible;
+    width: 14.5px;
+    height: 14.5px;
+    left: 240px;
+    top: -150px;
+}
+
+#_97 {
+    fill: transparent;
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 1.5px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+._97 {
+    position: absolute;
+    overflow: visible;
+    width: 12.5px;
+    height: 14.5px;
+    left: 280px;
+    top: -150px;
+}
+
+#_100 {
+    fill: transparent;
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 1.5px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+._100 {
+    position: absolute;
+    overflow: visible;
+    width: 12.5px;
+    height: 14.5px;
+    left: 320px;
+    top: -150px;
+}
+
+#_101 {
+    fill: transparent;
+    stroke: rgba(255, 255, 255, 1);
+    stroke-width: 1.5px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+._101 {
+    position: absolute;
+    overflow: visible;
+    width: 14.5px;
+    height: 14.5px;
+    left: 360px;
+    top: -150px;
+}
+
+#CHART_VIEW {
+    left: 1763px;
+    top: 30px;
+    position: absolute;
+    overflow: visible;
+    width: 158px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 1);
+}
+

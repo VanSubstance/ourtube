@@ -1,0 +1,287 @@
+.mainContainor {
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 1);
+}
+
+.sectionContainor {
+    width: 1920px;
+    height: 100%;
+}
+
+.mainLeftSection {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: relative;
+    float: left;
+    left: 0;
+    right: auto;
+    width: 640px;
+    height: 100%;
+    z-index: 0;
+}
+
+.mainRightSection {
+    margin-left: 20px;
+    left: 20px;
+    overflow: hidden;
+    position: relative;
+    width: 1260px;
+    height: 969px;
+}
+
+.backGroundImg {
+    position: fixed;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 100%;
+    min-width: 1903px;
+    height: 100%;
+    min-height: 969px;
+    z-index: -1;
+}
+
+.chartLinkBox {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 120px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-family: "Roboto";
+    transition: linear .1s;
+    outline: 2px solid transparent;
+}
+
+.chartLinkBox:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    outline: 2px solid white;
+    outline-offset: -2px;
+}
+
+.chartLinkBox:focus {
+    background-color: rgba(0, 0, 0, 0.8);
+    outline: 2px solid white;
+    outline-offset: -2px;
+}
+
+.chartLink {
+    position: relative;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.chartLink:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.chartLink:focus{
+    color: white;
+    text-decoration: none;
+}
+
+.mainBannerBox {
+    position: relative;
+    height: 150px;
+    width: 100%;
+    margin: 100px 0px 0px 0px;
+    background: transparent;
+    object-fit: cover;
+}
+
+.bannerMain{
+    position: absolute;
+    bottom: 33px;
+    margin: 0 auto;
+}
+
+.bannerImage{
+    position: relative;
+    width: 298px;
+    height: 65px;
+}
+
+.mainCategoriesBox {
+    position: relative;
+    width: 100%;
+    height: fit-content;
+}
+
+.searchBar {
+    position: relative;
+    border: none;
+    outline: none;
+    background-color: white;
+    width: 600px; height: 32px;
+    font-size: 15px;
+    padding: 0px;
+    text-align: left;
+}
+
+.searchInput {
+    position: relative;
+    border: none;
+    background: transparent;
+    height: 30px;
+    width: 576px;
+    padding: 1px 12px 1px 12px;
+    font-size: 14px;
+    color: black;
+    font-weight: 700;
+    vertical-align: middle;
+}
+
+.searchInput:hover {
+    outline: none;
+}
+
+.searchInput:focus {
+    outline: none;
+}
+
+.searchButton {
+    border: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: fit-content;
+    height: 32px;
+    background: white;
+    cursor: pointer;
+    transition: linear .1s;
+}
+
+.searchButton::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.searchButton:hover {
+    outline: none;
+    mix-blend-mode: difference;
+}
+
+.searchButton:focus {
+    outline: none;
+    mix-blend-mode: difference;
+}
+
+.searchButtonImg {
+    vertical-align: middle;
+    margin: 0 auto;
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+/* .searchButtonImg:hover {
+    background: url( "../Icons/searchButtonWhite.png" ) no-repeat;
+}
+
+.searchButtonImg:focus {
+    background: url( "../Icons/searchButtonWhite.png" ) no-repeat;
+} */
+
+.mainChipBox {
+    position: relative;
+    /*margin: 0 auto;*/
+}
+
+.chipStyles {
+    margin: 20px 20px 5px 0px
+}
+
+.MuiChip-root {
+    background-color: white !important;
+}
+
+.MuiChip-root:hover {
+    background-color: rgb(130, 130, 130) !important;
+    color: white !important;
+}
+
+.MuiChip-root:focus {
+    background-color: rgb(70, 70, 70) !important;
+    color: white !important;
+}
+
+.chipBackground {
+    width: 100%;
+    height: 60px;
+    background: transparent;
+    align-content: left;
+    display: flex;
+    justify-content: left;
+}
+
+.trendImage {
+    position: relative;
+    width: 100px;
+    height: 50px;
+    color: #17181c;
+    margin-right: 10px;
+}
+
+.footer {
+    position: relative;
+    width: 1903px;
+    height: 200px;
+    bottom: 0px;
+    background: linear-gradient(
+        to bottom,
+        rgba(20, 20, 20, 0.1) 10%,
+        rgba(20, 20, 20, 0.7) 70%,
+        rgba(20, 20, 20, 1)
+      ), rgba(0, 0, 0, 1);
+}
+
+.footerBox {
+    position: relative;
+    color: white;
+    padding-top: 20px;
+    text-align: center;
+}
+
+.testTxtTop {
+    position: fixed;
+    text-align: right;
+    margin-right: 15px;
+    right: 0px;
+    bottom: 55px;
+    color: white;
+    font-size: 100%;
+    font-weight: 400;
+    width: 70%;
+    z-index: -1;
+}
+
+.testTxtBottom {
+    position: fixed;
+    text-align: right;
+    margin-right: 15px;
+    right: 0px;
+    bottom: 20px;
+    color: white;
+    font-size: 0.7em;
+    width: 61%;
+    width: 790px;
+    font-weight: normal !important;
+    z-index: -1;
+}
+
+.bannerTrendMain {
+    position: relative;
+    margin: 0 auto;
+}

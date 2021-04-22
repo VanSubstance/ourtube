@@ -1,0 +1,454 @@
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-jp.css);
+
+.mp_leftThumbnailBox {
+    overflow: hidden;
+    position: absolute;
+    width: 308px;
+    height: 308px;
+    left: 76px;
+    top: 52px;
+    border: 1px solid white;
+}
+
+.mp_leftThumnail {
+    width: 308px;
+    height: 308px;
+}
+
+.mp_lookWellBox {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 1);
+    left: 400px;
+    top: 325px;
+    width: 100px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: linear .1s;
+    outline: 2px solid transparent;
+    border-radius: 10px;
+    color: black;
+}
+
+.mp_lookWellBox:hover {
+    background-color: rgb(130, 130, 130);
+    color: white;
+}
+
+.mp_lookWellBox:focus {
+    background-color: rgb(70, 70, 70);
+    color: white;
+}
+
+.mp_lookWell {
+    font-size: 0.95em;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: "Spoqa Han Sans Neo", serif;
+}
+
+.mp_LeftBoxContents {
+}
+
+#_gameName {
+    position: absolute;
+    left: 406px;
+    top: 175px;
+    color: white;
+    font-size: 1.5em;
+    font-family: "Spoqa Han Sans Neo", serif;
+    z-index: 10;
+}
+
+#_gamestyle {
+    left: 76px;
+    top: 25px;
+    position: absolute;
+    overflow: visible;
+    width: 157px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: "Roboto";
+    font-style: normal;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 1);
+    z-index: 10;
+}
+
+
+#_glorystyle1 {
+    mix-blend-mode: color-dodge;
+    left: 406px;
+    top: 64px;
+    position: absolute;
+    overflow: visible;
+    width: 89px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: "Spoqa Han Sans Neo", serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 1);
+    letter-spacing: 0.1px;
+    text-transform: uppercase;
+    z-index: 10;
+}
+
+.mp_GloryFlag1 {
+    opacity: 0.8;
+    position: absolute;
+    height: 100px;
+    width: 240px;
+    left: 350px;
+    top: 25px;
+    z-index: -1;
+}
+
+#_glorystyle2 {
+    mix-blend-mode: color-dodge;
+    left: 406px;
+    top: 94px;
+    position: absolute;
+    overflow: visible;
+    width: 89px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: "Spoqa Han Sans Neo", serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 1);
+    letter-spacing: 0.1px;
+    text-transform: uppercase;
+}
+
+.mp_GloryFlag2 {
+    opacity: 0.8;
+    position: absolute;
+    height: 100px;
+    width: 240px;
+    left: 350px;
+    top: 55px;
+    z-index: -1;
+}
+
+#_glorystyle3 {
+    mix-blend-mode: color-dodge;
+    left: 406px;
+    top: 124px;
+    position: absolute;
+    overflow: visible;
+    width: 89px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: "Spoqa Han Sans Neo", serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 1);
+    letter-spacing: 0.1px;
+    text-transform: uppercase;
+}
+
+.mp_GloryFlag3 {
+    opacity: 0.8;
+    position: absolute;
+    height: 100px;
+    width: 220px;
+    left: 350px;
+    top: 85px;
+    z-index: -1;
+}
+
+#_leftboxmainfont1 {
+    left: 76px;
+    top: 500px;
+    position: absolute;
+    overflow: visible;
+    width: 83px;
+    white-space: nowrap;
+    text-align: center;
+    font-family: "Spoqa Han Sans Neo", serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 17px;
+    color: rgba(255, 255, 255, 1);
+}
+#_leftboxmainfont2 {
+    left: 76px;
+    top: 610px;
+    position: absolute;
+    overflow: visible;
+    width: 83px;
+    white-space: nowrap;
+    text-align: center;
+    font-family: "Spoqa Han Sans Neo", serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 17px;
+    color: rgba(255, 255, 255, 1);
+}
+#_leftboxmainfont3 {
+    left: 76px;
+    top: 720px;
+    position: absolute;
+    overflow: visible;
+    width: 83px;
+    white-space: nowrap;
+    text-align: center;
+    font-family: "Spoqa Han Sans Neo", serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 17px;
+    color: rgba(255, 255, 255, 1);
+}
+#_leftboxmainfont4 {
+    left: 76px;
+    top: 830px;
+    position: absolute;
+    overflow: visible;
+    width: 83px;
+    white-space: nowrap;
+    text-align: center;
+    font-family: "Spoqa Han Sans Neo", serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 17px;
+    color: rgba(255, 255, 255, 1);
+}
+
+.mp_ChangeMarks {
+    position: absolute;
+    left: 550px;
+    top: 480px;
+    height: 380px;
+    width: 50px;
+    vertical-align: middle;
+}
+
+#mp_RankChange {
+    fill: rgb(17, 223, 255);
+}
+
+.mp_RankChange {
+    height: 20px;
+    width: 20px;
+    overflow: visible;
+    position: absolute;
+    top: 9%;
+    left: 52%;
+}
+
+#mp_UpArrow {
+    width: 17px;
+    height: 17px;
+    fill: rgba(0, 220, 255, 1);
+    transform:translate(-50%,-50%);
+}
+
+.mp_ViewChange {
+    height: 20px;
+    width: 20px;
+    overflow: visible;
+    position: absolute;
+    top: 38%;
+    left: 52%;
+}
+
+#mp_DownArrow {
+    fill: rgba(255, 72, 72, 1);
+    width: 17px;
+    height: 17px;
+    transform:translate(35%, 0%) rotate(180deg);
+}
+
+.mp_ScoreChange {
+    height: 20px;
+    width: 20px;
+    overflow: visible;
+    position: absolute;
+    top: 67%;
+    left: 52%;
+}
+
+#mp_NoChangeBar {
+    width: 27px;
+    height: 5px;
+    fill: rgba(255, 255, 255, 1);
+    transform:translate(-75%,-40%)
+}
+
+.mp_VideoChange {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    overflow: visible;
+    top: 96%;
+    left: 52%;
+}
+
+#_past {
+    opacity: 0.6;
+    left: 218px;
+    top: 418px;
+    position: absolute;
+    overflow: visible;
+    width: 40px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 1);
+}
+
+
+#_pastranknumber1 {
+    opacity: 0.6;
+    left: 218px;
+    top: 480px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_pastranknumber2 {
+    opacity: 0.6;
+    left: 218px;
+    top: 590px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_pastranknumber3 {
+    opacity: 0.6;
+    left: 218px;
+    top: 700px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_pastranknumber4 {
+    opacity: 0.6;
+    left: 218px;
+    top: 810px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_now {
+    left: 403px;
+    top: 418px;
+    position: absolute;
+    overflow: visible;
+    width: 40px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: _now;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_nowranknumber1 {
+    opacity: 1;
+    left: 403px;
+    top: 480px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_nowranknumber2 {
+    opacity: 1;
+    left: 403px;
+    top: 590px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_nowranknumber3 {
+    opacity: 1;
+    left: 403px;
+    top: 700px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
+
+#_nowranknumber4 {
+    opacity: 1;
+    left: 403px;
+    top: 810px;
+    position: absolute;
+    overflow: visible;
+    width: 46px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Spoqa Han Sans Neo;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(255, 255, 255, 1);
+}
