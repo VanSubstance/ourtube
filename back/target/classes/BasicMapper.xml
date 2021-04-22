@@ -2,13 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper
 	namespace = "com.my.spring.mapper.BasicMapper">
-	
-	<select id="checkTopicStat" parameterType="String" resultType="Int">
-		select count(*) from topicstatistics where topic = #{topic} and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+	<!-- 당일 기준 동영상 게시일이 70일(10주)가 넘어가는 동영상 id들 삭제 -->
+	<delete id="deleteOldDatas">
+		<![CDATA[
+		delete from video
+		where publisheddate < TO_DATE(SYSDATE - 70, 'YY/MM/DD')
+		]]>
+	</delete>
+
+	<select id="getGameQ" resultType="String">
+		select Q from gamesearch 
+		where q is not null 
+		and title not in (
+			select title from gameStatistics
+			where infodate = TO_DATE(SYSDATE, ('YY/MM/DD'))
+		)
 	</select>
-	<insert id="setTopicStat" parameterType="com.my.spring.domain.TopicStatDto">
-		insert into topicstatistics (topic, infoDate, resultcount)
-		values (#{item.topic}, #{item.infoDate}, #{item.resultCount})
+	<select id="getTitleByQ" parameterType="String" resultType="String">
+		select title from gamesearch where q = #{q}
+	</select>
+	<select id="getAllTitle" resultType="String">
+		select title from gamesearch where q is not null
+	</select>
+	<insert id="setGame" parameterType="com.my.spring.domain.basics.Game">
+		insert into game (title, thumbnail) 
+		values (#{item.title}, #{item.thumbnail})
+	</insert>
+	<insert id="setGameInGameSearch" parameterType="String">
+		insert into gamesearch (title)
+		values (#{title})
+	</insert>
+	<insert id="setGameTopic" parameterType="com.my.spring.domain.chains.GameTopic">
+		insert into gametopic (title, topic) 
+		values (#{item.title}, #{item.topic})
+	</insert>
+	
+	<insert id="setTopic" parameterType="String">
+		insert into topictotal (topic) values (#{topic})
+	</insert>
+	
+	<select id="checkGameStat" parameterType="String" resultType="Int">
+		select count(*) from gamestatistics where title = #{title} and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+	</select>
+	<insert id="setGameStat" parameterType="com.my.spring.domain.statistics.GameStatistic">
+		insert into gamestatistics (title, infoDate, resultcount)
+		values (#{item.title}, #{item.infoDate}, #{item.resultCount})
 	</insert>
 	<select id="getTopics" resultType="com.my.spring.domain.TopicDto">
 		select * from topictotal
@@ -16,8 +54,171 @@
 	<select id="getTopicGames" resultType="com.my.spring.domain.TopicDto">
 		select * from topicgame
 	</select>
-	<select id="getTopicsForPatch" resultType="com.my.spring.domain.TopicDto">
-		select a.id from topicbasic a where a.title not in (
-		select topic from topicstatistics where infodate = TO_DATE(SYSDATE, 'YY/MM/DD'))
+	<select id="getNounFilter" resultType="String">
+		select * from nounFilter
 	</select>
+	
+	<select id="getTopicsByVideoId" parameterType="String"
+	resultType="String">
+		select topic from videotopic where id = #{id}
+	</select>
+	
+	<select id="getTopicChains" resultType="com.my.spring.domain.chains.TopicChain">
+		select topic1, topic2, count(*) hardness from
+		(select a.topic topic1, b.topic topic2 from gametopic a, gametopic b
+		where a.title = b.title and a.topic != b.topic
+		) 
+		group by topic1, topic2
+		order by hardness desc
+	</select>
+	<select id="getTopicsByTopic" parameterType="String" resultType="String">
+		select topic2 topic from (
+		    select topic1, topic2, count(*) hardness from (
+		        select a.topic topic1, b.topic topic2 from gametopic a, gametopic b
+		        where a.title = b.title and a.topic != b.topic
+		    ) 
+		group by topic1, topic2
+		)
+		where topic1 = #{topic}
+		order by hardness desc
+	</select>
+	
+	<select id="getTopicChainsByTopic" parameterType="String" resultType="com.my.spring.domain.chains.TopicChain">
+		select * from (
+		select topic1, topic2, count(*) hardness from
+		(select a.topic topic1, b.topic topic2 from videotopic a, videotopic b
+		where a.id = b.id and a.topic != b.topic
+		union all
+		select a.topic topic1, b.topic topic2 from channeltopic a, channeltopic b
+		where a.id = b.id and a.topic != b.topic) 
+		group by topic1, topic2
+		order by hardness desc
+		) where topic1 = #{topic}
+		order by hardness desc
+	</select>
+	
+	<select id="getGameListForToday" resultType="com.my.spring.domain.statistics.GameStatistic">
+		select * from gameStatistics
+		where infodate = TO_DATE(SYSDATE, ('YY/MM/DD'))
+		order by resultcount desc
+	</select>
+	
+	<select id="getGamesByTopic" parameterType="String" resultType="com.my.spring.domain.basics.Game">
+		<![CDATA[
+		select * from game a, (
+		    select rownum ind, title from (
+		        select * from (
+                    select d.*, rownum rank from (
+                        select a.* from gamestatistics a
+                        where infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+                        order by ourscore desc
+                    ) d
+				) b
+		        where 
+		        b.title in (
+		            select title from gametopic where topic = #{topic}
+		        ) 
+		        and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+		        order by b.rank asc
+		        ) where ROWNUM <= 10
+		    ) b
+	    where a.title = b.title
+	    order by b.ind
+		]]>
+	</select>
+	
+	<select id="getAllGamesByTopic" parameterType="String" resultType="String">
+		<![CDATA[
+		select * from game a, (
+		    select rownum ind, title from (
+		        select * from (
+		            select a.*, rownum rank from gamestatistics a
+		            where infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+		            order by ourscore desc
+				) b
+		        where 
+		        b.title in (
+		            select title from gametopic where topic = #{topic}
+		        ) 
+		        and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+		        order by b.rank asc
+		        )
+		    ) b
+		where a.title = b.title
+		order by b.ind
+		]]>
+	</select>
+	
+	<select id="getGameDateForTrendMainByGame" parameterType="String" resultType="com.my.spring.domain.statistics.GameDataForMain">
+		select 
+		b.resultcount resultcount, 
+		round(sum(d.viewcount)) viewcount,
+		round(avg(d.likecount)) likecount, 
+		round(avg(d.dislikecount)) dislikecount, 
+		round(avg(d.commentcount)) commentcount 
+		from gamestatistics b, 
+		videogame c, 
+		videostatistics d
+		where 
+		b.title = #{title}
+		and b.infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+		and d.infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+		and b.title = c.game
+		and c.id = d.id
+		group by b.title, b.resultcount
+	</select>
+	
+	<select id="getGameDataForMainByGame" parameterType="String" resultType="com.my.spring.domain.statistics.GameDataForMain">
+		select b.*, d.resultcount, d.ourscore, d.rank from (
+			    select 
+			    a.infodate,
+			    round(sum(a.viewcount)) viewcount, 
+			    round(sum(a.likecount)) likecount, 
+			    round(sum(a.dislikecount)) dislikecount, 
+			    round(sum(a.commentcount)) commentcount from videostatistics a
+			    where id in (
+			        select id from videogame c
+			        where c.game = #{title}
+			        )
+			    group by a.infodate
+			    order by a.infodate desc) b
+			inner join (
+	            select d.*, rownum rank from (
+	                select a.* from gamestatistics a
+	                where infodate = TO_DATE(SYSDATE-1, 'YY/MM/DD')
+	                order by ourscore desc
+	            ) d
+			    ) d on d.title = #{title} and d.infodate = b.infodate
+		union
+		select b.*, d.resultcount, d.ourscore, d.rank from (
+			    select 
+			    a.infodate,
+			    round(sum(a.viewcount)) viewcount, 
+			    round(sum(a.likecount)) likecount, 
+			    round(sum(a.dislikecount)) dislikecount, 
+			    round(sum(a.commentcount)) commentcount from videostatistics a
+			    where id in (
+			        select id from videogame c
+			        where c.game = #{title}
+			        )
+			    group by a.infodate
+			    order by a.infodate desc) b
+			inner join (
+	            select d.*, rownum rank from (
+	                select a.* from gamestatistics a
+	                where infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+	                order by ourscore desc
+	            ) d
+			    ) d on d.title = #{title} and d.infodate = b.infodate
+	</select>
+	
+	<select id="getIdCompleteById" parameterType="String" resultType="Int">
+		select count(*) from idcomplete where id = #{id}
+	</select>
+	
+	<insert id="setIdComplete" parameterType="com.my.spring.domain.IdComplete">
+		insert into IdComplete (type, id)
+		values (#{item.type}, #{item.id})
+	</insert>
+	
 </mapper>

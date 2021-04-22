@@ -2,13 +2,45 @@ package com.my.spring.service;
 
 import java.util.List;
 
+import com.my.spring.domain.IdComplete;
 import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.TopicStatDto;
+import com.my.spring.domain.basics.Game;
+import com.my.spring.domain.basics.GameSearch;
+import com.my.spring.domain.chains.GameTopic;
+import com.my.spring.domain.chains.TopicChain;
+import com.my.spring.domain.statistics.GameDataForMain;
+import com.my.spring.domain.statistics.GameDataForTrendMain;
+import com.my.spring.domain.statistics.GameStatistic;
 
 public interface BasicService {
-	public int checkTopicStat(String topic);
-	public void setTopicStat(TopicStatDto item);
+	// 당일 기준 동영상 게시일이 98일(14주)가 넘어가는 동영상 id들 삭제
+	public void deleteOldDatas();
+	
+	public List<String> getGameQ();
+	public String getTitleByQ(String q);
+	public List<String> getAllTitle();
+
+	public void setGame(Game item);
+	public void setGameInGameSearch(String title);
+	public void setGameTopic(GameTopic item);
+	public void setTopic(String topic);
+	
+	public List<GameDataForMain> getGameDataForMainByGame(String title);
+	public GameDataForMain getGameDateForTrendMainByGame(String title);
+	
+	public int checkGameStat(String title);
+	public void setGameStat(GameStatistic item);
 	public List<TopicDto> getTopics();
 	public List<TopicDto> getTopicGames();
-	public List<TopicDto> getTopicsForPatch();
+	public List<String> getNounFilter();
+	public List<TopicChain> getTopicChains();
+	public List<TopicChain> getTopicChainsByTopic(String topic);
+	public List<TopicStatDto> getGameListForToday();
+	public int getIdCompleteById(String id);
+	public void setIdComplete(IdComplete item);
+	
+	public List<String> getTopicsByTopic(String topic);
+	public List<Game> getGamesByTopic(String topic);
+	public List<String> getAllGamesByTopic(String topic);
 }

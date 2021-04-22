@@ -30,6 +30,7 @@ import com.my.spring.domain.TagDto;
 import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
+import com.my.spring.domain.statistics.GameStatistic;
 import com.my.spring.service.YoutubeService;
 
 @Service
@@ -44,7 +45,6 @@ public class YoutubeServiceImpl implements YoutubeService {
 			"AIzaSyAFdfs807Tl-7PM8tb4ZDOqfC7vKSCSaRg",
 			"AIzaSyAQtHVKj5g7XtkJJh_Ipd5WlifxCOCwzsc", 
 			"AIzaSyCXiMrdsfLrPLtHRqhS5POORUzqrIK5_74"};
-	private static final int api = 0;
 
 	public YoutubeServiceImpl() {
 		getConnection();
@@ -60,14 +60,14 @@ public class YoutubeServiceImpl implements YoutubeService {
 			t.printStackTrace();
 		}
 	}
-
+	
 	// search.list: 100
 	@Override
-	public ArrayList<Object> callVideoIdsByTopic(TopicDto topicDto) {
+	public ArrayList<Object> callVideoIdsByGame(String title, int api) {
 		ArrayList<Object> result = new ArrayList<Object>();
 		List<String> videoIdList = new ArrayList();
 		List<String> channelIdList = new ArrayList();
-		TopicStatDto topicStat = new TopicStatDto();
+		GameStatistic gameStat = new GameStatistic();
 		try {
 			YouTube.Search.List base = youtube.search().list("snippet");
 			// api 키 입력
@@ -81,17 +81,17 @@ public class YoutubeServiceImpl implements YoutubeService {
 			// 검색 범위 한국으로 한정
 			base.setRegionCode("KR");
 			// 토픽 아이디 한정
-			base.setQ(topicDto.getTopic());
-			base.setVideoCategoryId("20");
+			base.setQ(title);
 			// 조회 상한선
-			base.setMaxResults((long) 40);
-			
-			List<SearchResult> searchResults = base.execute().getItems();
+			base.setMaxResults((long) 30);
+
+			SearchListResponse con = base.execute();
+			List<SearchResult> searchResults = con.getItems();
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String infoDate = dateFormat.format(Calendar.getInstance().getTime());
-			topicStat.setInfoDate(Date.valueOf(infoDate));
-			topicStat.setTopic(topicDto.getTopic());
-			topicStat.setResultCount(base.execute().getPageInfo().getTotalResults());
+			gameStat.setTitle(title);
+			gameStat.setInfoDate(Date.valueOf(infoDate));
+			gameStat.setResultCount(con.getPageInfo().getTotalResults());
 			if (base != null) {
 				Iterator<SearchResult> data = searchResults.iterator();
 				if (!data.hasNext()) {
@@ -118,13 +118,13 @@ public class YoutubeServiceImpl implements YoutubeService {
 		}
 		result.add(videoIdList);
 		result.add(channelIdList);
-		result.add(topicStat);
+		result.add(gameStat);
 		return result;
 	}
 	
 	// channels.list 1
 	@Override
-	public ArrayList<Object> callChannelInfosByChannelId(List<String> channelIdList) {
+	public ArrayList<Object> callChannelInfosByChannelId(List<String> channelIdList, int api) {
 		ArrayList<Object> result = new ArrayList<Object>();
 		List<ChannelDto> channelList = new ArrayList<ChannelDto>();
 		try {
@@ -133,7 +133,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			base.setKey(apiKeys[api]);
 			// 국가 한정
 			base.setHl("ko_kr");
-			base.setMaxResults((long) 40);
+			base.setMaxResults((long) 30);
 			String idList = "";
 			for (int i = 1; i <= channelIdList.size(); i++) {
 				idList += channelIdList.get(i - 1) + ",";
@@ -180,7 +180,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 
 	// channels.list 1
 	@Override
-	public ArrayList<Object> callChannelStatsByChannelId(List<String> channelIdList) {
+	public ArrayList<Object> callChannelStatsByChannelId(List<String> channelIdList, int api) {
 		ArrayList<Object> result = new ArrayList<Object>();
 		List<ChannelStatDto> channelStatList = new ArrayList<ChannelStatDto>();
 		try {
@@ -189,7 +189,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			base.setKey(apiKeys[api]);
 			// 국가 한정
 			base.setHl("ko_kr");
-			base.setMaxResults((long) 40);
+			base.setMaxResults((long) 30);
 			String idList = "";
 			for (int i = 1; i <= channelIdList.size(); i++) {
 				idList += channelIdList.get(i - 1) + ", ";
@@ -233,7 +233,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 
 	// videos.list 1
 	@Override
-	public ArrayList<Object> callVideoInfosByVideoId(List<String> videoIdList) {
+	public ArrayList<Object> callVideoInfosByVideoId(List<String> videoIdList, int api) {
 		ArrayList<Object> result = new ArrayList<Object>();
 		List<VideoDto> videoList = new ArrayList<VideoDto>();
 		List<TagDto> tagList = new ArrayList<TagDto>();
@@ -300,7 +300,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 
 	// videos.list 1
 	@Override
-	public ArrayList<Object> callVideoStatsByVideoId(List<String> videoIdList) {
+	public ArrayList<Object> callVideoStatsByVideoId(List<String> videoIdList, int api) {
 		ArrayList<Object> result = new ArrayList<Object>();
 		List<VideoStatDto> videoStatList = new ArrayList<VideoStatDto>();
 		try {
@@ -357,7 +357,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 
 	//commentThread.list 1
 	@Override
-	public ArrayList<Object> callCommentsByVideoId(List<String> videoIdList) {
+	public ArrayList<Object> callCommentsByVideoId(List<String> videoIdList, int api) {
 		ArrayList<Object> result = new ArrayList<Object>();
 		List<CommentDto> commentList = new ArrayList<CommentDto>();
 		try {

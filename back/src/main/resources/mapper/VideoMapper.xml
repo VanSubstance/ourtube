@@ -2,23 +2,59 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper
 	namespace = "com.my.spring.mapper.VideoMapper">
-	<select id="getVideoIdsByTopic" parameterType="String" resultType="String">
-		select a.id from video a, videoTopic b where a.id = b.id and b.topic = #{topic}
+	<select id="getVideoIdsByGame" parameterType="String" resultType="String">
+		select id from videogame
+		where game = #{game}
 	</select>
+	
+	<!-- 게임 별 비디오 설명의 parsing 작업이 이루어지지 않은 비디오 id 반환 -->
+	<select id="getNotParsedVideoIdsByTitle" parameterType="String" resultType="String">
+		select id from videogame
+		where game = #{title}
+		and id not in (
+		    select id from videoword
+		    where id in (
+		        select id from videogame
+		        where game =  #{title}
+		    )
+		)
+	</select>
+	
+	<!-- 게임 별 비디오 태그의 parsing 작업이 이루어지지 않은 비디오 id 반환 -->
+	<select id="getTagNotParsedVideoIdsByTitle" parameterType="String" resultType="String">
+		select id from videogame
+		where game = #{title}
+		and id not in (
+		    select id from tagword
+		    where id in (
+		        select id from videogame
+		        where game = #{title}
+		    )
+		)
+	</select>
+	
 	<select id="getDescriptionByVideoId" parameterType="String" resultType="String">
 		select description from video where id = #{id}
 	</select>
-	<select id="getVideoIdsForStatisticsByTopic" parameterType="String" resultType="String">
-		select a.id from Video a, videoTopic b 
-		where a.id = b.id and b.topic = #{topic} and 
+	<select id="getVideoIdsForStatisticsByGame" parameterType="String" resultType="String">
+		select a.id from Video a, videoGame b 
+		where a.id = b.id and b.game = #{game} and 
 		a.id not in (select id from VideoStatistics where infoDate = TO_DATE(SYSDATE, 'YY/MM/DD'))
 	</select>
-	<select id="getVideoIdsForCommentByTopic" parameterType="String" resultType="String">
-		select a.id from Video a, videoTopic b 
-		where a.id = b.id and b.topic = #{topic} and 
+	<select id="getVideoIdsForCommentByGame" parameterType="String" resultType="String">
+		select a.id from Video a, videoGame b 
+		where a.id = b.id and b.game = #{game} and 
 		a.id not in (select videoid id from comments group by videoid)
 	</select>
-	
+	<select id="getVideoInfo" resultType="com.my.spring.domain.VideoDto">
+		select * from video
+	</select>
+	<select id="getVideoInfoById" parameterType="java.util.List" resultType="com.my.spring.domain.VideoDto">
+		select * from video where id in
+		<foreach collection="list" item = "item" index = "index" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</select>
 	<select id="getVideoTagByVideoId" parameterType="String" resultType="com.my.spring.domain.TagDto">
 		select * from Tag where id = #{id}
 	</select>
@@ -27,14 +63,44 @@
 		values (#{item.id}, #{item.title}, #{item.thumbnail}, #{item.description}, #{item.publishedDate})
 	</insert>
 	<insert id="setChain" parameterType="com.my.spring.domain.ChainDto">
-		insert into videoTopic (id, topic)
-		values (#{item.id}, #{item.topic})
+		insert into videoGame (id, game)
+		values (#{item.id}, #{item.game})
 	</insert>
 	<insert id="setVideoStatistics" parameterType="com.my.spring.domain.VideoStatDto">
 		insert into VideoStatistics (id, infodate, likecount, dislikecount, viewcount, favoritecount, commentcount)
 		values (#{item.id}, #{item.infoDate}, #{item.likeCount}, 
 		#{item.dislikeCount}, #{item.viewCount}, #{item.favoriteCount}, #{item.commentCount})
 	</insert>
+	<select id="getAvgVideoStatisticsByGame" parameterType="String" resultType="com.my.spring.domain.VideoStatDto">
+		select sum(likecount) likecount, sum(dislikecount) dislikecount, sum(commentcount) commentcount from (
+		select id, round(avg(likecount)) likecount, round(avg(dislikecount)) dislikecount, round(avg(commentcount)) commentcount
+		from videostatistics 
+		where id in (select id from videoGame where game = #{game}) group by id
+		)
+	</select>
+	<select id="getTotalVideoStatisticsByTopic" parameterType="String" resultType="com.my.spring.domain.VideoStatDto">
+		select sum(viewcount) viewcount, sum(likecount) likecount, sum(dislikecount) dislikecount, sum(commentcount) commentcount from (
+		    select id, round(avg(viewcount)) viewcount, round(avg(likecount)) likecount, round(avg(dislikecount)) dislikecount, round(avg(commentcount)) commentcount
+		    from videostatistics 
+		        where id in (
+		            select id from videoGame where game in (
+		                select title as game from gametopic
+		                where topic = #{topic}
+		            )
+		        ) 
+		    group by id
+		)
+	</select>
+	<select id="getTotalViewsByGame" parameterType="String" resultType="Int">
+		select round(sum(viewcount)) viewcount
+		from videostatistics 
+		where id in (
+            select id from videoGame where game = #{game}
+        )
+        group by infodate
+        order by infodate desc
+	</select>
+	
 	<insert id="setVideoTag" parameterType="com.my.spring.domain.TagDto">
 		insert into tag (id, tag) values (#{item.id}, #{item.tag})
 	</insert>
@@ -45,6 +111,104 @@
 		select count(*) from Videostatistics where id = #{item.id} and infodate = #{item.infoDate}
 	</select>
 	<select id="checkChain" parameterType="com.my.spring.domain.ChainDto" resultType="Int">
-		select count(*) from videoTopic where id = #{item.id} and topic = #{item.topic}
+		select count(*) from videoGame where id = #{item.id} and game = #{item.game}
+	</select>
+	<delete id="filterTagWord">
+		delete from tagword
+		where length(word) = lengthb(word)
+	</delete>
+	<delete id="filterVideoWord">
+		delete from videoword
+		where length(word) = lengthb(word)
+	</delete>
+	
+	<select id="getVideoIdsInComplete" resultType="String">
+		select id from video where id not in (
+		select id from idComplete where type = 'video')
+	</select>
+	
+	<select id="getNumNewVidTodayByTitle" parameterType="String" resultType="Int">
+		select count(*) from (
+		    select id from videostatistics
+		    where id in (
+		        select id from videogame a
+		        where a.game = #{title}
+		    ) and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+		    group by id
+		)
+		where id not in (
+		    select id from videostatistics
+		    where id in (
+		        select id from videogame a
+		        where a.game = #{title}
+		    ) and infodate != TO_DATE(SYSDATE, 'YY/MM/DD')
+		    group by id
+		)
+	</select>
+	
+	<!-- 게임 제목을 통한 당일 평균 신규 조회수, 좋아요, 싫어요, 댓글 수 추적 -->
+			<select id="getAvgNewTodayByTitle" parameterType="String" resultType="com.my.spring.domain.statistics.GameDailyStatistic">
+		select a.*, b.numNewVid, c.numExistedVid from (
+		    select #{title} title
+		    ,round(sum(newview) / count(*)) avgnewview
+		    , round(sum(newlike) / count(*)) avgnewlike
+		    , round(sum(newdislike) / count(*)) avgnewdislike
+		    , round(sum(newcomment) / count(*)) avgnewcomment
+		    from (
+		        select id, infodate, (todview - yestview) newView
+		        , (todlike - yestlike) newlike
+		        , (toddislike - yestdislike) newdislike
+		        , (todcomment - yestcomment) newcomment
+		        from (
+		            select id, infodate, viewcount todview, lead(viewcount) over (order by id desc, infodate desc) yestview
+		            ,likecount todlike, lead(likecount) over (order by id desc, infodate desc) yestlike
+		            ,dislikecount toddislike, lead(dislikecount) over (order by id desc, infodate desc) yestdislike
+		            ,commentcount todcomment, lead(commentcount) over (order by id desc, infodate desc) yestcomment
+		            from videostatistics
+		            where id in (
+		                select id from (
+		                    select id, count(*) freq from videostatistics
+		                    where id in (
+		                        select id from videostatistics
+		                        where id in (
+		                            select id from videogame a
+		                            where a.game = #{title}
+		                        ) and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+		                    )
+		                    group by id
+		                )
+		                where freq != 1
+		            )
+		            order by id desc, infodate desc
+		        ) where infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+		    )
+		) a, (
+		    select #{title} title, count(*) numNewVid from (
+		        select id from videostatistics
+		        where id in (
+		            select id from videogame a
+		            where a.game = #{title}
+		        ) and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+		        group by id
+		    )
+		    where id not in (
+		        select id from videostatistics
+		        where id in (
+		            select id from videogame a
+		            where a.game = #{title}
+		        ) and infodate != TO_DATE(SYSDATE, 'YY/MM/DD')
+		        group by id
+		    )
+		) b, (
+		    select #{title} title, count(*) numExistedVid from (
+		        select id from videostatistics
+		        where id in (
+		            select id from videogame a
+		            where a.game = #{title}
+		        )
+		        and infodate != TO_DATE(SYSDATE, 'YY/MM/DD')
+		        group by id
+		    )
+		) c
 	</select>
 </mapper>

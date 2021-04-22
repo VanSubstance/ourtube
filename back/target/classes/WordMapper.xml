@@ -49,14 +49,101 @@
 		where word = #{item.word} and id = #{item.id}
 	</update>
 	
-	<select id="getTagWordsByTopic" parameterType="String" resultType="com.my.spring.domain.words.NounDto">
-		select * from tagWord where id in (select id from videotopic where topic = #{topic})
+	<select id="getTagWordsByGame" parameterType="String" resultType="com.my.spring.domain.words.NounDto">
+		select * from tagWord where id in (select id from videoGame where game = #{game}) order by length(word) desc
 	</select>
-	<select id="getChannelWordsByTopic" parameterType="String" resultType="com.my.spring.domain.words.NounDto">
-		select * from channelWord where id in (select id from channelTopic where topic = #{topic})
+	<select id="getChannelWordsByGame" parameterType="String" resultType="com.my.spring.domain.words.NounDto">
+		select * from channelWord where id in (select id from channelGame where game = #{game}) order by length(word) desc
 	</select>
-	<select id="getVideoWordsByTopic" parameterType="String" resultType="com.my.spring.domain.words.NounDto">
-		select * from videoWord where id in (select id from videotopic where topic = #{topic})
+	<select id="getVideoWordsByGame" parameterType="String" resultType="com.my.spring.domain.words.NounDto">
+		select * from videoWord where id in (select id from videoGame where game = #{game}) order by length(word) desc
 	</select>
+	
+	<select id="getWordsByGame" parameterType="String" resultType="com.my.spring.domain.words.NounDto">
+		select word, sum(count) count from (
+		select id, word, count from channelWord where id in (select id from channelGame where game = #{game})
+		union all
+		select id, word, count from tagWord where id in (select id from videoGame where game = #{game})
+		union all
+		select id, word, count from videoWord where id in (select id from videoGame where game = #{game})
+		) 
+		group by word
+		order by count desc
+	</select>
+	
+	<select id="checkWordUnique" parameterType="String" resultType="Int">
+		select count(*) from wordunique where word = #{word}
+	</select>
+	
+	<insert id="setWordUnique" parameterType="String">
+		insert into wordunique (word)
+		values (#{word})
+	</insert>
+	
+	<select id="buildWordChainByTag" parameterType="String" resultType = "com.my.spring.domain.chains.WordChain">
+		select word1, word2, count(*) hardness from
+		(
+		select a.word word1, b.word word2 from tagword a, videoword b
+		where a.id = #{videoId} and a.id = b.id and a.word != b.word
+		) group by (word1, word2)
+	</select>
+	<select id="buildWordChainByVideo" parameterType="String" resultType = "com.my.spring.domain.chains.WordChain">
+		select word1, word2, count(*) hardness from
+		(
+		select a.word word1, b.word word2 from Videoword a, videoword b
+		where a.id = #{videoId} and a.id = b.id and a.word != b.word
+		) group by (word1, word2)
+	</select>
+	<select id="buildWordChainByChannel" parameterType="String" resultType = "com.my.spring.domain.chains.WordChain">
+		select word1, word2, count(*) hardness from
+		(
+		select a.word word1, b.word word2 from Channelword a, videoword b
+		where a.id = #{channelId} and a.id = b.id and a.word != b.word
+		) group by (word1, word2)
+	</select>
+	
+	<insert id="setWordChainsById">
+		insert into wordchain
+		select word1, word2, count(*) hardness from
+		(
+		select a.word word1, b.word word2 from videoword a, videoword b
+		where a.id = b.id and a.word != b.word and a.id in
+		(
+		select id from video where id not in (
+		select id from idComplete where type = 'video')
+		)
+		union all
+		select a.word word1, b.word word2 from channelword a, channelword b
+		where a.id = b.id and a.word != b.word and a.id in
+		(
+		select id from channel where id not in (
+		select id from idComplete where type = 'channel')
+		)
+		union all
+		select a.word word1, b.word word2 from tagword a, tagword b
+		where a.id = b.id and a.word != b.word and a.id in
+		(
+		select id from video where id not in (
+		select id from idComplete where type = 'video')
+		)
+		) 
+		group by word1, word2
+		order by hardness desc
+	</insert>
+	
+	
+	<select id="getWordChain" parameterType="com.my.spring.domain.chains.WordChain"
+	resultType = "com.my.spring.domain.chains.WordChain">
+		select * from WordChain where word1 = #{item.word1} and word2 = #{item.word2}
+	</select>
+	<insert id="setWordChain" parameterType="com.my.spring.domain.chains.WordChain">
+		insert into WordChain (word1, word2, hardness) 
+		values (#{item.word1}, #{item.word2}, #{item.hardness})
+	</insert>
+	<update id="updateWordChain" parameterType="com.my.spring.domain.chains.WordChain">
+		update WordChain set
+		hardness ={item.hardness}
+		where word1 = #{item.sord1} and word2 = #{item.word2}
+	</update>
 	
 </mapper>

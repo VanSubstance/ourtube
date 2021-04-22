@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.ChannelDto;
 import com.my.spring.domain.ChannelStatDto;
+import com.my.spring.domain.statistics.MaxAvgMedian;
 import com.my.spring.mapper.ChannelMapper;
 import com.my.spring.service.ChannelService;
 
@@ -20,8 +21,8 @@ public class ChannelServiceImpl implements ChannelService{
 	public ChannelMapper mapper;
 
 	@Override
-	public List<String> getChannelIdsByTopic(String topic) {
-		return mapper.getChannelIdsByTopic(topic);
+	public List<String> getChannelIdsByGame(String game) {
+		return mapper.getChannelIdsByGame(game);
 	}
 
 	@Override
@@ -55,12 +56,32 @@ public class ChannelServiceImpl implements ChannelService{
 	}
 
 	@Override
-	public List<String> getChannelIdsForStatisticsByTopic(String topic) {
-		return mapper.getChannelIdsForStatisticsByTopic(topic);
+	public List<String> getChannelIdsForStatisticsByGame(String game) {
+		return mapper.getChannelIdsForStatisticsByGame(game);
 	}
 
 	@Override
 	public String getDescriptionByChannelId(String id) {
 		return mapper.getDescriptionByChannelId(id);
+	}
+
+	@Override
+	public List<ChannelDto> getChannelInfoById(List<String> list) {
+		return mapper.getChannelInfoById(list);
+	}
+	
+	@Override
+	public void filterChannelWord() {
+		mapper.filterChannelWord();
+	}
+
+	@Override
+	public List<String> getChannelIdsInComplete() {
+		return mapper.getChannelIdsInComplete();
+	}
+
+	@Override
+	public MaxAvgMedian getChannelMaxAvgMedianByTopic(String topic) {
+		return mapper.getChannelMaxAvgMedianByTopic(topic);
 	}
 }
