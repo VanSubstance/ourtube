@@ -16,6 +16,9 @@ import com.my.spring.domain.statistics.GameDataForTrendMain;
 import com.my.spring.domain.statistics.GameStatistic;
 
 public interface BasicMapper {
+	// 당일 기준 동영상 게시일이 98일(14주)가 넘어가는 동영상 id들 삭제
+	public void deleteOldDatas();
+	
 	public List<String> getGameQ();
 	public String getTitleByQ(@Param("q") String q);
 	public List<String> getAllTitle();
@@ -42,6 +45,4 @@ public interface BasicMapper {
 	public List<String> getTopicsByTopic(@Param("topic") String topic);
 	public List<Game> getGamesByTopic(@Param("topic") String topic);
 	public List<String> getAllGamesByTopic(@Param("topic") String topic);
-	
-	public void setWeightsGameTodayByGame(@Param("item") GameStatistic item);
 }

@@ -3,8 +3,36 @@
 <mapper
 	namespace = "com.my.spring.mapper.VideoMapper">
 	<select id="getVideoIdsByGame" parameterType="String" resultType="String">
-		select a.id from video a, videoGame b where a.id = b.id and b.game = #{game}
+		select id from videogame
+		where game = #{game}
 	</select>
+	
+	<!-- 게임 별 비디오 설명의 parsing 작업이 이루어지지 않은 비디오 id 반환 -->
+	<select id="getNotParsedVideoIdsByTitle" parameterType="String" resultType="String">
+		select id from videogame
+		where game = #{title}
+		and id not in (
+		    select id from videoword
+		    where id in (
+		        select id from videogame
+		        where game =  #{title}
+		    )
+		)
+	</select>
+	
+	<!-- 게임 별 비디오 태그의 parsing 작업이 이루어지지 않은 비디오 id 반환 -->
+	<select id="getTagNotParsedVideoIdsByTitle" parameterType="String" resultType="String">
+		select id from videogame
+		where game = #{title}
+		and id not in (
+		    select id from tagword
+		    where id in (
+		        select id from videogame
+		        where game = #{title}
+		    )
+		)
+	</select>
+	
 	<select id="getDescriptionByVideoId" parameterType="String" resultType="String">
 		select description from video where id = #{id}
 	</select>
@@ -97,5 +125,90 @@
 	<select id="getVideoIdsInComplete" resultType="String">
 		select id from video where id not in (
 		select id from idComplete where type = 'video')
+	</select>
+	
+	<select id="getNumNewVidTodayByTitle" parameterType="String" resultType="Int">
+		select count(*) from (
+		    select id from videostatistics
+		    where id in (
+		        select id from videogame a
+		        where a.game = #{title}
+		    ) and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+		    group by id
+		)
+		where id not in (
+		    select id from videostatistics
+		    where id in (
+		        select id from videogame a
+		        where a.game = #{title}
+		    ) and infodate != TO_DATE(SYSDATE, 'YY/MM/DD')
+		    group by id
+		)
+	</select>
+	
+	<!-- 게임 제목을 통한 당일 평균 신규 조회수, 좋아요, 싫어요, 댓글 수 추적 -->
+			<select id="getAvgNewTodayByTitle" parameterType="String" resultType="com.my.spring.domain.statistics.GameDailyStatistic">
+		select a.*, b.numNewVid, c.numExistedVid from (
+		    select #{title} title
+		    ,round(sum(newview) / count(*)) avgnewview
+		    , round(sum(newlike) / count(*)) avgnewlike
+		    , round(sum(newdislike) / count(*)) avgnewdislike
+		    , round(sum(newcomment) / count(*)) avgnewcomment
+		    from (
+		        select id, infodate, (todview - yestview) newView
+		        , (todlike - yestlike) newlike
+		        , (toddislike - yestdislike) newdislike
+		        , (todcomment - yestcomment) newcomment
+		        from (
+		            select id, infodate, viewcount todview, lead(viewcount) over (order by id desc, infodate desc) yestview
+		            ,likecount todlike, lead(likecount) over (order by id desc, infodate desc) yestlike
+		            ,dislikecount toddislike, lead(dislikecount) over (order by id desc, infodate desc) yestdislike
+		            ,commentcount todcomment, lead(commentcount) over (order by id desc, infodate desc) yestcomment
+		            from videostatistics
+		            where id in (
+		                select id from (
+		                    select id, count(*) freq from videostatistics
+		                    where id in (
+		                        select id from videostatistics
+		                        where id in (
+		                            select id from videogame a
+		                            where a.game = #{title}
+		                        ) and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+		                    )
+		                    group by id
+		                )
+		                where freq != 1
+		            )
+		            order by id desc, infodate desc
+		        ) where infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+		    )
+		) a, (
+		    select #{title} title, count(*) numNewVid from (
+		        select id from videostatistics
+		        where id in (
+		            select id from videogame a
+		            where a.game = #{title}
+		        ) and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+		        group by id
+		    )
+		    where id not in (
+		        select id from videostatistics
+		        where id in (
+		            select id from videogame a
+		            where a.game = #{title}
+		        ) and infodate != TO_DATE(SYSDATE, 'YY/MM/DD')
+		        group by id
+		    )
+		) b, (
+		    select #{title} title, count(*) numExistedVid from (
+		        select id from videostatistics
+		        where id in (
+		            select id from videogame a
+		            where a.game = #{title}
+		        )
+		        and infodate != TO_DATE(SYSDATE, 'YY/MM/DD')
+		        group by id
+		    )
+		) c
 	</select>
 </mapper>

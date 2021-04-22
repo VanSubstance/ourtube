@@ -3,7 +3,8 @@
 <mapper
 	namespace = "com.my.spring.mapper.ChannelMapper">
 	<select id="getChannelIdsByGame" parameterType="String" resultType="String">
-		select a.id from channel a, channelGame b where a.id = b.id and b.game = #{game}
+		select id from channelgame
+		where game = #{game}
 	</select>
 	<select id="getDescriptionByChannelId" parameterType="String" resultType="String">
 		select description from channel where id = #{id}

@@ -1,5 +1,6 @@
 package com.my.spring.service.Impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.TagDto;
 import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
+import com.my.spring.domain.statistics.GameDailyStatistic;
 import com.my.spring.mapper.VideoMapper;
 import com.my.spring.service.VideoService;
 
@@ -115,5 +117,27 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	public List<Integer> getTotalViewsByGame(String game) {
 		return mapper.getTotalViewsByGame(game);
+	}
+
+	@Override
+	public Integer getNumNewVidTodayByTitle(String title) {
+		return mapper.getNumNewVidTodayByTitle(title);
+	}
+	
+	@Override
+	public List<GameDailyStatistic> getAvgNewTodayByTitle(List<String> titles) {
+		List<GameDailyStatistic> result = new ArrayList<GameDailyStatistic>();
+		for (String title : titles) result.add(mapper.getAvgNewTodayByTitle(title));
+		return result;
+	}
+
+	@Override
+	public List<String> getNotParsedVideoIdsByTitle(String title) {
+		return mapper.getNotParsedVideoIdsByTitle(title);
+	}
+
+	@Override
+	public List<String> getTagNotParsedVideoIdsByTitle(String title) {
+		return mapper.getTagNotParsedVideoIdsByTitle(title);
 	}
 }

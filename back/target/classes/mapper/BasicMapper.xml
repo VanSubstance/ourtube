@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper
 	namespace = "com.my.spring.mapper.BasicMapper">
+	<!-- 당일 기준 동영상 게시일이 70일(10주)가 넘어가는 동영상 id들 삭제 -->
+	<delete id="deleteOldDatas">
+		<![CDATA[
+		delete from video
+		where publisheddate < TO_DATE(SYSDATE - 70, 'YY/MM/DD')
+		]]>
+	</delete>
 
 	<select id="getGameQ" resultType="String">
 		select Q from gamesearch 
@@ -15,7 +22,7 @@
 		select title from gamesearch where q = #{q}
 	</select>
 	<select id="getAllTitle" resultType="String">
-		select title from gamesearch
+		select title from gamesearch where q is not null
 	</select>
 	<insert id="setGame" parameterType="com.my.spring.domain.basics.Game">
 		insert into game (title, thumbnail) 
@@ -213,10 +220,5 @@
 		insert into IdComplete (type, id)
 		values (#{item.type}, #{item.id})
 	</insert>
-	
-	<update id="setWeightsGameTodayByGame" parameterType="com.my.spring.domain.statistics.GameStatistic">
-		update gamestatistics set w1 = #{item.w1}, w2 = #{item.w2}, w3 = #{item.w3}, w4 = #{item.w4}, w5 = #{item.w5}, ourScore = #{item.ourScore}
-		where title = #{item.title} and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
-	</update>
 	
 </mapper>

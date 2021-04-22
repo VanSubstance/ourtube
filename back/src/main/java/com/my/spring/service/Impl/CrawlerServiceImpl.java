@@ -6,6 +6,7 @@ import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.stereotype.Service;
@@ -232,13 +233,14 @@ public class CrawlerServiceImpl implements CrawlerService {
 			driver.get(base_url);
 			Thread.sleep(2000);
 			Document soup = Jsoup.parse(driver.getPageSource());
-			for (Element tag : soup.select("a#video-title")) {
+			for (Element item : soup.select("ytd-video-renderer")) {
+				Elements tag = item.select("a#video-title");
 				String vidId = tag.attr("href");
+				String title = tag.attr("title");
 				vidId = vidId.replace("/watch?v=", "").split("&qq=")[0];
 				videoIdList.add(vidId);
-				System.out.println("비디오: " + vidId);
-			}
-			for (Element tag : soup.select("div#channel-info")) {
+				System.out.println("비디오: " + title + " : " + vidId);
+				tag = item.select("div#channel-info");
 				String channelId = tag.select("a").attr("href");
 				channelId = channelId.replace("/channel/", "");
 				if (!channelId.contains("/user/")) {
@@ -251,9 +253,10 @@ public class CrawlerServiceImpl implements CrawlerService {
 		} finally {
 			driver.close();
 		}
+		
 		result.add(videoIdList);
 		result.add(channelIdList);
 		return result;
 	}
-
+	
 }

@@ -6,9 +6,12 @@ import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.TagDto;
 import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
+import com.my.spring.domain.statistics.GameDailyStatistic;
 
 public interface VideoService {
 	public List<String> getVideoIdsByGame(String game);
+	public List<String> getNotParsedVideoIdsByTitle(String title);
+	public List<String> getTagNotParsedVideoIdsByTitle(String title);
 	public List<String> getVideoIdsForStatisticsByGame(String game);
 	public List<String> getVideoIdsForCommentByGame(String game);
 	public String getDescriptionByVideoId(String id);
@@ -28,4 +31,6 @@ public interface VideoService {
 	public void filterVideoWord();
 	public void filterTagWord();
 	public List<String> getVideoIdsInComplete();
+	public Integer getNumNewVidTodayByTitle(String title);
+	public List<GameDailyStatistic> getAvgNewTodayByTitle(List<String> titles);
 }

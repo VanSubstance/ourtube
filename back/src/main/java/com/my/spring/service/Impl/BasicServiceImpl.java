@@ -22,6 +22,11 @@ import com.my.spring.service.BasicService;
 public class BasicServiceImpl implements BasicService {
 	@Autowired
 	BasicMapper mapper;
+	
+	@Override
+	public void deleteOldDatas() {
+		mapper.deleteOldDatas();
+	}
 
 	@Override
 	public List<String> getGameQ() {
@@ -130,11 +135,6 @@ public class BasicServiceImpl implements BasicService {
 	@Override
 	public List<String> getAllGamesByTopic(String topic) {
 		return mapper.getAllGamesByTopic(topic);
-	}
-
-	@Override
-	public void setWeightsGameTodayByGame(GameStatistic item) {
-		mapper.setWeightsGameTodayByGame(item);
 	}
 
 }

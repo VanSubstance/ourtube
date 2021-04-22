@@ -8,9 +8,17 @@ import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.TagDto;
 import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
+import com.my.spring.domain.statistics.GameDailyStatistic;
 
 public interface VideoMapper {
 	public List<String> getVideoIdsByGame(@Param("game") String game);
+	
+	// 게임 별 비디오 설명의 parsing 작업이 이루어지지 않은 비디오 id 반환
+	public List<String> getNotParsedVideoIdsByTitle(@Param("title") String title);
+	
+	// 게임 별 비디오 태그의 parsing 작업이 이루어지지 않은 비디오 id 반환
+	public List<String> getTagNotParsedVideoIdsByTitle(@Param("title") String title);
+	
 	public List<String> getVideoIdsForStatisticsByGame(@Param("game") String game);
 	public String getDescriptionByVideoId(@Param("id") String id);
 	public List<String> getVideoIdsForCommentByGame(@Param("game") String game);
@@ -30,4 +38,6 @@ public interface VideoMapper {
 	public void filterVideoWord();
 	public void filterTagWord();
 	public List<String> getVideoIdsInComplete();
+	public Integer getNumNewVidTodayByTitle(@Param("title") String title);
+	public GameDailyStatistic getAvgNewTodayByTitle(@Param("title") String title);
 }

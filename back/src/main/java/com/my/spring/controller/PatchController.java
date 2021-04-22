@@ -63,9 +63,9 @@ public class PatchController {
 	@Autowired
 	private StatisticService serviceStatistic;
 	
-	private final int hour = 1;
+	private final int hour = 0;
 	
-	@Scheduled(cron = "1 0 " + hour + " * * *")
+	@Scheduled(cron = "1 5 " + hour + " * * *")
 	public void patchGameFromYoutube() {
 		System.out.println("------------------------------- 게임 크롤링 시작 -------------------------------");
 		ArrayList<Object> data = serviceCrawler.crawlGame();
@@ -91,116 +91,124 @@ public class PatchController {
 		System.out.println("------------------------------- 게임 크롤링 종료 -------------------------------");
 	}
 
-	@Scheduled(cron = "1 20 " + hour + " * * *")
+	@Scheduled(cron = "1 25 " + hour + " * * *")
 	public void patchDataByGameFirst() {
 		List<String> gameQList = serviceBasic.getGameQ();
 		int mark = 0;
 		for (String gameQ : gameQList) {
 			System.out.println(mark);
 			System.out.println("게임: " + gameQ);
-			patchVideoAndChannelByGame(gameQ, mark % 2);
+			patchVideoAndChannelByGame(gameQ, mark % 4);
 			System.out.println("게임: " + gameQ + " : 데이터 갱신 완료.");
 			mark ++;
 		}
+		System.out.println("당일 기준 동영상 게시일이 70일(10주)가 넘어가는 동영상 id들 삭제");
+		serviceBasic.deleteOldDatas();
 	}
 	
-	@Scheduled(cron = "1 40 " + hour + " * * *")
-	@RequestMapping(value = "/calc/weight")
-	public void calculatePercentile() {
-		System.out.println("변수 계산 -------------");
-		SimpleRegression regression = new SimpleRegression();
-		List<String> GamesOrderByView = serviceStatistic.getGamesByDate();
-		List<String> GamesOrderByComment = serviceStatistic.getGamesOrderByComment();
-		List<Double> w3s = serviceStatistic.getLikeRatioByDate();
-		HashMap<String, GameStatistic> gameStats = new HashMap<String, GameStatistic>();
-		for (String title : GamesOrderByView) {
-			System.out.println("\t" + title);
-			int seq = GamesOrderByView.indexOf(title);
-			GameStatistic gameStat = new GameStatistic();
-			gameStat.setTitle(title);
-			
-			// w1 계산
-			// w1: 당일 평균 총합 조회수 해당 게임 백분율
-			double w1 = (double) seq
-					/ (double) GamesOrderByView.size();
-			w1 -= 0.5;
-			if (w1 < 0.0) {
-				w1 = - Math.pow(Math.abs(w1), 1.0/3.0);
-			} else {
-				w1 = Math.pow(w1, 1.0/3.0);
-			}
-			gameStat.setW1(w1);
-			
-			// w2 계산
-			// w2: 해당 게임 근 14일간 각 일 종합 조회수 기준 선형 계수
-			List<Integer> y = serviceStatistic.getRecentViewsByGame(title);
-			double[][] data = new double[14][2];
-			for (int i = 0; i < y.size(); i++) {
-				data[i][0] = i;
-				data[i][1] = y.get(i);
-			}
-			regression.addData(data);
-			double w2 = regression.getSlope()/10000;
-			if (w2 > 100.0) w2 = 100.0;
-			if (w2 < -100.0) w2 = -100.0;
-			gameStat.setW2(w2);
-			
-			// w3 계산
-			// w3: 해당 게임 당일 총 좋싫비 (총합 좋아요 / 총합 싫어요)
-			double w3 = w3s.get(seq);
-			if (w3 > 100.0) w3 = 100.0;
-			if (w3 < 1.0) w3 = 1.0;
-			gameStat.setW3(w3);
-			
-			// w4 계산
-			// w4: 해당 게임 당일 총합 댓글 백분율
-			double w4 = (double) GamesOrderByComment.indexOf(title)
-					/ (double) GamesOrderByComment.size();
-			w4 -= 0.5;
-			if (w4 < 0.0) {
-				w4 = - Math.pow(Math.abs(w4), 1.0/3.0);
-			} else {
-				w4 = Math.pow(w4, 1.0/3.0);
-			}
-			gameStat.setW4(w4);
-			
-			// w5 계산
-			// w5: 해당 게임 근 14일간 각 일 종합 취합 댓글 수 기준 선형 계수
-			regression = new SimpleRegression();
-			y = serviceStatistic.getRecentCommentCountsByGame(title);
-			data = new double[14][2];
-			for (int i = 0; i < y.size(); i++) {
-				data[i][0] = i;
-				data[i][1] = y.get(i);
-			}
-			regression.addData(data);
-			double w5 = regression.getSlope()/10;
-			if (w5 > 30.0) w5 = 30.0;
-			if (w5 < -30.0) w5 = -30.0;
-			gameStat.setW5(w5);
-			
-			System.out.println(gameStat.getTitle());
-			System.out.println(gameStat.getW1());
-			System.out.println(gameStat.getW2());
-			System.out.println(gameStat.getW3());
-			System.out.println(gameStat.getW4());
-			System.out.println(gameStat.getW5());
-			
-			// OurScore 계산			
-			gameStat.calcScore();
-			System.out.println("Score: " + gameStat.getOurScore());
-			
-			gameStats.put(title, gameStat);
-			
-			// 삽입
-			serviceBasic.setWeightsGameTodayByGame(gameStat);
-			
-		}
-
-		System.out.println("변수 계산 종료 -------------\n");
-	}
+//	@Scheduled(cron = "1 40 " + hour + " * * *")
+//	@RequestMapping(value = "/calc/weight")
+//	public void calculatePercentile() {
+//		System.out.println("변수 계산 -------------");
+//		SimpleRegression regression = new SimpleRegression();
+//		List<String> GamesOrderByView = serviceStatistic.getGamesByDate();
+//		List<String> GamesOrderByComment = serviceStatistic.getGamesOrderByComment();
+//		List<Double> w3s = serviceStatistic.getLikeRatioByDate();
+//		HashMap<String, GameStatistic> gameStats = new HashMap<String, GameStatistic>();
+//		for (String title : GamesOrderByView) {
+//			System.out.println("\t" + title);
+//			int seq = GamesOrderByView.indexOf(title);
+//			GameStatistic gameStat = new GameStatistic();
+//			gameStat.setTitle(title);
+//			
+//			// w0 계산
+//			// w0: 평균 신규 조회수
+//			double w0 = serviceVideo.getNumNewViewTodayByTitle(title);
+//			gameStat.setW0(w0);
+//			
+//			// w1 계산
+//			// w1: 평균 신규 조회수
+//			double w1 = serviceVideo.getNumNewVidTodayByTitle(title);
+////			double w1 = (double) seq
+////					/ (double) GamesOrderByView.size();
+////			w1 -= 0.5;
+////			if (w1 < 0.0) {
+////				w1 = - Math.pow(Math.abs(w1), 1.0/3.0);
+////			} else {
+////				w1 = Math.pow(w1, 1.0/3.0);
+////			}
+//			gameStat.setW1(w1);
+//			
+//			// w2 계산
+//			// w2: 해당 게임 근 14일간 각 일 종합 조회수 기준 선형 계수
+//			List<Integer> y = serviceStatistic.getRecentViewsByGame(title);
+//			double[][] data = new double[14][2];
+//			for (int i = 0; i < y.size(); i++) {
+//				data[i][0] = i;
+//				data[i][1] = y.get(i);
+//			}
+//			regression.addData(data);
+//			double w2 = regression.getSlope()/10000;
+//			if (w2 > 100.0) w2 = 100.0;
+//			if (w2 < -100.0) w2 = -100.0;
+//			gameStat.setW2(w2);
+//			
+//			// w3 계산
+//			// w3: 해당 게임 당일 총 좋싫비 (총합 좋아요 / 총합 싫어요)
+//			double w3 = w3s.get(seq);
+//			if (w3 > 100.0) w3 = 100.0;
+//			if (w3 < 1.0) w3 = 1.0;
+//			gameStat.setW3(w3);
+//			
+//			// w4 계산
+//			// w4: 해당 게임 당일 총합 댓글 백분율
+//			double w4 = (double) GamesOrderByComment.indexOf(title)
+//					/ (double) GamesOrderByComment.size();
+//			w4 -= 0.5;
+//			if (w4 < 0.0) {
+//				w4 = - Math.pow(Math.abs(w4), 1.0/3.0);
+//			} else {
+//				w4 = Math.pow(w4, 1.0/3.0);
+//			}
+//			gameStat.setW4(w4);
+//			
+//			// w5 계산
+//			// w5: 해당 게임 근 14일간 각 일 종합 취합 댓글 수 기준 선형 계수
+//			regression = new SimpleRegression();
+//			y = serviceStatistic.getRecentCommentCountsByGame(title);
+//			data = new double[14][2];
+//			for (int i = 0; i < y.size(); i++) {
+//				data[i][0] = i;
+//				data[i][1] = y.get(i);
+//			}
+//			regression.addData(data);
+//			double w5 = regression.getSlope()/10;
+//			if (w5 > 30.0) w5 = 30.0;
+//			if (w5 < -30.0) w5 = -30.0;
+//			gameStat.setW5(w5);
+//			
+//			System.out.println("w0: " + gameStat.getW0());
+//			System.out.println("w1: " + gameStat.getW1());
+//			System.out.println("w2: " + gameStat.getW2());
+//			System.out.println("w3: " + gameStat.getW3());
+//			System.out.println("w4: " + gameStat.getW4());
+//			System.out.println("w5: " + gameStat.getW5());
+//			
+//			// OurScore 계산			
+////			gameStat.calcScore();
+////			System.out.println("Score: " + gameStat.getOurScore());
+////			
+////			gameStats.put(title, gameStat);
+////			
+////			// 삽입
+////			serviceBasic.setWeightsGameTodayByGame(gameStat);
+//			
+//		}
+//
+//		System.out.println("변수 계산 종료 -------------\n");
+//	}
 	
-	@Scheduled(cron = "1 50 " + hour + " * * *")
+	@Scheduled(cron = "1 55 " + hour + " * * *")
 	public void parseWords() {
 		new ArrayList<String>();
 		new ArrayList<String>();
@@ -217,6 +225,7 @@ public class PatchController {
 		System.out.println("----------------- 연관성 구축 시작 -----------------");
 		buildChains(videoIdList, videoIdListTag, channelIdList);
 		System.out.println("----------------- 연관성 구축 종료 -----------------");
+		
 	}
 
 	@RequestMapping(value = "/chain/all")
@@ -228,7 +237,7 @@ public class PatchController {
 		System.out.println("----------------- 연관성 구축 종료 -----------------");
 	}
 	
-	public void patchChannelByGame(String title, List<String> channelIdList) {
+	public void patchChannelByGame(String title, List<String> channelIdList, int api) {
 		System.out.println("------------------------ 채널 데이터 작업 시작  ------------------------");
 
 		System.out.print("\t\t신규 채널 유효성 검사 | o -> 신규 등록 | x -> 이미 존재 | ");
@@ -250,7 +259,7 @@ public class PatchController {
 		}
 
 		System.out.println("\t\t상위 채널 중 신규 id 리스트 -> 채널 기본 정보 & 채널 토픽 체인");
-		ArrayList<Object> data = serviceYoutube.callChannelInfosByChannelId(temp, 2);
+		ArrayList<Object> data = serviceYoutube.callChannelInfosByChannelId(temp, api);
 		List<ChannelDto> channelDtoList = (List<ChannelDto>) data.get(0);
 		List<ChainDto> chainChannel = new ArrayList<ChainDto>();
 
@@ -289,7 +298,8 @@ public class PatchController {
 		System.out.println(" 완료.");
 		
 		System.out.println("\t\t금일 통계 정보 갱신을 위한 채널 id 리스트 -> Youtube API -> 금일 채널 통계 정보");
-		data = serviceYoutube.callChannelStatsByChannelId(channelIdList, 2);
+		channelIdList = serviceChannel.getChannelIdsByGame(title);
+		data = serviceYoutube.callChannelStatsByChannelId(channelIdList, api);
 		System.out.println();
 		List<ChannelStatDto> channelStatList = (List<ChannelStatDto>) data.get(0);
 		System.out.print("\t\t\t금일 채널 통계 정보 -> Database | o -> 등록 | ");
@@ -305,7 +315,7 @@ public class PatchController {
 		System.out.println("------------------------ 채널 데이터 작업 종료  ------------------------");
 	}
 
-	public void patchVideoByGame(String title, List<String> videoIdList) {
+	public void patchVideoByGame(String title, List<String> videoIdList, int api) {
 		System.out.println("------------------------ 비디오 데이터 작업 시작  ------------------------");
 
 		System.out.print("\t\t신규 비디오 유효성 검사 | o -> 신규 등록 | x -> 이미 존재 | ");
@@ -326,7 +336,7 @@ public class PatchController {
 			existedInfo = serviceVideo.getVideoInfoById(existed);
 		}
 		System.out.println("\t\t상위 비디오 중 신규 id 리스트 -> 비디오 기본 정보 & 태그 & 비디오 토픽 체인");
-		ArrayList<Object> data = serviceYoutube.callVideoInfosByVideoId(temp, 2);
+		ArrayList<Object> data = serviceYoutube.callVideoInfosByVideoId(temp, api);
 		List<VideoDto> videoDtoList = (List<VideoDto>) data.get(0);
 		List<ChainDto> chainVideo = new ArrayList<ChainDto>();
 
@@ -374,7 +384,7 @@ public class PatchController {
 		System.out.println(" 완료.");
 
 		System.out.print("\t\t\t댓글 -> Database | o -> 신규 등록 | x -> 이미 존재 | ");
-		data = serviceYoutube.callCommentsByVideoId(videoIdList, 3);
+		data = serviceYoutube.callCommentsByVideoId(videoIdList, api);
 		List<CommentDto> commentDtoList = (List<CommentDto>) data.get(0);
 		System.out.print(commentDtoList.size() + " 개\n\t\t\t");
 		for (CommentDto commentDto : commentDtoList) {
@@ -394,7 +404,8 @@ public class PatchController {
 		System.out.println(" 완료.");
 		
 		System.out.println("\t\t금일 통계 정보 갱신을 위한 비디오 id 리스트 -> Youtube API -> 금일 비디오 통계 정보");
-		data = serviceYoutube.callVideoStatsByVideoId(videoIdList, 3);
+		videoIdList = serviceVideo.getVideoIdsByGame(title);
+		data = serviceYoutube.callVideoStatsByVideoId(videoIdList, api);
 		System.out.println();
 		List<VideoStatDto> videoStatList = (List<VideoStatDto>) data.get(0);
 		System.out.print("\t\t\t금일 비디오 통계 정보 -> Database | o -> 등록 | ");
@@ -408,6 +419,48 @@ public class PatchController {
 		}
 		System.out.println(" 완료.");
 		System.out.println("------------------------ 비디오 데이터 작업 종료  ------------------------");
+	}
+	
+	@RequestMapping(value = "/menual")
+	public void renewDataToday() {
+		List<String> titles = serviceBasic.getAllTitle();
+		int api = 0;
+		for (String title: titles) {
+			System.out.println(title + " 시작");
+			List<String> videoIdList = serviceVideo.getVideoIdsByGame(title);
+			System.out.println("비디오 시작: " + videoIdList.size() + "개");
+			ArrayList<Object> data = serviceYoutube.callVideoStatsByVideoId(videoIdList, api);
+			List<VideoStatDto> videoStatList = (List<VideoStatDto>) data.get(0);
+			System.out.print("\t금일 비디오 통계 정보 -> Database | o -> 등록 | ");
+			for (VideoStatDto videoStatDto : videoStatList) {
+				System.out.println(videoStatDto.getId());
+				try {
+					System.out.print("o");
+				} catch (DataIntegrityViolationException e) {
+					System.out.print("x");
+				}
+			}
+			System.out.println("비디오 완료.");
+			
+			List<String> channelIdList = serviceChannel.getChannelIdsByGame(title);
+			System.out.println("채널 시작: " + channelIdList.size() + "개");
+			data = serviceYoutube.callChannelStatsByChannelId(channelIdList, api);
+			List<ChannelStatDto> channelStatList = (List<ChannelStatDto>) data.get(0);
+			System.out.print("\t금일 채널 통계 정보 -> Database | o -> 등록 | ");
+			for (ChannelStatDto channelStatDto : channelStatList) {
+				try {
+					serviceChannel.setChannelStatistics(channelStatDto);
+					System.out.print("o");
+				} catch (DataIntegrityViolationException e) {
+					System.out.print("x");
+				}
+			}
+			System.out.println("채널 완료.");
+			
+			System.out.println(title + " 완료");
+			api++;
+			api %= 4;
+		}
 	}
 
 	public void patchVideoAndChannelByGame(String gameQ, int api) {
@@ -437,8 +490,8 @@ public class PatchController {
 			System.out.println("이미 존재");
 		}
 
-		patchVideoByGame(title, videoIdList);
-		patchChannelByGame(title, channelIdList);
+		patchVideoByGame(title, videoIdList, api);
+		patchChannelByGame(title, channelIdList, api);
 
 		System.out.println("------------------------ 데이터 작업 종료  ------------------------");
 	}
@@ -449,7 +502,7 @@ public class PatchController {
 		List<String> gameList = serviceBasic.getAllTitle();
 		for (String game : gameList) {
 			System.out.println("게임: " + game);
-			List<String> videoIdList = serviceVideo.getVideoIdsByGame(game);
+			List<String> videoIdList = serviceVideo.getTagNotParsedVideoIdsByTitle(game);
 			for (String videoId : videoIdList) {
 				System.out.print("\t비디오 id: " + videoId);
 				if (serviceWord.checkCompleteForTag(videoId) == 0) {
@@ -567,7 +620,7 @@ public class PatchController {
 		List<String> gameList = serviceBasic.getAllTitle();
 		for (String game : gameList) {
 			System.out.println("게임: " + game);
-			List<String> videoIdList = serviceVideo.getVideoIdsByGame(game);
+			List<String> videoIdList = serviceVideo.getNotParsedVideoIdsByTitle(game);
 			for (String videoId : videoIdList) {
 				System.out.print("\t비디오 id: " + videoId + " : ");
 				if (serviceWord.checkCompleteForVideo(videoId) == 0) {

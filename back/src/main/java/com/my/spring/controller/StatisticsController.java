@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.my.spring.domain.TopicDto;
+import com.my.spring.domain.statistics.GameDailyStatistic;
 import com.my.spring.domain.statistics.GameStatistic;
 import com.my.spring.domain.words.NounDto;
 import com.my.spring.service.BasicService;
@@ -38,13 +39,21 @@ public class StatisticsController {
 	private BasicService serviceBasic;
 	@Autowired
 	private StatisticService serviceStatistic;
+	@Autowired
+	private VideoService serviceVideo;
 
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-	String requestedTime;
+	String requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+	
+	@RequestMapping(value = "/test")
+	public List<GameDailyStatistic> test() {
+		System.out.println("게임 별 비디오 평균치 반환 : " + requestedTime);
+		List<String> titles = serviceStatistic.getGamesByDate();
+		return serviceVideo.getAvgNewTodayByTitle(titles);
+	}
 	
 	@RequestMapping(value = "/weight/**", method = RequestMethod.GET)
 	public GameStatistic getGameStatisticsByGame(HttpServletRequest request) {
-		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
 		String requestURL = request.getRequestURL().toString();
 		String title = requestURL.split("/weight/")[1];
 		try {
