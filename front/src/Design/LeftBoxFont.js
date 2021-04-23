@@ -83,16 +83,12 @@ const LeftBoxFont = (props) => {
         </div>
         <div id="_now">
           <span>
-            {props.data[dateTarget.right] !== undefined
-              ? dateTarget.right
-              : 0}
+            {dateTarget.right}
           </span>
         </div>
         <div id="_past">
           <span>
-            {props.data[dateTarget.left] !== undefined
-              ? dateTarget.left
-              : 0}
+            {dateTarget.left}
           </span>
         </div>
         <div id="_pastranknumber1">
@@ -116,7 +112,7 @@ const LeftBoxFont = (props) => {
         <div id="_pastranknumber4">
           <span>
             {props.data[dateTarget.left] !== undefined
-              ? siRound(props.data[dateTarget.left].ourScore)
+              ? props.data[dateTarget.left].ourScore
               : 0}</span>
         </div>
         <div id="_nowranknumber1">
@@ -139,7 +135,7 @@ const LeftBoxFont = (props) => {
         </div>
         <div id="_nowranknumber4">
           <span>{props.data[dateTarget.right] !== undefined
-              ? siRound(props.data[dateTarget.right].ourSocre)
+              ? props.data[dateTarget.right].ourScore
               : 0}</span>
         </div>
         <div
