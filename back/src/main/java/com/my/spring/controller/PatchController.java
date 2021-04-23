@@ -1,16 +1,12 @@
 package com.my.spring.controller;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -218,7 +214,7 @@ public class PatchController {
 		System.out.println("----------------- 채널 키워드 추출 시작 -----------------");
 		System.out.println("----------------- 비디오 키워드 추출 시작 -----------------");
 		List<String> videoIdList = parseVideos();
-		System.out.println("----------------- 비디오 키워드 추출 시작 -----------------");
+		System.out.println("----------------- 비디오 키워드 추출 종료 -----------------");
 		System.out.println("----------------- 태그 키워드 추출 시작 -----------------");
 		List<String> videoIdListTag = parseTags();
 		System.out.println("----------------- 태그 키워드 추출 종료 -----------------");

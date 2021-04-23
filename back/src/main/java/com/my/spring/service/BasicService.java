@@ -6,11 +6,9 @@ import com.my.spring.domain.IdComplete;
 import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.TopicStatDto;
 import com.my.spring.domain.basics.Game;
-import com.my.spring.domain.basics.GameSearch;
 import com.my.spring.domain.chains.GameTopic;
 import com.my.spring.domain.chains.TopicChain;
 import com.my.spring.domain.statistics.GameDataForMain;
-import com.my.spring.domain.statistics.GameDataForTrendMain;
 import com.my.spring.domain.statistics.GameStatistic;
 
 public interface BasicService {
@@ -24,18 +22,13 @@ public interface BasicService {
 	public void setGame(Game item);
 	public void setGameInGameSearch(String title);
 	public void setGameTopic(GameTopic item);
-	public void setTopic(String topic);
 	
 	public List<GameDataForMain> getGameDataForMainByGame(String title);
 	public GameDataForMain getGameDateForTrendMainByGame(String title);
 	
-	public int checkGameStat(String title);
 	public void setGameStat(GameStatistic item);
 	public List<TopicDto> getTopics();
-	public List<TopicDto> getTopicGames();
 	public List<String> getNounFilter();
-	public List<TopicChain> getTopicChains();
-	public List<TopicChain> getTopicChainsByTopic(String topic);
 	public List<TopicStatDto> getGameListForToday();
 	public int getIdCompleteById(String id);
 	public void setIdComplete(IdComplete item);

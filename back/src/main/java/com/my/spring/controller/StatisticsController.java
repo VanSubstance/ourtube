@@ -2,6 +2,7 @@ package com.my.spring.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,7 +12,6 @@ import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.my.spring.domain.TopicDto;
-import com.my.spring.domain.statistics.GameDailyStatistic;
+import com.my.spring.domain.statistics.DateStatistic;
+import com.my.spring.domain.statistics.DateStatisticRelative;
 import com.my.spring.domain.statistics.GameStatistic;
 import com.my.spring.domain.words.NounDto;
 import com.my.spring.service.BasicService;
-import com.my.spring.service.ChannelService;
 import com.my.spring.service.StatisticService;
 import com.my.spring.service.VideoService;
 import com.my.spring.service.WordService;
@@ -46,14 +46,25 @@ public class StatisticsController {
 	String requestedTime = dateFormat.format(Calendar.getInstance().getTime());
 	
 	@RequestMapping(value = "/test")
-	public List<GameDailyStatistic> test() {
+	public HashMap<String, HashMap<Date, DateStatistic>> test() {
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
 		System.out.println("게임 별 비디오 평균치 반환 : " + requestedTime);
 		List<String> titles = serviceStatistic.getGamesByDate();
-		return serviceVideo.getAvgNewTodayByTitle(titles);
+		return serviceVideo.getVideoDataByTitleAndDate(titles);
+	}
+	
+	@RequestMapping(value = "/test/percentile")
+	public HashMap<String, DateStatisticRelative> testRelative() {
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println("게임 별 비디오 평균치 백분위 치환값 반환 : " + requestedTime);
+		List<String> titles = serviceStatistic.getGamesByDate();
+		return serviceVideo.getVideoRelativeDataByTitleAndDate(titles);
+		
 	}
 	
 	@RequestMapping(value = "/weight/**", method = RequestMethod.GET)
 	public GameStatistic getGameStatisticsByGame(HttpServletRequest request) {
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
 		String requestURL = request.getRequestURL().toString();
 		String title = requestURL.split("/weight/")[1];
 		try {

@@ -9,11 +9,6 @@
 	<select id="getDescriptionByChannelId" parameterType="String" resultType="String">
 		select description from channel where id = #{id}
 	</select>
-	<select id="getChannelIdsForStatisticsByGame" parameterType="String" resultType="String">
-		select a.id from channel a, channelGame b 
-		where a.id = b.id and b.game = #{game} and 
-		a.id not in (select id from channelStatistics where infoDate = TO_DATE(SYSDATE, 'YY/MM/DD'))
-	</select>
 	<insert id="setChannelInfo" parameterType="com.my.spring.domain.ChannelDto">
 		insert into channel (id, title, thumbnail, description, publisheddate)
 		values (#{item.id}, #{item.title}, #{item.thumbnail}, #{item.description}, #{item.publishedDate})
@@ -29,9 +24,6 @@
 	<select id="checkChannelInfo" parameterType="String" resultType="Int">
 		select count(*) from channel where id = #{id}
 	</select>
-	<select id="checkChannelStatistics" parameterType="com.my.spring.domain.ChannelStatDto" resultType="Int">
-		select count(*) from channelstatistics where id = #{item.id} and infodate = #{item.infoDate}
-	</select>
 	<select id="checkChain" parameterType="com.my.spring.domain.ChainDto" resultType="Int">
 		select count(*) from channelGame where game = #{item.game} and id = #{item.id}
 	</select>
@@ -42,10 +34,7 @@
 			#{item}
 		</foreach>
 	</select>
-	<delete id="filterChannelWord">
-		delete from channelword
-		where length(word) = lengthb(word)
-	</delete>
+	
 	<select id="getChannelIdsInComplete" resultType="String">
 		select id from channel where id not in (
 		select id from idComplete where type = 'channel')
