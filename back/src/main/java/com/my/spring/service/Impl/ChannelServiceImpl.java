@@ -1,8 +1,6 @@
 package com.my.spring.service.Impl;
 
-import java.sql.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,17 +47,7 @@ public class ChannelServiceImpl implements ChannelService{
 	public int checkChain(ChainDto item) {
 		return mapper.checkChain(item);
 	}
-
-	@Override
-	public int checkChannelStatistics(ChannelStatDto item) {
-		return mapper.checkChannelStatistics(item);
-	}
-
-	@Override
-	public List<String> getChannelIdsForStatisticsByGame(String game) {
-		return mapper.getChannelIdsForStatisticsByGame(game);
-	}
-
+	
 	@Override
 	public String getDescriptionByChannelId(String id) {
 		return mapper.getDescriptionByChannelId(id);
@@ -68,11 +56,6 @@ public class ChannelServiceImpl implements ChannelService{
 	@Override
 	public List<ChannelDto> getChannelInfoById(List<String> list) {
 		return mapper.getChannelInfoById(list);
-	}
-	
-	@Override
-	public void filterChannelWord() {
-		mapper.filterChannelWord();
 	}
 
 	@Override

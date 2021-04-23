@@ -2,66 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper
 	namespace = "com.my.spring.mapper.StatisticMapper">
-	<select id="getTotalViewcountsByDate" resultType="Int">
-		select round(sum(b.viewcount)) viewcount from videogame a, videostatistics b
-		where b.id = a.id and b.infodate = TO_DATE(SYSDATE, 'YY/MM/DD') 
-		group by a.game
-		order by viewcount asc
-	</select>
 	<select id="getGamesByDate" resultType="String">
 		select title from (
 		select a.game title, round(sum(b.viewcount)) viewcount from videogame a, videostatistics b
 		where b.id = a.id and b.infodate = TO_DATE(SYSDATE, 'YY/MM/DD') 
 		group by a.game
 		order by viewcount asc)
-	</select>
-	<select id="getRecentViewsByGame" parameterType="String" resultType="Int">
-		<![CDATA[
-		select viewcount from (
-		select sum(a.viewcount) viewcount, a.infodate from videostatistics a
-		where id in ( select id from videogame where game = #{title})
-		group by a.infodate
-		order by a.infodate desc
-		) where rownum <= 14
-		order by infodate asc
-		]]>
-	</select>
-	
-	<select id="getLikeRatioByDate" resultType="Double">
-		select ratio from (
-		select round(sum(b.viewcount)) viewcount, sum(b.likecount) / sum(dislikecount) ratio from videogame a, videostatistics b
-		where b.id = a.id and b.infodate = TO_DATE(SYSDATE, 'YY/MM/DD') 
-		group by a.game
-		order by viewcount asc)
-	</select>
-	
-	<select id="getCommentCountsByDate" resultType="Int">
-		select commentcount from (
-		select round(sum(b.viewcount)) viewcount, sum(b.commentcount) commentcount from videogame a, videostatistics b
-		where b.id = a.id and b.infodate = TO_DATE(SYSDATE, 'YY/MM/DD') 
-		group by a.game
-		order by viewcount asc)
-	</select>
-	<select id="getGamesOrderByComment" resultType="String">
-		select title from (
-		select a.game title, sum(b.commentcount) commentcount from videogame a, videostatistics b
-		where b.id = a.id and b.infodate = TO_DATE(SYSDATE, 'YY/MM/DD') 
-		group by a.game
-		order by commentcount asc)
-	</select>
-	<select id="getRecentCommentCountsByGame" parameterType="String" resultType="Int">
-		<![CDATA[
-		select amount from (
-		select count(c.id) amount, d.infodate infodate from comments c, (
-		select a.id vid, b.infodate infodate from videogame a, videostatistics b
-		where a.game = #{title} and a.id = b.id) d
-		where c.videoid = d.vid 
-		group by d.infodate
-		order by infodate desc
-		)
-		where rownum <= 14
-		order by infodate asc
-		]]>
 	</select>
 	
 	<select id="getGameStatisticsByGame" parameterType="String" resultType="com.my.spring.domain.statistics.GameStatistic">

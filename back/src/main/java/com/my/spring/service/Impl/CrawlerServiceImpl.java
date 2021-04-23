@@ -12,7 +12,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.stereotype.Service;
 
 import com.my.spring.domain.basics.Game;
-import com.my.spring.domain.basics.GameSearch;
 import com.my.spring.domain.chains.GameTopic;
 import com.my.spring.service.CrawlerService;
 
