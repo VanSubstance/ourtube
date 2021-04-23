@@ -47,6 +47,7 @@ public class StatisticsController {
 	
 	@RequestMapping(value = "/test")
 	public List<GameDailyStatistic> test() {
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
 		System.out.println("게임 별 비디오 평균치 반환 : " + requestedTime);
 		List<String> titles = serviceStatistic.getGamesByDate();
 		return serviceVideo.getAvgNewTodayByTitle(titles);
@@ -54,6 +55,7 @@ public class StatisticsController {
 	
 	@RequestMapping(value = "/weight/**", method = RequestMethod.GET)
 	public GameStatistic getGameStatisticsByGame(HttpServletRequest request) {
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
 		String requestURL = request.getRequestURL().toString();
 		String title = requestURL.split("/weight/")[1];
 		try {

@@ -218,7 +218,7 @@ public class PatchController {
 		System.out.println("----------------- 채널 키워드 추출 시작 -----------------");
 		System.out.println("----------------- 비디오 키워드 추출 시작 -----------------");
 		List<String> videoIdList = parseVideos();
-		System.out.println("----------------- 비디오 키워드 추출 시작 -----------------");
+		System.out.println("----------------- 비디오 키워드 추출 종료 -----------------");
 		System.out.println("----------------- 태그 키워드 추출 시작 -----------------");
 		List<String> videoIdListTag = parseTags();
 		System.out.println("----------------- 태그 키워드 추출 종료 -----------------");

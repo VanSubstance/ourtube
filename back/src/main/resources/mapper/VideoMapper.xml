@@ -148,7 +148,7 @@
 	
 	<!-- 게임 제목을 통한 당일 평균 신규 조회수, 좋아요, 싫어요, 댓글 수 추적 -->
 			<select id="getAvgNewTodayByTitle" parameterType="String" resultType="com.my.spring.domain.statistics.GameDailyStatistic">
-		select a.*, b.numNewVid, c.numExistedVid from (
+		select a.*, b.numNewVid, c.numExistedVid, d.avgAccuView from (
 		    select #{title} title
 		    ,round(sum(newview) / count(*)) avgnewview
 		    , round(sum(newlike) / count(*)) avgnewlike
@@ -209,6 +209,13 @@
 		        and infodate != TO_DATE(SYSDATE, 'YY/MM/DD')
 		        group by id
 		    )
-		) c
+		) c, (
+		    select round(sum(viewcount) / count(*)) avgAccuView from videostatistics
+		    where id in (
+		        select id from videogame
+		        where game = #{title}
+		    )
+		    and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
+		) d
 	</select>
 </mapper>

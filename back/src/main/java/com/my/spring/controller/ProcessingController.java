@@ -45,6 +45,7 @@ public class ProcessingController {
 
 	@RequestMapping(value = "/game/rank/today")
 	public List<TopicStatDto> getTopicStatsforToday() {
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
 		System.out.println("금일 게임 전체 랭킹 반환: " + requestedTime);
 		return serviceBasic.getGameListForToday();
 	}
