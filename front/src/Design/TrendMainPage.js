@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Styles.css";
+import './Css/TrendMainPage.css';
 import Chip from "@material-ui/core/Chip";
 import { ListFont } from "./Comps";
 import { Bar, Line } from "react-chartjs-2";
@@ -65,7 +66,7 @@ const TrendMainPage = () => {
       },
     }
   });
-  
+
   const [lineViewInfo, setlineViewInfo] = useState({
     data: {
       labels: ['1', '2', '3', '4', '5'],
@@ -89,7 +90,7 @@ const TrendMainPage = () => {
       },
     }
   });
-  
+
   const [line3Info, setline3Info] = useState({
     data: {
       labels: ['1', '2', '3', '4', '5'],
@@ -114,125 +115,139 @@ const TrendMainPage = () => {
     }
   });
 
-const setDataBarEx = (data) => {
-  let dataBar = [];
-  data.foreach((value, key) => {
-    dataBar.push(value.viweCount);
-  });
-  const newInfo = {
-    data: {
-      labels: [data.key],
-      datasets: [
-        {
-          data: dataBar,
-          backgroundColor: ["red", "blue"],
-          background: "",
-          label: ["조회수"],
-        },
-      ],
-    },
-    options: {
-      maintainAspectRatio: false,
-      scales: {
-        yAxes: [
+  const setDataBarEx = (data) => {
+    let dataBar = [];
+    data.foreach((value, key) => {
+      dataBar.push(value.viweCount);
+    });
+    const newInfo = {
+      data: {
+        labels: [data.key],
+        datasets: [
           {
-            ticks: {
-              beginAtZero: true,
-            },
+            data: dataBar,
+            backgroundColor: ["red", "blue"],
+            background: "",
+            label: ["조회수"],
           },
         ],
       },
-    },
+      options: {
+        maintainAspectRatio: false,
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          ],
+        },
+      },
+    };
+    setBarInfo(newInfo);
   };
-  setBarInfo(newInfo);
-};
 
-useEffect(() => {
-  getDataset();
-  getDatasetForKeyword(searchVal);
-}, []);
-
-const checkKeywords = (keyword, method) => {
-  if (method == 0) {
-    selectedKeywords = selectedKeywords.concat(keyword);
-  } else {
-    selectedKeywords = selectedKeywords.filter(k => k != keyword);
-  }
-  console.log(selectedKeywords);
-}
-
-const getDataset = async () => {
-  await axios
-    .get("http://222.232.15.205:8082/deploy/topic/" + searchVal)
-    .then(({ data }) => {
-      if (data.length >= 8) {
-        setCtgrs(data.slice(0, 7));
-      } else {
-        setCtgrs(data);
-      }
-    })
-    .catch((e) => {
-      console.error(e);
-    });
-};
-
-const getDataBar = async () => {
-  await axios
-    .get("http://222.232.15.205:8082/deploy/chart/" + searchVal)
-    .then(({ data }) => {
-      if (data.length >= 5) {
-        setDataBarEx(data.slice(0, 5));
-      } else {
-        setDataBarEx(data);
-      }
-    })
-    .catch((e) => {
-      console.error(e);
-    });
-};
-
-const searchCtgr = () => {
-  if (searchVal === "") {
-    getDataset();
-    getDatasetForKeyword("FPS");
-  } else {
+  useEffect(() => {
     getDataset();
     getDatasetForKeyword(searchVal);
-    if (ctgrs.length === 0) {
-      searchVal = "FPS";
+  }, []);
+
+  const checkKeywords = (keyword, method) => {
+    if (method == 0) {
+      selectedKeywords = selectedKeywords.concat(keyword);
+    } else {
+      selectedKeywords = selectedKeywords.filter(k => k != keyword);
+    }
+    console.log(selectedKeywords);
+  }
+
+  const getDataset = async () => {
+    await axios
+      .get("http://222.232.15.205:8082/deploy/topic/" + searchVal)
+      .then(({ data }) => {
+        if (data.length >= 8) {
+          setCtgrs(data.slice(0, 7));
+        } else {
+          setCtgrs(data);
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
+  const getDataBar = async () => {
+    await axios
+      .get("http://222.232.15.205:8082/deploy/chart/" + searchVal)
+      .then(({ data }) => {
+        if (data.length >= 5) {
+          setDataBarEx(data.slice(0, 5));
+        } else {
+          setDataBarEx(data);
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
+  const searchCtgr = () => {
+    if (searchVal === "") {
       getDataset();
       getDatasetForKeyword("FPS");
-    }
-  }
-};
-
-const getDatasetForKeyword = async (ctgr) => {
-  await axios
-    .get(url + "/deploy/game/list/" + ctgr)
-    .then(({ data }) => {
-      if (data.length >= 10) {
-        setKeywords(data.slice(0, 10));
-      } else {
-        setKeywords(data);
+    } else {
+      getDataset();
+      getDatasetForKeyword(searchVal);
+      if (ctgrs.length === 0) {
+        searchVal = "FPS";
+        getDataset();
+        getDatasetForKeyword("FPS");
       }
-    })
-    .catch((e) => {
-      console.error(e);
-    });
-};
+    }
+  };
 
-const searchCtgrPress = (e) => {
-  if (e.key === "Enter") {
-    searchVal = e.target.value;
-    searchCtgr();
-    console.log();
-  }
-};
+  const getDatasetForKeyword = async (ctgr) => {
+    await axios
+      .get(url + "/deploy/game/list/" + ctgr)
+      .then(({ data }) => {
+        if (data.length >= 10) {
+          setKeywords(data.slice(0, 10));
+        } else {
+          setKeywords(data);
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
 
-return (
-  <div>
-    {/* //배경 및 그라데이션  */}
-    <div id="scollWallpaper_">
+  const searchCtgrPress = (e) => {
+    if (e.key === "Enter") {
+      searchVal = e.target.value;
+      searchCtgr();
+      console.log();
+    }
+  };
+
+  return (
+    <div
+      className="tmp_MainWrapper">
+      <div
+        className="tmp_BackGroundPanel">
+      </div>
+
+      {/* //배경 및 그라데이션  */}
+
+      <div id="tmp_ScollWallPaper">
+        <img
+          className="tmp_ScrollWallPaperImg"
+          src="/Ex/andy-holmes-rCbdp8VCYhQ-unspla@2x.png"
+          srcSet="/Ex/andy-holmes-rCbdp8VCYhQ-unspla@2x.png">
+        </img>
+      </div>
+
+      {/* <div id="scollWallpaper_">
       <img
         id="andy-holmes-rCbdp8VCYhQ-unspla1"
         src="./Ex/andy-holmes-rCbdp8VCYhQ-unspla.png"
@@ -260,216 +275,109 @@ return (
         id="Gradient"
         d="M 0 0 L 1920 0 L 1920 1500 L 0 1500 L 0 0 Z"
       ></path>
-    </svg>
-    <div id="scollOURTUBE">
-      <div>
-        <a href="http://localhost:3012/" className="bannerTrandMain">
-          <img className="bannerImage" src="/Ex/ourtubeLogoWhite.PNG"></img>
-        </a>
-      </div>
-    </div>
-    <div>
-      <svg className="_scrollSearchbox1">
-        <rect
-          id="_Searchbox1"
-          rx="0"
-          ry="0"
-          x="0"
-          y="0"
-          width="680"
-          height="31.702"
-        ></rect>
-      </svg>
-    </div>
-    <div className="_scrollSearchbox">
-      <input
-        className="searchInput"
-        placeholder="검색어를 입력하세요"
-        autoComplete="off"
-        type="text"
-        onKeyPress={(e) => {
-          searchCtgrPress(e);
-        }}
-      />
-      <button
-        className="searchButton"
-        onClick={() => {
-          searchCtgr();
-        }}
-      >
-        <img className="searchButtonImg" src="/Ex/searchbuttonBlack.png"></img>
-      </button>
-    </div>
-    <div className="mainChipBox5">
-      <div className="chipBackground5">
-        {ctgrs.map((element) => {
-          return (
-            <Chip
-              className="mainChipSyle5"
-              label={element}
-              clickable
-              onClick={() => {
-                getDatasetForKeyword(element);
-              }}
-              component="button"
-            ></Chip>
-          );
-        })}
-      </div>
-    </div>
-    <svg className="listtop">
-      <rect
-        id="listtop"
-        rx="0"
-        ry="0"
-        x="0"
-        y="0"
-        width="923"
-        height="41"
-      ></rect>
-    </svg>
-    <svg className="listbox">
-      <rect
-        id="listbox"
-        rx="0"
-        ry="0"
-        x="0"
-        y="0"
-        width="923"
-        height="270"
-      ></rect>
-    </svg>
-    <ListFont keywords={keywords} func = {checkKeywords}></ListFont>
-    <svg className="rightbox">
-      <rect
-        id="rightbox"
-        rx="0"
-        ry="0"
-        x="0"
-        y="0"
-        width="339"
-        height="311"
-      ></rect>
-    </svg>
-    <span id="ourscore">아울스코어</span>
-    <span id="ourscorenumber">98</span>
-    <div id="rightboxfontgps">
-      <div>
-        <span id="rightboxfont">리그 오브 섹스</span>
-        <span id="rightboxfont2">1996년</span>
-        <span id="rightboxfont3">양승혁 골짜기</span>
-      </div>
-    </div>
-    <svg className="listtop2">
-      <rect
-        id="listtop2"
-        rx="0"
-        ry="0"
-        x="0"
-        y="0"
-        width="923"
-        height="41"
-      ></rect>
-    </svg>
-    <span id="secondboxfont">키워드 월별 순위변동</span>
-    <div className="secondbox">
-      <Line data={lineRankInfo.data} options={lineRankInfo.options} />
-      <rect
-        id="secondbox"
-        rx="0"
-        ry="0"
-        x="0"
-        y="0"
-        width="923"
-        height="227"
-      ></rect>
-    </div>
-    <svg className="exbox">
-      <rect
-        id="exbox"
-        rx="0"
-        ry="0"
-        x="0"
-        y="0"
-        width="339"
-        height="772"
-      ></rect>
-    </svg>
-    <svg className="thirdtop">
-      <rect
-        id="thirdtop"
-        rx="0"
-        ry="0"
-        x="0"
-        y="0"
-        width="456"
-        height="41"
-      ></rect>
-    </svg>
-    <div className="thirdbox">
-      <Line data={lineViewInfo.data} options={lineViewInfo.options} />
-      <rect
-        id="thirdbox"
-        rx="0"
-        ry="0"
-        x="0"
-        y="0"
-        width="456"
-        height="196"
-      ></rect>
-    </div>
-    <span id="thirdFont1">신규 조회수</span>
-    <svg className="thirdTop2">
-      <rect
-        id="thirdTop2"
-        rx="0"
-        ry="0"
-        x="0"
-        y="0"
-        width="456"
-        height="41"
-      ></rect>
-    </svg>
+    </svg> */}
 
-    <div className="thirdBox2">
-      <Line data={line3Info.data} options={line3Info.options} />
-      <rect
-        id="thirdBox2"
-        rx="0"
-        ry="0"
-        x="0"
-        y="0"
-        width="456"
-        height="196"
-      ></rect>
+      {/* 헤더 */}
+
+      <div id="header">
+        <div
+          className="tmp_BannerBox">
+          <a
+            className="tmp_BannerA"
+            href="http://localhost:3012/">
+            <img
+              className="tmp_BannerImage"
+              src="/Ex/ourtubeLogoWhite.PNG">
+            </img>
+          </a>
+        </div>
+      </div>
+
+      {/* 컨테이너 */}
+
+      <div id="container">
+        <div
+          className="tmp_LeftBox">
+          <div
+            className="tmp_SearchBox">
+            <div className="tmp_SearchBar">
+              <input
+                className="tmp_searchInput"
+                placeholder="검색어를 입력하세요"
+                autoComplete="off"
+                type="text"
+                maxLength="30"
+                onKeyPress={(e) => {
+                  searchCtgrPress(e);
+                }}
+              />
+              <button
+                className="tmp_searchButton"
+                onClick={() => {
+                  searchCtgr();
+                }}
+              >
+                <img
+                  className="tmp_searchButtonImg"
+                  src="/Ex/searchButtonBlack.png"
+                ></img>
+              </button>
+            </div>
+            <div className="tmp_MainChipBox">
+              <div className="tmp_chipBackground">
+                {ctgrs.map((element) => {
+                  return (
+                    <Chip
+                      className="mainChipSyle5"
+                      label={element}
+                      clickable
+                      onClick={() => {
+                        getDatasetForKeyword(element);
+                      }}
+                      component="button"
+                    ></Chip>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+          <div
+            className="tmp_KeywordRankBox">
+            <div
+              className="tmp_BoxNameBar">
+            </div>
+            <ListFont keywords={keywords} func={checkKeywords}></ListFont>
+          </div>
+        </div>
+        <div
+          className="tmp_RightBox">
+          <div
+            className="tmp_PFBox">
+            <div
+              className="tmp_PFThumbnailCircle">
+              <img
+                className="tmp_PFThumbnail"
+                src="/Ex/happy.jpg"></img>
+            </div>
+            <div
+              className="tmp_PFKeywordName">
+              {/* {props.match.params.keyword} */}
+            </div>
+            <div
+              className="tmp_PFKeywordYear">
+              테스트 제작연도
+                            </div>
+            <div
+              className="tmp_PFKeywordCompony">
+              테스트 제작사
+                            </div>
+          </div>
+        </div>
+      </div>
+      <div id="rightboxfontgps">
+      </div>
     </div>
-    <span id="thirdFont2">신규 동영상수</span>
-    <svg className="fourthTop">
-      <rect
-        id="fourthTop"
-        rx="0"
-        ry="0"
-        x="0"
-        y="0"
-        width="923"
-        height="41"
-      ></rect>
-    </svg>
-    <div className="fourthBox">
-      <Bar data={barInfo.data} options={barInfo.options} />
-      <rect
-        id="fourthBox"
-        rx="0"
-        ry="0"
-        x="0"
-        y="0"
-        width="923"
-        height="196"
-      ></rect>
-    </div>
-    <span id="fourthFont">채널 구독자수</span>
-  </div>
-);
+  );
 };
 
 export default TrendMainPage;

@@ -2,6 +2,7 @@ import { Checkbox } from '@material-ui/core';
 import React, { Component } from 'react';
 import { SelectButton } from './';
 import './Styles.css';
+import '../Design/Css/ListFont.css';
 
 const OPTIONS = ["One", "Two", "Three"];
 

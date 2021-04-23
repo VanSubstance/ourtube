@@ -244,7 +244,7 @@ const TrendResultPage = (props) => {
 
     return (
         <div
-            className="trp_MainWarpper">
+            className="trp_MainWrapper">
             <div
                 className="trp_BackGroundPanel">
             </div>
@@ -260,32 +260,6 @@ const TrendResultPage = (props) => {
                     src="/Ex/andy-holmes-rCbdp8VCYhQ-unspla@2x.png"
                     srcSet="/Ex/andy-holmes-rCbdp8VCYhQ-unspla@2x.png">
                 </img>
-                {/* <svg className="trp_scollGradient"
-                    width="1920px"
-                    height="1600px"
-                    viewBox="0 0 1920 1500"
-                    preserveAspectRatio="xMidyMin meet">
-                    <linearGradient
-                        id="_137_bn"
-                        spreadMethod="pad"
-                        x1="0.952"
-                        x2="0.071"
-                        y1="0.067"
-                        y2="0.886"
-                    >
-                        <stop offset="0" stopColor="#f60" stopOpacity="1"></stop>
-                        <stop offset="0.1673" stopColor="#cf8845" stopOpacity="1"></stop>
-                        <stop offset="0.3389" stopColor="#b79967" stopOpacity="1"></stop>
-                        <stop offset="0.4937" stopColor="#b4838b" stopOpacity="1"></stop>
-                        <stop offset="0.6735" stopColor="#b16ab4" stopOpacity="1"></stop>
-                        <stop offset="0.7991" stopColor="#7c84b9" stopOpacity="1"></stop>
-                        <stop offset="1" stopColor="#28adc2" stopOpacity="1"></stop>
-                    </linearGradient>
-                    <path
-                        id="trp_Gradient"
-                        d="M 0 0 L 1920 0 L 1920 1600 L 0 1600 L 0 0 Z"
-                    ></path>
-                </svg> */}
             </div>
 
             {/* 헤더 */}
@@ -493,6 +467,9 @@ const TrendResultPage = (props) => {
                             추천 키워드
                         </div>
                     </div>
+                </div>
+                <div
+                    className="trp_footer">
                     <div
                         className="trp_TxtTop">OURTUBE Analytics, Inc. © 2021</div>
                     <div

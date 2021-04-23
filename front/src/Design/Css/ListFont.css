@@ -1,0 +1,73 @@
+#scrollbitch {
+    color: rgb(255, 255, 255);
+    overflow: auto;
+    position: relative;
+    width: 930px;
+    height: 270px;
+    overflow-x: hidden;
+}
+
+.scrollbitch::-webkit-scrollbar {
+    margin-top: 30px;
+    width: 10px;
+}
+
+.scrollbitch::-webkit-scrollbar-button {
+}
+
+.scrollbitch::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.scrollbitch::-webkit-scrollbar-track-piece {
+}
+
+.scrollbitch::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.95);
+    width: 10px;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 1px solid transparent;
+}
+
+.scrollbitch::-webkit-scrollbar-corner {
+}
+
+#scrollHead1 {
+    position: absolute;
+    color: rgb(255, 255, 255);
+    width: 930px;
+    height: 0px;
+    top: 108px;
+    left: -10px;
+}
+
+#selectall {
+    width: 25px;
+    height: 25px;
+    color: rgb(255, 255, 255);
+    left: 350px;
+    top: 350px; 
+}
+
+#scrollbitch2 {
+    position: absolute;
+    border-spacing: 45px 30px;
+    width: 920px;
+    left: -40px;
+    top: -10px;
+}
+#longfont {
+    text-overflow:ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 15px;
+    display: block;
+    width: 120px;
+}
+
+#checkbox {
+    position: relative;
+    left: 20px;
+    top: 0px;
+}
