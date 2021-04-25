@@ -126,49 +126,55 @@
 		            ,commentcount todcomment, lead(commentcount) over (order by id desc, infodate desc) yestcomment
 		            from videostatistics
 		            where id in (
-		                select id from (
-		                    select id, count(*) freq from videostatistics
-		                    where id in (
-		                        select id from videostatistics
-		                        where id in (
-		                            select id from videogame a
-		                            where a.game = #{title}
-		                        ) and infodate = #{date}
-		                    )
-		                    group by id
-		                )
-		                where freq != 1
+						select id from (
+						    select id, count(*) freq from videostatistics
+						    where id in (
+						        select id from videostatistics
+						        where id in (
+						            select id from videogame a
+			           		 		where a.game = #{title}
+						        ) and infodate = TO_DATE(TO_DATE(#{date}) -1)
+						    )
+						    group by id
+						)
+						where freq != 1
 		            )
 		            order by id desc, infodate desc
 		        ) where infodate = #{date}
 		    )
 		) a, (
-		    select count(*) numNewVid from (
-		        select id from videostatistics
-		        where id in (
-		            select id from videogame a
-		            where a.game = #{title}
-		        ) and infodate = #{date}
-		        group by id
-		    )
-		    where id not in (
-		        select id from videostatistics
-		        where id in (
-		            select id from videogame a
-		            where a.game = #{title}
-		        ) and infodate != #{date}
-		        group by id
-		    )
+			<![CDATA[
+			select count(*) numNewVid from (
+			    select id from videostatistics
+			    where id in (
+			        select id from videogame a
+			        where a.game = #{title}
+			    )
+			    and infodate = #{date}
+			    group by id
+			)
+			where id not in (
+			    select id from (
+			        select id from videostatistics
+			        where id in (
+			            select id from videogame a
+			            where a.game = #{title}
+			        )
+			        and infodate < #{date}
+			        group by id
+			    )
+			)
+			]]>
 		) b, (
-		    select count(*) numAccuVid from (
-		        select id from videostatistics
-		        where id in (
-		            select id from videogame a
-		            where a.game = #{title}
-		        )
-		        and infodate != #{date}
-		        group by id
-		    )
+			select count(*) numAccuVid from (
+			    select id from videostatistics
+			    where id in (
+			        select id from videogame a
+			        where a.game = #{title}
+			    )
+			    and infodate = #{date}
+			    group by id
+			)
 		) c, (
 		    select
 		    round(sum(viewcount) / count(*)) avgAccuview
@@ -184,11 +190,15 @@
 		            ,commentcount
 		            from videostatistics
 		            where id in (
-		                select id from videostatistics
-		                where id in (
-		                    select id from videogame a
-		                    where a.game = #{title}
-		                ) and infodate = #{date}
+						select id from (
+						    select id from videostatistics
+						    where id in (
+						        select id from videogame a
+						        where a.game = #{title}
+						    )
+						    and infodate = #{date}
+						    group by id
+						)
 		            )
 		            order by id desc, infodate desc
 		        ) where infodate = #{date}
@@ -198,7 +208,7 @@
 	
 	<!-- 게임 전체의 당일 평균 신규 조회수, 좋아요, 싫어요, 댓글 수 추적 -->
 	<select id="getTotalVideoDataByDate" parameterType="map" resultType="com.my.spring.domain.statistics.DateStatistic">
-		select a.*, b.numNewVid, c.numExistedVid, d.avgAccuView from (
+		select b.numNewVid, a.*, c.numAccuVid, d.* from (
 		    select
 		    round(sum(newview) / count(*)) avgnewview
 		    , round(sum(newlike) / count(*)) avgnewlike
@@ -216,51 +226,64 @@
 		            ,commentcount todcomment, lead(commentcount) over (order by id desc, infodate desc) yestcomment
 		            from videostatistics
 		            where id in (
-		                select id from (
-		                    select id, count(*) freq from videostatistics
-		                    where id in (
-		                        select id from videostatistics
-		                        where id in (
-		                            select id from videogame a
-		                        ) and infodate = #{date}
-		                    )
-		                    group by id
-		                )
-		                where freq != 1
+						select id from (
+						    select id, count(*) freq from videostatistics
+						    where id in (
+						        select id from videostatistics
+						        where infodate = TO_DATE(TO_DATE(#{date}) -1)
+						    )
+						    group by id
+						)
+						where freq != 1
 		            )
 		            order by id desc, infodate desc
 		        ) where infodate = #{date}
 		    )
 		) a, (
-		    select count(*) numNewVid from (
-		        select id from videostatistics
-		        where id in (
-		            select id from videogame a
-		        ) and infodate = #{date}
-		        group by id
-		    )
-		    where id not in (
-		        select id from videostatistics
-		        where id in (
-		            select id from videogame a
-		        ) and infodate != #{date}
-		        group by id
-		    )
+			<![CDATA[
+			select count(*) numNewVid from (
+			    select id from videostatistics
+			    where infodate = #{date}
+			    group by id
+			)
+			where id not in (
+			    select id from (
+			        select id from videostatistics
+			        where infodate < #{date}
+			        group by id
+			    )
+			)
+			]]>
 		) b, (
-		    select count(*) numExistedVid from (
-		        select id from videostatistics
-		        where id in (
-		            select id from videogame a
-		        )
-		        and infodate != #{date}
-		        group by id
-		    )
+			select count(*) numAccuVid from (
+			    select id from videostatistics
+			    where infodate = #{date}
+			    group by id
+			)
 		) c, (
-		    select round(sum(viewcount) / count(*)) avgAccuView from videostatistics
-		    where id in (
-		        select id from videogame
+		    select
+		    round(sum(viewcount) / count(*)) avgAccuview
+		    , round(sum(likecount) / count(*)) avgAcculike
+		    , round(sum(dislikecount) / count(*)) avgAccudislike
+		    , round(sum(commentcount) / count(*)) avgAccucomment
+		    from (
+		        select *
+		        from (
+		            select id, infodate, viewcount
+		            ,likecount
+		            ,dislikecount
+		            ,commentcount
+		            from videostatistics
+		            where id in (
+						select id from (
+						    select id from videostatistics
+						    where infodate = #{date}
+						    group by id
+						)
+		            )
+		            order by id desc, infodate desc
+		        ) where infodate = #{date}
 		    )
-		    and infodate = #{date}
 		) d
 	</select>
 </mapper>
