@@ -46,7 +46,7 @@ public class StatisticsController {
 	String requestedTime = dateFormat.format(Calendar.getInstance().getTime());
 	
 	@RequestMapping(value = "/test")
-	public HashMap<String, HashMap<Date, DateStatistic>> test() {
+	public HashMap<String, HashMap<String, DateStatistic>> test() {
 		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
 		System.out.println("게임 별 비디오 평균치 반환 : " + requestedTime);
 		List<String> titles = serviceStatistic.getGamesByDate();

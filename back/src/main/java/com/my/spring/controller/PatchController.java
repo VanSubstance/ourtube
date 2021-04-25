@@ -59,7 +59,14 @@ public class PatchController {
 	@Autowired
 	private StatisticService serviceStatistic;
 	
-	private final int hour = 0;
+	private final int hour = 3;
+	
+	@RequestMapping(value = "/menually")
+	public void patchMenually() {
+		patchGameFromYoutube();
+		patchDataByGameFirst();
+		parseWords();
+	}
 	
 	@Scheduled(cron = "1 5 " + hour + " * * *")
 	public void patchGameFromYoutube() {

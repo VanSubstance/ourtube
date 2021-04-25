@@ -30,6 +30,6 @@ public interface VideoService {
 	public List<VideoDto> getVideoInfoById(List<String> list);
 	public List<String> getVideoIdsInComplete();
 	
-	public HashMap<String, HashMap<Date, DateStatistic>> getVideoDataByTitleAndDate(List<String> titles);
+	public HashMap<String, HashMap<String, DateStatistic>> getVideoDataByTitleAndDate(List<String> titles);
 	public HashMap<String, DateStatisticRelative> getVideoRelativeDataByTitleAndDate(List<String> titles);
 }
