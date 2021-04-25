@@ -31,7 +31,6 @@ import com.my.spring.service.BasicService;
 import com.my.spring.service.ChannelService;
 import com.my.spring.service.CommentService;
 import com.my.spring.service.CrawlerService;
-import com.my.spring.service.StatisticService;
 import com.my.spring.service.VideoService;
 import com.my.spring.service.WordService;
 import com.my.spring.service.YoutubeService;
@@ -56,8 +55,6 @@ public class PatchController {
 	private WordService serviceWord;
 	@Autowired
 	private CrawlerService serviceCrawler;
-	@Autowired
-	private StatisticService serviceStatistic;
 	
 	private final int hour = 3;
 	

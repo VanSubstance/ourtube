@@ -32,4 +32,5 @@ public interface VideoService {
 	
 	public HashMap<String, HashMap<String, DateStatistic>> getVideoDataByTitleAndDate(List<String> titles);
 	public HashMap<String, DateStatisticRelative> getVideoRelativeDataByTitleAndDate(List<String> titles);
+	public List<DateStatistic> getVideoDataForRegressionByTitle(String title);
 }

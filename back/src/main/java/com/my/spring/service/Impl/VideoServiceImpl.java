@@ -109,7 +109,7 @@ public class VideoServiceImpl implements VideoService {
 		List<Date> dates = new ArrayList<Date>(); 
 		Calendar cal = Calendar.getInstance();
 		String date = dateFormat.format(cal.getTime());
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 3; i++) {
 			dates.add(Date.valueOf(date));
 			cal.add(Calendar.DATE, -1);
 			date = dateFormat.format(cal.getTime());
@@ -129,6 +129,25 @@ public class VideoServiceImpl implements VideoService {
 			result.put(title, resultForTitle);
 		}
 		return result;
+	}
+
+	@Override
+	public List<DateStatistic> getVideoDataForRegressionByTitle(String title) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		List<Date> dates = new ArrayList<Date>(); 
+		Calendar cal = Calendar.getInstance();
+		String date = dateFormat.format(cal.getTime());
+		for (int i = 0; i < 3; i++) {
+			dates.add(Date.valueOf(date));
+			cal.add(Calendar.DATE, -1);
+			date = dateFormat.format(cal.getTime());
+		}
+		List<DateStatistic> result = new ArrayList<DateStatistic>();
+		for (Date targetDate: dates) {
+			result.add(mapper.getVideoDataByTitleAndDate(title, targetDate));
+		}
+		return result;
+		
 	}
 
 	// 최근 7일 간 각 게임 별 동영상 통계수치 추적 (10개 기본 수치) 및 백분위수로 치환

@@ -133,7 +133,7 @@
 						        where id in (
 						            select id from videogame a
 			           		 		where a.game = #{title}
-						        ) and infodate = #{date}
+						        ) and infodate = TO_DATE(TO_DATE(#{date}) -1)
 						    )
 						    group by id
 						)
@@ -230,7 +230,7 @@
 						    select id, count(*) freq from videostatistics
 						    where id in (
 						        select id from videostatistics
-						        where infodate = #{date}
+						        where infodate = TO_DATE(TO_DATE(#{date}) -1)
 						    )
 						    group by id
 						)
