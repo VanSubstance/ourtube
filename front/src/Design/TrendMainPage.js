@@ -33,7 +33,7 @@ const TrendMainPage = () => {
       name: 'Page G', uv: 3490, pv: 4300, amt: 2100,
     },
   ];
-  
+
   let [searchVal] = useState("FPS");
 
   let [selectedCtgr, setSelectedCtgr] = useState("");
@@ -272,23 +272,6 @@ const TrendMainPage = () => {
         </img>
       </div>
 
-      <LineChart
-        width={500}
-        height={300}
-        data={data}
-        margin={{
-          top: 5, right: 30, left: 20, bottom: 5,
-        }}
-      >
-        <XAxis dataKey="name" tick = {{fill: '#FFFFFF'}}/>
-        <YAxis tick = {{fill: '#FFFFFF'}}/>
-        <CartesianGrid stroke="#FFFFFF" strokeDasharray="3 3"/>
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="pv" stroke="#FFFFFF" activeDot={{ r: 8 }} />
-        <Line type="monotone" dataKey="uv" stroke="#FFFFFF" />
-      </LineChart>
-
       {/* <div id="scollWallpaper_">
       <img
         id="andy-holmes-rCbdp8VCYhQ-unspla1"
@@ -390,33 +373,201 @@ const TrendMainPage = () => {
             </div>
             <ListFont keywords={keywords} func={checkKeywords}></ListFont>
           </div>
+          <div
+            className="tmp_RankChangeBox">
+            <div
+              className="tmp_BoxNameBar">
+              키워드 월별 순위변동
+            </div>
+            <LineChart
+              width={920}
+              height={235}
+              data={data}
+              margin={{
+                top: 20, right: 30, left: 5, bottom: 5,
+              }}
+            >
+              <XAxis dataKey="name" tick={{ fill: '#FFFFFF' }} />
+              <YAxis tick={{ fill: '#FFFFFF' }} />
+              <CartesianGrid stroke="#FFFFFF" strokeDasharray="3 3" />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="pv" stroke="#FFFFFF" activeDot={{ r: 8 }} />
+              <Line type="monotone" dataKey="uv" stroke="#FFFFFF" />
+            </LineChart>
+          </div>
+          <div
+            className="tmp_NewViewBox">
+            <div
+              className="tmp_BoxNameBar">
+              신규 조회수
+            </div>
+            <LineChart
+              width={440}
+              height={235}
+              data={data}
+              margin={{
+                top: 20, right: 30, left: 5, bottom: 5,
+              }}
+            >
+              <XAxis dataKey="name" tick={{ fill: '#FFFFFF' }} />
+              <YAxis tick={{ fill: '#FFFFFF' }} />
+              <CartesianGrid stroke="#FFFFFF" strokeDasharray="3 3" />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="pv" stroke="#FFFFFF" activeDot={{ r: 8 }} />
+              <Line type="monotone" dataKey="uv" stroke="#FFFFFF" />
+            </LineChart>
+          </div>
+          <div
+            className="tmp_NewVideoBox">
+            <div
+              className="tmp_BoxNameBar">
+              신규 동영상 수
+            </div>
+            <LineChart
+              width={440}
+              height={235}
+              data={data}
+              margin={{
+                top: 20, right: 30, left: 5, bottom: 5,
+              }}
+            >
+              <XAxis dataKey="name" tick={{ fill: '#FFFFFF' }} />
+              <YAxis tick={{ fill: '#FFFFFF' }} />
+              <CartesianGrid stroke="#FFFFFF" strokeDasharray="3 3" />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="pv" stroke="#FFFFFF" activeDot={{ r: 8 }} />
+              <Line type="monotone" dataKey="uv" stroke="#FFFFFF" />
+            </LineChart>
+          </div>
+          <div
+            className="tmp_RankChangeBox">
+            <div
+              className="tmp_BoxNameBar">
+              채널 구독자 수 (미정)
+            </div>
+            <LineChart
+              width={920}
+              height={235}
+              data={data}
+              margin={{
+                top: 20, right: 30, left: 5, bottom: 5,
+              }}
+            >
+              <XAxis dataKey="name" tick={{ fill: '#FFFFFF' }} />
+              <YAxis tick={{ fill: '#FFFFFF' }} />
+              <CartesianGrid stroke="#FFFFFF" strokeDasharray="3 3" />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="pv" stroke="#FFFFFF" activeDot={{ r: 8 }} />
+              <Line type="monotone" dataKey="uv" stroke="#FFFFFF" />
+            </LineChart>
+          </div>
         </div>
         <div
           className="tmp_RightBox">
           <div
             className="tmp_PFBox">
             <div
-              className="tmp_PFThumbnailCircle">
-              <img
-                className="tmp_PFThumbnail"
-                src="/Ex/happy.jpg"></img>
-            </div>
-            <div
-              className="tmp_PFKeywordName">
+              className="tmp_PFTopBox">
+              <div
+                className="tmp_PFThumbnailCircle">
+                <img
+                  className="tmp_PFThumbnail"
+                  src="/Ex/happy.jpg"></img>
+              </div>
+              <div
+                className="tmp_PFKeywordName">
+                키워드 이름
               {/* {props.match.params.keyword} */}
+              </div>
+              <div
+                className="tmp_PFKeywordYear">
+                테스트 제작연도
+              </div>
+              <div
+                className="tmp_PFKeywordCompany">
+                테스트 제작사
+              </div>
             </div>
             <div
-              className="tmp_PFKeywordYear">
-              테스트 제작연도
-                            </div>
-            <div
-              className="tmp_PFKeywordCompony">
-              테스트 제작사
-                            </div>
+              className="tmp_PFBottomBox">
+              <div
+                className="tmp_PFKeywordInfoBox">
+                <div
+                  className="tmp_PFKeywordInfoTop">
+                  조회수
+                  </div>
+                <div
+                  className="tmp_PFKeywordInfoBottom">
+                  10000
+                  </div>
+              </div>
+              <div
+                className="tmp_PFKeywordInfoBox">
+                <div
+                  className="tmp_PFKeywordInfoTop">
+                  검색량
+                  </div>
+                <div
+                  className="tmp_PFKeywordInfoBottom">
+                  10000
+                  </div>
+              </div>
+              <div
+                className="tmp_PFKeywordInfoBox">
+                <div
+                  className="tmp_PFKeywordInfoTop">
+                  신규 동영상
+                  </div>
+                <div
+                  className="tmp_PFKeywordInfoBottom">
+                  10000
+                  </div>
+              </div>
+              <div
+                className="tmp_PFKeywordInfoBox">
+                <div
+                  className="tmp_PFKeywordInfoTop">
+                  댓글 수
+                  </div>
+                <div
+                  className="tmp_PFKeywordInfoBottom">
+                  10000
+                  </div>
+              </div>
+              <div
+                className="tmp_PFKeywordInfoBox">
+                <div
+                  className="tmp_PFKeywordInfoTop">
+                  아워 스코어
+                  </div>
+                <div
+                  className="tmp_PFKeywordInfoBottom">
+                  10000
+                  </div>
+              </div>
+              <div
+                className="tmp_PFKeywordInfoBox">
+                <div
+                  className="tmp_PFKeywordInfoTop">
+                  순위
+                  </div>
+                <div
+                  className="tmp_PFKeywordInfoBottom">
+                  10000
+                  </div>
+              </div>
+            </div>
           </div>
+          <div
+            className="tmp_KeywordExplainBox">
+              {/* 키워드 설명 및 관련 링크 (위키 등) 추가 */}
+              This boy, well known as 'tanoshii boy' is based on meme. did you know that?
+            </div>
         </div>
-      </div>
-      <div id="rightboxfontgps">
       </div>
     </div>
   );

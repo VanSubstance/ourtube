@@ -177,6 +177,30 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+.tmp_RankChangeBox {
+    float: left;
+    width: 100%;
+    height: 280px;
+    margin-top: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.tmp_NewViewBox {
+    float: left;
+    width: 455px;
+    height: 280px;
+    margin: 20px 0px 0px 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.tmp_NewVideoBox {
+    float: left;
+    width: 455px;
+    height: 280px;
+    margin: 20px 0px 0px 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
 .tmp_PFBox {
     overflow: hidden;
     width: 100%;
@@ -184,11 +208,16 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+.tmp_PFTopBox {
+    width: 100%;
+    float: left;
+}
+
 .tmp_PFThumbnailCircle {
     overflow: hidden;
     position: relative;
     float: left;
-    margin: 15px 0px 15px 10px;
+    margin: 15px 0px 15px 20px;
     width: 126px;
     height: 126px;
     border: 2px solid white;
@@ -206,7 +235,7 @@
     float: left;
     padding: 30px 0px 0px 10px;
     height: 25px;
-    width: 195px;
+    width: 185px;
     text-align: left;
     font-size: 1.1em;
     font-family: "Spoqa Han Sans Neo" , "Roboto";
@@ -217,22 +246,67 @@
     float: left;
     padding: 15px 0px 0px 10px;
     height: 20px;
-    width: 195px;
+    width: 185px;
     text-align: left;
     font-size: 0.9em;
     font-family: "Spoqa Han Sans Neo" , "Roboto";
     color: white;
 }
 
-.tmp_PFKeywordCompony {    
+.tmp_PFKeywordCompany {    
     float: left;
     padding: 15px 0px 0px 10px;
     height: 20px;
-    width: 195px;
+    width: 185px;
     text-align: left;
     font-size: 0.9em;
     font-family: "Spoqa Han Sans Neo" , "Roboto";
     color: white;
+}
+
+.tmp_PFBottomBox {
+    width: 100%;
+    float: left;
+}
+
+.tmp_PFKeywordInfoBox {
+    position: relative;
+    float: left;
+    width: 140px;
+    height: 60px;
+    margin: 15px 0px 0px 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.tmp_PFKeywordInfoTop {
+    float: left;
+    width: 100%;
+    text-align: center;
+    font-size: 0.9em;
+    font-family: "Spoqa Han Sans Neo" , "Roboto";
+    color: white;
+}
+
+.tmp_PFKeywordInfoBottom {
+    float: left;
+    width: 100%;
+    padding: 6.5px 0px 6.5px 0px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    font-family: "Spoqa Han Sans Neo" , "Roboto";
+    color: white;
+}
+
+.tmp_KeywordExplainBox {
+    float: left;
+    width: 100%;
+    height: 880px;
+    margin: 20px 0px 0px 0px;
+    text-align: center;
+    font-family: "Spoqa Han Sans Neo" , "Roboto";
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .tmp_BoxNameBar {
