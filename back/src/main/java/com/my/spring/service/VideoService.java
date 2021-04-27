@@ -34,4 +34,7 @@ public interface VideoService {
 	public List<DateStatistic> getVideoDataForRegressionByTitle(String title);
 	
 	public HashMap<String, Double> calcOurScoreFromVideoData(List<String> titles);
+
+	// 최근 7일 간 각 게임 별 동영상 통계수치 추적 (10개 기본 수치) -> 메인 페이지 차트뷰를 위한 형식
+	public HashMap<String, Object> getChartDataForMainPageChart(List<String> titles);
 }
