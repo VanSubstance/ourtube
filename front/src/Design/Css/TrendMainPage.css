@@ -1,20 +1,20 @@
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-jp.css);
 
-.trp_MainWrapper {
+.tmp_MainWrapper {
     min-width: 1290px;
     overflow: visible;
     margin: 0 auto;
 }
 
-.trp_BackGroundPanel{
+.tmp_BackGroundPanel{
     position: absolute;
     width: 100%;
     height: 100%;
     z-index: -1;
 }
 
-/* .trp_BackGroundPanelLine{
+/* .tmp_BackGroundPanelLine{
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -23,7 +23,7 @@
     background-color: grey;
 } */
 
-#trp_ScrollWallPaper {
+#tmp_ScrollWallPaper {
     z-index: -1;
     /* --web-view-name: ROBOTO 폰트 사용;
     --web-view-id: ROBOTO__;
@@ -31,7 +31,7 @@
     --web-enable-deep-linking: true; */
 }
 
-.trp_ScrollWallPaperImg {
+.tmp_ScrollWallPaperImg {
     position: fixed;
     opacity: 1;
     width: 100%;
@@ -41,39 +41,12 @@
     overflow: hidden;
 }
 
-#trp_Gradient {
-    position: absolute;
-    left: 50%;
-    opacity: 0.7;
-    fill: url(#_137_bn);
-}
-
-.trp_Gradient {
-    mix-blend-mode: multiply;
-    overflow: visible;
-    position: absolute;
-    width: 1920px;
-    height: 936px;
-    transform: matrix(1, 0, 0, 1, 0, 0) rotate(180deg);
-    transform-origin: center;
-}
-
-.trp_scollGradient {
-    mix-blend-mode: multiply;
-    overflow: hidden;
-    position: absolute;
-    width: 1920px;
-    height: 1500px;
-    transform: matrix(1, 0, 0, 1, 0, 0) rotate(180deg) translateX(17px);
-    transform-origin: center;
-}
-
 #header {
     position: relative;
     z-index: 2000;
 }
 
-.trp_BannerBox {
+.tmp_BannerBox {
     position: relative;
     width: 300px;
     height: 65px;
@@ -81,61 +54,16 @@
     padding: 85px 525px 85px 525px
 }
 
-.trp_BannerA {
+.tmp_BannerA {
     position: relative;
 }
 
-.trp_BannerImage {
+.tmp_BannerImage {
     position: relative;
     display: block;
     margin: 0 auto;
     width: 298px;
     height: 65px;
-}
-
-.trp_InfoBar {
-    overflow: visible;
-    margin: 0 auto;
-    position: relative;
-    padding: 5px 30px 5px 30px;
-    height: 40px;
-    width: 1290px;
-}
-
-.trp_CtgrChip {
-    float: left;
-    padding: 7px 0px 7px 0px;
-    height: 26px;
-    width: 105px;
-    background-color: rgba(0, 0, 0, 0.7);
-    margin-left: 15px;
-    text-align: center;
-    font-size: 1em;
-    font-family: "Spoqa Han Sans Neo" , "Roboto";
-    color: white;
-}
-
-.trp_BadgeBar {
-    float: left;
-    padding: 0px 40px 0px 40px;
-    height: 40px;
-    width: 850px;
-    background-color: rgba(0, 0, 0, 0.7);
-    text-align: center;
-    font-size: 1em;
-    font-family: "Spoqa Han Sans Neo" , "Roboto";
-    color: white;
-}
-
-.trp_BadgeChip{
-    float: left;
-    padding: 7px 0px 7px 0px;
-    height: 26px;
-    margin: 0px 10px 0px 10px;
-    text-align: center;
-    font-size: 1em;
-    font-family: "Spoqa Han Sans Neo" , "Roboto";
-    color: white;
 }
 
 #container {
@@ -147,13 +75,94 @@
     flex-wrap: wrap;
 }
 
-.trp_LeftBox {
+.tmp_SearchBox {
+    position: relative;
+    float: left;
+}
+
+.tmp_SearchBar {
+    position: relative;
+    border: none;
+    outline: none;
+    background-color: white;
+    width: 930px;
+    height: 32px;
+    font-size: 15px;
+    padding: 0px;
+    text-align: left;
+}
+
+.tmp_searchInput {
+    position: relative;
+    border: none;
+    background: transparent;
+    height: 30px;
+    width: 906px;
+    padding: 1px 12px 1px 12px;
+    font-size: 14px;
+    color: black;
+    font-weight: 700;
+    vertical-align: middle;
+}
+
+.tmp_searchInput:hover {
+    outline: none;
+}
+
+.tmp_searchInput:focus {
+    outline: none;
+}
+
+.tmp_searchButton {
+    border: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: fit-content;
+    height: 32px;
+    background: white;
+    cursor: pointer;
+    transition: linear .1s;
+}
+
+.tmp_searchButton::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.tmp_searchButton:hover {
+    outline: none;
+    mix-blend-mode: difference;
+}
+
+.tmp_searchButton:focus {
+    outline: none;
+    mix-blend-mode: difference;
+}
+
+.tmp_searchButtonImg {
+    vertical-align: middle;
+    margin: 0 auto;
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.tmp_MainChipBox {
+}
+
+.tmp_chipBackGround {
+}
+
+.tmp_LeftBox {
     position: relative;
     float: left;
     width: 930px;
 }
 
-.trp_RightBox {
+.tmp_RightBox {
     overflow: visible;
     position: relative;
     float: left;
@@ -161,21 +170,21 @@
     margin-left: 15px;
 }
 
-.trp_TextCloudBox {
+.tmp_TextCloudBox {
     float: left;
     width: 675px;
     height: 360px;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.trp_PFBox {
+.tmp_PFBox {
     overflow: hidden;
     width: 100%;
-    height: 160px;
+    height: 410px;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.trp_PFThumbnailCircle {
+.tmp_PFThumbnailCircle {
     overflow: hidden;
     position: relative;
     float: left;
@@ -186,14 +195,14 @@
     border-radius: 50%;
 }
 
-.trp_PFThumbnail {
+.tmp_PFThumbnail {
     display: table;
     margin: 0 auto;
     width: 126px;
     height: 126px;
 }
 
-.trp_PFKeywordName {    
+.tmp_PFKeywordName {    
     float: left;
     padding: 30px 0px 0px 10px;
     height: 25px;
@@ -204,7 +213,7 @@
     color: white;
 }
 
-.trp_PFKeywordYear {    
+.tmp_PFKeywordYear {    
     float: left;
     padding: 15px 0px 0px 10px;
     height: 20px;
@@ -215,7 +224,7 @@
     color: white;
 }
 
-.trp_PFKeywordCompony {    
+.tmp_PFKeywordCompony {    
     float: left;
     padding: 15px 0px 0px 10px;
     height: 20px;
@@ -226,7 +235,7 @@
     color: white;
 }
 
-.trp_BoxNameBar {
+.tmp_BoxNameBar {
     width: 100%;
     padding: 7px 0px 7px 0px;
     height: 26px;
@@ -237,15 +246,15 @@
     color: white;
 }
 
-.trp_CommentListBox {
+.tmp_KeywordRankBox {
     float: left;
-    margin-left: 15px;
-    width: 240px;
-    height: 360px;
+    width: 930px;
+    height: 310px;
     background-color: rgba(0, 0, 0, 0.5);
+    margin-top: 10px;
 }
 
-.trp_CommentList {
+.tmp_CommentList {
     overflow: auto;
     float: right;
     width: 240px;
@@ -256,22 +265,22 @@
     font-size: 0.8em;
 }
 
-.trp_CommentList::-webkit-scrollbar {
+.tmp_CommentList::-webkit-scrollbar {
     margin-top: 30px;
     width: 10px;
 }
 
-.trp_CommentList::-webkit-scrollbar-button {
+.tmp_CommentList::-webkit-scrollbar-button {
 }
 
-.trp_CommentList::-webkit-scrollbar-track {
+.tmp_CommentList::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.trp_CommentList::-webkit-scrollbar-track-piece {
+.tmp_CommentList::-webkit-scrollbar-track-piece {
 }
 
-.trp_CommentList::-webkit-scrollbar-thumb {
+.tmp_CommentList::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.95);
     width: 10px;
     border-radius: 10px;
@@ -279,38 +288,38 @@
     border: 1px solid transparent;
 }
 
-.trp_CommentList::-webkit-scrollbar-corner {
+.tmp_CommentList::-webkit-scrollbar-corner {
 }
 
-.trp_CLChip_L {
+.tmp_CLChip_L {
     float: left;
     padding: 7px 0px 7px 0px;
     width: 40px;
     height: 20px;
 }
 
-.trp_CLChip_M {
+.tmp_CLChip_M {
     float: left;
     padding: 7px 0px 7px 0px;
     width: 130px;
     height: 20px;
 }
 
-.trp_CLChip_R {
+.tmp_CLChip_R {
     float: left;
     padding: 7px 0px 7px 0px;
     width: 60px;
     height: 20px;
 }
 
-.trp_CLChip_4 {
+.tmp_CLChip_4 {
     float: left;
     padding: 7px 0px 7px 0px;
     width: 100%;
     height: 200px;
 }
 
-.trp_GraphBox_1 {
+.tmp_GraphBox_1 {
     float: left;
     width: 300px;
     height: 250px;
@@ -318,7 +327,7 @@
     margin: 15px 15px 0px 0px;
 }
 
-.trp_GraphBox_2 {
+.tmp_GraphBox_2 {
     float: left;
     width: 300px;
     height: 250px;
@@ -326,7 +335,7 @@
     margin: 15px 15px 0px 0px;
 }
 
-.trp_GraphBox_3 {
+.tmp_GraphBox_3 {
     float: left;
     width: 300px;
     height: 250px;
@@ -334,7 +343,7 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.trp_GraphBox_4 {
+.tmp_GraphBox_4 {
     float: left;
     width: 457.5px;
     height: 250px;
@@ -342,7 +351,7 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.trp_GraphBox_5 {
+.tmp_GraphBox_5 {
     float: left;
     width: 457.5px;
     height: 250px;
@@ -350,7 +359,7 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.trp_GraphBox_6 {
+.tmp_GraphBox_6 {
     float: left;
     width: 100%;
     height: 250px;
@@ -358,12 +367,12 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.trp_BarGraphContainer {
+.tmp_BarGraphContainer {
     width: 457.5px;
     height: 210px;
 }
 
-.trp_RadarBox {
+.tmp_RadarBox {
     float: left;
     width: 100%;
     height: 325px;
@@ -371,13 +380,13 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.trp_RadarContainer {
+.tmp_RadarContainer {
     overflow: hidden;
     width: 345px;
     height: 285px;
 }
 
-.trp_KWDRecommend {
+.tmp_KWDRecommend {
     float: left;
     width: 100%;
     height: 640px;
@@ -385,13 +394,13 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.trp_footer {
+.tmp_footer {
     float: left;
     position: relative;
     width: 100%;
 }
 
-.trp_TxtTop {
+.tmp_TxtTop {
     float: right;
     position: relative;
     text-align: right;
@@ -404,7 +413,7 @@
     width: 100%;
 }
 
-.trp_TxtBottom {
+.tmp_TxtBottom {
     float: right;
     position: relative;
     text-align: right;

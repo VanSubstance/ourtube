@@ -898,16 +898,6 @@
     top: 355px;
     overflow: scroll;
 }
-#scrollbitch {
-    color: rgb(255, 255, 255);
-    overflow-y: scroll;
-    position: absolute;
-    left: 285px;
-    top: 354px;
-    width: 958px;
-    height: 270px;
-    overflow-x: hidden;
-}
 
 #scrollHead {
     color: rgb(255, 255, 255);
@@ -925,27 +915,6 @@
     top: 350px; 
 }
 
-#scrollbitch2 {
-    border-spacing: 45px 30px;
-    
-}
-#longfont {
-    text-overflow:ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    font-size: 15px;
-    display: block;
-    width: 120px;
- 
-    
-}
-#checkbox {
-    position: relative;
-    left: 20px;
-    top: 0px;
-
-
-}
 #_dc {
     left: 103.242px;
     top: 478.114px;

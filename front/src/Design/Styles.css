@@ -948,19 +948,6 @@
     top: 648px;
 }
 
-#exbox {
-    opacity: 0.6;
-    fill: rgba(17,17,17,1);
-}
-.exbox {
-    position: absolute;
-    overflow: visible;
-    width: 339px;
-    height: 772px;
-    left: 1260px;
-    top: 648px;
-}
-
 #listBox {
     opacity: 0.8;
     fill: rgba(17,17,17,1);
@@ -983,59 +970,7 @@
 	left: 320px;
 	top: 355px;
 }
-#scrollbitch {
-    color: rgb(255, 255, 255);
-    overflow-y: scroll;
-    position: absolute;
-    left: 285px;
-    top: 354px;
-    width: 958px;
-    height: 270px;
-    overflow-x: hidden;
-}
 
-#scrollHead1 {
-    position: absolute;
-    color: rgb(255, 255, 255);
-    left: 320px;
-    top: 325px;
-    width: 930px;
-    height: 0px;
-
-}
-
-#selectall {
-    width: 25px;
-    height: 25px;
-    color: rgb(255, 255, 255);
-    left: 350px;
-    top: 350px; 
-}
-
-#scrollbitch2 {
-    border-spacing: 45px 30px;
-    width: 950px;
-    
-    
-    
-}
-#longfont {
-    text-overflow:ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    font-size: 15px;
-    display: block;
-    width: 120px;
- 
-    
-}
-#checkbox {
-    position: relative;
-    left: 20px;
-    top: 0px;
-
-
-}
 #_dc {
     left: 103.242px;
     top: 478.114px;
