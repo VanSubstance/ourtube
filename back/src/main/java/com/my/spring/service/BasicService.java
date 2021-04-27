@@ -22,9 +22,10 @@ public interface BasicService {
 	public void setGame(Game item);
 	public void setGameInGameSearch(String title);
 	public void setGameTopic(GameTopic item);
+
+	public void setOurScoreForGameToday(String title, double score);
 	
 	public List<GameDataForMain> getGameDataForMainByGame(String title);
-	public GameDataForMain getGameDateForTrendMainByGame(String title);
 	
 	public void setGameStat(GameStatistic item);
 	public List<TopicDto> getTopics();
@@ -35,5 +36,4 @@ public interface BasicService {
 	
 	public List<String> getTopicsByTopic(String topic);
 	public List<Game> getGamesByTopic(String topic);
-	public List<String> getAllGamesByTopic(String topic);
 }

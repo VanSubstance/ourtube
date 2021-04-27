@@ -82,42 +82,44 @@ public class ProcessingController {
 		return serviceBasic.getGamesByTopic(topic);
 	}
 	
-	@RequestMapping(value = "/keyword/{keyword}", method = RequestMethod.GET)
-	public HashMap<String, Object> getDataForWordcloudByKeyword(@PathVariable String keyword) {
-		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
-		System.out.println("워드 클라우드 데이터 반환: " + keyword + " : " + requestedTime);
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		List<NounDto> words = serviceWord.getWordsByGame(keyword);
-		VideoStatDto avg = serviceVideo.getAvgVideoStatisticsByGame(keyword);
-		List<Integer> views = serviceVideo.getTotalViewsByGame(keyword);
-		result.put("words", words);
-		result.put("likeCount", avg.getLikeCount());
-		result.put("dislikeCount", avg.getDislikeCount());
-		result.put("commentCount", avg.getCommentCount());
-		result.put("viewCounts", views);
-		return result;
-	}
+//	
+//	@RequestMapping(value = "/keyword/{keyword}", method = RequestMethod.GET)
+//	public HashMap<String, Object> getDataForWordcloudByKeyword(@PathVariable String keyword) {
+//		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+//		System.out.println("워드 클라우드 데이터 반환: " + keyword + " : " + requestedTime);
+//		HashMap<String, Object> result = new HashMap<String, Object>();
+//		List<NounDto> words = serviceWord.getWordsByGame(keyword);
+//		VideoStatDto avg = serviceVideo.getAvgVideoStatisticsByGame(keyword);
+//		List<Integer> views = serviceVideo.getTotalViewsByGame(keyword);
+//		result.put("words", words);
+//		result.put("likeCount", avg.getLikeCount());
+//		result.put("dislikeCount", avg.getDislikeCount());
+//		result.put("commentCount", avg.getCommentCount());
+//		result.put("viewCounts", views);
+//		return result;
+//	}
 	
-	@RequestMapping(value = "/chart/{topic}", method = RequestMethod.GET)
-	public HashMap<String, HashMap<String, Object>> getDataForChartViewByTopic(@PathVariable String topic) {
-		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
-		System.out.println("차트 데이터 반환: " + topic + " : " + requestedTime);
-		HashMap<String, HashMap<String, Object>> result = new HashMap<String, HashMap<String, Object>>();
-		List<String> topics = serviceBasic.getTopicsByTopic(topic);
-		for (String topicRel : topics) {
-			HashMap<String, Object> value = new HashMap<String, Object>();
-			VideoStatDto resultVideo = serviceVideo.getTotalVideoStatisticsByTopic(topicRel);
-			MaxAvgMedian maxAvgMedian = serviceChannel.getChannelMaxAvgMedianByTopic(topicRel);
-			value.put("viewCount", resultVideo.getViewCount());
-			value.put("dislikeCount", resultVideo.getDislikeCount());
-			value.put("commentCount", resultVideo.getCommentCount());
-			value.put("max", maxAvgMedian.getMax());
-			value.put("avg", maxAvgMedian.getAvg());
-			value.put("median", maxAvgMedian.getMedian());
-			result.put(topicRel, value);
-		}
-		return result;
-	}
+	
+//	@RequestMapping(value = "/chart/{topic}", method = RequestMethod.GET)
+//	public HashMap<String, HashMap<String, Object>> getDataForChartViewByTopic(@PathVariable String topic) {
+//		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+//		System.out.println("차트 데이터 반환: " + topic + " : " + requestedTime);
+//		HashMap<String, HashMap<String, Object>> result = new HashMap<String, HashMap<String, Object>>();
+//		List<String> topics = serviceBasic.getTopicsByTopic(topic);
+//		for (String topicRel : topics) {
+//			HashMap<String, Object> value = new HashMap<String, Object>();
+//			VideoStatDto resultVideo = serviceVideo.getTotalVideoStatisticsByTopic(topicRel);
+//			MaxAvgMedian maxAvgMedian = serviceChannel.getChannelMaxAvgMedianByTopic(topicRel);
+//			value.put("viewCount", resultVideo.getViewCount());
+//			value.put("dislikeCount", resultVideo.getDislikeCount());
+//			value.put("commentCount", resultVideo.getCommentCount());
+//			value.put("max", maxAvgMedian.getMax());
+//			value.put("avg", maxAvgMedian.getAvg());
+//			value.put("median", maxAvgMedian.getMedian());
+//			result.put(topicRel, value);
+//		}
+//		return result;
+//	}
 	
 	@RequestMapping(value = "/game/main/{title}", method = RequestMethod.GET)
 	public HashMap<String, GameDataForMain> getDatasForGame(@PathVariable String title) {
@@ -125,7 +127,7 @@ public class ProcessingController {
 		System.out.println("메인 화면 좌측 데이터 반환: " + title + " : " + requestedTime);
 		HashMap<String, GameDataForMain> result = new HashMap<String, GameDataForMain>();
 		for (GameDataForMain item : serviceBasic.getGameDataForMainByGame(title)) {
-			item.setOurScore(Math.round(item.getOurScore()*100)/100.0);
+			item.setOurScore(Math.round(item.getOurScore()*10000)/100.0);
 			result.put(item.getInfoDate().toString(), item);
 		}
 		return result;
@@ -136,18 +138,5 @@ public class ProcessingController {
 		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
 		System.out.println("게임 제목 전체 반환: " + requestedTime);
 		return serviceBasic.getAllTitle();
-	}
-	
-	@RequestMapping(value = "/games/trendmain/{topic}", method =  RequestMethod.GET)
-	public HashMap<String, GameDataForMain> getDataForTrendMainPage(@PathVariable String topic) {
-		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
-		System.out.println("토픽에 따른 트렌드 메인 페이지 게임 데이터: " + topic + " : " + requestedTime);
-		HashMap<String, GameDataForMain> result = new HashMap<String, GameDataForMain>();
-		List<String> games = serviceBasic.getAllGamesByTopic(topic);
-		for (String game: games) {
-			result.put(game, serviceBasic.getGameDateForTrendMainByGame(game));
-		}
-		
-		return result;
 	}
 }
