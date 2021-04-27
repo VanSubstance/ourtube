@@ -145,12 +145,12 @@ const LeftBoxFont = (props) => {
             {
               props.data[dateTarget.left] !== undefined
                 ? (props.data[dateTarget.right] !== undefined
-                  ? (props.data[dateTarget.left].viewCount < props.data[dateTarget.right].viewCount
+                  ? (props.data[dateTarget.left].rank > props.data[dateTarget.right].rank
                     ? <path
                       id="mp_UpArrow"
                       d="M 8.17737865447998 0 L 16.35475921630859 10.58249282836914 L 0 10.58249282836914 Z"
                     ></path>
-                    : (props.data[dateTarget.left].viewCount > props.data[dateTarget.right].viewCount
+                    : (props.data[dateTarget.left].rank < props.data[dateTarget.right].rank
                       ? <path
                         id="mp_DownArrow"
                         d="M 8.17737865447998 0 L 16.35475921630859 10.58249282836914 L 0 10.58249282836914 Z"
@@ -280,12 +280,12 @@ const LeftBoxFont = (props) => {
             {
               props.data[dateTarget.left] !== undefined
                 ? (props.data[dateTarget.right] !== undefined
-                  ? (props.data[dateTarget.left].viewCount < props.data[dateTarget.right].viewCount
+                  ? (props.data[dateTarget.left].ourScore < props.data[dateTarget.right].ourScore
                     ? <path
                       id="mp_UpArrow"
                       d="M 8.17737865447998 0 L 16.35475921630859 10.58249282836914 L 0 10.58249282836914 Z"
                     ></path>
-                    : (props.data[dateTarget.left].viewCount > props.data[dateTarget.right].viewCount
+                    : (props.data[dateTarget.left].ourScore > props.data[dateTarget.right].ourScore
                       ? <path
                         id="mp_DownArrow"
                         d="M 8.17737865447998 0 L 16.35475921630859 10.58249282836914 L 0 10.58249282836914 Z"
