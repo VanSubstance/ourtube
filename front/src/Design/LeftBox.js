@@ -26,7 +26,7 @@ const LeftBox = (props) => {
       </LeftBoxFont>
       <a
         className="mp_lookWellBox"
-        href={/trend/ + props.keyword.title}>
+        href={/game/ + props.keyword.title}>
         <div
           className="mp_lookWell">
           자세히 보기

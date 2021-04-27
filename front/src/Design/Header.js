@@ -15,7 +15,7 @@ const App = () => {
         <Route exact path='/' component={MainPageSimple} />
 
         <Route
-          exact path='/trend'
+          exact path='/chart'
           render={({location}) => 
             location.state !== undefined
             ? (
@@ -28,7 +28,7 @@ const App = () => {
         </Route>
 
         <Route
-          exact path='/trend/:keyword'
+          exact path='/game/:keyword'
           component = {TrendResultPage}>
         </Route>
       </div>
