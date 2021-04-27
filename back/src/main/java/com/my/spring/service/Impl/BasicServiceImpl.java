@@ -101,13 +101,8 @@ public class BasicServiceImpl implements BasicService {
 	}
 
 	@Override
-	public GameDataForMain getGameDateForTrendMainByGame(String title) {
-		return mapper.getGameDateForTrendMainByGame(title);
-	}
-
-	@Override
-	public List<String> getAllGamesByTopic(String topic) {
-		return mapper.getAllGamesByTopic(topic);
+	public void setOurScoreForGameToday(String title, double score) {
+		mapper.setOurScoreForGameToday(title, score);
 	}
 
 }

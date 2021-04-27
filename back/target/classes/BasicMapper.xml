@@ -40,6 +40,11 @@
 		insert into gamestatistics (title, infoDate, resultcount)
 		values (#{item.title}, #{item.infoDate}, #{item.resultCount})
 	</insert>
+	<update id="setOurScoreForGameToday" parameterType="map">
+		update gamestatistics
+		set ourScore = #{score}
+		where infodate = TO_DATE(SYSDATE, 'YY/MM/DD') and title = #{title}
+	</update>
 	<select id="getTopics" resultType="com.my.spring.domain.TopicDto">
 		select * from topictotal
 	</select>
@@ -60,9 +65,11 @@
 	</select>
 	
 	<select id="getGameListForToday" resultType="com.my.spring.domain.statistics.GameStatistic">
-		select * from gameStatistics
-		where infodate = TO_DATE(SYSDATE, ('YY/MM/DD'))
-		order by resultcount desc
+		select a.*, rownum rank from (
+			select * from gameStatistics
+			where infodate = TO_DATE(SYSDATE, ('YY/MM/DD'))
+			order by ourscore desc
+        ) a
 	</select>
 	
 	<select id="getGamesByTopic" parameterType="String" resultType="com.my.spring.domain.basics.Game">
@@ -87,47 +94,6 @@
 	    where a.title = b.title
 	    order by b.ind
 		]]>
-	</select>
-	
-	<select id="getAllGamesByTopic" parameterType="String" resultType="String">
-		<![CDATA[
-		select * from game a, (
-		    select rownum ind, title from (
-		        select * from (
-		            select a.*, rownum rank from gamestatistics a
-		            where infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
-		            order by ourscore desc
-				) b
-		        where 
-		        b.title in (
-		            select title from gametopic where topic = #{topic}
-		        ) 
-		        and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
-		        order by b.rank asc
-		        )
-		    ) b
-		where a.title = b.title
-		order by b.ind
-		]]>
-	</select>
-	
-	<select id="getGameDateForTrendMainByGame" parameterType="String" resultType="com.my.spring.domain.statistics.GameDataForMain">
-		select 
-		b.resultcount resultcount, 
-		round(sum(d.viewcount)) viewcount,
-		round(avg(d.likecount)) likecount, 
-		round(avg(d.dislikecount)) dislikecount, 
-		round(avg(d.commentcount)) commentcount 
-		from gamestatistics b, 
-		videogame c, 
-		videostatistics d
-		where 
-		b.title = #{title}
-		and b.infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
-		and d.infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
-		and b.title = c.game
-		and c.id = d.id
-		group by b.title, b.resultcount
 	</select>
 	
 	<select id="getGameDataForMainByGame" parameterType="String" resultType="com.my.spring.domain.statistics.GameDataForMain">

@@ -25,8 +25,9 @@ public interface BasicMapper {
 	public void setGameInGameSearch(@Param("title") String title);
 	public void setGameTopic(@Param("item") GameTopic item);
 	
+	public void setOurScoreForGameToday(@Param("title") String title, @Param("score") double score);
+	
 	public List<GameDataForMain> getGameDataForMainByGame(@Param("title") String title);
-	public GameDataForMain getGameDateForTrendMainByGame(@Param("title") String title);
 	
 	public void setGameStat(@Param("item") GameStatistic item);
 	public List<TopicDto> getTopics();
@@ -37,5 +38,4 @@ public interface BasicMapper {
 	
 	public List<String> getTopicsByTopic(@Param("topic") String topic);
 	public List<Game> getGamesByTopic(@Param("topic") String topic);
-	public List<String> getAllGamesByTopic(@Param("topic") String topic);
 }

@@ -1,6 +1,5 @@
 package com.my.spring.service;
 
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,4 +32,6 @@ public interface VideoService {
 	public HashMap<String, HashMap<String, DateStatistic>> getVideoDataByTitleAndDate(List<String> titles);
 	public HashMap<String, DateStatisticRelative> getVideoRelativeDataByTitleAndDate(List<String> titles);
 	public List<DateStatistic> getVideoDataForRegressionByTitle(String title);
+	
+	public HashMap<String, Double> calcOurScoreFromVideoData(List<String> titles);
 }

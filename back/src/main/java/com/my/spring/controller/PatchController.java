@@ -56,7 +56,7 @@ public class PatchController {
 	@Autowired
 	private CrawlerService serviceCrawler;
 	
-	private final int hour = 3;
+	private final int hour = 9;
 	
 	@RequestMapping(value = "/menually")
 	public void patchMenually() {
@@ -92,6 +92,7 @@ public class PatchController {
 	}
 
 	@Scheduled(cron = "1 25 " + hour + " * * *")
+	@RequestMapping(value = "/menually/omitted")
 	public void patchDataByGameFirst() {
 		List<String> gameQList = serviceBasic.getGameQ();
 		int mark = 0;
@@ -395,7 +396,6 @@ public class PatchController {
 				if (commentDto.getText().length() >= 2000) {
 					commentDto.setText(commentDto.getText().substring(0, 2000));
 				}
-				System.out.println(commentDto.getText());
 				if (commentDto.getText().length() != 0) {
 					serviceComment.setComment(commentDto);
 				}
