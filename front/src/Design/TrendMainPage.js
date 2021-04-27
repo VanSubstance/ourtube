@@ -564,9 +564,22 @@ const TrendMainPage = () => {
           </div>
           <div
             className="tmp_KeywordExplainBox">
-              {/* 키워드 설명 및 관련 링크 (위키 등) 추가 */}
+            {/* 키워드 설명 및 관련 링크 (위키 등) 추가 */}
               This boy, well known as 'tanoshii boy' is based on meme. did you know that?
-            </div>
+          </div>
+        </div>
+        <div
+          className="tmp_footer">
+          <div
+            className="tmp_TxtTop">OURTUBE Analytics, Inc. © 2021</div>
+          <div
+            className="tmp_TxtBottom">
+            Ourtube is hosted by Ourtube Analytics, Inc. Ourtube isn’t endorsed
+            by Youtube and doesn’t reflect the views or opinions of youtube or
+            anyone officially involved in producing or managing Youtube. youtube
+            and Google are trademarks or registered trademarks of Google.Inc.
+            Youtube © Google.Inc.
+                    </div>
         </div>
       </div>
     </div>
