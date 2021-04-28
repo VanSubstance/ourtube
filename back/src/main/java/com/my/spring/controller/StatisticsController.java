@@ -38,23 +38,9 @@ public class StatisticsController {
 	private BasicService serviceBasic;
 	@Autowired
 	private StatisticService serviceStatistic;
-	@Autowired
-	private VideoService serviceVideo;
 
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	String requestedTime = dateFormat.format(Calendar.getInstance().getTime());
-	
-	@RequestMapping(value = "/score")
-	public HashMap<String, Double> calcScore() {
-		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
-		System.out.println(" -- 아울스코어 계산 및 DB 삽입 -- " + requestedTime);
-		List<String> titles = serviceStatistic.getGamesByDate();
-		HashMap<String, Double> result = serviceVideo.calcOurScoreFromVideoData(titles);
-		for (String title : titles) {
-			serviceBasic.setOurScoreForGameToday(title, result.get(title));
-		}
-		return result;
-	}
 	
 	@RequestMapping(value = "/check")
 	public List<GameStatistic> getAllGames() {
