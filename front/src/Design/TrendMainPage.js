@@ -21,290 +21,13 @@ const TrendMainPage = () => {
     add: true,
   });
 
-  const [dataExample] = useState([
-    {
-      id: "japan",
-      color: "hsl(193, 70%, 50%)",
-      data: [
-        {
-          x: "plane",
-          y: 126,
-        },
-        {
-          x: "helicopter",
-          y: 99,
-        },
-        {
-          x: "boat",
-          y: 205,
-        },
-        {
-          x: "train",
-          y: 153,
-        },
-        {
-          x: "subway",
-          y: 66,
-        },
-        {
-          x: "bus",
-          y: 76,
-        },
-        {
-          x: "car",
-          y: 185,
-        },
-        {
-          x: "moto",
-          y: 291,
-        },
-        {
-          x: "bicycle",
-          y: 10,
-        },
-        {
-          x: "horse",
-          y: 280,
-        },
-        {
-          x: "skateboard",
-          y: 268,
-        },
-        {
-          x: "others",
-          y: 76,
-        },
-      ],
-    },
-    {
-      id: "france",
-      color: "hsl(172, 70%, 50%)",
-      data: [
-        {
-          x: "plane",
-          y: 73,
-        },
-        {
-          x: "helicopter",
-          y: 201,
-        },
-        {
-          x: "boat",
-          y: 287,
-        },
-        {
-          x: "train",
-          y: 298,
-        },
-        {
-          x: "subway",
-          y: 286,
-        },
-        {
-          x: "bus",
-          y: 141,
-        },
-        {
-          x: "car",
-          y: 155,
-        },
-        {
-          x: "moto",
-          y: 186,
-        },
-        {
-          x: "bicycle",
-          y: 291,
-        },
-        {
-          x: "horse",
-          y: 2,
-        },
-        {
-          x: "skateboard",
-          y: 57,
-        },
-        {
-          x: "others",
-          y: 13,
-        },
-      ],
-    },
-    {
-      id: "us",
-      color: "hsl(79, 70%, 50%)",
-      data: [
-        {
-          x: "plane",
-          y: 278,
-        },
-        {
-          x: "helicopter",
-          y: 36,
-        },
-        {
-          x: "boat",
-          y: 140,
-        },
-        {
-          x: "train",
-          y: 158,
-        },
-        {
-          x: "subway",
-          y: 223,
-        },
-        {
-          x: "bus",
-          y: 247,
-        },
-        {
-          x: "car",
-          y: 241,
-        },
-        {
-          x: "moto",
-          y: 27,
-        },
-        {
-          x: "bicycle",
-          y: 112,
-        },
-        {
-          x: "horse",
-          y: 68,
-        },
-        {
-          x: "skateboard",
-          y: 223,
-        },
-        {
-          x: "others",
-          y: 102,
-        },
-      ],
-    },
-    {
-      id: "germany",
-      color: "hsl(79, 70%, 50%)",
-      data: [
-        {
-          x: "plane",
-          y: 145,
-        },
-        {
-          x: "helicopter",
-          y: 41,
-        },
-        {
-          x: "boat",
-          y: 131,
-        },
-        {
-          x: "train",
-          y: 149,
-        },
-        {
-          x: "subway",
-          y: 13,
-        },
-        {
-          x: "bus",
-          y: 243,
-        },
-        {
-          x: "car",
-          y: 85,
-        },
-        {
-          x: "moto",
-          y: 178,
-        },
-        {
-          x: "bicycle",
-          y: 281,
-        },
-        {
-          x: "horse",
-          y: 259,
-        },
-        {
-          x: "skateboard",
-          y: 28,
-        },
-        {
-          x: "others",
-          y: 277,
-        },
-      ],
-    },
-    {
-      id: "norway",
-      color: "hsl(27, 70%, 50%)",
-      data: [
-        {
-          x: "plane",
-          y: 52,
-        },
-        {
-          x: "helicopter",
-          y: 159,
-        },
-        {
-          x: "boat",
-          y: 96,
-        },
-        {
-          x: "train",
-          y: 296,
-        },
-        {
-          x: "subway",
-          y: 184,
-        },
-        {
-          x: "bus",
-          y: 218,
-        },
-        {
-          x: "car",
-          y: 146,
-        },
-        {
-          x: "moto",
-          y: 56,
-        },
-        {
-          x: "bicycle",
-          y: 185,
-        },
-        {
-          x: "horse",
-          y: 166,
-        },
-        {
-          x: "skateboard",
-          y: 85,
-        },
-        {
-          x: "others",
-          y: 174,
-        },
-      ],
-    },
-  ]);
+  // AvgNewView 데이터
+  const [dataForAvgNewView, setDataForAvgNewView] = useState([]);
 
   useEffect(() => {
     getDataset();
     getDatasetForKeyword(searchVal);
   }, []);
-
-  useEffect(() => {
-    console.log(titleSelected);
-    titleSelected.add++ + true
-      ? addDataByGame(titleSelected.title)
-      : deleteDataByGame(titleSelected.title);
-  }, [titleSelected]);
 
   const checkKeywords = (keyword, method) => {
     if (method == 0) {
@@ -320,8 +43,9 @@ const TrendMainPage = () => {
         add: false,
       };
     }
-    console.log(titlesSelected);
-    console.log(titleSelected);
+    titleSelected.add === true
+      ? addDataByGame(titleSelected.title)
+      : deleteDataByGame(titleSelected.title);
   };
 
   // 게임 체크 = 해당 게임 데이터 추가
@@ -330,14 +54,20 @@ const TrendMainPage = () => {
   };
 
   // 게임 체크 해제 = 해당 게임 데이터 삭제
-  const deleteDataByGame = (title) => {};
+  const deleteDataByGame = (title) => {
+    setDataForAvgNewView(dataForAvgNewView.filter((dataForLine) => dataForLine.id != title));
+  };
 
   // 해당 게임 데이터 가져오기
   const getDatasetForChart = (title) => {
     fetch(url + "/deploy/game/chart/" + title)
       .then((response) => response.json())
       .then((dataForChart) => {
-
+        setDataForAvgNewView(dataForAvgNewView.concat({
+          id: title,
+          color: "hsl(27, 70%, 50%)",
+          data: dataForChart.avgNewView
+        }));
       });
   };
 
@@ -506,14 +236,14 @@ const TrendMainPage = () => {
           <div className="tmp_NewViewBox">
             <div className="tmp_BoxNameBar">신규 조회수</div>
             <ResponsiveLine
-              data={dataExample}
+              data={dataForAvgNewView}
               margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
               xScale={{ type: "point" }}
               yScale={{
                 type: "linear",
-                min: "auto",
+                min: "0",
                 max: "auto",
-                stacked: true,
+                stacked: false,
                 reverse: false,
               }}
               yFormat=" >-.2f"
