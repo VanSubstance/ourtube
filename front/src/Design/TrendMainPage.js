@@ -10,26 +10,11 @@ import { ResponsiveLine } from "@nivo/line";
 const TrendMainPage = () => {
   const [url] = useState("http://222.232.15.205:8082");
 
-  const [dataForChart, setDataForChart] = useState();
-
-  let [dataForAvgNewView] = useState([]);
-
-  const [datesForCharts] = useState([
-    moment().subtract(6, "days").format("yyyy-MM-DD"),
-    moment().subtract(5, "days").format("yyyy-MM-DD"),
-    moment().subtract(4, "days").format("yyyy-MM-DD"),
-    moment().subtract(3, "days").format("yyyy-MM-DD"),
-    moment().subtract(2, "days").format("yyyy-MM-DD"),
-    moment().subtract(1, "days").format("yyyy-MM-DD"),
-    moment().format("yyyy-MM-DD"),
-  ]);
-
   let [searchVal] = useState("FPS");
 
   let [ctgrs, setCtgrs] = useState([]);
 
   let [keywords, setKeywords] = useState([]);
-  let [titles, setTitles] = useState([]);
   let [titlesSelected] = useState([]);
   let [titleSelected] = useState({
     title: "",
@@ -308,85 +293,11 @@ const TrendMainPage = () => {
       ],
     },
   ]);
-  const MyResponsiveLine = ({ data /* see data tab */ }) => {
-    return (
-      <ResponsiveLine
-        data={data}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-        xScale={{ type: "point" }}
-        yScale={{
-          type: "linear",
-          min: "auto",
-          max: "auto",
-          stacked: true,
-          reverse: false,
-        }}
-        yFormat=" >-.2f"
-        axisTop={null}
-        axisRight={null}
-        axisBottom={{
-          orient: "bottom",
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: "transportation",
-          legendOffset: 36,
-          legendPosition: "middle",
-        }}
-        axisLeft={{
-          orient: "left",
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: "count",
-          legendOffset: -40,
-          legendPosition: "middle",
-        }}
-        pointSize={10}
-        pointColor={{ theme: "background" }}
-        pointBorderWidth={2}
-        pointBorderColor={{ from: "serieColor" }}
-        pointLabelYOffset={-12}
-        useMesh={true}
-        legends={[
-          {
-            anchor: "bottom-right",
-            direction: "column",
-            justify: false,
-            translateX: 100,
-            translateY: 0,
-            itemsSpacing: 0,
-            itemDirection: "left-to-right",
-            itemWidth: 80,
-            itemHeight: 20,
-            itemOpacity: 0.75,
-            symbolSize: 12,
-            symbolShape: "circle",
-            symbolBorderColor: "rgba(0, 0, 0, .5)",
-            effects: [
-              {
-                on: "hover",
-                style: {
-                  itemBackground: "rgba(0, 0, 0, .03)",
-                  itemOpacity: 1,
-                },
-              },
-            ],
-          },
-        ]}
-      />
-    );
-  };
 
   useEffect(() => {
-    initDatasForCharts();
     getDataset();
     getDatasetForKeyword(searchVal);
   }, []);
-
-  useEffect(() => {
-    extractTitlesFromKeywords();
-  }, [keywords]);
 
   useEffect(() => {
     console.log(titleSelected);
@@ -413,13 +324,6 @@ const TrendMainPage = () => {
     console.log(titleSelected);
   };
 
-  const initDatasForCharts = () => {
-    dataForAvgNewView = [];
-    datesForCharts.forEach((index, value) => {
-      dataForAvgNewView = dataForAvgNewView.concat({ name: value });
-    });
-  };
-
   // 게임 체크 = 해당 게임 데이터 추가
   const addDataByGame = (title) => {
     getDatasetForChart(title);
@@ -433,11 +337,7 @@ const TrendMainPage = () => {
     fetch(url + "/deploy/game/chart/" + title)
       .then((response) => response.json())
       .then((dataForChart) => {
-        datesForCharts.forEach((index, dateForChart) => {
-          dataForAvgNewView[index][title] =
-            dataForChart.avgNewView[dateForChart];
-        });
-        console.log(dataForAvgNewView);
+
       });
   };
 
@@ -460,16 +360,13 @@ const TrendMainPage = () => {
     if (searchVal === "") {
       getDataset();
       getDatasetForKeyword("FPS");
-      extractTitlesFromKeywords();
     } else {
       getDataset();
       getDatasetForKeyword(searchVal);
-      extractTitlesFromKeywords();
       if (ctgrs.length === 0) {
         searchVal = "FPS";
         getDataset();
         getDatasetForKeyword("FPS");
-        extractTitlesFromKeywords();
       }
     }
   };
@@ -487,14 +384,6 @@ const TrendMainPage = () => {
       .catch((e) => {
         console.error(e);
       });
-  };
-
-  const extractTitlesFromKeywords = () => {
-    const titleTemp = [];
-    keywords.forEach((element) => {
-      titleTemp.push(element.title);
-    });
-    setTitles(titleTemp);
   };
 
   const searchCtgrPress = (e) => {
@@ -599,7 +488,6 @@ const TrendMainPage = () => {
                       clickable
                       onClick={() => {
                         getDatasetForKeyword(element);
-                        extractTitlesFromKeywords();
                       }}
                       component="button"
                     ></Chip>
