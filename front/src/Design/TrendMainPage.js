@@ -4,7 +4,6 @@ import "./Styles.css";
 import "./Css/TrendMainPage.css";
 import Chip from "@material-ui/core/Chip";
 import { ListFont } from "./Comps";
-import moment from "moment";
 import { ResponsiveLine } from "@nivo/line";
 
 const TrendMainPage = () => {
@@ -23,6 +22,8 @@ const TrendMainPage = () => {
 
   // AvgNewView 데이터
   const [dataForAvgNewView, setDataForAvgNewView] = useState([]);
+  // numNewVid 데이터
+  const [dataForNumNewVid, setDataForNumNewVid] = useState([]);
 
   useEffect(() => {
     getDataset();
@@ -56,6 +57,7 @@ const TrendMainPage = () => {
   // 게임 체크 해제 = 해당 게임 데이터 삭제
   const deleteDataByGame = (title) => {
     setDataForAvgNewView(dataForAvgNewView.filter((dataForLine) => dataForLine.id != title));
+    setDataForNumNewVid(dataForNumNewVid.filter((dataForLine) => dataForLine.id != title));
   };
 
   // 해당 게임 데이터 가져오기
@@ -68,6 +70,11 @@ const TrendMainPage = () => {
           color: "hsl(27, 70%, 50%)",
           data: dataForChart.avgNewView
         }));
+        setDataForNumNewVid(dataForNumNewVid.concat({
+          id: title,
+          color: "hsl(27, 70%, 50%)",
+          data: dataForChart.numNewVid
+        }))
       });
   };
 
@@ -304,6 +311,72 @@ const TrendMainPage = () => {
           </div>
           <div className="tmp_NewVideoBox">
             <div className="tmp_BoxNameBar">신규 동영상 수</div>
+            <ResponsiveLine
+              data={dataForNumNewVid}
+              margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+              xScale={{ type: "point" }}
+              yScale={{
+                type: "linear",
+                min: "0",
+                max: "auto",
+                stacked: false,
+                reverse: false,
+              }}
+              yFormat=" >-.2f"
+              curve="monotoneX"
+              axisTop={null}
+              axisRight={null}
+              axisBottom={{
+                orient: "bottom",
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: "transportation",
+                legendOffset: 36,
+                legendPosition: "middle",
+              }}
+              axisLeft={{
+                orient: "left",
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: "count",
+                legendOffset: -40,
+                legendPosition: "middle",
+              }}
+              pointSize={4}
+              pointColor={{ theme: "background" }}
+              pointBorderWidth={2}
+              pointBorderColor={{ from: "serieColor" }}
+              pointLabelYOffset={-12}
+              useMesh={true}
+              legends={[
+                {
+                  anchor: "top-right",
+                  direction: "column",
+                  justify: false,
+                  translateX: 100,
+                  translateY: 0,
+                  itemsSpacing: 0,
+                  itemDirection: "left-to-right",
+                  itemWidth: 80,
+                  itemHeight: 20,
+                  itemOpacity: 0.75,
+                  symbolSize: 12,
+                  symbolShape: "circle",
+                  symbolBorderColor: "rgba(0, 0, 0, .5)",
+                  effects: [
+                    {
+                      on: "hover",
+                      style: {
+                        itemBackground: "rgba(0, 0, 0, .03)",
+                        itemOpacity: 1,
+                      },
+                    },
+                  ],
+                },
+              ]}
+            />
           </div>
           <div className="tmp_RankChangeBox">
             <div className="tmp_BoxNameBar">채널 구독자 수 (미정)</div>

@@ -1,5 +1,5 @@
 import { TableHead } from '@material-ui/core';
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../Styles.css';
 
 const ListFont = (props) => {
@@ -12,7 +12,7 @@ const ListFont = (props) => {
         );
     }
 
-    let currentChecked = 0;
+    let [currentChecked, setCurrentChecked] = useState(0);
 
     const checkFunction = (e) => {
         if (e.target.checked) {
@@ -20,11 +20,11 @@ const ListFont = (props) => {
                 alert("최대 5개까지만 선택 가능합니다.");
                 e.target.checked = false;
             } else {
-                currentChecked += 1;
+                setCurrentChecked(currentChecked + 1);
                 props.func(e.target.value, 0);
             }
         } else {
-            currentChecked -= 1;
+            setCurrentChecked(currentChecked - 1);
             props.func(e.target.value, 1);
         }
     }
