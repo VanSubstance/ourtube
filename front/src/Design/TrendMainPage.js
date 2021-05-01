@@ -323,7 +323,7 @@ const TrendMainPage = () => {
                 reverse: false,
               }}
               yFormat=" >-.2f"
-              curve="monotoneX"
+              curve="linear"
               axisTop={null}
               axisRight={null}
               axisBottom={{
