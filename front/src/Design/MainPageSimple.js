@@ -127,7 +127,7 @@ const MainPageSimple = (props) => {
         <div className="mainRightSection">
           <a
             className="chartLinkBox"
-            href="http://localhost:3012/trend">
+            href="http://localhost:3012/chart">
             <div
               className="chartLink">
               Chart View

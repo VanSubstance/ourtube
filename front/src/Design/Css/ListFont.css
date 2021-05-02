@@ -1,28 +1,27 @@
 #scrollbitch {
     color: rgb(255, 255, 255);
-    overflow: auto;
+    overflow-y: scroll;
     position: relative;
     width: 930px;
     height: 270px;
-    overflow-x: hidden;
 }
 
-.scrollbitch::-webkit-scrollbar {
+#scrollbitch::-webkit-scrollbar {
     margin-top: 30px;
     width: 10px;
 }
 
-.scrollbitch::-webkit-scrollbar-button {
+#scrollbitch::-webkit-scrollbar-button {
 }
 
-.scrollbitch::-webkit-scrollbar-track {
+#scrollbitch::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.scrollbitch::-webkit-scrollbar-track-piece {
+#scrollbitch::-webkit-scrollbar-track-piece {
 }
 
-.scrollbitch::-webkit-scrollbar-thumb {
+#scrollbitch::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.95);
     width: 10px;
     border-radius: 10px;
@@ -30,7 +29,7 @@
     border: 1px solid transparent;
 }
 
-.scrollbitch::-webkit-scrollbar-corner {
+#scrollbitch::-webkit-scrollbar-corner {
 }
 
 #scrollHead1 {
