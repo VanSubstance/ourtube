@@ -42,7 +42,7 @@
 	</insert>
 	<update id="setOurScoreForGameToday" parameterType="map">
 		update gamestatistics
-		set ourScore = #{score}
+		set ourScore = #{score}, rank = #{rank}
 		where infodate = TO_DATE(SYSDATE, 'YY/MM/DD') and title = #{title}
 	</update>
 	<select id="getTopics" resultType="com.my.spring.domain.TopicDto">
@@ -65,24 +65,15 @@
 	</select>
 	
 	<select id="getGameListForToday" resultType="com.my.spring.domain.statistics.GameStatistic">
-		select a.*, rownum rank from (
-			select * from gameStatistics
-			where infodate = TO_DATE(SYSDATE, ('YY/MM/DD'))
-			order by ourscore desc
-        ) a
+		select * from gameStatistics
+		where infodate = TO_DATE(SYSDATE, ('YY/MM/DD'))
 	</select>
 	
 	<select id="getGamesByTopic" parameterType="String" resultType="com.my.spring.domain.basics.Game">
 		<![CDATA[
 		select * from game a, (
 		    select rownum ind, title from (
-		        select * from (
-                    select d.*, rownum rank from (
-                        select a.* from gamestatistics a
-                        where infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
-                        order by ourscore desc
-                    ) d
-				) b
+		        select * from gamestatistics b
 		        where 
 		        b.title in (
 		            select title from gametopic where topic = #{topic}
@@ -111,11 +102,7 @@
 			    group by a.infodate
 			    order by a.infodate desc) b
 			inner join (
-	            select d.*, rownum rank from (
-	                select a.* from gamestatistics a
-	                where infodate = TO_DATE(SYSDATE-1, 'YY/MM/DD')
-	                order by ourscore desc
-	            ) d
+	            select * from gamestatistics d
 			    ) d on d.title = #{title} and d.infodate = b.infodate
 		union
 		select b.*, d.resultcount, d.ourscore, d.rank from (
@@ -132,11 +119,7 @@
 			    group by a.infodate
 			    order by a.infodate desc) b
 			inner join (
-	            select d.*, rownum rank from (
-	                select a.* from gamestatistics a
-	                where infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
-	                order by ourscore desc
-	            ) d
+	            select * from gamestatistics d
 			    ) d on d.title = #{title} and d.infodate = b.infodate
 	</select>
 	

@@ -5,6 +5,7 @@ import lombok.*;
 @Setter
 @Getter
 public class DateStatistic {
+	private int rank;
 	private int numNewVid;
 	private int avgNewView;
 	private int avgNewLike;

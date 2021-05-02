@@ -238,13 +238,11 @@ public class CrawlerServiceImpl implements CrawlerService {
 				String title = tag.attr("title");
 				vidId = vidId.replace("/watch?v=", "").split("&qq=")[0];
 				videoIdList.add(vidId);
-				System.out.println("비디오: " + title + " : " + vidId);
 				tag = item.select("div#channel-info");
 				String channelId = tag.select("a").attr("href");
 				channelId = channelId.replace("/channel/", "");
 				if (!channelId.contains("/user/")) {
 					channelIdList.add(channelId);
-					System.out.println("채널: " + channelId);
 				}
 			}
 		} catch (Exception e) {

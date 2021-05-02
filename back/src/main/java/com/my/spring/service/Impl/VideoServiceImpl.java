@@ -3,6 +3,7 @@ package com.my.spring.service.Impl;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import com.my.spring.domain.ChainDto;
 import com.my.spring.domain.TagDto;
 import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
+import com.my.spring.domain.deploy.DataForLine;
 import com.my.spring.domain.statistics.DateStatistic;
 import com.my.spring.domain.statistics.DateStatisticRelative;
 import com.my.spring.mapper.VideoMapper;
@@ -183,89 +185,51 @@ public class VideoServiceImpl implements VideoService {
 	
 	// 최근 7일 간 각 게임 별 동영상 통계수치 추적 (10개 기본 수치) -> 메인 페이지 차트뷰를 위한 형식
 	@Override
-	public HashMap<String, Object> getChartDataForMainPageChart(List<String> titles) {
+	public HashMap<String, Object> getChartDataForMainPageChart(String title) {
+		List<String> variables = Arrays.asList(new String[] {
+				"rank",
+				"numNewVid", "avgNewView", "avgNewLike", "avgNewDislike", "avgNewComment",
+				"numAccuVid", "avgAccuView", "avgAccuLike", "avgAccuDislike", "avgAccuComment"
+				});
+		// 1. 기본 결과 객체 생성
 		HashMap<String, Object> result = new HashMap<String, Object>();
-		List<HashMap<String, Object>> numNewVid = new ArrayList<HashMap<String,Object>>();
-		List<HashMap<String, Object>> avgNewView = new ArrayList<HashMap<String, Object>>();
-		List<HashMap<String, Object>> avgNewLike = new ArrayList<HashMap<String, Object>>();
-		List<HashMap<String, Object>> avgNewDislike = new ArrayList<HashMap<String, Object>>();
-		List<HashMap<String, Object>> avgNewComment = new ArrayList<HashMap<String, Object>>();
-		List<HashMap<String, Object>> numAccuVid = new ArrayList<HashMap<String, Object>>();
-		List<HashMap<String, Object>> avgAccuView = new ArrayList<HashMap<String, Object>>();
-		List<HashMap<String, Object>> avgAccuLike = new ArrayList<HashMap<String, Object>>();
-		List<HashMap<String, Object>> avgAccuDislike = new ArrayList<HashMap<String, Object>>();
-		List<HashMap<String, Object>> avgAccuComment = new ArrayList<HashMap<String, Object>>();
+		List<DataForLine> dataForAvgNewView = new ArrayList<DataForLine>();
+		List<DataForLine> dataForNumNewVid = new ArrayList<DataForLine>();
+		List<DataForLine> dataForRank = new ArrayList<DataForLine>();
+		// 2. 각 날짜 별 데이터 호출
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		List<Date> dates = new ArrayList<Date>(); 
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, -5);
+		cal.add(Calendar.DATE, -7);
 		String date = dateFormat.format(cal.getTime());
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 7; i++) {
 			dates.add(Date.valueOf(date));
 			cal.add(Calendar.DATE, +1);
 			date = dateFormat.format(cal.getTime());
 		}
-		// 날짜 별 데이터 삽입
 		for (Date targetDate : dates) {
-			// 1. 각 변수를 위한 단일 객체 생성
-			HashMap<String, Object> dataForInsertNewVid = new HashMap<String, Object>();
-			HashMap<String, Object> dataForInsertNewView = new HashMap<String, Object>();
-			HashMap<String, Object> dataForInsertNewLike = new HashMap<String, Object>();
-			HashMap<String, Object> dataForInsertNewDislike = new HashMap<String, Object>();
-			HashMap<String, Object> dataForInsertNewComment = new HashMap<String, Object>();
-			HashMap<String, Object> dataForInsertAccuVid = new HashMap<String, Object>();
-			HashMap<String, Object> dataForInsertAccuView = new HashMap<String, Object>();
-			HashMap<String, Object> dataForInsertAccuLike = new HashMap<String, Object>();
-			HashMap<String, Object> dataForInsertAccuDislike = new HashMap<String, Object>();
-			HashMap<String, Object> dataForInsertAccuComment = new HashMap<String, Object>();
-			// 2. 각 단일 객체에 name 추가 <- 날짜
-			dataForInsertNewVid.put("name", targetDate.toString());
-			dataForInsertNewView.put("name", targetDate.toString());
-			dataForInsertNewLike.put("name", targetDate.toString());
-			dataForInsertNewDislike.put("name", targetDate.toString());
-			dataForInsertNewComment.put("name", targetDate.toString());
-			dataForInsertAccuVid.put("name", targetDate.toString());
-			dataForInsertAccuView.put("name", targetDate.toString());
-			dataForInsertAccuLike.put("name", targetDate.toString());
-			dataForInsertAccuDislike.put("name", targetDate.toString());
-			dataForInsertAccuComment.put("name", targetDate.toString());
-			// 3. 각 단일 객체에 변수 추가 <- 각 객체에 해당되는 변수
-			for (String title : titles) {
-				DateStatistic dataTemp = mapper.getVideoDataByTitleAndDate(title, targetDate);
-				dataForInsertNewVid.put(title, dataTemp.getNumNewVid());
-				dataForInsertNewView.put(title, dataTemp.getAvgNewView());
-				dataForInsertNewLike.put(title, dataTemp.getAvgNewLike());
-				dataForInsertNewDislike.put(title, dataTemp.getAvgNewDislike());
-				dataForInsertNewComment.put(title, dataTemp.getAvgNewComment());
-				dataForInsertAccuVid.put(title, dataTemp.getNumAccuVid());
-				dataForInsertAccuView.put(title, dataTemp.getAvgAccuView());
-				dataForInsertAccuLike.put(title, dataTemp.getAvgAccuLike());
-				dataForInsertAccuDislike.put(title, dataTemp.getAvgAccuDislike());
-				dataForInsertAccuComment.put(title, dataTemp.getAvgAccuComment());
-			}
-			// 4. 각 단일 객체를 해당되는 반확 객체에 추가
-			numNewVid.add(dataForInsertNewVid);
-			avgNewView.add(dataForInsertNewView);
-			avgNewLike.add(dataForInsertNewLike);
-			avgNewDislike.add(dataForInsertNewDislike);
-			avgNewComment.add(dataForInsertNewComment);
-			numAccuVid.add(dataForInsertAccuVid);
-			avgAccuView.add(dataForInsertAccuView);
-			avgAccuLike.add(dataForInsertAccuLike);
-			avgAccuDislike.add(dataForInsertAccuDislike);
-			avgAccuComment.add(dataForInsertAccuComment);
+			// 3. 해당 날짜 + 게임 데이터 결과 객체에 추가
+			DateStatistic dataTemp = mapper.getVideoDataByTitleAndDate(title, targetDate);
+			// AvgNumView
+			DataForLine dataForLine = new DataForLine();
+			dataForLine.setX(targetDate.toString());
+			dataForLine.setY(dataTemp.getAvgNewView());
+			dataForAvgNewView.add(dataForLine);
+			// NumNewVid
+			dataForLine = new DataForLine();
+			dataForLine.setX(targetDate.toString());
+			dataForLine.setY(dataTemp.getNumNewVid());
+			dataForNumNewVid.add(dataForLine);
+			// rank
+			System.out.println(dataTemp.getRank());
+			dataForLine = new DataForLine();
+			dataForLine.setX(targetDate.toString());
+			dataForLine.setY(dataTemp.getRank());
+			dataForRank.add(dataForLine);
 		}
-		// 5. 최종 반환 객체에 각 반환 객체들 추가
-		result.put("numNewVid", numNewVid);
-		result.put("avgNewView", avgNewView);
-		result.put("avgNewLike", avgNewLike);
-		result.put("avgNewDislike", avgNewDislike);
-		result.put("avgNewComment", avgNewComment);
-		result.put("numAccuVid", numAccuVid);
-		result.put("avgAccuView", avgAccuView);
-		result.put("avgAccuLike", avgAccuLike);
-		result.put("avgAccuDislike", avgAccuDislike);
-		result.put("avgAccuComment", avgAccuComment);
+		result.put("avgNewView", dataForAvgNewView);
+		result.put("numNewVid", dataForNumNewVid);
+		result.put("rank", dataForRank);
 		return result;
 	}
 

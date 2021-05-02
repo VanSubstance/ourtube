@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -64,9 +66,10 @@ public class PatchController {
 	
 	private final int hour = 0;
 	
-	@Scheduled(cron = "1 5 " + hour + " * * *")
+	@Scheduled(cron = "1 0 " + hour + " * * *")
+	@RequestMapping("/daily")
 	private void patchDaily() {
-		patchGameFromYoutube();
+//		patchGameFromYoutube();
 		patchDataByGameFirst();
 		parseWords();
 		calcScore();
@@ -130,6 +133,7 @@ public class PatchController {
 		
 	}
 	
+	@RequestMapping("/calcScore")
 	public HashMap<String, Double> calcScore() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		String requestedTime = dateFormat.format(Calendar.getInstance().getTime());
@@ -137,10 +141,18 @@ public class PatchController {
 		System.out.println(" -- 아울스코어 계산 및 DB 삽입 -- " + requestedTime);
 		List<String> titles = serviceStatistic.getGamesByDate();
 		HashMap<String, Double> result = serviceVideo.calcOurScoreFromVideoData(titles);
+		Collection<Double> ourscores = result.values();
+		List<Double> ourscoresSorted = new ArrayList<Double>(ourscores);
+		Collections.sort(ourscoresSorted, Collections.reverseOrder());
+		
 		for (String title : titles) {
-			serviceBasic.setOurScoreForGameToday(title, result.get(title));
+			serviceBasic.setOurScoreForGameToday(title, result.get(title), ourscoresSorted.indexOf(result.get(title)) + 1);
 		}
 		return result;
+	}
+	
+	public void setRankFromOurscore() {
+		
 	}
 	
 

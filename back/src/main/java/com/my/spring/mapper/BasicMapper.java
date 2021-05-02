@@ -25,7 +25,7 @@ public interface BasicMapper {
 	public void setGameInGameSearch(@Param("title") String title);
 	public void setGameTopic(@Param("item") GameTopic item);
 	
-	public void setOurScoreForGameToday(@Param("title") String title, @Param("score") double score);
+	public void setOurScoreForGameToday(@Param("title") String title, @Param("score") double score, @Param("rank") int rank);
 	
 	public List<GameDataForMain> getGameDataForMainByGame(@Param("title") String title);
 	
