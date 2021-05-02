@@ -1,8 +1,13 @@
 package com.my.spring.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,6 +36,7 @@ import com.my.spring.service.BasicService;
 import com.my.spring.service.ChannelService;
 import com.my.spring.service.CommentService;
 import com.my.spring.service.CrawlerService;
+import com.my.spring.service.StatisticService;
 import com.my.spring.service.VideoService;
 import com.my.spring.service.WordService;
 import com.my.spring.service.YoutubeService;
@@ -52,20 +58,23 @@ public class PatchController {
 	@Autowired
 	private CommentService serviceComment;
 	@Autowired
+	private StatisticService serviceStatistic;
+	@Autowired
 	private WordService serviceWord;
 	@Autowired
 	private CrawlerService serviceCrawler;
 	
-	private final int hour = 9;
+	private final int hour = 0;
 	
-	@RequestMapping(value = "/menually")
-	public void patchMenually() {
-		patchGameFromYoutube();
+	@Scheduled(cron = "1 0 " + hour + " * * *")
+	@RequestMapping("/daily")
+	private void patchDaily() {
+//		patchGameFromYoutube();
 		patchDataByGameFirst();
 		parseWords();
+		calcScore();
 	}
 	
-	@Scheduled(cron = "1 5 " + hour + " * * *")
 	public void patchGameFromYoutube() {
 		System.out.println("------------------------------- 게임 크롤링 시작 -------------------------------");
 		ArrayList<Object> data = serviceCrawler.crawlGame();
@@ -91,8 +100,6 @@ public class PatchController {
 		System.out.println("------------------------------- 게임 크롤링 종료 -------------------------------");
 	}
 
-	@Scheduled(cron = "1 25 " + hour + " * * *")
-	@RequestMapping(value = "/menually/omitted")
 	public void patchDataByGameFirst() {
 		List<String> gameQList = serviceBasic.getGameQ();
 		int mark = 0;
@@ -107,109 +114,6 @@ public class PatchController {
 		serviceBasic.deleteOldDatas();
 	}
 	
-//	@Scheduled(cron = "1 40 " + hour + " * * *")
-//	@RequestMapping(value = "/calc/weight")
-//	public void calculatePercentile() {
-//		System.out.println("변수 계산 -------------");
-//		SimpleRegression regression = new SimpleRegression();
-//		List<String> GamesOrderByView = serviceStatistic.getGamesByDate();
-//		List<String> GamesOrderByComment = serviceStatistic.getGamesOrderByComment();
-//		List<Double> w3s = serviceStatistic.getLikeRatioByDate();
-//		HashMap<String, GameStatistic> gameStats = new HashMap<String, GameStatistic>();
-//		for (String title : GamesOrderByView) {
-//			System.out.println("\t" + title);
-//			int seq = GamesOrderByView.indexOf(title);
-//			GameStatistic gameStat = new GameStatistic();
-//			gameStat.setTitle(title);
-//			
-//			// w0 계산
-//			// w0: 평균 신규 조회수
-//			double w0 = serviceVideo.getNumNewViewTodayByTitle(title);
-//			gameStat.setW0(w0);
-//			
-//			// w1 계산
-//			// w1: 평균 신규 조회수
-//			double w1 = serviceVideo.getNumNewVidTodayByTitle(title);
-////			double w1 = (double) seq
-////					/ (double) GamesOrderByView.size();
-////			w1 -= 0.5;
-////			if (w1 < 0.0) {
-////				w1 = - Math.pow(Math.abs(w1), 1.0/3.0);
-////			} else {
-////				w1 = Math.pow(w1, 1.0/3.0);
-////			}
-//			gameStat.setW1(w1);
-//			
-//			// w2 계산
-//			// w2: 해당 게임 근 14일간 각 일 종합 조회수 기준 선형 계수
-//			List<Integer> y = serviceStatistic.getRecentViewsByGame(title);
-//			double[][] data = new double[14][2];
-//			for (int i = 0; i < y.size(); i++) {
-//				data[i][0] = i;
-//				data[i][1] = y.get(i);
-//			}
-//			regression.addData(data);
-//			double w2 = regression.getSlope()/10000;
-//			if (w2 > 100.0) w2 = 100.0;
-//			if (w2 < -100.0) w2 = -100.0;
-//			gameStat.setW2(w2);
-//			
-//			// w3 계산
-//			// w3: 해당 게임 당일 총 좋싫비 (총합 좋아요 / 총합 싫어요)
-//			double w3 = w3s.get(seq);
-//			if (w3 > 100.0) w3 = 100.0;
-//			if (w3 < 1.0) w3 = 1.0;
-//			gameStat.setW3(w3);
-//			
-//			// w4 계산
-//			// w4: 해당 게임 당일 총합 댓글 백분율
-//			double w4 = (double) GamesOrderByComment.indexOf(title)
-//					/ (double) GamesOrderByComment.size();
-//			w4 -= 0.5;
-//			if (w4 < 0.0) {
-//				w4 = - Math.pow(Math.abs(w4), 1.0/3.0);
-//			} else {
-//				w4 = Math.pow(w4, 1.0/3.0);
-//			}
-//			gameStat.setW4(w4);
-//			
-//			// w5 계산
-//			// w5: 해당 게임 근 14일간 각 일 종합 취합 댓글 수 기준 선형 계수
-//			regression = new SimpleRegression();
-//			y = serviceStatistic.getRecentCommentCountsByGame(title);
-//			data = new double[14][2];
-//			for (int i = 0; i < y.size(); i++) {
-//				data[i][0] = i;
-//				data[i][1] = y.get(i);
-//			}
-//			regression.addData(data);
-//			double w5 = regression.getSlope()/10;
-//			if (w5 > 30.0) w5 = 30.0;
-//			if (w5 < -30.0) w5 = -30.0;
-//			gameStat.setW5(w5);
-//			
-//			System.out.println("w0: " + gameStat.getW0());
-//			System.out.println("w1: " + gameStat.getW1());
-//			System.out.println("w2: " + gameStat.getW2());
-//			System.out.println("w3: " + gameStat.getW3());
-//			System.out.println("w4: " + gameStat.getW4());
-//			System.out.println("w5: " + gameStat.getW5());
-//			
-//			// OurScore 계산			
-////			gameStat.calcScore();
-////			System.out.println("Score: " + gameStat.getOurScore());
-////			
-////			gameStats.put(title, gameStat);
-////			
-////			// 삽입
-////			serviceBasic.setWeightsGameTodayByGame(gameStat);
-//			
-//		}
-//
-//		System.out.println("변수 계산 종료 -------------\n");
-//	}
-	
-	@Scheduled(cron = "1 55 " + hour + " * * *")
 	public void parseWords() {
 		new ArrayList<String>();
 		new ArrayList<String>();
@@ -228,6 +132,29 @@ public class PatchController {
 		System.out.println("----------------- 연관성 구축 종료 -----------------");
 		
 	}
+	
+	@RequestMapping("/calcScore")
+	public HashMap<String, Double> calcScore() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println(" -- 아울스코어 계산 및 DB 삽입 -- " + requestedTime);
+		List<String> titles = serviceStatistic.getGamesByDate();
+		HashMap<String, Double> result = serviceVideo.calcOurScoreFromVideoData(titles);
+		Collection<Double> ourscores = result.values();
+		List<Double> ourscoresSorted = new ArrayList<Double>(ourscores);
+		Collections.sort(ourscoresSorted, Collections.reverseOrder());
+		
+		for (String title : titles) {
+			serviceBasic.setOurScoreForGameToday(title, result.get(title), ourscoresSorted.indexOf(result.get(title)) + 1);
+		}
+		return result;
+	}
+	
+	public void setRankFromOurscore() {
+		
+	}
+	
 
 	@RequestMapping(value = "/chain/all")
 	public void buildChains() {

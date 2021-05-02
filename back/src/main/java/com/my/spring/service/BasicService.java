@@ -23,7 +23,7 @@ public interface BasicService {
 	public void setGameInGameSearch(String title);
 	public void setGameTopic(GameTopic item);
 
-	public void setOurScoreForGameToday(String title, double score);
+	public void setOurScoreForGameToday(String title, double score, int rank);
 	
 	public List<GameDataForMain> getGameDataForMainByGame(String title);
 	

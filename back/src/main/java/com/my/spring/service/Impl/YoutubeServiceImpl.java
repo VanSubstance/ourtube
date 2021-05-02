@@ -369,7 +369,7 @@ public class YoutubeServiceImpl implements YoutubeService {
 			// 텍스트 -> 플레인 텍스트
 			commentBasics.setTextFormat("plainText");
 			// 조회 상한선
-			commentBasics.setMaxResults((long) 40);
+			commentBasics.setMaxResults((long) 3);
 			for (String videoId : videoIdList) {
 				// 검색어 지정
 				commentBasics.setVideoId(videoId);

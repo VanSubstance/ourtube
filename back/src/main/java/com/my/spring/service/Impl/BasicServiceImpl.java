@@ -101,8 +101,8 @@ public class BasicServiceImpl implements BasicService {
 	}
 
 	@Override
-	public void setOurScoreForGameToday(String title, double score) {
-		mapper.setOurScoreForGameToday(title, score);
+	public void setOurScoreForGameToday(String title, double score, int rank) {
+		mapper.setOurScoreForGameToday(title, score, rank);
 	}
 
 }
