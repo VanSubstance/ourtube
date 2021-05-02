@@ -24,6 +24,8 @@ const TrendMainPage = () => {
   const [dataForAvgNewView, setDataForAvgNewView] = useState([]);
   // numNewVid 데이터
   const [dataForNumNewVid, setDataForNumNewVid] = useState([]);
+  // rank 데이터
+  const [dataForRank, setDataForRank] = useState([]);
 
   useEffect(() => {
     getDataset();
@@ -58,6 +60,7 @@ const TrendMainPage = () => {
   const deleteDataByGame = (title) => {
     setDataForAvgNewView(dataForAvgNewView.filter((dataForLine) => dataForLine.id != title));
     setDataForNumNewVid(dataForNumNewVid.filter((dataForLine) => dataForLine.id != title));
+    setDataForRank(dataForRank.filter((dataForLine) => dataForLine.id != title));
   };
 
   // 해당 게임 데이터 가져오기
@@ -74,6 +77,11 @@ const TrendMainPage = () => {
           id: title,
           color: "hsl(27, 70%, 50%)",
           data: dataForChart.numNewVid
+        }));
+        setDataForRank(dataForRank.concat({
+          id: title,
+          color: "hsl(27, 70%, 50%)",
+          data: dataForChart.rank
         }))
       });
   };
@@ -239,6 +247,72 @@ const TrendMainPage = () => {
           </div>
           <div className="tmp_RankChangeBox">
             <div className="tmp_BoxNameBar">키워드 월별 순위변동</div>
+            <ResponsiveLine
+              data={dataForRank}
+              margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+              xScale={{ type: "point" }}
+              yScale={{
+                type: "linear",
+                min: "0",
+                max: "auto",
+                stacked: false,
+                reverse: false,
+              }}
+              yFormat=" >-.2f"
+              curve="linear"
+              axisTop={null}
+              axisRight={null}
+              axisBottom={{
+                orient: "bottom",
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: "transportation",
+                legendOffset: 36,
+                legendPosition: "middle",
+              }}
+              axisLeft={{
+                orient: "left",
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: "count",
+                legendOffset: -40,
+                legendPosition: "middle",
+              }}
+              pointSize={4}
+              pointColor={{ theme: "background" }}
+              pointBorderWidth={2}
+              pointBorderColor={{ from: "serieColor" }}
+              pointLabelYOffset={-12}
+              useMesh={true}
+              legends={[
+                {
+                  anchor: "top-right",
+                  direction: "column",
+                  justify: false,
+                  translateX: 100,
+                  translateY: 0,
+                  itemsSpacing: 0,
+                  itemDirection: "left-to-right",
+                  itemWidth: 80,
+                  itemHeight: 20,
+                  itemOpacity: 0.75,
+                  symbolSize: 12,
+                  symbolShape: "circle",
+                  symbolBorderColor: "rgba(0, 0, 0, .5)",
+                  effects: [
+                    {
+                      on: "hover",
+                      style: {
+                        itemBackground: "rgba(0, 0, 0, .03)",
+                        itemOpacity: 1,
+                      },
+                    },
+                  ],
+                },
+              ]}
+            />
           </div>
           <div className="tmp_NewViewBox">
             <div className="tmp_BoxNameBar">신규 조회수</div>
