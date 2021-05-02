@@ -12,31 +12,9 @@ const ListFont = (props) => {
         );
     }
 
-    let [currentChecked, setCurrentChecked] = useState(0);
-
-    const checkFunction = (e) => {
-        if (e.target.checked) {
-            if (currentChecked == 5) {
-                alert("최대 5개까지만 선택 가능합니다.");
-                e.target.checked = false;
-            } else {
-                setCurrentChecked(currentChecked + 1);
-                props.func(e.target.value, 0);
-            }
-        } else {
-            setCurrentChecked(currentChecked - 1);
-            props.func(e.target.value, 1);
-        }
-    }
-
     const addRow = (dataRow, index) => {
         return (
             <tr align="left" >
-                <td id="checkbox">
-                    <form action='a.jsp' >
-                        <input type='checkbox' name='checkboxList' onClick={(e) => { checkFunction(e) }} value = {dataRow.title}/>
-                    </form>
-                </td>
                 <td align="left">{index + 1}</td>
                 <td id="longfont" align="center">{dataRow.title}</td>
                 <td >{dataRow.viewCount}</td>

@@ -14,7 +14,9 @@ const TrendMainPage = () => {
   let [ctgrs, setCtgrs] = useState([]);
 
   let [keywords, setKeywords] = useState([]);
+  // 현재 선택된 게임 리스트
   let [titlesSelected] = useState([]);
+  // 현재 선택한 /선택 해제한 게임
   let [titleSelected] = useState({
     title: "",
     add: true,
@@ -32,7 +34,7 @@ const TrendMainPage = () => {
     getDatasetForKeyword(searchVal);
   }, []);
 
-  const checkKeywords = (keyword, method) => {
+  const selectGame = (keyword, method) => {
     if (method == 0) {
       titlesSelected = titlesSelected.concat(keyword);
       titleSelected = {
@@ -51,16 +53,29 @@ const TrendMainPage = () => {
       : deleteDataByGame(titleSelected.title);
   };
 
-  // 게임 체크 = 해당 게임 데이터 추가
+  // 게임 선택 = 해당 게임 데이터 추가
   const addDataByGame = (title) => {
     getDatasetForChart(title);
   };
 
-  // 게임 체크 해제 = 해당 게임 데이터 삭제
+  // 게임 선택 해제 = 해당 게임 데이터 삭제
   const deleteDataByGame = (title) => {
     setDataForAvgNewView(dataForAvgNewView.filter((dataForLine) => dataForLine.id != title));
     setDataForNumNewVid(dataForNumNewVid.filter((dataForLine) => dataForLine.id != title));
     setDataForRank(dataForRank.filter((dataForLine) => dataForLine.id != title));
+  };
+
+  const clearTitlesSelected = () => {
+    console.log("데이터 초기화");
+    setDataForAvgNewView([]);
+    setDataForNumNewVid([]);
+    setDataForRank([]);
+
+    titlesSelected = [];
+    titleSelected = {
+      title: "",
+      add: true,
+    };
   };
 
   // 해당 게임 데이터 가져오기
@@ -120,6 +135,7 @@ const TrendMainPage = () => {
     await axios
       .get(url + "/deploy/game/list/" + ctgr)
       .then(({ data }) => {
+        clearTitlesSelected();
         if (data.length >= 10) {
           setKeywords(data.slice(0, 10));
         } else {
@@ -243,7 +259,7 @@ const TrendMainPage = () => {
           </div>
           <div className="tmp_KeywordRankBox">
             <div className="tmp_BoxNameBar"></div>
-            <ListFont keywords={keywords} func={checkKeywords}></ListFont>
+            <ListFont keywords={keywords}></ListFont>
           </div>
           <div className="tmp_RankChangeBox">
             <div className="tmp_BoxNameBar">키워드 월별 순위변동</div>
