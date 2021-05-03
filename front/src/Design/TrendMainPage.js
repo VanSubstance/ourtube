@@ -12,9 +12,12 @@ const TrendMainPage = () => {
   let [searchVal] = useState("FPS");
 
   let [ctgrs, setCtgrs] = useState([]);
+  let [ctgrSelected, setCtgrSelected] = useState("");
 
   let [keywords, setKeywords] = useState([]);
+  // 현재 선택된 게임 리스트
   let [titlesSelected] = useState([]);
+  // 현재 선택한 /선택 해제한 게임
   let [titleSelected] = useState({
     title: "",
     add: true,
@@ -32,7 +35,7 @@ const TrendMainPage = () => {
     getDatasetForKeyword(searchVal);
   }, []);
 
-  const checkKeywords = (keyword, method) => {
+  const selectGame = (keyword, method) => {
     if (method == 0) {
       titlesSelected = titlesSelected.concat(keyword);
       titleSelected = {
@@ -40,7 +43,7 @@ const TrendMainPage = () => {
         add: true,
       };
     } else {
-      titlesSelected = titlesSelected.filter((k) => k != keyword);
+      titlesSelected = titlesSelected.filter((k) => k !== keyword);
       titleSelected = {
         title: keyword,
         add: false,
@@ -51,16 +54,28 @@ const TrendMainPage = () => {
       : deleteDataByGame(titleSelected.title);
   };
 
-  // 게임 체크 = 해당 게임 데이터 추가
+  // 게임 선택 = 해당 게임 데이터 추가
   const addDataByGame = (title) => {
     getDatasetForChart(title);
   };
 
-  // 게임 체크 해제 = 해당 게임 데이터 삭제
+  // 게임 선택 해제 = 해당 게임 데이터 삭제
   const deleteDataByGame = (title) => {
-    setDataForAvgNewView(dataForAvgNewView.filter((dataForLine) => dataForLine.id != title));
-    setDataForNumNewVid(dataForNumNewVid.filter((dataForLine) => dataForLine.id != title));
-    setDataForRank(dataForRank.filter((dataForLine) => dataForLine.id != title));
+    setDataForAvgNewView(dataForAvgNewView.filter((dataForLine) => dataForLine.id !== title));
+    setDataForNumNewVid(dataForNumNewVid.filter((dataForLine) => dataForLine.id !== title));
+    setDataForRank(dataForRank.filter((dataForLine) => dataForLine.id !== title));
+  };
+
+  const clearTitlesSelected = () => {
+    setDataForAvgNewView([]);
+    setDataForNumNewVid([]);
+    setDataForRank([]);
+
+    titlesSelected = [];
+    titleSelected = {
+      title: "",
+      add: true,
+    };
   };
 
   // 해당 게임 데이터 가져오기
@@ -70,17 +85,17 @@ const TrendMainPage = () => {
       .then((dataForChart) => {
         setDataForAvgNewView(dataForAvgNewView.concat({
           id: title,
-          color: "hsl(27, 70%, 50%)",
+          color: "white",
           data: dataForChart.avgNewView
         }));
         setDataForNumNewVid(dataForNumNewVid.concat({
           id: title,
-          color: "hsl(27, 70%, 50%)",
+          color: "white",
           data: dataForChart.numNewVid
         }));
         setDataForRank(dataForRank.concat({
           id: title,
-          color: "hsl(27, 70%, 50%)",
+          color: "white",
           data: dataForChart.rank
         }))
       });
@@ -92,8 +107,10 @@ const TrendMainPage = () => {
       .then(({ data }) => {
         if (data.length >= 8) {
           setCtgrs(data.slice(0, 7));
+          setCtgrSelected(searchVal);
         } else {
           setCtgrs(data);
+          setCtgrSelected(searchVal);
         }
       })
       .catch((e) => {
@@ -120,6 +137,8 @@ const TrendMainPage = () => {
     await axios
       .get(url + "/deploy/game/list/" + ctgr)
       .then(({ data }) => {
+        setCtgrSelected(ctgr);
+        clearTitlesSelected();
         if (data.length >= 10) {
           setKeywords(data.slice(0, 10));
         } else {
@@ -152,36 +171,7 @@ const TrendMainPage = () => {
           srcSet="/Ex/andy-holmes-rCbdp8VCYhQ-unspla@2x.png"
         ></img>
       </div>
-      {/* <div id="scollWallpaper_">
-      <img
-        id="andy-holmes-rCbdp8VCYhQ-unspla1"
-        src="./Ex/andy-holmes-rCbdp8VCYhQ-unspla.png"
-        srcSet="./Ex/andy-holmes-rCbdp8VCYhQ-unspla.png 1x, ./Ex/andy-holmes-rCbdp8VCYhQ-unspla@2x.png 2x"
-      />
-    </div>
-    <svg className="scollGradient" viewBox="0 0 1920 1500">
-      <linearGradient
-        id="_137_bn"
-        spreadMethod="pad"
-        x1="0.952"
-        x2="0.071"
-        y1="0.067"
-        y2="0.886"
-      >
-        <stop offset="0" stopColor="#f60" stopOpacity="1"></stop>
-        <stop offset="0.1673" stopColor="#cf8845" stopOpacity="1"></stop>
-        <stop offset="0.3389" stopColor="#b79967" stopOpacity="1"></stop>
-        <stop offset="0.4937" stopColor="#b4838b" stopOpacity="1"></stop>
-        <stop offset="0.6735" stopColor="#b16ab4" stopOpacity="1"></stop>
-        <stop offset="0.7991" stopColor="#7c84b9" stopOpacity="1"></stop>
-        <stop offset="1" stopColor="#28adc2" stopOpacity="1"></stop>
-      </linearGradient>
-      <path
-        id="Gradient"
-        d="M 0 0 L 1920 0 L 1920 1500 L 0 1500 L 0 0 Z"
-      ></path>
-    </svg> */}
-
+      
       {/* 헤더 */}
 
       <div id="header">
@@ -243,23 +233,23 @@ const TrendMainPage = () => {
           </div>
           <div className="tmp_KeywordRankBox">
             <div className="tmp_BoxNameBar"></div>
-            <ListFont keywords={keywords} func={checkKeywords}></ListFont>
+            <ListFont keywords={keywords}></ListFont>
           </div>
           <div className="tmp_RankChangeBox">
             <div className="tmp_BoxNameBar">키워드 월별 순위변동</div>
             <ResponsiveLine
               data={dataForRank}
-              margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+              margin={{ top: 20, right: 110, bottom: 100, left: 60 }}
               xScale={{ type: "point" }}
               yScale={{
                 type: "linear",
                 min: "0",
                 max: "auto",
                 stacked: false,
-                reverse: false,
+                reverse: true,
               }}
               yFormat=" >-.2f"
-              curve="linear"
+              curve="monotoneX"
               axisTop={null}
               axisRight={null}
               axisBottom={{
@@ -279,6 +269,30 @@ const TrendMainPage = () => {
                 legend: "count",
                 legendOffset: -40,
                 legendPosition: "middle",
+              }}
+              theme={{
+                textColor: "white",
+                axis: {
+                  tickColor: "white",
+                  ticks: {
+                    line: {
+                      stroke: "white"
+                    },
+                    text: {
+                      fill: "white"
+                    }
+                  },
+                  legend: {
+                    text: {
+                      fill: "white"
+                    }
+                  }
+                },
+                grid: {
+                  line: {
+                    stroke: "white"
+                  }
+                }
               }}
               pointSize={4}
               pointColor={{ theme: "background" }}
@@ -318,7 +332,7 @@ const TrendMainPage = () => {
             <div className="tmp_BoxNameBar">신규 조회수</div>
             <ResponsiveLine
               data={dataForAvgNewView}
-              margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+              margin={{ top: 40, right: 25, bottom: 75, left: 45 }}
               xScale={{ type: "point" }}
               yScale={{
                 type: "linear",
@@ -329,6 +343,7 @@ const TrendMainPage = () => {
               }}
               yFormat=" >-.2f"
               curve="monotoneX"
+              textColor="#ffffff"
               axisTop={null}
               axisRight={null}
               axisBottom={{
@@ -336,7 +351,7 @@ const TrendMainPage = () => {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: "transportation",
+                legend: null,
                 legendOffset: 36,
                 legendPosition: "middle",
               }}
@@ -345,9 +360,33 @@ const TrendMainPage = () => {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: "count",
-                legendOffset: -40,
+                legend: null,
+                legendOffset: -50,
                 legendPosition: "middle",
+              }}
+              theme={{
+                textColor: "white",
+                axis: {
+                  tickColor: "white",
+                  ticks: {
+                    line: {
+                      stroke: "white"
+                    },
+                    text: {
+                      fill: "white"
+                    }
+                  },
+                  legend: {
+                    text: {
+                      fill: "white"
+                    }
+                  }
+                },
+                grid: {
+                  line: {
+                    stroke: "white"
+                  }
+                }
               }}
               pointSize={4}
               pointColor={{ theme: "background" }}
@@ -357,16 +396,18 @@ const TrendMainPage = () => {
               useMesh={true}
               legends={[
                 {
-                  anchor: "top-right",
-                  direction: "column",
+                  dataFrom: "keys",
+                  anchor: "top-left",
+                  direction: "row",
                   justify: false,
-                  translateX: 100,
-                  translateY: 0,
-                  itemsSpacing: 0,
+                  translateX: -25,
+                  translateY: -35,
+                  itemsSpacing: 30,
                   itemDirection: "left-to-right",
-                  itemWidth: 80,
+                  itemWidth: 60,
                   itemHeight: 20,
-                  itemOpacity: 0.75,
+                  itemOpacity: 0.8,
+                  itemTextColor: "#ffffff",
                   symbolSize: 12,
                   symbolShape: "circle",
                   symbolBorderColor: "rgba(0, 0, 0, .5)",
@@ -397,7 +438,7 @@ const TrendMainPage = () => {
                 reverse: false,
               }}
               yFormat=" >-.2f"
-              curve="linear"
+              curve="monotoneX"
               axisTop={null}
               axisRight={null}
               axisBottom={{
@@ -408,12 +449,13 @@ const TrendMainPage = () => {
                 legend: "transportation",
                 legendOffset: 36,
                 legendPosition: "middle",
+                legendColor: "rgna(0.0.0, .5)"
               }}
               axisLeft={{
                 orient: "left",
                 tickSize: 5,
-                tickPadding: 5,
-                tickRotation: 0,
+                tickPadding: 10,
+                tickRotation: 10,
                 legend: "count",
                 legendOffset: -40,
                 legendPosition: "middle",
@@ -460,11 +502,20 @@ const TrendMainPage = () => {
           <div className="tmp_PFBox">
             <div className="tmp_PFTopBox">
               <div className="tmp_PFThumbnailCircle">
-                <img className="tmp_PFThumbnail" src="/Ex/happy.jpg"></img>
+                <img className="tmp_PFThumbnail" src=
+                {
+                  keywords === [] || keywords[0] === undefined
+                  ?("/Ex/happy.jpg")
+                  :(keywords[0].thumbnail)
+                }
+                ></img>
               </div>
               <div className="tmp_PFKeywordName">
-                키워드 이름
-                {/* {props.match.params.keyword} */}
+                {
+                  ctgrSelected === ""
+                  ?("장르 이름")
+                  :(ctgrSelected)
+                }
               </div>
               <div className="tmp_PFKeywordYear">테스트 제작연도</div>
               <div className="tmp_PFKeywordCompany">테스트 제작사</div>
@@ -491,13 +542,13 @@ const TrendMainPage = () => {
                 <div className="tmp_PFKeywordInfoBottom">10000</div>
               </div>
               <div className="tmp_PFKeywordInfoBox">
-                <div className="tmp_PFKeywordInfoTop">순위</div>
+                <div className="tmp_PFKeywordInfoTop">장르 순위</div>
                 <div className="tmp_PFKeywordInfoBottom">10000</div>
               </div>
             </div>
           </div>
           <div className="tmp_KeywordExplainBox">
-            {/* 키워드 설명 및 관련 링크 (위키 등) 추가 */}
+            키워드 설명 및 관련 링크 (위키 등) 추가
             This boy, well known as 'tanoshii boy' is based on meme. did you
             know that?
           </div>
