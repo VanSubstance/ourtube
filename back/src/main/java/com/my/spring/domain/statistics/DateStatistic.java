@@ -5,15 +5,15 @@ import lombok.*;
 @Setter
 @Getter
 public class DateStatistic {
-	private int rank;
-	private int numNewVid;
-	private int avgNewView;
-	private int avgNewLike;
-	private int avgNewDislike;
-	private int avgNewComment;
-	private int numAccuVid;
-	private int avgAccuView;
-	private int avgAccuLike;
-	private int avgAccuDislike;
-	private int avgAccuComment;
+	private Integer rank;
+	private Integer numNewVid;
+	private Integer avgNewView;
+	private Integer avgNewLike;
+	private Integer avgNewDislike;
+	private Integer avgNewComment;
+	private Integer numAccuVid;
+	private Integer avgAccuView;
+	private Integer avgAccuLike;
+	private Integer avgAccuDislike;
+	private Integer avgAccuComment;
 }
