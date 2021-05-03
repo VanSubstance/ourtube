@@ -43,7 +43,7 @@ const TrendMainPage = () => {
         add: true,
       };
     } else {
-      titlesSelected = titlesSelected.filter((k) => k != keyword);
+      titlesSelected = titlesSelected.filter((k) => k !== keyword);
       titleSelected = {
         title: keyword,
         add: false,
@@ -61,13 +61,12 @@ const TrendMainPage = () => {
 
   // 게임 선택 해제 = 해당 게임 데이터 삭제
   const deleteDataByGame = (title) => {
-    setDataForAvgNewView(dataForAvgNewView.filter((dataForLine) => dataForLine.id != title));
-    setDataForNumNewVid(dataForNumNewVid.filter((dataForLine) => dataForLine.id != title));
-    setDataForRank(dataForRank.filter((dataForLine) => dataForLine.id != title));
+    setDataForAvgNewView(dataForAvgNewView.filter((dataForLine) => dataForLine.id !== title));
+    setDataForNumNewVid(dataForNumNewVid.filter((dataForLine) => dataForLine.id !== title));
+    setDataForRank(dataForRank.filter((dataForLine) => dataForLine.id !== title));
   };
 
   const clearTitlesSelected = () => {
-    console.log("데이터 초기화");
     setDataForAvgNewView([]);
     setDataForNumNewVid([]);
     setDataForRank([]);
@@ -77,7 +76,6 @@ const TrendMainPage = () => {
       title: "",
       add: true,
     };
-    console.log(keywords);
   };
 
   // 해당 게임 데이터 가져오기
@@ -506,7 +504,7 @@ const TrendMainPage = () => {
               <div className="tmp_PFThumbnailCircle">
                 <img className="tmp_PFThumbnail" src=
                 {
-                  keywords === []
+                  keywords === [] || keywords[0] === undefined
                   ?("/Ex/happy.jpg")
                   :(keywords[0].thumbnail)
                 }
