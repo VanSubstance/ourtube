@@ -12,6 +12,7 @@ const TrendMainPage = () => {
   let [searchVal] = useState("FPS");
 
   let [ctgrs, setCtgrs] = useState([]);
+  let [ctgrSelected, setCtgrSelected] = useState("");
 
   let [keywords, setKeywords] = useState([]);
   // 현재 선택된 게임 리스트
@@ -76,6 +77,7 @@ const TrendMainPage = () => {
       title: "",
       add: true,
     };
+    console.log(keywords);
   };
 
   // 해당 게임 데이터 가져오기
@@ -107,8 +109,10 @@ const TrendMainPage = () => {
       .then(({ data }) => {
         if (data.length >= 8) {
           setCtgrs(data.slice(0, 7));
+          setCtgrSelected(searchVal);
         } else {
           setCtgrs(data);
+          setCtgrSelected(searchVal);
         }
       })
       .catch((e) => {
@@ -135,6 +139,7 @@ const TrendMainPage = () => {
     await axios
       .get(url + "/deploy/game/list/" + ctgr)
       .then(({ data }) => {
+        setCtgrSelected(ctgr);
         clearTitlesSelected();
         if (data.length >= 10) {
           setKeywords(data.slice(0, 10));
@@ -499,11 +504,20 @@ const TrendMainPage = () => {
           <div className="tmp_PFBox">
             <div className="tmp_PFTopBox">
               <div className="tmp_PFThumbnailCircle">
-                <img className="tmp_PFThumbnail" src="/Ex/happy.jpg"></img>
+                <img className="tmp_PFThumbnail" src=
+                {
+                  keywords === []
+                  ?("/Ex/happy.jpg")
+                  :(keywords[0].thumbnail)
+                }
+                ></img>
               </div>
               <div className="tmp_PFKeywordName">
-                키워드 이름
-                {/* {props.match.params.keyword} */}
+                {
+                  ctgrSelected === ""
+                  ?("장르 이름")
+                  :(ctgrSelected)
+                }
               </div>
               <div className="tmp_PFKeywordYear">테스트 제작연도</div>
               <div className="tmp_PFKeywordCompany">테스트 제작사</div>
