@@ -212,18 +212,17 @@ public class VideoServiceImpl implements VideoService {
 			DateStatistic dataTemp = mapper.getVideoDataByTitleAndDate(title, targetDate);
 			// AvgNumView
 			DataForLine dataForLine = new DataForLine();
-			dataForLine.setX(targetDate.toString());
+			dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
 			dataForLine.setY(dataTemp.getAvgNewView());
 			dataForAvgNewView.add(dataForLine);
 			// NumNewVid
 			dataForLine = new DataForLine();
-			dataForLine.setX(targetDate.toString());
+			dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
 			dataForLine.setY(dataTemp.getNumNewVid());
 			dataForNumNewVid.add(dataForLine);
 			// rank
-			System.out.println(dataTemp.getRank());
 			dataForLine = new DataForLine();
-			dataForLine.setX(targetDate.toString());
+			dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
 			dataForLine.setY(dataTemp.getRank());
 			dataForRank.add(dataForLine);
 		}
@@ -365,6 +364,11 @@ public class VideoServiceImpl implements VideoService {
 			avgNewComments = new ArrayList<Integer>();
 			for (int i = datas.size() - 1; i >= 0; i--) {
 				DateStatistic data = datas.get(i);
+				int count = 1;
+				while (data == null) {
+					data = datas.get(i - count);
+					count ++;
+				}
 				numNewVids.add(data.getNumNewVid());
 				avgNewViews.add(data.getAvgNewView());
 				avgNewComments.add(data.getAvgNewComment());
@@ -380,7 +384,20 @@ public class VideoServiceImpl implements VideoService {
 			dataForRegression = new double[avgNewViews.size()][2];
 			for (int i = 0; i < avgNewViews.size(); i++) {
 				dataForRegression[i][0] = i;
-				dataForRegression[i][1] = avgNewViews.get(i);
+				Integer val = avgNewViews.get(i);
+				if (val != null) {
+					val = avgNewViews.get(i);
+				}
+				int count = 1;
+				while (val == null) {
+					if (i != 0) {
+						val = avgNewViews.get(i - count);
+						count ++;
+					} else {
+						val = 0;
+					}
+				}
+				dataForRegression[i][1] = val;
 			}
 			regression = new SimpleRegression();
 			regression.addData(dataForRegression);
@@ -388,7 +405,20 @@ public class VideoServiceImpl implements VideoService {
 			dataForRegression = new double[avgNewComments.size()][2];
 			for (int i = 0; i < avgNewComments.size(); i++) {
 				dataForRegression[i][0] = i;
-				dataForRegression[i][1] = avgNewComments.get(i);
+				Integer val = avgNewComments.get(i);
+				if (val != null) {
+					val = avgNewComments.get(i);
+				}
+				int count = 1;
+				while (val == null) {
+					if (i != 0) {
+						val = avgNewComments.get(i - count);
+						count ++;
+					} else {
+						val = 0;
+					}
+				}
+				dataForRegression[i][1] = val;
 			}
 			regression = new SimpleRegression();
 			regression.addData(dataForRegression);
