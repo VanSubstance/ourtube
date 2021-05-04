@@ -7,9 +7,9 @@ class User extends Component {
     render() {
         return (
             <body>
-                <WallPaper></WallPaper>                
+                <WallPaper></WallPaper>
                 <ItemBoxList></ItemBoxList>
-                <LeftBox></LeftBox>                
+                <LeftBox></LeftBox>
             </body>
         );
     }
