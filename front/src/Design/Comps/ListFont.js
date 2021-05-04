@@ -14,35 +14,56 @@ const ListFont = (props) => {
 
     const addRow = (dataRow, index) => {
         return (
-            <tr align="left" >
-                <td align="left">{index + 1}</td>
-                <td id="longfont" align="center">{dataRow.title}</td>
-                <td>{dataRow.viewCount}</td>
-                <td>{dataRow.score}</td>
-                <td>{dataRow.likeCount}</td>
-                <td>{dataRow.dislikeCount}</td>
-                <td>{dataRow.videoCount}</td>
-            </tr>
+            <div
+                className="tmp_KeywordRankParent">
+                <button className="tmp_KeywordRankButton" onClick = {() => props.func(dataRow.title, 0)}></button>
+                <div className="tmp_KeywordRankChip">{index + 1}</div>
+                <div className="tmp_KeywordNameChip">{dataRow.title}</div>
+                <div className="tmp_KeywordScoreChip">아울스코어</div>
+                <div className="tmp_KeywordScoreChip">누적 조회수</div>
+                <div className="tmp_KeywordScoreChip">누적 동영상</div>
+                <div className="tmp_KeywordScoreChip">누적 댓글수</div>
+                <div className="tmp_KeywordScoreChip">검색량</div>
+            </div>
+
+            // <tr align="left" >
+            //     <td align="left">{index + 1}</td>
+            //     <td id="longfont" align="center">{dataRow.title}</td>
+            //     <td>{dataRow.viewCount}</td>
+            //     <td>{dataRow.score}</td>
+            //     <td>{dataRow.likeCount}</td>
+            //     <td>{dataRow.dislikeCount}</td>
+            //     <td>{dataRow.videoCount}</td>
+            // </tr>
         );
     }
 
-    const headTitle = (dataRow) => {
-        return (
-            <tr>
-                <th>{dataRow.rank}</th>
-                <th>{dataRow.keyword}</th>
-                <th>{dataRow.like}</th>
-                <th>{dataRow.unlike}</th>
-                <th>{dataRow.search}</th>
-                <th>{dataRow.video}</th>
-                <th>{dataRow.comment}</th>
-            </tr>
+    // const headTitle = (dataRow) => {
+    //     return (
+    //         <tr>
+    //             <th>{dataRow.rank}</th>
+    //             <th>{dataRow.keyword}</th>
+    //             <th>{dataRow.like}</th>
+    //             <th>{dataRow.unlike}</th>
+    //             <th>{dataRow.search}</th>
+    //             <th>{dataRow.video}</th>
+    //             <th>{dataRow.comment}</th>
+    //         </tr>
+    //     );
+    // }
 
-        );
-    }
     return (
         <div>
-            <div>
+            <div className="tmp_BoxNameBarNoPad">
+                <div className="tmp_KeywordRankHead">순위</div>
+                <div className="tmp_KeywordNameHead">이름</div>
+                <div className="tmp_KeywordScoreHead">아울스코어</div>
+                <div className="tmp_KeywordScoreHead">누적 조회수</div>
+                <div className="tmp_KeywordScoreHead">누적 동영상</div>
+                <div className="tmp_KeywordScoreHead">누적 댓글수</div>
+                <div className="tmp_KeywordScoreHead">검색량</div>
+            </div>
+            {/* <div>
                 <table id="scrollHead1" cellSpacing="0">
                     <thead>
                         {headTitle(
@@ -58,15 +79,11 @@ const ListFont = (props) => {
                         )}
                     </thead>
                 </table>
-            </div>
+            </div> */}
 
             <div id="scrollbitch" >
-                <table id="scrollbitch2" cellSpacing="0">
-                    <tbody>
-                        {addRows(props.keywords
-                        )}
-                    </tbody>
-                </table>
+                {addRows(props.keywords
+                )}
             </div>
         </div>
 

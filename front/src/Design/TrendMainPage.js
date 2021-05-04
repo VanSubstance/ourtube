@@ -16,7 +16,7 @@ const TrendMainPage = () => {
 
   let [keywords, setKeywords] = useState([]);
   // 현재 선택된 게임 리스트
-  let [titlesSelected] = useState([]);
+  const [titlesSelected, setTitlesSelected] = useState([]);
   // 현재 선택한 /선택 해제한 게임
   let [titleSelected] = useState({
     title: "",
@@ -30,28 +30,32 @@ const TrendMainPage = () => {
   // rank 데이터
   const [dataForRank, setDataForRank] = useState([]);
 
+  // 새로고침 시에 일회성으로 작동하는 함수 -> useEffect(리엑트 훅) 검색해서 숙지
   useEffect(() => {
     getDataset();
     getDatasetForKeyword(searchVal);
   }, []);
 
+  // method: 0 -> 추가, 1 -> 삭제
   const selectGame = (keyword, method) => {
-    if (method == 0) {
-      titlesSelected = titlesSelected.concat(keyword);
-      titleSelected = {
-        title: keyword,
-        add: true,
-      };
-    } else {
-      titlesSelected = titlesSelected.filter((k) => k !== keyword);
-      titleSelected = {
-        title: keyword,
-        add: false,
-      };
+    if (!titlesSelected.includes(keyword)) {
+      if (method == 0) {
+        setTitlesSelected(titlesSelected.concat(keyword));
+        titleSelected = {
+          title: keyword,
+          add: true,
+        };
+      } else {
+        setTitlesSelected(titlesSelected.filter((k) => k !== keyword));
+        titleSelected = {
+          title: keyword,
+          add: false,
+        };
+      }
+      titleSelected.add === true
+        ? addDataByGame(titleSelected.title)
+        : deleteDataByGame(titleSelected.title);
     }
-    titleSelected.add === true
-      ? addDataByGame(titleSelected.title)
-      : deleteDataByGame(titleSelected.title);
   };
 
   // 게임 선택 = 해당 게임 데이터 추가
@@ -66,12 +70,12 @@ const TrendMainPage = () => {
     setDataForRank(dataForRank.filter((dataForLine) => dataForLine.id !== title));
   };
 
+  // 장르 변경 시 데이터 초기화
   const clearTitlesSelected = () => {
     setDataForAvgNewView([]);
     setDataForNumNewVid([]);
     setDataForRank([]);
-
-    titlesSelected = [];
+    setTitlesSelected([]);    
     titleSelected = {
       title: "",
       add: true,
@@ -101,6 +105,7 @@ const TrendMainPage = () => {
       });
   };
 
+  // 장르 별 리스트 가져오기: 최대 7개
   const getDataset = async () => {
     await axios
       .get(url + "/deploy/topic/" + searchVal)
@@ -118,6 +123,7 @@ const TrendMainPage = () => {
       });
   };
 
+  // 장르 별 검색 api 함수: Default 값: 현재 FPS -> 장르별 순위 메김으로 1위 장르로 고정
   const searchCtgr = () => {
     if (searchVal === "") {
       getDataset();
@@ -133,6 +139,7 @@ const TrendMainPage = () => {
     }
   };
 
+  // 장르 별 게임 탑 10 리스트 api 호출 함수
   const getDatasetForKeyword = async (ctgr) => {
     await axios
       .get(url + "/deploy/game/list/" + ctgr)
@@ -150,6 +157,7 @@ const TrendMainPage = () => {
       });
   };
 
+  // 검색 엔터키와 연결 함수
   const searchCtgrPress = (e) => {
     if (e.key === "Enter") {
       searchVal = e.target.value;
@@ -233,7 +241,7 @@ const TrendMainPage = () => {
           </div>
           <div className="tmp_KeywordRankBox">
             <div className="tmp_BoxNameBar"></div>
-            <ListFont keywords={keywords}></ListFont>
+            <ListFont keywords={keywords} func = {selectGame}></ListFont>
           </div>
           <div className="tmp_RankChangeBox">
             <div className="tmp_BoxNameBar">키워드 월별 순위변동</div>
@@ -550,18 +558,17 @@ const TrendMainPage = () => {
                     </g>
                   </svg>
                 </div>
-                <div className="tmp_PFMainCTGR">메인카테고리</div>
+                <div className="tmp_PFMainCTGR">
+                  {
+                    ctgrSelected === ""
+                      ? ("장르 이름")
+                      : (ctgrSelected)
+                  }
+                </div>
                 <div className="tmp_PFRelaCTGR">연관카테고리</div>
                 <div className="tmp_PFRelaCTGR">연관카테고리</div>
                 <div className="tmp_PFRelaCTGR">연관카테고리</div>
               </div>
-              {/* <div className="tmp_PFKeywordName">
-                {
-                  ctgrSelected === ""
-                    ? ("장르 이름")
-                    : (ctgrSelected)
-                }
-              </div> */}
             </div>
             <div className="tmp_PFRightBox">
               <div
@@ -603,6 +610,9 @@ const TrendMainPage = () => {
           </div>
           <div className="tmp_KeywordChipBox">
             <button className="tmp_KeywordChipClearAllbutton">전부 지우기</button>
+            <div
+              className="tmp_KeywordChipScroll">
+            </div>
           </div>
         </div>
         <div className="tmp_footer">
