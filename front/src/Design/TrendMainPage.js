@@ -550,18 +550,17 @@ const TrendMainPage = () => {
                     </g>
                   </svg>
                 </div>
-                <div className="tmp_PFMainCTGR">메인카테고리</div>
+                <div className="tmp_PFMainCTGR">
+                  {
+                    ctgrSelected === ""
+                      ? ("장르 이름")
+                      : (ctgrSelected)
+                  }
+                </div>
                 <div className="tmp_PFRelaCTGR">연관카테고리</div>
                 <div className="tmp_PFRelaCTGR">연관카테고리</div>
                 <div className="tmp_PFRelaCTGR">연관카테고리</div>
               </div>
-              {/* <div className="tmp_PFKeywordName">
-                {
-                  ctgrSelected === ""
-                    ? ("장르 이름")
-                    : (ctgrSelected)
-                }
-              </div> */}
             </div>
             <div className="tmp_PFRightBox">
               <div
@@ -603,6 +602,10 @@ const TrendMainPage = () => {
           </div>
           <div className="tmp_KeywordChipBox">
             <button className="tmp_KeywordChipClearAllbutton">전부 지우기</button>
+            <div
+              className="tmp_KeywordChipScroll">
+
+            </div>
           </div>
         </div>
         <div className="tmp_footer">
