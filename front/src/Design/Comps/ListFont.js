@@ -16,7 +16,7 @@ const ListFont = (props) => {
         return (
             <tr align="left" >
                 <td align="left">{index + 1}</td>
-                <td id="longfont" align="center">{dataRow.title}</td>
+                <td id="longfont" align="center" onClick = {() => props.func(dataRow.title, 0)}>{dataRow.title}</td>
                 <td>{dataRow.viewCount}</td>
                 <td>{dataRow.score}</td>
                 <td>{dataRow.likeCount}</td>
