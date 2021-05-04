@@ -223,7 +223,11 @@ public class VideoServiceImpl implements VideoService {
 			// rank
 			dataForLine = new DataForLine();
 			dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
-			dataForLine.setY(dataTemp.getRank());
+			if (dataTemp.getRank() != null) {
+				dataForLine.setY(dataTemp.getRank());
+			} else {
+				dataForLine.setY(0);
+			}
 			dataForRank.add(dataForLine);
 		}
 		result.put("avgNewView", dataForAvgNewView);

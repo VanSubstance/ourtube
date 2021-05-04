@@ -142,7 +142,7 @@ public class ProcessingController {
 	@RequestMapping(value = "/game/chart/{title}", method = RequestMethod.GET)
 	public HashMap<String, Object> getChartDataForMainPageChart(@PathVariable String title) {
 		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
-		System.out.println("최근 각 게임 별 동영상 통계수치 추적 (10개 기본 수치) (최대 7일) -> 메인 페이지 차트뷰를 위한 형식: " + requestedTime);
+		System.out.println("최근 " + title + " 동영상 통계수치 추적 (10개 기본 수치) (최대 7일): " + requestedTime);
 		return serviceVideo.getChartDataForMainPageChart(title);
 	}
 }
