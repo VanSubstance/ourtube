@@ -201,18 +201,87 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.tmp_PFBox {
+.tmp_PFBoxChip {
+    position: relative;
     overflow: hidden;
     width: 100%;
-    height: 410px;
+    height: 160px;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.tmp_PFLeftBox {
+.tmp_lookWellBox {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 1);
+    left: 40px;
+    top: 120px;
+    width: 100px;
+    height: 35px;
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: linear .1s;
+    outline: 2px solid transparent;
+    border-radius: 15px;
+    color: black;
+    z-index: 2;
+}
+
+.tmp_lookWellBox:hover {
+    background-color: rgb(130, 130, 130);
+    color: white;
+}
+
+.tmp_lookWellBox:focus {
+    background-color: rgb(70, 70, 70);
+    color: white;
+}
+
+.tmp_lookWellBox:visited {
+    background-color: rgba(255, 255, 255, 1);
+    color: black;
+}
+
+.tmp_lookWell {
+    font-size: 0.95em;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: "Spoqa Han Sans Neo", serif;
+}
+
+.tmp_PFLeftBox {
     width: 50%;
     float: left;
+}
+
+.tmp_PFBoxDeleteButton {
+    position: absolute;
+    width:30px;
+    height: 30px;
+    top: 10px;
+    left: 290px;
+    background-color: white;
+    border: none;
+    border-radius: 15px;
+    font-family: "roboto";
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: linear .1s;
+}
+
+.tmp_PFBoxDeleteButton:hover {
+    background-color: grey;
+    color: white;
+}
+
+
+.tmp_PFBoxDeleteButtonImg {
+    position: absolute;
+    top: 0px;
+    left:15px;
 }
 
 .tmp_PFThumbnailCircle {
@@ -307,17 +376,74 @@
 }
 
 .tmp_PFRightBox {
-    display: flex;
-    flex-wrap: wrap;
     width: 50%;
     float: left;
+}
+
+.tmp_PFBox {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.tmp_PFThumbnailCircle {
+    overflow: hidden;
+    position: relative;
+    float: left;
+    margin: 15px 0px 15px 10px;
+    width: 126px;
+    height: 126px;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+.tmp_PFThumbnail {
+    display: table;
+    margin: 0 auto;
+    width: 126px;
+    height: 126px;
+}
+
+.tmp_PFKeywordName {    
+    float: left;
+    padding: 30px 0px 0px 10px;
+    height: 25px;
+    width: 170px;
+    text-align: left;
+    font-size: 1.1em;
+    font-family: "Spoqa Han Sans Neo" , "Roboto";
+    color: white;
+}
+
+.tmp_PFKeywordYear {    
+    float: left;
+    padding: 15px 0px 0px 10px;
+    height: 20px;
+    width: 170px;
+    text-align: left;
+    font-size: 0.9em;
+    font-family: "Spoqa Han Sans Neo" , "Roboto";
+    color: white;
+}
+
+.tmp_PFKeywordCompony {    
+    float: left;
+    padding: 15px 0px 0px 10px;
+    height: 20px;
+    width: 170px;
+    text-align: left;
+    font-size: 0.9em;
+    font-family: "Spoqa Han Sans Neo" , "Roboto";
+    color: white;
 }
 
 .tmp_PFKeywordInfoBox {
     position: relative;
     float: left;
     width: 140px;
-    height: 63px;
+    height: 64px;
     margin: 15px 20px 0px 10px;
     background-color: rgba(0, 0, 0, 0.7);
 }
@@ -448,7 +574,7 @@
 .tmp_KeywordRankBox {
     float: left;
     width: 930px;
-    height: 310px;
+    height: 315px;
     background-color: rgba(0, 0, 0, 0.5);
     margin-top: 10px;
     font-family: "Spoqa Han Sans Neo" , "Roboto";

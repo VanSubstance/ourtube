@@ -4,6 +4,7 @@ import "./Styles.css";
 import "./Css/TrendMainPage.css";
 import Chip from "@material-ui/core/Chip";
 import { ListFont } from "./Comps";
+import { ProfileChipContainer } from "./Comps";
 import { ResponsiveLine } from "@nivo/line";
 
 const TrendMainPage = () => {
@@ -240,7 +241,6 @@ const TrendMainPage = () => {
             </div>
           </div>
           <div className="tmp_KeywordRankBox">
-            <div className="tmp_BoxNameBar"></div>
             <ListFont keywords={keywords} func = {selectGame}></ListFont>
           </div>
           <div className="tmp_RankChangeBox">
@@ -612,6 +612,7 @@ const TrendMainPage = () => {
             <button className="tmp_KeywordChipClearAllbutton">전부 지우기</button>
             <div
               className="tmp_KeywordChipScroll">
+                <ProfileChipContainer></ProfileChipContainer>
             </div>
           </div>
         </div>
