@@ -9,10 +9,13 @@ import { ResponsiveLine } from "@nivo/line";
 
 const TrendMainPage = () => {
   const [url] = useState("http://222.232.15.205:8082");
-
+  
+  // 검색어
   let [searchVal] = useState("FPS");
 
+  // 장르 리스트
   let [ctgrs, setCtgrs] = useState([]);
+  // 선택된 장르
   let [ctgrSelected, setCtgrSelected] = useState("");
 
   let [keywords, setKeywords] = useState([]);
@@ -60,19 +63,27 @@ const TrendMainPage = () => {
   };
 
   // 게임 선택 = 해당 게임 데이터 추가
+  // 후측 하단 컴포넌트에 게임 객체 생성 -> ProfileChipContainer 안에 ProfileChip 생성
   const addDataByGame = (title) => {
     getDatasetForChart(title);
   };
 
   // 게임 선택 해제 = 해당 게임 데이터 삭제
+  // 후측 하단 컴포넌트에 게임 객체 삭제 -> ProfileChipContainer 안에 해당 ProfileChip 생성
   const deleteDataByGame = (title) => {
     setDataForAvgNewView(dataForAvgNewView.filter((dataForLine) => dataForLine.id !== title));
     setDataForNumNewVid(dataForNumNewVid.filter((dataForLine) => dataForLine.id !== title));
     setDataForRank(dataForRank.filter((dataForLine) => dataForLine.id !== title));
   };
 
+  // 우측 하단 컴포넌트에 게임 객체 일괄 삭제 -> ProfileChipContainer 안에 ProfileChip 전체 삭제
+  const clearProfileChipContainer = () => {
+
+  }
+
   // 장르 변경 시 데이터 초기화
   const clearTitlesSelected = () => {
+    clearProfileChipContainer();
     setDataForAvgNewView([]);
     setDataForNumNewVid([]);
     setDataForRank([]);
