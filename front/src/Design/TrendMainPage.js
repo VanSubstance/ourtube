@@ -70,7 +70,7 @@ const TrendMainPage = () => {
     setDataForRank(dataForRank.filter((dataForLine) => dataForLine.id !== title));
   };
 
-  // 데이터 초기화
+  // 장르 변경 시 데이터 초기화
   const clearTitlesSelected = () => {
     setDataForAvgNewView([]);
     setDataForNumNewVid([]);
