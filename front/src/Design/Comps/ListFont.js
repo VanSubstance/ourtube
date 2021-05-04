@@ -17,7 +17,7 @@ const ListFont = (props) => {
             <tr align="left" >
                 <td align="left">{index + 1}</td>
                 <td id="longfont" align="center">{dataRow.title}</td>
-                <td >{dataRow.viewCount}</td>
+                <td>{dataRow.viewCount}</td>
                 <td>{dataRow.score}</td>
                 <td>{dataRow.likeCount}</td>
                 <td>{dataRow.dislikeCount}</td>

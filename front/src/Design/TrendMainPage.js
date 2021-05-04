@@ -171,7 +171,7 @@ const TrendMainPage = () => {
           srcSet="/Ex/andy-holmes-rCbdp8VCYhQ-unspla@2x.png"
         ></img>
       </div>
-      
+
       {/* 헤더 */}
 
       <div id="header">
@@ -257,7 +257,7 @@ const TrendMainPage = () => {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: "transportation",
+                legend: null,
                 legendOffset: 36,
                 legendPosition: "middle",
               }}
@@ -266,7 +266,7 @@ const TrendMainPage = () => {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: "count",
+                legend: null,
                 legendOffset: -40,
                 legendPosition: "middle",
               }}
@@ -427,8 +427,8 @@ const TrendMainPage = () => {
           <div className="tmp_NewVideoBox">
             <div className="tmp_BoxNameBar">신규 동영상 수</div>
             <ResponsiveLine
-              data={dataForNumNewVid}
-              margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+              data={dataForAvgNewView}
+              margin={{ top: 40, right: 25, bottom: 75, left: 45 }}
               xScale={{ type: "point" }}
               yScale={{
                 type: "linear",
@@ -439,6 +439,7 @@ const TrendMainPage = () => {
               }}
               yFormat=" >-.2f"
               curve="monotoneX"
+              textColor="#ffffff"
               axisTop={null}
               axisRight={null}
               axisBottom={{
@@ -446,19 +447,42 @@ const TrendMainPage = () => {
                 tickSize: 5,
                 tickPadding: 5,
                 tickRotation: 0,
-                legend: "transportation",
+                legend: null,
                 legendOffset: 36,
                 legendPosition: "middle",
-                legendColor: "rgna(0.0.0, .5)"
               }}
               axisLeft={{
                 orient: "left",
                 tickSize: 5,
-                tickPadding: 10,
-                tickRotation: 10,
-                legend: "count",
-                legendOffset: -40,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: null,
+                legendOffset: -50,
                 legendPosition: "middle",
+              }}
+              theme={{
+                textColor: "white",
+                axis: {
+                  tickColor: "white",
+                  ticks: {
+                    line: {
+                      stroke: "white"
+                    },
+                    text: {
+                      fill: "white"
+                    }
+                  },
+                  legend: {
+                    text: {
+                      fill: "white"
+                    }
+                  }
+                },
+                grid: {
+                  line: {
+                    stroke: "white"
+                  }
+                }
               }}
               pointSize={4}
               pointColor={{ theme: "background" }}
@@ -468,16 +492,18 @@ const TrendMainPage = () => {
               useMesh={true}
               legends={[
                 {
-                  anchor: "top-right",
-                  direction: "column",
+                  dataFrom: "keys",
+                  anchor: "top-left",
+                  direction: "row",
                   justify: false,
-                  translateX: 100,
-                  translateY: 0,
-                  itemsSpacing: 0,
+                  translateX: -25,
+                  translateY: -35,
+                  itemsSpacing: 30,
                   itemDirection: "left-to-right",
-                  itemWidth: 80,
+                  itemWidth: 60,
                   itemHeight: 20,
-                  itemOpacity: 0.75,
+                  itemOpacity: 0.8,
+                  itemTextColor: "#ffffff",
                   symbolSize: 12,
                   symbolShape: "circle",
                   symbolBorderColor: "rgba(0, 0, 0, .5)",
@@ -500,57 +526,83 @@ const TrendMainPage = () => {
         </div>
         <div className="tmp_RightBox">
           <div className="tmp_PFBox">
-            <div className="tmp_PFTopBox">
+            <div className="tmp_PFLeftBox">
               <div className="tmp_PFThumbnailCircle">
                 <img className="tmp_PFThumbnail" src=
-                {
-                  keywords === [] || keywords[0] === undefined
-                  ?("/Ex/happy.jpg")
-                  :(keywords[0].thumbnail)
-                }
+                  {
+                    keywords === [] || keywords[0] === undefined
+                      ? ("/Ex/happy.jpg")
+                      : (keywords[0].thumbnail)
+                  }
                 ></img>
               </div>
-              <div className="tmp_PFKeywordName">
+              <div
+                className="tmp_PFRelaCTGRBox">
+                <div
+                  className="tmp_PFRelaCTGRLineBox">
+                  <svg width="35" height="220" >
+                    <g>
+                      <line stroke="#ffffff" stroke-width="2" id="svg_8" y2="32" x2="27" y1="32" x1="9" />
+                      <line stroke="#ffffff" stroke-width="2" id="svg_9" y2="88" x2="27" y1="88" x1="9" />
+                      <line stroke="#ffffff" stroke-width="2" id="svg_10" y2="141" x2="27" y1="141" x1="9" />
+                      <line stroke="#ffffff" stroke-width="2" id="svg_5" y2="195" x2="27" y1="195" x1="9" />
+                      <line stroke="#ffffff" stroke-width="2" id="svg_6" y2="195" x2="10" y1="32" x1="10" />
+                    </g>
+                  </svg>
+                </div>
+                <div className="tmp_PFMainCTGR">메인카테고리</div>
+                <div className="tmp_PFRelaCTGR">연관카테고리</div>
+                <div className="tmp_PFRelaCTGR">연관카테고리</div>
+                <div className="tmp_PFRelaCTGR">연관카테고리</div>
+              </div>
+              {/* <div className="tmp_PFKeywordName">
                 {
                   ctgrSelected === ""
-                  ?("장르 이름")
-                  :(ctgrSelected)
+                    ? ("장르 이름")
+                    : (ctgrSelected)
                 }
-              </div>
-              <div className="tmp_PFKeywordYear">테스트 제작연도</div>
-              <div className="tmp_PFKeywordCompany">테스트 제작사</div>
+              </div> */}
             </div>
-            <div className="tmp_PFBottomBox">
-              <div className="tmp_PFKeywordInfoBox">
-                <div className="tmp_PFKeywordInfoTop">조회수</div>
-                <div className="tmp_PFKeywordInfoBottom">10000</div>
+            <div className="tmp_PFRightBox">
+              <div
+                className="tmp_PFKeywordInfoBox">
+                <div
+                  className="tmp_PFKeywordInfoTop">장르 순위</div>
+                <div
+                  className="tmp_PFKeywordInfoBottom">1</div>
               </div>
-              <div className="tmp_PFKeywordInfoBox">
-                <div className="tmp_PFKeywordInfoTop">검색량</div>
-                <div className="tmp_PFKeywordInfoBottom">10000</div>
+              <div
+                className="tmp_PFKeywordInfoBox">
+                <div
+                  className="tmp_PFKeywordInfoTop">장르 아울스코어</div>
+                <div
+                  className="tmp_PFKeywordInfoBottom">65.4</div>
               </div>
-              <div className="tmp_PFKeywordInfoBox">
-                <div className="tmp_PFKeywordInfoTop">신규 동영상</div>
-                <div className="tmp_PFKeywordInfoBottom">10000</div>
+              <div
+                className="tmp_PFKeywordInfoBox">
+                <div
+                  className="tmp_PFKeywordInfoTop">평균 검색량</div>
+                <div
+                  className="tmp_PFKeywordInfoBottom">23.2K</div>
               </div>
-              <div className="tmp_PFKeywordInfoBox">
-                <div className="tmp_PFKeywordInfoTop">댓글 수</div>
-                <div className="tmp_PFKeywordInfoBottom">10000</div>
+              <div
+                className="tmp_PFKeywordInfoBox">
+                <div
+                  className="tmp_PFKeywordInfoTop">평균 조회수</div>
+                <div
+                  className="tmp_PFKeywordInfoBottom">85.4K</div>
               </div>
-              <div className="tmp_PFKeywordInfoBox">
-                <div className="tmp_PFKeywordInfoTop">아워 스코어</div>
-                <div className="tmp_PFKeywordInfoBottom">10000</div>
-              </div>
-              <div className="tmp_PFKeywordInfoBox">
-                <div className="tmp_PFKeywordInfoTop">장르 순위</div>
-                <div className="tmp_PFKeywordInfoBottom">10000</div>
+              <div
+                className="tmp_PFKeywordInfoBox">
+                <div
+                  className="tmp_PFKeywordInfoTop">좋싫비</div>
+                <div
+                  className="tmp_PFKeywordInfoBottom">95.4%</div>
               </div>
             </div>
           </div>
-          <div className="tmp_KeywordExplainBox">
-            키워드 설명 및 관련 링크 (위키 등) 추가
-            This boy, well known as 'tanoshii boy' is based on meme. did you
-            know that?
+          <div className="tmp_KeywordChipBox">
+            <button className="tmp_KeywordChipClearAllbutton">전부 지우기</button>
           </div>
         </div>
         <div className="tmp_footer">
