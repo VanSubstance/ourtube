@@ -89,3 +89,98 @@
     left: 20px;
     top: 0px;
 }
+
+.tmp_BoxNameBarNoPad {
+    width: 100%;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.7);
+    text-align: center;
+    font-size: 1em;
+    font-family: "Spoqa Han Sans Neo" , "Roboto";
+    color: white;
+}
+
+.tmp_KeywordRankHead {
+    position: relative;
+    float: left;
+    width: 50px;
+    height: 24px;
+    padding: 8px 0px 8px 0px;
+}
+
+.tmp_KeywordNameHead {
+    position: relative;
+    float: left;
+    width: 280px;
+    height: 24px;
+    padding: 8px 0px 8px 0px;
+}
+
+.tmp_KeywordScoreHead {
+    position: relative;
+    float: left;
+    width: 118px;
+    height: 24px;
+    padding: 8px 0px 8px 0px;
+}
+
+
+.tmp_KeywordRankChip {
+    position: relative;
+    float: left;
+    width: 50px;
+    height: 24px;
+    padding: 8px 0px 8px 0px;
+}
+
+.tmp_KeywordNameChip {
+    position: relative;
+    float: left;
+    width: 280px;
+    height: 20px;
+    padding: 10px 0px 10px 0px;
+}
+
+.tmp_KeywordScoreChip {
+    position: relative;
+    float: left;
+    width: 118px;
+    height: 20px;
+    padding: 10px 0px 10px 0px;
+}
+
+.tmp_KeywordRankParent {
+    display: flex;
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 40px;
+    margin: 6.8px 0px 6.8px 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    font-size: 0.9em;
+    font-family: "Spoqa Han Sans Neo" , "Roboto";
+    color: white;
+}
+
+.tmp_KeywordRankButton {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    border-top: solid 1px rgba(255, 255, 255, 0.8);
+    border-bottom: solid 1px rgba(255, 255, 255, 0.8);
+    border-left: none;
+    border-right: none;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 2;
+    transition: linear .1s;
+}
+
+.tmp_KeywordRankButton:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.tmp_KeywordRankButton:visited {
+    background-color: rgba(0, 0, 0, 0);
+}

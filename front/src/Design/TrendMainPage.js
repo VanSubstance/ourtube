@@ -232,7 +232,6 @@ const TrendMainPage = () => {
             </div>
           </div>
           <div className="tmp_KeywordRankBox">
-            <div className="tmp_BoxNameBar"></div>
             <ListFont keywords={keywords}></ListFont>
           </div>
           <div className="tmp_RankChangeBox">
@@ -604,7 +603,6 @@ const TrendMainPage = () => {
             <button className="tmp_KeywordChipClearAllbutton">전부 지우기</button>
             <div
               className="tmp_KeywordChipScroll">
-
             </div>
           </div>
         </div>
