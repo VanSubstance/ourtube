@@ -16,7 +16,7 @@ const ListFont = (props) => {
         return (
             <div
                 className="tmp_KeywordRankParent">
-                <button className="tmp_KeywordRankButton"></button>
+                <button className="tmp_KeywordRankButton" onClick = {() => props.func(dataRow.title, 0)}></button>
                 <div className="tmp_KeywordRankChip">{index + 1}</div>
                 <div className="tmp_KeywordNameChip">{dataRow.title}</div>
                 <div className="tmp_KeywordScoreChip">아울스코어</div>
