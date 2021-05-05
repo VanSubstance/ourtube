@@ -704,7 +704,9 @@ const TrendMainPage = () => {
             <button className="tmp_KeywordChipClearAllbutton">전부 지우기</button>
             <div
               className="tmp_KeywordChipScroll">
-                <ProfileChipContainer></ProfileChipContainer>
+                <ProfileChipContainer titles = {titlesSelected}>
+
+                </ProfileChipContainer>
             </div>
           </div>
         </div>

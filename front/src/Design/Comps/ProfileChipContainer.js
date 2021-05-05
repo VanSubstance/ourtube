@@ -5,24 +5,30 @@ import ProfileChip from "./ProfileChip";
 
 const ProfileChipContainer = (props) => {
 
+    // ProfileChip 추가 함수
+    const addProfileChip = (keyword) => {
+        return (
+            <ProfileChip keyword = {{
+                title: "테스트",
+                thumbnail: "xptmxm"
+              }}>
+            </ProfileChip>
+        );
+    }
+
     return (
         <div>
-            <ProfileChip>
+            <ProfileChip keyword = {{
+                title: "테스트",
+                thumbnail: "xptmxm"
+              }}>
             </ProfileChip>
-            <ProfileChip>
-            </ProfileChip>
-            <ProfileChip>
-            </ProfileChip>
-            <ProfileChip>
-            </ProfileChip>
-            <ProfileChip>
-            </ProfileChip>
-            <ProfileChip>
-            </ProfileChip>
-            <ProfileChip>
-            </ProfileChip>
-            <ProfileChip>
-            </ProfileChip>
+            {
+                props.titles !== undefined ? ( props.titles.forEach((title) => {
+                    console.log("작동 ",title);
+                    return (addProfileChip(title));                    
+                })) : "없음"
+            }
         </div>
     );
 }
