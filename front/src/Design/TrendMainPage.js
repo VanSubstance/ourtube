@@ -28,6 +28,7 @@ const TrendMainPage = () => {
   // 선택된 장르 관련 값 리스트
   const [ctgrsRelevant, setCtgrsRelevant] = useState([]);
 
+  // 현재 장르에 해당되는 불러와진 게임 리스트 : 최대 10개
   let [keywords, setKeywords] = useState([]);
   // 현재 선택된 게임 리스트
   const [titlesSelected, setTitlesSelected] = useState([]);
