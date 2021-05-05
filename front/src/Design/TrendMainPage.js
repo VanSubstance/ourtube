@@ -4,16 +4,31 @@ import "./Styles.css";
 import "./Css/TrendMainPage.css";
 import Chip from "@material-ui/core/Chip";
 import { ListFont } from "./Comps";
+import { ProfileChipContainer } from "./Comps";
 import { ResponsiveLine } from "@nivo/line";
 
 const TrendMainPage = () => {
   const [url] = useState("http://222.232.15.205:8082");
-
+  
+  // 검색어
   let [searchVal] = useState("FPS");
 
+  // 장르 리스트
   let [ctgrs, setCtgrs] = useState([]);
+  // 선택된 장르
   let [ctgrSelected, setCtgrSelected] = useState("");
+  // 선택된 장르 통계치
+  const [ctgrData, setCtgrData] = useState({
+    ourScore: 0.0,
+    resultCount: 0,
+    viewCount: 0,
+    likeCount: 0,
+    dislikeCount: 0
+  });
+  // 선택된 장르 관련 값 리스트
+  const [ctgrsRelevant, setCtgrsRelevant] = useState([]);
 
+  // 현재 장르에 해당되는 불러와진 게임 리스트 : 최대 10개
   let [keywords, setKeywords] = useState([]);
   // 현재 선택된 게임 리스트
   const [titlesSelected, setTitlesSelected] = useState([]);
@@ -59,19 +74,27 @@ const TrendMainPage = () => {
   };
 
   // 게임 선택 = 해당 게임 데이터 추가
+  // 후측 하단 컴포넌트에 게임 객체 생성 -> ProfileChipContainer 안에 ProfileChip 생성
   const addDataByGame = (title) => {
     getDatasetForChart(title);
   };
 
   // 게임 선택 해제 = 해당 게임 데이터 삭제
+  // 후측 하단 컴포넌트에 게임 객체 삭제 -> ProfileChipContainer 안에 해당 ProfileChip 생성
   const deleteDataByGame = (title) => {
     setDataForAvgNewView(dataForAvgNewView.filter((dataForLine) => dataForLine.id !== title));
     setDataForNumNewVid(dataForNumNewVid.filter((dataForLine) => dataForLine.id !== title));
     setDataForRank(dataForRank.filter((dataForLine) => dataForLine.id !== title));
   };
 
+  // 우측 하단 컴포넌트에 게임 객체 일괄 삭제 -> ProfileChipContainer 안에 ProfileChip 전체 삭제
+  const clearProfileChipContainer = () => {
+
+  }
+
   // 장르 변경 시 데이터 초기화
   const clearTitlesSelected = () => {
+    clearProfileChipContainer();
     setDataForAvgNewView([]);
     setDataForNumNewVid([]);
     setDataForRank([]);
@@ -105,7 +128,7 @@ const TrendMainPage = () => {
       });
   };
 
-  // 장르 별 리스트 가져오기: 최대 7개
+  // 장르 리스트 가져오기: 최대 7개
   const getDataset = async () => {
     await axios
       .get(url + "/deploy/topic/" + searchVal)
@@ -113,9 +136,29 @@ const TrendMainPage = () => {
         if (data.length >= 8) {
           setCtgrs(data.slice(0, 7));
           setCtgrSelected(searchVal);
+          getDataByTopic(searchVal);
+          getTopicRelevant(searchVal);
         } else {
           setCtgrs(data);
           setCtgrSelected(searchVal);
+          getDataByTopic(searchVal);
+          getTopicRelevant(searchVal);
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
+
+  // 관련 장르 가져오기: 최대 3개
+  const getTopicRelevant = async (topic) => {
+    await axios
+      .get(url + "/deploy/topic/" + topic)
+      .then(({ data }) => {
+        if (data.length >= 8) {
+          setCtgrsRelevant(data.slice(0, 3));
+        } else {
+          setCtgrsRelevant(data);
         }
       })
       .catch((e) => {
@@ -145,6 +188,8 @@ const TrendMainPage = () => {
       .get(url + "/deploy/game/list/" + ctgr)
       .then(({ data }) => {
         setCtgrSelected(ctgr);
+        getDataByTopic(ctgr);
+        getTopicRelevant(ctgr);
         clearTitlesSelected();
         if (data.length >= 10) {
           setKeywords(data.slice(0, 10));
@@ -156,6 +201,19 @@ const TrendMainPage = () => {
         console.error(e);
       });
   };
+
+  // 장르 통계 수치 api 호출 함수
+  const getDataByTopic = async (topic) => {
+    await axios
+      .get(url + "/deploy/topic/statistic/" + topic)
+      .then(({data}) => {
+        console.log(data);
+        setCtgrData(data);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }
 
   // 검색 엔터키와 연결 함수
   const searchCtgrPress = (e) => {
@@ -240,7 +298,6 @@ const TrendMainPage = () => {
             </div>
           </div>
           <div className="tmp_KeywordRankBox">
-            <div className="tmp_BoxNameBar"></div>
             <ListFont keywords={keywords} func = {selectGame}></ListFont>
           </div>
           <div className="tmp_RankChangeBox">
@@ -435,7 +492,7 @@ const TrendMainPage = () => {
           <div className="tmp_NewVideoBox">
             <div className="tmp_BoxNameBar">신규 동영상 수</div>
             <ResponsiveLine
-              data={dataForAvgNewView}
+              data={dataForNumNewVid}
               margin={{ top: 40, right: 25, bottom: 75, left: 45 }}
               xScale={{ type: "point" }}
               yScale={{
@@ -565,9 +622,27 @@ const TrendMainPage = () => {
                       : (ctgrSelected)
                   }
                 </div>
-                <div className="tmp_PFRelaCTGR">연관카테고리</div>
-                <div className="tmp_PFRelaCTGR">연관카테고리</div>
-                <div className="tmp_PFRelaCTGR">연관카테고리</div>
+                <div className="tmp_PFRelaCTGR">
+                  {
+                    ctgrsRelevant !== null && ctgrsRelevant[0] !== null
+                    ?(ctgrsRelevant[0])
+                    :("연관카테고리")
+                  }
+                </div>
+                <div className="tmp_PFRelaCTGR">
+                  {
+                    ctgrsRelevant !== null && ctgrsRelevant[1] !== null
+                    ?(ctgrsRelevant[1])
+                    :("연관카테고리")
+                  }
+                </div>
+                <div className="tmp_PFRelaCTGR">
+                  {
+                    ctgrsRelevant !== null && ctgrsRelevant[2] !== null
+                    ?(ctgrsRelevant[2])
+                    :("연관카테고리")
+                  }
+                </div>
               </div>
             </div>
             <div className="tmp_PFRightBox">
@@ -583,21 +658,39 @@ const TrendMainPage = () => {
                 <div
                   className="tmp_PFKeywordInfoTop">장르 아울스코어</div>
                 <div
-                  className="tmp_PFKeywordInfoBottom">65.4</div>
+                  className="tmp_PFKeywordInfoBottom">
+                    {
+                      ctgrData === null
+                      ?(50.00)
+                      :(ctgrData.ourScore)
+                    }
+                  </div>
               </div>
               <div
                 className="tmp_PFKeywordInfoBox">
                 <div
                   className="tmp_PFKeywordInfoTop">평균 검색량</div>
                 <div
-                  className="tmp_PFKeywordInfoBottom">23.2K</div>
+                  className="tmp_PFKeywordInfoBottom">
+                  {
+                    ctgrData === null
+                    ?(50.00)
+                    :(ctgrData.resultCount)
+                  }
+                </div>
               </div>
               <div
                 className="tmp_PFKeywordInfoBox">
                 <div
                   className="tmp_PFKeywordInfoTop">평균 조회수</div>
                 <div
-                  className="tmp_PFKeywordInfoBottom">85.4K</div>
+                  className="tmp_PFKeywordInfoBottom">
+                  {
+                    ctgrData === null
+                    ?(50.00)
+                    :(ctgrData.viewCount)
+                  }
+                </div>
               </div>
               <div
                 className="tmp_PFKeywordInfoBox">
@@ -612,6 +705,9 @@ const TrendMainPage = () => {
             <button className="tmp_KeywordChipClearAllbutton">전부 지우기</button>
             <div
               className="tmp_KeywordChipScroll">
+                <ProfileChipContainer titles = {titlesSelected}>
+
+                </ProfileChipContainer>
             </div>
           </div>
         </div>

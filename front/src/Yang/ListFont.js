@@ -8,7 +8,6 @@ const OPTIONS = ["One", "Two", "Three"];
 
 class ListFont extends Component {
 
-
     addRows = (dataRows) => {
         return (
             dataRows.map((dataRow, index) => {
