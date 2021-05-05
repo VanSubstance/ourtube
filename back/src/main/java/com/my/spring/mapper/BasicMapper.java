@@ -1,5 +1,6 @@
 package com.my.spring.mapper;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -9,9 +10,9 @@ import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.TopicStatDto;
 import com.my.spring.domain.basics.Game;
 import com.my.spring.domain.chains.GameTopic;
-import com.my.spring.domain.chains.TopicChain;
 import com.my.spring.domain.statistics.GameDataForMain;
 import com.my.spring.domain.statistics.GameStatistic;
+import com.my.spring.domain.statistics.TopicStatistic;
 
 public interface BasicMapper {
 	// 당일 기준 동영상 게시일이 98일(14주)가 넘어가는 동영상 id들 삭제
@@ -38,4 +39,6 @@ public interface BasicMapper {
 	
 	public List<String> getTopicsByTopic(@Param("topic") String topic);
 	public List<Game> getGamesByTopic(@Param("topic") String topic);
+	// 날짜, 장르 ==> 평균 아울스코어, 검색량, 조회수, 좋아요, 싫어요
+	public TopicStatistic getTopicAvgStatuesByTopicAndDate(@Param("topic") String topic, @Param("date") Date date);
 }

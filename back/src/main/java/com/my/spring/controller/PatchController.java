@@ -69,7 +69,7 @@ public class PatchController {
 	@Scheduled(cron = "1 0 " + hour + " * * *")
 	@RequestMapping("/daily")
 	private void patchDaily() {
-//		patchGameFromYoutube();
+		patchGameFromYoutube();
 		patchDataByGameFirst();
 		parseWords();
 		calcScore();
