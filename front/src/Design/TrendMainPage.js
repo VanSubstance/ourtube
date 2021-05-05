@@ -704,7 +704,7 @@ const TrendMainPage = () => {
             </div>
           </div>
           <div className="tmp_KeywordChipBox">
-            <button className="tmp_KeywordChipClearAllbutton">전부 지우기</button>
+            <button className="tmp_KeywordChipClearAllbutton" onClick = {() => {clearTitlesSelected()}}>전부 지우기</button>
             <div
               className="tmp_KeywordChipScroll">
                 <ProfileChipContainer titles = {titlesSelected} func1 = {selectGame}>
