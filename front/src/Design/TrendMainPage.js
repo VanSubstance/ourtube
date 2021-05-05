@@ -52,25 +52,27 @@ const TrendMainPage = () => {
   }, []);
 
   // method: 0 -> 추가, 1 -> 삭제
-  const selectGame = (keyword, method) => {
-    if (!titlesSelected.includes(keyword)) {
+  const selectGame = (title, method) => {
+    if (!titlesSelected.includes(title)) {
       if (method == 0) {
-        setTitlesSelected(titlesSelected.concat(keyword));
+        setTitlesSelected(titlesSelected.concat(title));
         titleSelected = {
-          title: keyword,
+          title: title,
           add: true,
         };
-      } else {
-        setTitlesSelected(titlesSelected.filter((k) => k !== keyword));
+      }
+    } else {
+      if (method == 1) {
+        setTitlesSelected(titlesSelected.filter((k) => k !== title));
         titleSelected = {
-          title: keyword,
+          title: title,
           add: false,
         };
       }
-      titleSelected.add === true
-        ? addDataByGame(titleSelected.title)
-        : deleteDataByGame(titleSelected.title);
     }
+    titleSelected.add === true
+      ? addDataByGame(titleSelected.title)
+      : deleteDataByGame(titleSelected.title);
   };
 
   // 게임 선택 = 해당 게임 데이터 추가
@@ -705,7 +707,7 @@ const TrendMainPage = () => {
             <button className="tmp_KeywordChipClearAllbutton">전부 지우기</button>
             <div
               className="tmp_KeywordChipScroll">
-                <ProfileChipContainer titles = {titlesSelected}>
+                <ProfileChipContainer titles = {titlesSelected} func1 = {selectGame}>
 
                 </ProfileChipContainer>
             </div>

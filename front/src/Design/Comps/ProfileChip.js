@@ -7,7 +7,7 @@ const ProfileChip = (props) => {
     return (
       <div>
         <div className="tmp_PFBoxChip">
-          <button className="tmp_PFBoxDeleteButton">X</button>
+          <button className="tmp_PFBoxDeleteButton" onClick = {() => {props.func(props.keyword.title, 1)}}>X</button>
           <a
             className="tmp_lookWellBox"
             // href={/game/ + props.keyword.title}

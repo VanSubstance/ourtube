@@ -13,6 +13,7 @@ const ProfileChipContainer = (props) => {
               title: title,
               thumbnail: "xptmxm",
             }}
+            func={props.func1}
           ></ProfileChip>
         );
       })}
