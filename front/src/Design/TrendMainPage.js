@@ -492,7 +492,7 @@ const TrendMainPage = () => {
           <div className="tmp_NewVideoBox">
             <div className="tmp_BoxNameBar">신규 동영상 수</div>
             <ResponsiveLine
-              data={dataForAvgNewView}
+              data={dataForNumNewVid}
               margin={{ top: 40, right: 25, bottom: 75, left: 45 }}
               xScale={{ type: "point" }}
               yScale={{
