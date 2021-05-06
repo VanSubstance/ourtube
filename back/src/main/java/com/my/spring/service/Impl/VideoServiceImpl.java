@@ -395,7 +395,10 @@ public class VideoServiceImpl implements VideoService {
 				int count = 1;
 				while (val == null) {
 					if (i != 0) {
-						val = avgNewViews.get(i - count);
+						val = avgNewViews.get(i + count);
+						if (val == null || (i - count) >= 0) {
+							val = avgNewViews.get(i - count);
+						}
 						count ++;
 					} else {
 						val = 0;
@@ -416,7 +419,10 @@ public class VideoServiceImpl implements VideoService {
 				int count = 1;
 				while (val == null) {
 					if (i != 0) {
-						val = avgNewComments.get(i - count);
+						val = avgNewComments.get(i + count);
+						if (val == null || (i - count) >= 0) {
+							val = avgNewComments.get(i - count);
+						}
 						count ++;
 					} else {
 						val = 0;

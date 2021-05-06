@@ -1,10 +1,14 @@
 package com.my.spring.service.Impl;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.my.spring.domain.GameProfileChip;
 import com.my.spring.domain.IdComplete;
 import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.TopicStatDto;
@@ -13,6 +17,7 @@ import com.my.spring.domain.chains.GameTopic;
 import com.my.spring.domain.chains.TopicChain;
 import com.my.spring.domain.statistics.GameDataForMain;
 import com.my.spring.domain.statistics.GameStatistic;
+import com.my.spring.domain.statistics.TopicStatistic;
 import com.my.spring.mapper.BasicMapper;
 import com.my.spring.service.BasicService;
 
@@ -103,6 +108,25 @@ public class BasicServiceImpl implements BasicService {
 	@Override
 	public void setOurScoreForGameToday(String title, double score, int rank) {
 		mapper.setOurScoreForGameToday(title, score, rank);
+	}
+
+	@Override
+	public TopicStatistic getTopicAvgStatuesByTopicAndDate(String topic) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+		String date = dateFormat.format(cal.getTime());
+		return mapper.getTopicAvgStatuesByTopicAndDate(topic, Date.valueOf(date));
+	}
+
+	@Override
+	public GameProfileChip getProfileChipByTitle(String title) {
+		GameProfileChip result = new GameProfileChip();
+		List<GameProfileChip> data = mapper.getProfileChipByTitle(title);
+		for (int i = 0; i < data.size(); i++) {
+			if (i == 0) result = data.get(i);
+			if (i == 1) result.setGenre2(data.get(i).getGenre1());
+		}
+		return result;
 	}
 
 }

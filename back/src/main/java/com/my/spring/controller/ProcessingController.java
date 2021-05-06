@@ -2,6 +2,7 @@ package com.my.spring.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.my.spring.domain.GameProfileChip;
 import com.my.spring.domain.TopicStatDto;
 import com.my.spring.domain.basics.Game;
 import com.my.spring.domain.statistics.GameDataForMain;
+import com.my.spring.domain.statistics.TopicStatistic;
 import com.my.spring.service.BasicService;
 import com.my.spring.service.ChannelService;
 import com.my.spring.service.VideoService;
@@ -138,11 +141,27 @@ public class ProcessingController {
 	}
 	
 	// 최근 각 게임 별 동영상 통계수치 추적 (10개 기본 수치) (최대 7일) -> 메인 페이지 차트뷰를 위한 형식
-	@CrossOrigin("*")
 	@RequestMapping(value = "/game/chart/{title}", method = RequestMethod.GET)
 	public HashMap<String, Object> getChartDataForMainPageChart(@PathVariable String title) {
 		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
 		System.out.println("최근 " + title + " 동영상 통계수치 추적 (10개 기본 수치) (최대 7일): " + requestedTime);
 		return serviceVideo.getChartDataForMainPageChart(title);
+	}
+
+	// 날짜, 장르 ==> 평균 아울스코어, 검색량, 조회수, 좋아요, 싫어요
+	@RequestMapping(value = "/topic/statistic/{topic}", method = RequestMethod.GET)
+	public TopicStatistic getTopicAvgStatuesByTopicAndDate(@PathVariable String topic) {
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println("장르 ==> 평균 아울스코어, 검색량, 조회수, 좋아요, 싫어요: " + requestedTime);
+		return serviceBasic.getTopicAvgStatuesByTopicAndDate(topic);
+	}
+	
+
+	// 게임 제목 ==> ProfileChip에 필요한 데이터
+	@RequestMapping(value = "/game/profile/{title}", method = RequestMethod.GET)
+	public GameProfileChip getProfileChipByTitle(@PathVariable String title) {
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println(title + " ==> ProfileChip에 필요한 데이터: " + requestedTime);
+		return serviceBasic.getProfileChipByTitle(title);
 	}
 }

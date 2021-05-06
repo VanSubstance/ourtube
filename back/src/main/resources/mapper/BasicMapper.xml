@@ -123,6 +123,25 @@
 			    ) d on d.title = #{title} and d.infodate = b.infodate
 	</select>
 	
+	<!-- 날짜, 장르 ==> 평균 아울스코어, 검색량, 조회수, 좋아요, 싫어요  -->
+	<select id="getTopicAvgStatuesByTopicAndDate" parameterType="map" resultType="com.my.spring.domain.statistics.TopicStatistic">
+		select a.*, b.* from (
+		    select round(avg(a.resultcount)) resultCount, avg(a.ourscore) ourScore from gamestatistics a, gametopic b
+		    where a.title = b.title
+		    and b.topic = #{topic}
+		    and infodate = #{date}
+		) a, (
+		    select round(avg(a.viewcount)) viewCount, 
+		    round(avg(a.likecount)) likeCount, 
+		    round(avg(a.dislikecount)) dislikeCount 
+		    from videostatistics a, gametopic b, videogame c
+		    where b.topic = #{topic}
+		    and b.title = c.game
+		    and c.id = a.id
+		    and a.infodate = #{date}
+		) b
+	</select>
+	
 	<select id="getIdCompleteById" parameterType="String" resultType="Int">
 		select count(*) from idcomplete where id = #{id}
 	</select>
@@ -131,5 +150,11 @@
 		insert into IdComplete (type, id)
 		values (#{item.type}, #{item.id})
 	</insert>
+	
+	<select id="getProfileChipByTitle" parameterType="String" resultType="com.my.spring.domain.GameProfileChip">
+		select #{title} title, a.thumbnail, b.topic genre1 from game a, gametopic b
+		where a.title = b.title
+		and a.title = #{title}
+	</select>
 	
 </mapper>
