@@ -200,7 +200,7 @@ public class VideoServiceImpl implements VideoService {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		List<Date> dates = new ArrayList<Date>(); 
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, -7);
+		cal.add(Calendar.DATE, -6);
 		String date = dateFormat.format(cal.getTime());
 		for (int i = 0; i < 7; i++) {
 			dates.add(Date.valueOf(date));
@@ -213,6 +213,7 @@ public class VideoServiceImpl implements VideoService {
 			// AvgNumView
 			DataForLine dataForLine = new DataForLine();
 			dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
+			/////////////////////////////////////////////////////////////////////////////////////////// 버그 구간
 			dataForLine.setY(dataTemp.getAvgNewView());
 			dataForAvgNewView.add(dataForLine);
 			// NumNewVid

@@ -78,9 +78,9 @@ public class StatisticsController {
 		System.out.println("토픽 별 비디오 태그 별 명사 리스트 추출");
 		HashMap<String, List<NounDto>> result = new HashMap<String, List<NounDto>>();
 		List<NounDto> value = new ArrayList<NounDto>();
-		List<TopicDto> topicList = serviceBasic.getTopics();
-		for (TopicDto topic : topicList) {
-			List<NounDto> nounList = serviceWord.getTagWordsByTopic(topic.getTopic());
+		List<String> topicList = serviceBasic.getTopics();
+		for (String topic : topicList) {
+			List<NounDto> nounList = serviceWord.getTagWordsByTopic(topic);
 			for (NounDto noun : nounList) {
 				value = new ArrayList<NounDto>();
 				if (result.containsKey(noun.getId())) {
@@ -145,9 +145,9 @@ public class StatisticsController {
 		System.out.println("토픽 별 비디오 설명 별 명사 리스트 추출");
 		HashMap<String, List<NounDto>> result = new HashMap<String, List<NounDto>>();
 		List<NounDto> value = new ArrayList<NounDto>();
-		List<TopicDto> topicList = serviceBasic.getTopics();
-		for (TopicDto topic : topicList) {
-			List<NounDto> nounList = serviceWord.getVideoWordsByTopic(topic.getTopic());
+		List<String> topicList = serviceBasic.getTopics();
+		for (String topic : topicList) {
+			List<NounDto> nounList = serviceWord.getVideoWordsByTopic(topic);
 			for (NounDto noun : nounList) {
 				value = new ArrayList<NounDto>();
 				if (result.containsKey(noun.getId())) {
@@ -168,9 +168,9 @@ public class StatisticsController {
 		System.out.println("토픽 별 채널 설명 별 명사 리스트 추출");
 		HashMap<String, List<NounDto>> result = new HashMap<String, List<NounDto>>();
 		List<NounDto> value = new ArrayList<NounDto>();
-		List<TopicDto> topicList = serviceBasic.getTopics();
-		for (TopicDto topic : topicList) {
-			List<NounDto> nounList = serviceWord.getChannelWordsByTopic(topic.getTopic());
+		List<String> topicList = serviceBasic.getTopics();
+		for (String topic : topicList) {
+			List<NounDto> nounList = serviceWord.getChannelWordsByTopic(topic);
 			for (NounDto noun : nounList) {
 				value = new ArrayList<NounDto>();
 				if (result.containsKey(noun.getId())) {
