@@ -9,10 +9,7 @@ const ProfileChipContainer = (props) => {
       {props.titles.map((title) => {
         return (
           <ProfileChip
-            keyword={{
-              title: title,
-              thumbnail: "xptmxm",
-            }}
+            title = {title}
             func={props.func1}
           ></ProfileChip>
         );
