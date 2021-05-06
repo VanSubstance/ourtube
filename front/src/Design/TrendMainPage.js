@@ -303,7 +303,7 @@ const TrendMainPage = () => {
             <ListFont keywords={keywords} func = {selectGame}></ListFont>
           </div>
           <div className="tmp_RankChangeBox">
-            <div className="tmp_BoxNameBar">키워드 월별 순위변동</div>
+            <div className="tmp_BoxNameBar">키워드 일별 순위변동</div>
             <ResponsiveLine
               data={dataForRank}
               margin={{ top: 20, right: 110, bottom: 100, left: 60 }}
@@ -316,7 +316,7 @@ const TrendMainPage = () => {
                 reverse: true,
               }}
               yFormat=" >-.2f"
-              curve="monotoneX"
+              curve="linear"
               axisTop={null}
               axisRight={null}
               axisBottom={{
@@ -653,7 +653,13 @@ const TrendMainPage = () => {
                 <div
                   className="tmp_PFKeywordInfoTop">장르 순위</div>
                 <div
-                  className="tmp_PFKeywordInfoBottom">1</div>
+                  className="tmp_PFKeywordInfoBottom">
+                  {
+                    ctgrData === null
+                    ?(0)
+                    :(ctgrData.rank)
+                  }
+                  </div>
               </div>
               <div
                 className="tmp_PFKeywordInfoBox">
