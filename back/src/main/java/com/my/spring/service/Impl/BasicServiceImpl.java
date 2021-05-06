@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.my.spring.domain.GameProfileChip;
 import com.my.spring.domain.IdComplete;
 import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.TopicStatDto;
@@ -115,6 +116,17 @@ public class BasicServiceImpl implements BasicService {
 		Calendar cal = Calendar.getInstance();
 		String date = dateFormat.format(cal.getTime());
 		return mapper.getTopicAvgStatuesByTopicAndDate(topic, Date.valueOf(date));
+	}
+
+	@Override
+	public GameProfileChip getProfileChipByTitle(String title) {
+		GameProfileChip result = new GameProfileChip();
+		List<GameProfileChip> data = mapper.getProfileChipByTitle(title);
+		for (int i = 0; i < data.size(); i++) {
+			if (i == 0) result = data.get(i);
+			if (i == 1) result.setGenre2(data.get(i).getGenre1());
+		}
+		return result;
 	}
 
 }

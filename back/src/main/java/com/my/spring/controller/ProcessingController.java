@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.my.spring.domain.GameProfileChip;
 import com.my.spring.domain.TopicStatDto;
 import com.my.spring.domain.basics.Game;
 import com.my.spring.domain.statistics.GameDataForMain;
@@ -153,5 +154,14 @@ public class ProcessingController {
 		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
 		System.out.println("장르 ==> 평균 아울스코어, 검색량, 조회수, 좋아요, 싫어요: " + requestedTime);
 		return serviceBasic.getTopicAvgStatuesByTopicAndDate(topic);
+	}
+	
+
+	// 게임 제목 ==> ProfileChip에 필요한 데이터
+	@RequestMapping(value = "/game/profile/{title}", method = RequestMethod.GET)
+	public GameProfileChip getProfileChipByTitle(@PathVariable String title) {
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println(title + " ==> ProfileChip에 필요한 데이터: " + requestedTime);
+		return serviceBasic.getProfileChipByTitle(title);
 	}
 }
