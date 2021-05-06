@@ -45,8 +45,9 @@
 		set ourScore = #{score}, rank = #{rank}
 		where infodate = TO_DATE(SYSDATE, 'YY/MM/DD') and title = #{title}
 	</update>
-	<select id="getTopics" resultType="com.my.spring.domain.TopicDto">
-		select * from topictotal
+	<select id="getTopics" resultType="String">
+		select topic from gametopic
+		group by topic
 	</select>
 	<select id="getNounFilter" resultType="String">
 		select * from nounFilter
@@ -125,7 +126,7 @@
 	
 	<!-- 날짜, 장르 ==> 평균 아울스코어, 검색량, 조회수, 좋아요, 싫어요  -->
 	<select id="getTopicAvgStatuesByTopicAndDate" parameterType="map" resultType="com.my.spring.domain.statistics.TopicStatistic">
-		select a.*, b.* from (
+		select #{topic} topic, #{date} infoDate, a.*, b.* from (
 		    select round(avg(a.resultcount)) resultCount, avg(a.ourscore) ourScore from gamestatistics a, gametopic b
 		    where a.title = b.title
 		    and b.topic = #{topic}
@@ -140,6 +141,12 @@
 		    and c.id = a.id
 		    and a.infodate = #{date}
 		) b
+	</select>
+	
+	<select id="getTopicStatisticTodayByTopic" parameterType="String" resultType="com.my.spring.domain.statistics.TopicStatistic">
+		select * from topicstatistics
+		where topic = #{topic}
+		and infodate = TO_DATE(SYSDATE, 'YY/MM/DD')
 	</select>
 	
 	<select id="getIdCompleteById" parameterType="String" resultType="Int">

@@ -18,4 +18,17 @@
 		) where title = #{title}
 	</select>
 	
+	<!-- 당일 장르 통계 수치 저장 -->
+	<insert id="setTopicStatistic" parameterType="com.my.spring.domain.statistics.TopicStatistic">
+		insert into topicStatistics (topic, ourscore, infodate, resultCount, likecount, dislikecount, viewcount)
+		values (#{item.topic}, #{item.ourScore}, #{item.infoDate}, 
+		#{item.resultCount}, #{item.likeCount}, #{item.dislikeCount}, #{item.viewCount})
+	</insert>
+	<!-- 당일 장르 통계 rank 업데이트 -->
+	<update id="setTopicRankToday" parameterType="map">
+		update topicStatistics
+		set rank = #{rank}
+		where infodate = TO_DATE(SYSDATE, 'YY/MM/DD') and topic = #{topic}
+	</update>
+	
 </mapper>

@@ -152,8 +152,8 @@ public class ProcessingController {
 	@RequestMapping(value = "/topic/statistic/{topic}", method = RequestMethod.GET)
 	public TopicStatistic getTopicAvgStatuesByTopicAndDate(@PathVariable String topic) {
 		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
-		System.out.println("장르 ==> 평균 아울스코어, 검색량, 조회수, 좋아요, 싫어요: " + requestedTime);
-		return serviceBasic.getTopicAvgStatuesByTopicAndDate(topic);
+		System.out.println(topic + " ==> 통계 데이터: " + requestedTime);
+		return serviceBasic.getTopicStatisticTodayByTopic(topic);
 	}
 	
 

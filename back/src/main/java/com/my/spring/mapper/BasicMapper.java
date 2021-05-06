@@ -32,7 +32,7 @@ public interface BasicMapper {
 	public List<GameDataForMain> getGameDataForMainByGame(@Param("title") String title);
 	
 	public void setGameStat(@Param("item") GameStatistic item);
-	public List<TopicDto> getTopics();
+	public List<String> getTopics();
 	public List<String> getNounFilter();
 	public List<TopicStatDto> getGameListForToday();
 	public int getIdCompleteById(@Param("id") String id);
@@ -40,8 +40,12 @@ public interface BasicMapper {
 	
 	public List<String> getTopicsByTopic(@Param("topic") String topic);
 	public List<Game> getGamesByTopic(@Param("topic") String topic);
+
 	// 날짜, 장르 ==> 평균 아울스코어, 검색량, 조회수, 좋아요, 싫어요
 	public TopicStatistic getTopicAvgStatuesByTopicAndDate(@Param("topic") String topic, @Param("date") Date date);
+
+	// 날짜, 장르 ==> 평균 아울스코어, 검색량, 조회수, 좋아요, 싫어요
+	public TopicStatistic getTopicStatisticTodayByTopic(String topic);
 	
 	// 게임 제목 ==> ProfileChip에 필요한 데이터
 	public List<GameProfileChip> getProfileChipByTitle(@Param("title") String title);

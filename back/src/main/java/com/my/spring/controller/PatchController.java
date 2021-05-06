@@ -26,12 +26,14 @@ import com.my.spring.domain.ChannelStatDto;
 import com.my.spring.domain.CommentDto;
 import com.my.spring.domain.IdComplete;
 import com.my.spring.domain.TagDto;
+import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
 import com.my.spring.domain.WordDto;
 import com.my.spring.domain.basics.Game;
 import com.my.spring.domain.chains.GameTopic;
 import com.my.spring.domain.statistics.GameStatistic;
+import com.my.spring.domain.statistics.TopicStatistic;
 import com.my.spring.service.BasicService;
 import com.my.spring.service.ChannelService;
 import com.my.spring.service.CommentService;
@@ -73,6 +75,7 @@ public class PatchController {
 		patchDataByGameFirst();
 		parseWords();
 		calcScore();
+		calcScoresForTopic();
 	}
 	
 	public void patchGameFromYoutube() {
@@ -150,9 +153,28 @@ public class PatchController {
 		}
 		return result;
 	}
-	
-	public void setRankFromOurscore() {
+
+	@RequestMapping("/calcScoreTopic")
+	public void calcScoresForTopic() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println(" -- 토픽 별 통계 수치 계산 및 DB 삽입 -- " + requestedTime);
+		List<String> topics = serviceBasic.getTopics();
+		HashMap<String, Double> topicsWithScore = new HashMap<String, Double>();
+		List<Double> scores = new ArrayList<Double>();
+		for (String topic : topics) {
+			TopicStatistic topicStatistic = serviceBasic.getTopicAvgStatuesByTopicAndDate(topic);
+			serviceStatistic.setTopicStatistic(topicStatistic);
+			scores.add(topicStatistic.getOurScore());
+			topicsWithScore.put(topic, topicStatistic.getOurScore());
+		}
 		
+		Collections.sort(scores, Collections.reverseOrder());
+		
+		for (String topic : topics) {
+			serviceStatistic.setTopicRankToday(topic, scores.indexOf(topicsWithScore.get(topic)) + 1);
+		}
 	}
 	
 

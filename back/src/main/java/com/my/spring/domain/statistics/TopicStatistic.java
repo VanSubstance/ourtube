@@ -1,10 +1,15 @@
 package com.my.spring.domain.statistics;
 
+import java.sql.Date;
+
 import lombok.*;
 
 @Setter
 @Getter
 public class TopicStatistic {
+	private String topic;
+	private Date infoDate;
+	private Integer rank;
 	private Double ourScore;
 	private Integer resultCount;
 	private Integer viewCount;
@@ -13,6 +18,13 @@ public class TopicStatistic {
 	
 	@Override
 	public String toString() {
-		return ourScore + "\n" + resultCount + "\n" + viewCount + "\n" + likeCount + "\n" + dislikeCount;
+		return topic + "\n" +
+				ourScore + "\n" + 
+	infoDate + "\n" + 
+				rank + "\n" + 
+	resultCount + "\n" + 
+				viewCount + "\n" + 
+	likeCount + "\n" + 
+				dislikeCount;
 	}
 }

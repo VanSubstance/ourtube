@@ -9,4 +9,5 @@ public class GameProfileChip {
 	private String thumbnail;
 	private String genre1;
 	private String genre2;
+	private String genre3;
 }

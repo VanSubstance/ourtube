@@ -31,7 +31,7 @@ public interface BasicService {
 	public List<GameDataForMain> getGameDataForMainByGame(String title);
 	
 	public void setGameStat(GameStatistic item);
-	public List<TopicDto> getTopics();
+	public List<String> getTopics();
 	public List<String> getNounFilter();
 	public List<TopicStatDto> getGameListForToday();
 	public int getIdCompleteById(String id);
@@ -39,8 +39,12 @@ public interface BasicService {
 	
 	public List<String> getTopicsByTopic(String topic);
 	public List<Game> getGamesByTopic(String topic);
-	// 날짜, 장르 ==> 평균 아울스코어, 검색량, 조회수, 좋아요, 싫어요
+	
+	// 업데이트를 위한 계산 공정 후 데이터
 	public TopicStatistic getTopicAvgStatuesByTopicAndDate(String topic);
+
+	// 날짜, 장르 ==> 평균 아울스코어, 검색량, 조회수, 좋아요, 싫어요
+	public TopicStatistic getTopicStatisticTodayByTopic(String topic);
 
 	// 게임 제목 ==> ProfileChip에 필요한 데이터
 	public GameProfileChip getProfileChipByTitle(String title);

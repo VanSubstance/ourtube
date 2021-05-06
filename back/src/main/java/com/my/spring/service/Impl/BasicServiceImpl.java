@@ -52,7 +52,7 @@ public class BasicServiceImpl implements BasicService {
 	}
 
 	@Override
-	public List<TopicDto> getTopics() {
+	public List<String> getTopics() {
 		return mapper.getTopics();
 	}
 
@@ -114,7 +114,7 @@ public class BasicServiceImpl implements BasicService {
 	public TopicStatistic getTopicAvgStatuesByTopicAndDate(String topic) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar cal = Calendar.getInstance();
-		String date = dateFormat.format(cal.getTime());
+		String date = dateFormat.format(cal.getTime());;
 		return mapper.getTopicAvgStatuesByTopicAndDate(topic, Date.valueOf(date));
 	}
 
@@ -125,8 +125,14 @@ public class BasicServiceImpl implements BasicService {
 		for (int i = 0; i < data.size(); i++) {
 			if (i == 0) result = data.get(i);
 			if (i == 1) result.setGenre2(data.get(i).getGenre1());
+			if (i == 1) result.setGenre3(data.get(i).getGenre1());
 		}
 		return result;
+	}
+
+	@Override
+	public TopicStatistic getTopicStatisticTodayByTopic(String topic) {
+		return mapper.getTopicStatisticTodayByTopic(topic);
 	}
 
 }
