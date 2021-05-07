@@ -108,7 +108,7 @@
 	
 	<!-- 게임 제목을 통한 당일 평균 신규 조회수, 좋아요, 싫어요, 댓글 수 추적 -->
 	<select id="getVideoDataByTitleAndDate" parameterType="map" resultType="com.my.spring.domain.statistics.DateStatistic">
-		select b.numNewVid, a.*, c.numAccuVid, d.*, e.rank from (
+		select f.*, b.numNewVid, a.*, c.numAccuVid, d.*, e.* from (
 		    select
 		    round(sum(newview) / count(*)) avgnewview
 		    , round(sum(newlike) / count(*)) avgnewlike
@@ -204,10 +204,14 @@
 		        ) where infodate = #{date}
 		    )
 		) d, (
-			select rank from gamestatistics
+			select resultCount, ourscore, rank from gamestatistics
         	where title = #{title}
         	and infodate = #{date}
-        ) e
+        ) e,
+        (
+            select title, thumbnail from game
+            where title = #{title}
+        ) f
 	</select>
 	
 	<!-- 게임 전체의 당일 평균 신규 조회수, 좋아요, 싫어요, 댓글 수 추적 -->

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.my.spring.domain.GameProfileChip;
 import com.my.spring.domain.TopicStatDto;
 import com.my.spring.domain.basics.Game;
+import com.my.spring.domain.statistics.DateStatistic;
 import com.my.spring.domain.statistics.GameDataForMain;
 import com.my.spring.domain.statistics.TopicStatistic;
 import com.my.spring.service.BasicService;
@@ -138,6 +139,12 @@ public class ProcessingController {
 		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
 		System.out.println("게임 제목 전체 반환: " + requestedTime);
 		return serviceBasic.getAllTitle();
+	}
+
+	// 당일 게임 동영상 통계수치 추적 (10개 기본 수치)
+	@RequestMapping(value = "/game/chart/today/{title}", method = RequestMethod.GET)
+	public DateStatistic getVideoDataTodayByTitle(@PathVariable String title) {
+		return serviceVideo.getVideoDataTodayByTitle(title);
 	}
 	
 	// 최근 각 게임 별 동영상 통계수치 추적 (10개 기본 수치) (최대 7일) -> 메인 페이지 차트뷰를 위한 형식

@@ -37,4 +37,7 @@ public interface VideoService {
 
 	// 최근 7일 간 각 게임 별 동영상 통계수치 추적 (10개 기본 수치) -> 메인 페이지 차트뷰를 위한 형식
 	public HashMap<String, Object> getChartDataForMainPageChart(String title);
+	
+	// 당일 게임 동영상 통계수치 추적 (10개 기본 수치)
+	public DateStatistic getVideoDataTodayByTitle (String title);
 }

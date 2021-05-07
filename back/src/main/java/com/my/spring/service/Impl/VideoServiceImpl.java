@@ -182,6 +182,15 @@ public class VideoServiceImpl implements VideoService {
 		}
 		return result;
 	}
+
+	// 당일 게임 동영상 통계수치 추적 (10개 기본 수치)
+	@Override
+	public DateStatistic getVideoDataTodayByTitle (String title) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+		String date = dateFormat.format(cal.getTime());
+		return mapper.getVideoDataByTitleAndDate(title, Date.valueOf(date));
+	}
 	
 	// 최근 7일 간 각 게임 별 동영상 통계수치 추적 (10개 기본 수치) -> 메인 페이지 차트뷰를 위한 형식
 	@Override
