@@ -6,6 +6,7 @@ import Chip from "@material-ui/core/Chip";
 import { ListFont } from "./Comps";
 import { ProfileChipContainer } from "./Comps";
 import { ResponsiveLine } from "@nivo/line";
+import { ResponsivePie } from "@nivo/pie";
 
 const TrendMainPage = () => {
   const [url] = useState("http://222.232.15.205:8082");
@@ -202,20 +203,7 @@ const TrendMainPage = () => {
           await axios
           .get(url + "/deploy/game/chart/today/" + element.title)
           .then(({data}) => {
-            temp = temp.concat({
-              title: element.title,
-              rank: data.rank,
-              numNewVid: data.numNewVid,
-              avgNewView: data.avgNewView,
-              avgNewLike: data.avgNewLike,
-              avgNewDislike: data.avgNewDislike,
-              avgNewComment: data.avgNewComment,
-              numAccuVid: data.numAccuVid,
-              avgAccuView: data.avgAccuView,
-              avgAccuLike: data.avgAccuLike,
-              avgAccuDislike: data.avgAccuDislike,
-              avgAccuComment: data.avgAccuComment
-            });
+            temp = temp.concat(data);
             setKeywords(temp);
           })
           .catch((e) => {
@@ -232,7 +220,7 @@ const TrendMainPage = () => {
   const getDataByTopic = async (topic) => {
     await axios
       .get(url + "/deploy/topic/statistic/" + topic)
-      .then(({data}) => {
+      .then(({ data }) => {
         setCtgrData(data);
       })
       .catch((e) => {
@@ -557,7 +545,25 @@ const TrendMainPage = () => {
             />
           </div>
           <div className="tmp_RankChangeBox">
-            <div className="tmp_BoxNameBar">채널 구독자 수 (미정)</div>
+            <div className="tmp_BoxNameBar">키워드 별 검색량</div>
+            <ResponsivePie
+              data={dataForAvgNewView}
+              margin={{ top: 15, right: 25, bottom: 75, left: 45 }}
+              innerRadius={0.5}
+              padAngle={0.7}
+              cornerRadius={3}
+              activeOuterRadiusOffset={8}
+              colors={{ scheme: 'nivo' }}
+              borderWidth={1}
+              borderColor={{ theme: 'background' }}
+              arcLinkLabelsSkipAngle={10}
+              arcLinkLabelsTextColor="#333333"
+              arcLinkLabelsThickness={2}
+              arcLinkLabelsColor={{ from: 'color' }}
+              arcLabelsSkipAngle={10}
+              arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
+              legends={[]}
+            />
           </div>
         </div>
         <div className="tmp_RightBox">
@@ -636,12 +642,12 @@ const TrendMainPage = () => {
                   className="tmp_PFKeywordInfoTop">장르 아울스코어</div>
                 <div
                   className="tmp_PFKeywordInfoBottom">
-                    {
-                      ctgrData === null
-                      ?(50.00)
-                      :(100*(ctgrData.ourScore)).toFixed(1)
-                    }
-                  </div>
+                  {
+                    ctgrData === null
+                      ? (50.00)
+                      : (100 * (ctgrData.ourScore)).toFixed(1)
+                  }
+                </div>
               </div>
               <div
                 className="tmp_PFKeywordInfoBox">
@@ -675,11 +681,11 @@ const TrendMainPage = () => {
                   className="tmp_PFKeywordInfoTop">평균 좋싫비</div>
                 <div
                   className="tmp_PFKeywordInfoBottom">
-                    {
-                      ctgrData === null
-                      ?(50.00)
-                      :Math.round((ctgrData.likeCount/ctgrData.dislikeCount))
-                    }
+                  {
+                    ctgrData === null
+                      ? (50.00)
+                      : (ctgrData.likeCount / ctgrData.dislikeCount).toFixed(1)
+                  }
                     &nbsp;: 1
                   </div>
               </div>
@@ -690,7 +696,6 @@ const TrendMainPage = () => {
             <div
               className="tmp_KeywordChipScroll">
               <ProfileChipContainer titles={titlesSelected} func1={selectGame}>
-
               </ProfileChipContainer>
             </div>
           </div>

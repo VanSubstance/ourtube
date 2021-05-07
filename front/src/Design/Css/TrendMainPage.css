@@ -345,6 +345,7 @@
     height: 24px;
     text-align: left;
     font-size: 1.1em;
+    font-weight: 500;
     font-family: "Spoqa Han Sans Neo" , "Roboto";
     color: white;
 }
@@ -356,7 +357,8 @@
     width: 105px;
     height: 23px;
     text-align: left;
-    font-size: 0.95em;
+    font-size: 0.9em;
+    font-weight: lighter;
     font-family: "Spoqa Han Sans Neo" , "Roboto";
     color: white;
 }
@@ -408,6 +410,13 @@
 }
 
 .tmp_PFThumbnail {
+    display: table;
+    margin: 0 auto;
+    width: 138px;
+    height: 138px;
+}
+
+.tmp_PFThumbnailChip {
     display: table;
     margin: 0 auto;
     width: 126px;

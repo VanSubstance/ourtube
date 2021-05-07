@@ -12,7 +12,7 @@ const ListFont = (props) => {
         <div className="tmp_KeywordScoreHead">누적 조회수</div>
         <div className="tmp_KeywordScoreHead">누적 동영상</div>
         <div className="tmp_KeywordScoreHead">누적 댓글수</div>
-        <div className="tmp_KeywordScoreHead">검색량</div>
+        <div className="tmp_KeywordScoreHead">누적 좋싫비</div>
       </div>
 
       <div id="scrollbitch">
@@ -42,11 +42,12 @@ const ListFont = (props) => {
               ></button>
               <div className="tmp_KeywordRankChip">{data.rank}</div>
               <div className="tmp_KeywordNameChip">{data.title}</div>
-              <div className="tmp_KeywordScoreChip">아울스코어</div>
+              <div className="tmp_KeywordScoreChip">{(100 * (data.ourScore)).toFixed(1)}</div>
               <div className="tmp_KeywordScoreChip">{data.avgAccuView}</div>
               <div className="tmp_KeywordScoreChip">{data.numAccuVid}</div>
               <div className="tmp_KeywordScoreChip">{data.avgAccuComment}</div>
-              <div className="tmp_KeywordScoreChip">검색량</div>
+              <div className="tmp_KeywordScoreChip">{(data.avgAccuLike/data.avgAccuDislike).toFixed(1)}
+                    &nbsp;: 1</div>
             </div>
           );
         })}
