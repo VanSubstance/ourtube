@@ -43,17 +43,17 @@ const ProfileChip = (props) => {
           >
             <div className="tmp_lookWell">자세히 보기</div>
           </a>
-          <div className="tmp_PFThumbnailCircle">
+          <div className="tmp_PFThumbnailCircleChip">
             <img className="tmp_PFThumbnail" src=
             {data.thumbnail !== undefined ? data.thumbnail : "/Ex/happy.jpg"}></img>
           </div>
           <div className="tmp_PFKeywordName">
             {data.title !== undefined ? data.title : "제목"}
           </div>
-          <div className="tmp_PFKeywordYear">
+          <div className="tmp_PFKeywordCTGR">
             {data.genre1 !== undefined ? data.genre1 : "장르 1"}
           </div>
-          <div className="tmp_PFKeywordCompony">
+          <div className="tmp_PFKeywordCTGR">
             {data.genre2 !== undefined ? data.genre2 : "장르 2"}
           </div>
         </div>

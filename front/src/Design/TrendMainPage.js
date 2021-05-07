@@ -328,8 +328,9 @@ const TrendMainPage = () => {
           <div className="tmp_RankChangeBox">
             <div className="tmp_BoxNameBar">키워드 일별 순위변동</div>
             <ResponsiveLine
+              className="tmp_ResponsiveLine"
               data={dataForRank}
-              margin={{ top: 20, right: 110, bottom: 100, left: 60 }}
+              margin={{ top: 5, right: 230, bottom: 75, left: 40 }}
               xScale={{ type: "point" }}
               yScale={{
                 type: "linear",
@@ -374,6 +375,7 @@ const TrendMainPage = () => {
                   },
                   legend: {
                     text: {
+                      fontSize: 10,
                       fill: "white"
                     }
                   }
@@ -422,7 +424,7 @@ const TrendMainPage = () => {
             <div className="tmp_BoxNameBar">신규 조회수</div>
             <ResponsiveLine
               data={dataForAvgNewView}
-              margin={{ top: 40, right: 25, bottom: 75, left: 45 }}
+              margin={{ top: 15, right: 25, bottom: 75, left: 45 }}
               xScale={{ type: "point" }}
               yScale={{
                 type: "linear",
@@ -484,41 +486,13 @@ const TrendMainPage = () => {
               pointBorderColor={{ from: "serieColor" }}
               pointLabelYOffset={-12}
               useMesh={true}
-              legends={[
-                {
-                  dataFrom: "keys",
-                  anchor: "top-left",
-                  direction: "row",
-                  justify: false,
-                  translateX: -25,
-                  translateY: -35,
-                  itemsSpacing: 30,
-                  itemDirection: "left-to-right",
-                  itemWidth: 60,
-                  itemHeight: 20,
-                  itemOpacity: 0.8,
-                  itemTextColor: "#ffffff",
-                  symbolSize: 12,
-                  symbolShape: "circle",
-                  symbolBorderColor: "rgba(0, 0, 0, .5)",
-                  effects: [
-                    {
-                      on: "hover",
-                      style: {
-                        itemBackground: "rgba(0, 0, 0, .03)",
-                        itemOpacity: 1,
-                      },
-                    },
-                  ],
-                },
-              ]}
             />
           </div>
           <div className="tmp_NewVideoBox">
             <div className="tmp_BoxNameBar">신규 동영상 수</div>
             <ResponsiveLine
               data={dataForNumNewVid}
-              margin={{ top: 40, right: 25, bottom: 75, left: 45 }}
+              margin={{ top: 15, right: 25, bottom: 75, left: 45 }}
               xScale={{ type: "point" }}
               yScale={{
                 type: "linear",
@@ -528,7 +502,7 @@ const TrendMainPage = () => {
                 reverse: false,
               }}
               yFormat=" >-.2f"
-              curve="monotoneX"
+              curve="linear"
               textColor="#ffffff"
               axisTop={null}
               axisRight={null}
@@ -580,34 +554,6 @@ const TrendMainPage = () => {
               pointBorderColor={{ from: "serieColor" }}
               pointLabelYOffset={-12}
               useMesh={true}
-              legends={[
-                {
-                  dataFrom: "keys",
-                  anchor: "top-left",
-                  direction: "row",
-                  justify: false,
-                  translateX: -25,
-                  translateY: -35,
-                  itemsSpacing: 30,
-                  itemDirection: "left-to-right",
-                  itemWidth: 60,
-                  itemHeight: 20,
-                  itemOpacity: 0.8,
-                  itemTextColor: "#ffffff",
-                  symbolSize: 12,
-                  symbolShape: "circle",
-                  symbolBorderColor: "rgba(0, 0, 0, .5)",
-                  effects: [
-                    {
-                      on: "hover",
-                      style: {
-                        itemBackground: "rgba(0, 0, 0, .03)",
-                        itemOpacity: 1,
-                      },
-                    },
-                  ],
-                },
-              ]}
             />
           </div>
           <div className="tmp_RankChangeBox">
@@ -690,12 +636,12 @@ const TrendMainPage = () => {
                   className="tmp_PFKeywordInfoTop">장르 아울스코어</div>
                 <div
                   className="tmp_PFKeywordInfoBottom">
-                  {
-                    ctgrData === null
-                      ? (50.00)
-                      : (ctgrData.ourScore)
-                  }
-                </div>
+                    {
+                      ctgrData === null
+                      ?(50.00)
+                      :(100*(ctgrData.ourScore)).toFixed(1)
+                    }
+                  </div>
               </div>
               <div
                 className="tmp_PFKeywordInfoBox">
@@ -726,9 +672,16 @@ const TrendMainPage = () => {
               <div
                 className="tmp_PFKeywordInfoBox">
                 <div
-                  className="tmp_PFKeywordInfoTop">좋싫비</div>
+                  className="tmp_PFKeywordInfoTop">평균 좋싫비</div>
                 <div
-                  className="tmp_PFKeywordInfoBottom">95.4%</div>
+                  className="tmp_PFKeywordInfoBottom">
+                    {
+                      ctgrData === null
+                      ?(50.00)
+                      :Math.round((ctgrData.likeCount/ctgrData.dislikeCount))
+                    }
+                    &nbsp;: 1
+                  </div>
               </div>
             </div>
           </div>
