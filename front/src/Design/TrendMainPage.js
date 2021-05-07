@@ -9,7 +9,7 @@ import { ResponsiveLine } from "@nivo/line";
 
 const TrendMainPage = () => {
   const [url] = useState("http://222.232.15.205:8082");
-  
+
   // 검색어
   let [searchVal] = useState("FPS");
 
@@ -51,6 +51,9 @@ const TrendMainPage = () => {
     getDatasetForKeyword(searchVal);
   }, []);
 
+  useEffect(() => {
+  }, [titlesSelected]);
+
   // method: 0 -> 추가, 1 -> 삭제
   const selectGame = (title, method) => {
     if (!titlesSelected.includes(title)) {
@@ -70,6 +73,7 @@ const TrendMainPage = () => {
         };
       }
     }
+    console.log(titleSelected);
     titleSelected.add === true
       ? addDataByGame(titleSelected.title)
       : deleteDataByGame(titleSelected.title);
@@ -89,18 +93,12 @@ const TrendMainPage = () => {
     setDataForRank(dataForRank.filter((dataForLine) => dataForLine.id !== title));
   };
 
-  // 우측 하단 컴포넌트에 게임 객체 일괄 삭제 -> ProfileChipContainer 안에 ProfileChip 전체 삭제
-  const clearProfileChipContainer = () => {
-
-  }
-
   // 장르 변경 시 데이터 초기화
   const clearTitlesSelected = () => {
-    clearProfileChipContainer();
     setDataForAvgNewView([]);
     setDataForNumNewVid([]);
     setDataForRank([]);
-    setTitlesSelected([]);    
+    setTitlesSelected([]);
     titleSelected = {
       title: "",
       add: true,
@@ -193,11 +191,37 @@ const TrendMainPage = () => {
         getDataByTopic(ctgr);
         getTopicRelevant(ctgr);
         clearTitlesSelected();
+        let games = [];
         if (data.length >= 10) {
-          setKeywords(data.slice(0, 10));
+          games = data.slice(0, 10);
         } else {
-          setKeywords(data);
+          games = data;
         }
+        let temp = [];
+        games.forEach(async (element) => {
+          await axios
+          .get(url + "/deploy/game/chart/today/" + element.title)
+          .then(({data}) => {
+            temp = temp.concat({
+              title: element.title,
+              rank: data.rank,
+              numNewVid: data.numNewVid,
+              avgNewView: data.avgNewView,
+              avgNewLike: data.avgNewLike,
+              avgNewDislike: data.avgNewDislike,
+              avgNewComment: data.avgNewComment,
+              numAccuVid: data.numAccuVid,
+              avgAccuView: data.avgAccuView,
+              avgAccuLike: data.avgAccuLike,
+              avgAccuDislike: data.avgAccuDislike,
+              avgAccuComment: data.avgAccuComment
+            });
+            setKeywords(temp);
+          })
+          .catch((e) => {
+            console.error(e);
+          })
+        });
       })
       .catch((e) => {
         console.error(e);
@@ -209,7 +233,6 @@ const TrendMainPage = () => {
     await axios
       .get(url + "/deploy/topic/statistic/" + topic)
       .then(({data}) => {
-        console.log(data);
         setCtgrData(data);
       })
       .catch((e) => {
@@ -300,13 +323,14 @@ const TrendMainPage = () => {
             </div>
           </div>
           <div className="tmp_KeywordRankBox">
-            <ListFont keywords={keywords} func = {selectGame}></ListFont>
+            <ListFont keywords={keywords} func={selectGame}></ListFont>
           </div>
           <div className="tmp_RankChangeBox">
             <div className="tmp_BoxNameBar">키워드 일별 순위변동</div>
             <ResponsiveLine
+              className="tmp_ResponsiveLine"
               data={dataForRank}
-              margin={{ top: 20, right: 110, bottom: 100, left: 60 }}
+              margin={{ top: 5, right: 230, bottom: 75, left: 40 }}
               xScale={{ type: "point" }}
               yScale={{
                 type: "linear",
@@ -351,6 +375,7 @@ const TrendMainPage = () => {
                   },
                   legend: {
                     text: {
+                      fontSize: 10,
                       fill: "white"
                     }
                   }
@@ -399,7 +424,7 @@ const TrendMainPage = () => {
             <div className="tmp_BoxNameBar">신규 조회수</div>
             <ResponsiveLine
               data={dataForAvgNewView}
-              margin={{ top: 40, right: 25, bottom: 75, left: 45 }}
+              margin={{ top: 15, right: 25, bottom: 75, left: 45 }}
               xScale={{ type: "point" }}
               yScale={{
                 type: "linear",
@@ -461,41 +486,13 @@ const TrendMainPage = () => {
               pointBorderColor={{ from: "serieColor" }}
               pointLabelYOffset={-12}
               useMesh={true}
-              legends={[
-                {
-                  dataFrom: "keys",
-                  anchor: "top-left",
-                  direction: "row",
-                  justify: false,
-                  translateX: -25,
-                  translateY: -35,
-                  itemsSpacing: 30,
-                  itemDirection: "left-to-right",
-                  itemWidth: 60,
-                  itemHeight: 20,
-                  itemOpacity: 0.8,
-                  itemTextColor: "#ffffff",
-                  symbolSize: 12,
-                  symbolShape: "circle",
-                  symbolBorderColor: "rgba(0, 0, 0, .5)",
-                  effects: [
-                    {
-                      on: "hover",
-                      style: {
-                        itemBackground: "rgba(0, 0, 0, .03)",
-                        itemOpacity: 1,
-                      },
-                    },
-                  ],
-                },
-              ]}
             />
           </div>
           <div className="tmp_NewVideoBox">
             <div className="tmp_BoxNameBar">신규 동영상 수</div>
             <ResponsiveLine
               data={dataForNumNewVid}
-              margin={{ top: 40, right: 25, bottom: 75, left: 45 }}
+              margin={{ top: 15, right: 25, bottom: 75, left: 45 }}
               xScale={{ type: "point" }}
               yScale={{
                 type: "linear",
@@ -505,7 +502,7 @@ const TrendMainPage = () => {
                 reverse: false,
               }}
               yFormat=" >-.2f"
-              curve="monotoneX"
+              curve="linear"
               textColor="#ffffff"
               axisTop={null}
               axisRight={null}
@@ -557,34 +554,6 @@ const TrendMainPage = () => {
               pointBorderColor={{ from: "serieColor" }}
               pointLabelYOffset={-12}
               useMesh={true}
-              legends={[
-                {
-                  dataFrom: "keys",
-                  anchor: "top-left",
-                  direction: "row",
-                  justify: false,
-                  translateX: -25,
-                  translateY: -35,
-                  itemsSpacing: 30,
-                  itemDirection: "left-to-right",
-                  itemWidth: 60,
-                  itemHeight: 20,
-                  itemOpacity: 0.8,
-                  itemTextColor: "#ffffff",
-                  symbolSize: 12,
-                  symbolShape: "circle",
-                  symbolBorderColor: "rgba(0, 0, 0, .5)",
-                  effects: [
-                    {
-                      on: "hover",
-                      style: {
-                        itemBackground: "rgba(0, 0, 0, .03)",
-                        itemOpacity: 1,
-                      },
-                    },
-                  ],
-                },
-              ]}
             />
           </div>
           <div className="tmp_RankChangeBox">
@@ -627,22 +596,22 @@ const TrendMainPage = () => {
                 <div className="tmp_PFRelaCTGR">
                   {
                     ctgrsRelevant !== null && ctgrsRelevant[0] !== null
-                    ?(ctgrsRelevant[0])
-                    :("연관카테고리")
+                      ? (ctgrsRelevant[0])
+                      : ("연관카테고리")
                   }
                 </div>
                 <div className="tmp_PFRelaCTGR">
                   {
                     ctgrsRelevant !== null && ctgrsRelevant[1] !== null
-                    ?(ctgrsRelevant[1])
-                    :("연관카테고리")
+                      ? (ctgrsRelevant[1])
+                      : ("연관카테고리")
                   }
                 </div>
                 <div className="tmp_PFRelaCTGR">
                   {
                     ctgrsRelevant !== null && ctgrsRelevant[2] !== null
-                    ?(ctgrsRelevant[2])
-                    :("연관카테고리")
+                      ? (ctgrsRelevant[2])
+                      : ("연관카테고리")
                   }
                 </div>
               </div>
@@ -656,10 +625,10 @@ const TrendMainPage = () => {
                   className="tmp_PFKeywordInfoBottom">
                   {
                     ctgrData === null
-                    ?(0)
-                    :(ctgrData.rank)
+                      ? (0)
+                      : (ctgrData.rank)
                   }
-                  </div>
+                </div>
               </div>
               <div
                 className="tmp_PFKeywordInfoBox">
@@ -670,7 +639,7 @@ const TrendMainPage = () => {
                     {
                       ctgrData === null
                       ?(50.00)
-                      :(ctgrData.ourScore)
+                      :(100*(ctgrData.ourScore)).toFixed(1)
                     }
                   </div>
               </div>
@@ -682,8 +651,8 @@ const TrendMainPage = () => {
                   className="tmp_PFKeywordInfoBottom">
                   {
                     ctgrData === null
-                    ?(50.00)
-                    :(ctgrData.resultCount)
+                      ? (50.00)
+                      : (ctgrData.resultCount)
                   }
                 </div>
               </div>
@@ -695,27 +664,34 @@ const TrendMainPage = () => {
                   className="tmp_PFKeywordInfoBottom">
                   {
                     ctgrData === null
-                    ?(50.00)
-                    :(ctgrData.viewCount)
+                      ? (50.00)
+                      : (ctgrData.viewCount)
                   }
                 </div>
               </div>
               <div
                 className="tmp_PFKeywordInfoBox">
                 <div
-                  className="tmp_PFKeywordInfoTop">좋싫비</div>
+                  className="tmp_PFKeywordInfoTop">평균 좋싫비</div>
                 <div
-                  className="tmp_PFKeywordInfoBottom">95.4%</div>
+                  className="tmp_PFKeywordInfoBottom">
+                    {
+                      ctgrData === null
+                      ?(50.00)
+                      :Math.round((ctgrData.likeCount/ctgrData.dislikeCount))
+                    }
+                    &nbsp;: 1
+                  </div>
               </div>
             </div>
           </div>
           <div className="tmp_KeywordChipBox">
-            <button className="tmp_KeywordChipClearAllbutton" onClick = {() => {clearTitlesSelected()}}>전부 지우기</button>
+            <button className="tmp_KeywordChipClearAllbutton" onClick={() => { clearTitlesSelected() }}>전부 지우기</button>
             <div
               className="tmp_KeywordChipScroll">
-                <ProfileChipContainer titles = {titlesSelected} func1 = {selectGame}>
+              <ProfileChipContainer titles={titlesSelected} func1={selectGame}>
 
-                </ProfileChipContainer>
+              </ProfileChipContainer>
             </div>
           </div>
         </div>

@@ -1,4 +1,3 @@
-import { TableHead } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 import '../Styles.css';
 import axios from "axios";
@@ -23,7 +22,6 @@ const ProfileChip = (props) => {
     await axios
       .get(url + "/deploy/game/profile/" + title)
       .then(({data}) => {
-        console.log(data);
         setData({
           title: title,
           thumbnail: data.thumbnail,
@@ -41,21 +39,21 @@ const ProfileChip = (props) => {
           <button className="tmp_PFBoxDeleteButton" onClick = {() => {props.func(data.title, 1)}}>X</button>
           <a
             className="tmp_lookWellBox"
-            // href={/game/ + props.keyword.title}
+            href={/game/ + props.title}
           >
             <div className="tmp_lookWell">자세히 보기</div>
           </a>
-          <div className="tmp_PFThumbnailCircle">
+          <div className="tmp_PFThumbnailCircleChip">
             <img className="tmp_PFThumbnail" src=
             {data.thumbnail !== undefined ? data.thumbnail : "/Ex/happy.jpg"}></img>
           </div>
           <div className="tmp_PFKeywordName">
             {data.title !== undefined ? data.title : "제목"}
           </div>
-          <div className="tmp_PFKeywordYear">
+          <div className="tmp_PFKeywordCTGR">
             {data.genre1 !== undefined ? data.genre1 : "장르 1"}
           </div>
-          <div className="tmp_PFKeywordCompony">
+          <div className="tmp_PFKeywordCTGR">
             {data.genre2 !== undefined ? data.genre2 : "장르 2"}
           </div>
         </div>
