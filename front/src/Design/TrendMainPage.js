@@ -9,7 +9,7 @@ import { ResponsiveLine } from "@nivo/line";
 
 const TrendMainPage = () => {
   const [url] = useState("http://222.232.15.205:8082");
-  
+
   // 검색어
   let [searchVal] = useState("FPS");
 
@@ -51,6 +51,11 @@ const TrendMainPage = () => {
     getDatasetForKeyword(searchVal);
   }, []);
 
+  useEffect(() => {
+    console.log("titlesSelected 변화");
+    console.log(titlesSelected);
+  }, [titlesSelected]);
+
   // method: 0 -> 추가, 1 -> 삭제
   const selectGame = (title, method) => {
     if (!titlesSelected.includes(title)) {
@@ -70,6 +75,7 @@ const TrendMainPage = () => {
         };
       }
     }
+    console.log(titleSelected);
     titleSelected.add === true
       ? addDataByGame(titleSelected.title)
       : deleteDataByGame(titleSelected.title);
@@ -89,18 +95,12 @@ const TrendMainPage = () => {
     setDataForRank(dataForRank.filter((dataForLine) => dataForLine.id !== title));
   };
 
-  // 우측 하단 컴포넌트에 게임 객체 일괄 삭제 -> ProfileChipContainer 안에 ProfileChip 전체 삭제
-  const clearProfileChipContainer = () => {
-
-  }
-
   // 장르 변경 시 데이터 초기화
   const clearTitlesSelected = () => {
-    clearProfileChipContainer();
     setDataForAvgNewView([]);
     setDataForNumNewVid([]);
     setDataForRank([]);
-    setTitlesSelected([]);    
+    setTitlesSelected([]);
     titleSelected = {
       title: "",
       add: true,
@@ -209,7 +209,6 @@ const TrendMainPage = () => {
     await axios
       .get(url + "/deploy/topic/statistic/" + topic)
       .then(({data}) => {
-        console.log(data);
         setCtgrData(data);
       })
       .catch((e) => {
@@ -300,7 +299,7 @@ const TrendMainPage = () => {
             </div>
           </div>
           <div className="tmp_KeywordRankBox">
-            <ListFont keywords={keywords} func = {selectGame}></ListFont>
+            <ListFont keywords={keywords} func={selectGame}></ListFont>
           </div>
           <div className="tmp_RankChangeBox">
             <div className="tmp_BoxNameBar">키워드 일별 순위변동</div>
@@ -573,22 +572,22 @@ const TrendMainPage = () => {
                 <div className="tmp_PFRelaCTGR">
                   {
                     ctgrsRelevant !== null && ctgrsRelevant[0] !== null
-                    ?(ctgrsRelevant[0])
-                    :("연관카테고리")
+                      ? (ctgrsRelevant[0])
+                      : ("연관카테고리")
                   }
                 </div>
                 <div className="tmp_PFRelaCTGR">
                   {
                     ctgrsRelevant !== null && ctgrsRelevant[1] !== null
-                    ?(ctgrsRelevant[1])
-                    :("연관카테고리")
+                      ? (ctgrsRelevant[1])
+                      : ("연관카테고리")
                   }
                 </div>
                 <div className="tmp_PFRelaCTGR">
                   {
                     ctgrsRelevant !== null && ctgrsRelevant[2] !== null
-                    ?(ctgrsRelevant[2])
-                    :("연관카테고리")
+                      ? (ctgrsRelevant[2])
+                      : ("연관카테고리")
                   }
                 </div>
               </div>
@@ -602,10 +601,10 @@ const TrendMainPage = () => {
                   className="tmp_PFKeywordInfoBottom">
                   {
                     ctgrData === null
-                    ?(0)
-                    :(ctgrData.rank)
+                      ? (0)
+                      : (ctgrData.rank)
                   }
-                  </div>
+                </div>
               </div>
               <div
                 className="tmp_PFKeywordInfoBox">
@@ -628,8 +627,8 @@ const TrendMainPage = () => {
                   className="tmp_PFKeywordInfoBottom">
                   {
                     ctgrData === null
-                    ?(50.00)
-                    :(ctgrData.resultCount)
+                      ? (50.00)
+                      : (ctgrData.resultCount)
                   }
                 </div>
               </div>
@@ -641,8 +640,8 @@ const TrendMainPage = () => {
                   className="tmp_PFKeywordInfoBottom">
                   {
                     ctgrData === null
-                    ?(50.00)
-                    :(ctgrData.viewCount)
+                      ? (50.00)
+                      : (ctgrData.viewCount)
                   }
                 </div>
               </div>
@@ -663,12 +662,12 @@ const TrendMainPage = () => {
             </div>
           </div>
           <div className="tmp_KeywordChipBox">
-            <button className="tmp_KeywordChipClearAllbutton" onClick = {() => {clearTitlesSelected()}}>전부 지우기</button>
+            <button className="tmp_KeywordChipClearAllbutton" onClick={() => { clearTitlesSelected() }}>전부 지우기</button>
             <div
               className="tmp_KeywordChipScroll">
-                <ProfileChipContainer titles = {titlesSelected} func1 = {selectGame}>
+              <ProfileChipContainer titles={titlesSelected} func1={selectGame}>
 
-                </ProfileChipContainer>
+              </ProfileChipContainer>
             </div>
           </div>
         </div>

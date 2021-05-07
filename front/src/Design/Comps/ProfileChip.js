@@ -1,4 +1,3 @@
-import { TableHead } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 import '../Styles.css';
 import axios from "axios";
@@ -23,7 +22,6 @@ const ProfileChip = (props) => {
     await axios
       .get(url + "/deploy/game/profile/" + title)
       .then(({data}) => {
-        console.log(data);
         setData({
           title: title,
           thumbnail: data.thumbnail,
@@ -41,7 +39,7 @@ const ProfileChip = (props) => {
           <button className="tmp_PFBoxDeleteButton" onClick = {() => {props.func(data.title, 1)}}>X</button>
           <a
             className="tmp_lookWellBox"
-            // href={/game/ + props.keyword.title}
+            href={/game/ + props.title}
           >
             <div className="tmp_lookWell">자세히 보기</div>
           </a>
