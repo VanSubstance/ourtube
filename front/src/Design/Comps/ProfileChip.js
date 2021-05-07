@@ -1,4 +1,3 @@
-import { TableHead } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 import '../Styles.css';
 import axios from "axios";
@@ -23,7 +22,6 @@ const ProfileChip = (props) => {
     await axios
       .get(url + "/deploy/game/profile/" + title)
       .then(({data}) => {
-        console.log(data);
         setData({
           title: title,
           thumbnail: data.thumbnail,

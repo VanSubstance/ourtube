@@ -51,6 +51,11 @@ const TrendMainPage = () => {
     getDatasetForKeyword(searchVal);
   }, []);
 
+  useEffect(() => {
+    console.log("titlesSelected 변화");
+    console.log(titlesSelected);
+  }, [titlesSelected]);
+
   // method: 0 -> 추가, 1 -> 삭제
   const selectGame = (title, method) => {
     if (!titlesSelected.includes(title)) {
@@ -70,6 +75,7 @@ const TrendMainPage = () => {
         };
       }
     }
+    console.log(titleSelected);
     titleSelected.add === true
       ? addDataByGame(titleSelected.title)
       : deleteDataByGame(titleSelected.title);
@@ -209,7 +215,6 @@ const TrendMainPage = () => {
     await axios
       .get(url + "/deploy/topic/statistic/" + topic)
       .then(({data}) => {
-        console.log(data);
         setCtgrData(data);
       })
       .catch((e) => {
