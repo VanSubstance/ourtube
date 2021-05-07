@@ -7,7 +7,6 @@ const ProfileChipContainer = (props) => {
   const [titles, setTitles] = useState([]);
 
   useEffect(() => {
-    console.log(props.titles);
     setTitles(props.titles);
   }, [props.titles]);
 

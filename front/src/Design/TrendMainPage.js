@@ -52,8 +52,6 @@ const TrendMainPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log("titlesSelected 변화");
-    console.log(titlesSelected);
   }, [titlesSelected]);
 
   // method: 0 -> 추가, 1 -> 삭제
@@ -193,11 +191,37 @@ const TrendMainPage = () => {
         getDataByTopic(ctgr);
         getTopicRelevant(ctgr);
         clearTitlesSelected();
+        let games = [];
         if (data.length >= 10) {
-          setKeywords(data.slice(0, 10));
+          games = data.slice(0, 10);
         } else {
-          setKeywords(data);
+          games = data;
         }
+        let temp = [];
+        games.forEach(async (element) => {
+          await axios
+          .get(url + "/deploy/game/chart/today/" + element.title)
+          .then(({data}) => {
+            temp = temp.concat({
+              title: element.title,
+              rank: data.rank,
+              numNewVid: data.numNewVid,
+              avgNewView: data.avgNewView,
+              avgNewLike: data.avgNewLike,
+              avgNewDislike: data.avgNewDislike,
+              avgNewComment: data.avgNewComment,
+              numAccuVid: data.numAccuVid,
+              avgAccuView: data.avgAccuView,
+              avgAccuLike: data.avgAccuLike,
+              avgAccuDislike: data.avgAccuDislike,
+              avgAccuComment: data.avgAccuComment
+            });
+            setKeywords(temp);
+          })
+          .catch((e) => {
+            console.error(e);
+          })
+        });
       })
       .catch((e) => {
         console.error(e);
