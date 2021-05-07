@@ -41,7 +41,7 @@ const ProfileChip = (props) => {
           <button className="tmp_PFBoxDeleteButton" onClick = {() => {props.func(data.title, 1)}}>X</button>
           <a
             className="tmp_lookWellBox"
-            // href={/game/ + props.keyword.title}
+            href={/game/ + props.title}
           >
             <div className="tmp_lookWell">자세히 보기</div>
           </a>
