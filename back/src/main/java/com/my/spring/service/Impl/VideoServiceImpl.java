@@ -219,26 +219,35 @@ public class VideoServiceImpl implements VideoService {
 		for (Date targetDate : dates) {
 			// 3. 해당 날짜 + 게임 데이터 결과 객체에 추가
 			DateStatistic dataTemp = mapper.getVideoDataByTitleAndDate(title, targetDate);
-			// AvgNumView
-			DataForLine dataForLine = new DataForLine();
-			dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
-			/////////////////////////////////////////////////////////////////////////////////////////// 버그 구간
-			dataForLine.setY(dataTemp.getAvgNewView());
-			dataForAvgNewView.add(dataForLine);
-			// NumNewVid
-			dataForLine = new DataForLine();
-			dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
-			dataForLine.setY(dataTemp.getNumNewVid());
-			dataForNumNewVid.add(dataForLine);
-			// rank
-			dataForLine = new DataForLine();
-			dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
-			if (dataTemp.getRank() != null) {
-				dataForLine.setY(dataTemp.getRank());
-			} else {
-				dataForLine.setY(0);
+			if (dataTemp != null) {
+				// AvgNumView
+				DataForLine dataForLine = new DataForLine();
+				dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
+				if (dataTemp.getAvgNewView() != null) {
+					dataForLine.setY(dataTemp.getAvgNewView());
+				} else {
+					dataForLine.setY(0);
+				}
+				dataForAvgNewView.add(dataForLine);
+				// NumNewVid
+				dataForLine = new DataForLine();
+				dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
+				if (dataTemp.getNumNewVid() != null) {
+					dataForLine.setY(dataTemp.getNumNewVid());
+				} else {
+					dataForLine.setY(0);
+				}
+				dataForNumNewVid.add(dataForLine);
+				// rank
+				dataForLine = new DataForLine();
+				dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
+				if (dataTemp.getRank() != null) {
+					dataForLine.setY(dataTemp.getRank());
+				} else {
+					dataForLine.setY(0);
+				}
+				dataForRank.add(dataForLine);
 			}
-			dataForRank.add(dataForLine);
 		}
 		result.put("avgNewView", dataForAvgNewView);
 		result.put("numNewVid", dataForNumNewVid);
