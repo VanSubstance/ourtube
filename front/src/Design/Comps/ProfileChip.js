@@ -12,10 +12,10 @@ const ProfileChip = (props) => {
     genre2:""
   });
 
-  // 생성시 게임 제목 -> 필요한 데이터 불러오기
+  // 게임 제목 변경 시 -> 필요한 데이터 불러오기
   useEffect(() => {
     getData(props.title);
-  }, []);
+  }, [props.title]);
 
   // 장르 리스트 가져오기: 최대 7개
   const getData = async(title) => {

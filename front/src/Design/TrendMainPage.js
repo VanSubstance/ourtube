@@ -74,7 +74,6 @@ const TrendMainPage = () => {
         };
       }
     }
-    console.log(titleSelected);
     titleSelected.add === true
       ? addDataByGame(titleSelected.title)
       : deleteDataByGame(titleSelected.title);
@@ -92,6 +91,7 @@ const TrendMainPage = () => {
     setDataForAvgNewView(dataForAvgNewView.filter((dataForLine) => dataForLine.id !== title));
     setDataForNumNewVid(dataForNumNewVid.filter((dataForLine) => dataForLine.id !== title));
     setDataForRank(dataForRank.filter((dataForLine) => dataForLine.id !== title));
+    setTitlesSelected(titlesSelected.filter((data) => data !== title));
   };
 
   // 장르 변경 시 데이터 초기화
@@ -695,7 +695,7 @@ const TrendMainPage = () => {
             <button className="tmp_KeywordChipClearAllbutton" onClick={() => { clearTitlesSelected() }}>전부 지우기</button>
             <div
               className="tmp_KeywordChipScroll">
-              <ProfileChipContainer titles={titlesSelected} func1={selectGame}>
+              <ProfileChipContainer titles={titlesSelected} func={selectGame}>
               </ProfileChipContainer>
             </div>
           </div>
