@@ -87,7 +87,7 @@ const TrendMainPage = () => {
   };
 
   // 게임 선택 해제 = 해당 게임 데이터 삭제
-  // 후측 하단 컴포넌트에 게임 객체 삭제 -> ProfileChipContainer 안에 해당 ProfileChip 생성
+  // 후측 하단 컴포넌트에 게임 객체 삭제 -> ProfileChipContainer 안에 해당 ProfileChip 삭제
   const deleteDataByGame = (title) => {
     setDataForAvgNewView(dataForAvgNewView.filter((dataForLine) => dataForLine.id !== title));
     setDataForNumNewVid(dataForNumNewVid.filter((dataForLine) => dataForLine.id !== title));
