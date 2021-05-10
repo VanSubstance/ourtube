@@ -210,6 +210,8 @@ public class VideoServiceImpl implements VideoService {
 		List<DataForLine> dataForAvgNewView = new ArrayList<DataForLine>();
 		List<DataForLine> dataForNumNewVid = new ArrayList<DataForLine>();
 		List<DataForLine> dataForRank = new ArrayList<DataForLine>();
+		Integer dataForAvgAccuComment = 0;
+		List<Integer> dataForBar = new ArrayList<Integer>();
 		// 2. 각 날짜 별 데이터 호출
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		List<Date> dates = new ArrayList<Date>(); 
@@ -230,8 +232,10 @@ public class VideoServiceImpl implements VideoService {
 				dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
 				if (dataTemp.getAvgNewView() != null) {
 					dataForLine.setY(dataTemp.getAvgNewView());
+					dataForBar.add(dataTemp.getAvgNewView());
 				} else {
 					dataForLine.setY(0);
+					dataForBar.add(0);
 				}
 				dataForAvgNewView.add(dataForLine);
 				// NumNewVid
@@ -252,11 +256,14 @@ public class VideoServiceImpl implements VideoService {
 					dataForLine.setY(0);
 				}
 				dataForRank.add(dataForLine);
+				dataForAvgAccuComment = dataTemp.getAvgAccuComment();
 			}
 		}
 		result.put("avgNewView", dataForAvgNewView);
 		result.put("numNewVid", dataForNumNewVid);
 		result.put("rank", dataForRank);
+		result.put("avgAccuComment", dataForAvgAccuComment);
+		result.put("avgNewViewForBar", dataForBar);
 		return result;
 	}
 
