@@ -1,8 +1,38 @@
-import { TableHead } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import "../Styles.css";
 
 const ListFont = (props) => {
+  // 1. ListFont에 지역 변수 선언 <- 정렬된 prop.keywords를 받기 위한 변수
+  const [sortByRankList, setSortByRankList] = useState([]);
+
+  useEffect(() => {
+    setSortByRankList([]);
+    sortByRank(props.keywords);
+  }, [props.keywords]);
+
+  // 2. ListFont에 정렬 함수 선언
+  const sortByRank = (dataRaw) => {
+    let arraySort = [];
+    dataRaw.forEach(({ rank }) => {
+      arraySort = arraySort.concat(rank);
+      // 정렬된 arraySort
+      arraySort.sort(function (a, b) {
+        if (a > b) return 1;
+        if (a === b) return 0;
+        if (a < b) return -1;
+      });
+    });
+    let result = [];
+    // 정렬된 rank와 이전의 rank와 비교 후 같으면 map 전체 출력
+    arraySort.forEach((rankSorted) => {
+      dataRaw.forEach((dataTemp) => {
+        if (rankSorted === dataTemp.rank) {
+          result = result.concat(dataTemp);
+        }
+      });
+    });
+    setSortByRankList(result);
+  };
   return (
     <div>
       <div className="tmp_BoxNameBarNoPad">
@@ -33,7 +63,7 @@ const ListFont = (props) => {
           avgAccuComment: data.avgAccuComment
         }
         */}
-        {props.keywords.map((data, index) => {
+        {sortByRankList.map((data) => {
           return (
             <div className="tmp_KeywordRankParent">
               <button
@@ -42,12 +72,16 @@ const ListFont = (props) => {
               ></button>
               <div className="tmp_KeywordRankChip">{data.rank}</div>
               <div className="tmp_KeywordNameChip">{data.title}</div>
-              <div className="tmp_KeywordScoreChip">{(100 * (data.ourScore)).toFixed(1)}</div>
+              <div className="tmp_KeywordScoreChip">
+                {(100 * data.ourScore).toFixed(1)}
+              </div>
               <div className="tmp_KeywordScoreChip">{data.avgAccuView}</div>
               <div className="tmp_KeywordScoreChip">{data.numAccuVid}</div>
               <div className="tmp_KeywordScoreChip">{data.avgAccuComment}</div>
-              <div className="tmp_KeywordScoreChip">{(data.avgAccuLike/data.avgAccuDislike).toFixed(1)}
-                    &nbsp;: 1</div>
+              <div className="tmp_KeywordScoreChip">
+                {(data.avgAccuLike / data.avgAccuDislike).toFixed(1)}
+                &nbsp;: 1
+              </div>
             </div>
           );
         })}
