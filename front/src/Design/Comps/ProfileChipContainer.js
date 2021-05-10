@@ -4,7 +4,8 @@ import ProfileChip from "./ProfileChip";
 
 const ProfileChipContainer = ({ titles, func }) => {
   return (
-    <div>
+    <div
+      className="tmp_ProfileChipContainer">
       {
         titles.map((title) => (
           <ProfileChip title={title} func={func}></ProfileChip>

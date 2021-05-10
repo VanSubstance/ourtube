@@ -204,7 +204,7 @@
 
 .tmp_pieBox {
     float: left;
-    width: 385px;
+    width: 455px;
     height: 340px;
     margin: 20px 0px 0px 0px;
     background-color: rgba(0, 0, 0, 0.5);
@@ -220,7 +220,7 @@
 
 .tmp_barBox {
     float: left;
-    width: 525px;
+    width: 455px;
     height: 340px;
     margin: 20px 0px 0px 20px;
     background-color: rgba(0, 0, 0, 0.5);
@@ -231,14 +231,17 @@
     overflow: hidden;
     width: 100%;
     height: 160px;
+    margin: 10px 0px 10px 0px;
     background-color: rgba(0, 0, 0, 0.5);
+    border-top: solid 1px rgba(255, 255, 255, 0.8);
+    border-bottom: solid 1px rgba(255, 255, 255, 0.8);
 }
 
 .tmp_lookWellBox {
     position: absolute;
     background-color: rgba(255, 255, 255, 1);
     left: 40px;
-    top: 120px;
+    top: 115px;
     width: 100px;
     height: 35px;
     display: flex;
@@ -324,7 +327,7 @@
     overflow: hidden;
     position: relative;
     float: left;
-    margin: 15px 10px 0px 15px;
+    margin: 10px 10px 0px 15px;
     width: 120px;
     height: 120px;
     border: 2px solid white;
@@ -782,4 +785,8 @@
     font-size: 100%;
     font-weight: 400;
     width: 1100px;
+}
+
+.tmp_ProfileChipContainer {
+
 }

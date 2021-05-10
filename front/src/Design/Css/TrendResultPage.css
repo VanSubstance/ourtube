@@ -276,7 +276,15 @@
     width: 10px;
     border-radius: 10px;
     background-clip: padding-box;
-    border: 1px solid transparent;
+    border: 2px solid transparent;
+}
+
+.trp_CommentList::-webkit-scrollbar-thumb:hover {
+    background-color: darkgrey;
+    width: 10px;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
 }
 
 .trp_CommentList::-webkit-scrollbar-corner {
