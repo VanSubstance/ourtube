@@ -107,6 +107,7 @@ public class VideoServiceImpl implements VideoService {
 	private List<Double> formulaAByDouble(List<Double> Xs, double weight) {
 		List<Double> result = new ArrayList<Double>();
 		for (Double x : Xs) {
+			if (x == null) x = 0.0;
 			result.add((1.0 - (1.0 / ((100.0 * x) + 1.0))) * weight);
 		}
 		return result;
@@ -115,7 +116,8 @@ public class VideoServiceImpl implements VideoService {
 	// 아울스코어를 위한 그래프 수식: A
 	private List<Double> formulaAByInteger(List<Integer> Xs, double weight) {
 		List<Double> result = new ArrayList<Double>();
-		for (int x : Xs) {
+		for (Integer x : Xs) {
+			if (x == null) x = 0;
 			result.add((1.0 - (1.0 / ((double)x + 1.0))) * weight);
 		}
 		return result;
@@ -125,6 +127,7 @@ public class VideoServiceImpl implements VideoService {
 	private List<Double> formulaBByDouble(List<Double> Xs, double avg, double weight) {
 		List<Double> result = new ArrayList<Double>();
 		for (Double x : Xs) {
+			if (x == null) x = 0.0;
 			if (x == avg) result.add(weight / 2.0);
 			else if (x > avg) result.add(((1.0 / Math.pow(2.0, 0.5) * Math.pow(x - avg, 0.5)) + 0.5) * weight);
 			else result.add(((-1.0 / Math.pow(2.0, 0.5) * Math.pow(avg - x, 0.5)) + 0.5) * weight);
@@ -134,7 +137,8 @@ public class VideoServiceImpl implements VideoService {
 	// 아울스코어 그래프 수식: B
 	private List<Double> formulaBByInteger(List<Integer> Xs, double avg, double weight) {
 		List<Double> result = new ArrayList<Double>();
-		for (int x : Xs) {
+		for (Integer x : Xs) {
+			if (x == null) x = 0;
 			if (x >= avg) result.add((1.0 - (1.0/(2.0*((double)x + 1.0 - avg)))) * weight);
 			else result.add((-1.0/(2.0*(x - 1.0 - avg))) * weight);
 		}
@@ -145,6 +149,7 @@ public class VideoServiceImpl implements VideoService {
 	private List<Double> formulaCByDouble(List<Double> Xs, double weight) {
 		List<Double> result = new ArrayList<Double>();
 		for (Double x : Xs) {
+			if (x == null) x = 0.0;
 			if (1000.0 > x) result.add(1.0 * weight);
 			else if (x >= 0) result.add(((Math.pow(x / 1000.0, 2.0) / 2.0) + (1.0/2.0)) * weight);
 			else if (x < -1000) result.add(-1.0 * weight);
@@ -205,6 +210,8 @@ public class VideoServiceImpl implements VideoService {
 		List<DataForLine> dataForAvgNewView = new ArrayList<DataForLine>();
 		List<DataForLine> dataForNumNewVid = new ArrayList<DataForLine>();
 		List<DataForLine> dataForRank = new ArrayList<DataForLine>();
+		Integer dataForAvgAccuComment = 0;
+		List<Integer> dataForBar = new ArrayList<Integer>();
 		// 2. 각 날짜 별 데이터 호출
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		List<Date> dates = new ArrayList<Date>(); 
@@ -219,30 +226,44 @@ public class VideoServiceImpl implements VideoService {
 		for (Date targetDate : dates) {
 			// 3. 해당 날짜 + 게임 데이터 결과 객체에 추가
 			DateStatistic dataTemp = mapper.getVideoDataByTitleAndDate(title, targetDate);
-			// AvgNumView
-			DataForLine dataForLine = new DataForLine();
-			dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
-			/////////////////////////////////////////////////////////////////////////////////////////// 버그 구간
-			dataForLine.setY(dataTemp.getAvgNewView());
-			dataForAvgNewView.add(dataForLine);
-			// NumNewVid
-			dataForLine = new DataForLine();
-			dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
-			dataForLine.setY(dataTemp.getNumNewVid());
-			dataForNumNewVid.add(dataForLine);
-			// rank
-			dataForLine = new DataForLine();
-			dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
-			if (dataTemp.getRank() != null) {
-				dataForLine.setY(dataTemp.getRank());
-			} else {
-				dataForLine.setY(0);
+			if (dataTemp != null) {
+				// AvgNumView
+				DataForLine dataForLine = new DataForLine();
+				dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
+				if (dataTemp.getAvgNewView() != null) {
+					dataForLine.setY(dataTemp.getAvgNewView());
+					dataForBar.add(dataTemp.getAvgNewView());
+				} else {
+					dataForLine.setY(0);
+					dataForBar.add(0);
+				}
+				dataForAvgNewView.add(dataForLine);
+				// NumNewVid
+				dataForLine = new DataForLine();
+				dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
+				if (dataTemp.getNumNewVid() != null) {
+					dataForLine.setY(dataTemp.getNumNewVid());
+				} else {
+					dataForLine.setY(0);
+				}
+				dataForNumNewVid.add(dataForLine);
+				// rank
+				dataForLine = new DataForLine();
+				dataForLine.setX(targetDate.toString().substring(5).replace("-", "/"));
+				if (dataTemp.getRank() != null) {
+					dataForLine.setY(dataTemp.getRank());
+				} else {
+					dataForLine.setY(0);
+				}
+				dataForRank.add(dataForLine);
+				dataForAvgAccuComment = dataTemp.getAvgAccuComment();
 			}
-			dataForRank.add(dataForLine);
 		}
 		result.put("avgNewView", dataForAvgNewView);
 		result.put("numNewVid", dataForNumNewVid);
 		result.put("rank", dataForRank);
+		result.put("avgAccuComment", dataForAvgAccuComment);
+		result.put("avgNewViewForBar", dataForBar);
 		return result;
 	}
 
@@ -253,7 +274,7 @@ public class VideoServiceImpl implements VideoService {
 		List<Date> dates = new ArrayList<Date>(); 
 		Calendar cal = Calendar.getInstance();
 		String date = dateFormat.format(cal.getTime());
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 7; i++) {
 			dates.add(Date.valueOf(date));
 			cal.add(Calendar.DATE, -1);
 			date = dateFormat.format(cal.getTime());
@@ -405,11 +426,14 @@ public class VideoServiceImpl implements VideoService {
 				int count = 1;
 				while (val == null) {
 					if (i != 0) {
-						val = avgNewViews.get(i + count);
-						if (val == null || (i - count) >= 0) {
-							val = avgNewViews.get(i - count);
+						if (i + count == avgNewViews.size()) val = 0;
+						else {
+							val = avgNewViews.get(i + count);
+							if (val == null && (i - count) >= 0) {
+								val = avgNewViews.get(i - count);
+							}
+							count ++;
 						}
-						count ++;
 					} else {
 						val = 0;
 					}
@@ -429,11 +453,14 @@ public class VideoServiceImpl implements VideoService {
 				int count = 1;
 				while (val == null) {
 					if (i != 0) {
-						val = avgNewComments.get(i + count);
-						if (val == null || (i - count) >= 0) {
-							val = avgNewComments.get(i - count);
+						if (i + count == avgNewComments.size()) val = 0;
+						else {
+							val = avgNewComments.get(i + count);
+							if (val == null && (i - count) >= 0) {
+								val = avgNewComments.get(i - count);
+							}
+							count ++;
 						}
-						count ++;
 					} else {
 						val = 0;
 					}
