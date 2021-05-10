@@ -8,6 +8,7 @@ import { ProfileChipContainer } from "./Comps";
 import { ResponsiveLine } from "@nivo/line";
 import { ResponsivePie } from "@nivo/pie";
 import { ResponsiveBar } from "@nivo/bar";
+import moment from "moment";
 
 const TrendMainPage = () => {
   const [url] = useState("http://222.232.15.205:8082");
@@ -46,6 +47,19 @@ const TrendMainPage = () => {
   const [dataForNumNewVid, setDataForNumNewVid] = useState([]);
   // rank 데이터
   const [dataForRank, setDataForRank] = useState([]);
+  // AccuComment 데이터
+  const [dataForAvgAccuComment, setDataForAvgAccuComment] = useState([]);
+  // NumAccuView 데이터
+  const [dataForAvgAccuView, setDataForAvgAccuView] = useState([]);
+  const datesForBar = [
+    moment().subtract(6, "days").format("MM/DD"),
+    moment().subtract(5, "days").format("MM/DD"),
+    moment().subtract(4, "days").format("MM/DD"),
+    moment().subtract(3, "days").format("MM/DD"),
+    moment().subtract(2, "days").format("MM/DD"),
+    moment().subtract(1, "days").format("MM/DD"),
+    moment().format("MM/DD")
+  ];
 
   // 새로고침 시에 일회성으로 작동하는 함수 -> useEffect(리엑트 훅) 검색해서 숙지
   useEffect(() => {
@@ -92,6 +106,8 @@ const TrendMainPage = () => {
     setDataForAvgNewView(dataForAvgNewView.filter((dataForLine) => dataForLine.id !== title));
     setDataForNumNewVid(dataForNumNewVid.filter((dataForLine) => dataForLine.id !== title));
     setDataForRank(dataForRank.filter((dataForLine) => dataForLine.id !== title));
+    setDataForAvgAccuComment(dataForAvgAccuComment.filter((dataForPie) => dataForPie.id !== title));
+    setDataForAvgAccuView(dataForAvgAccuView.filter((dataForBar) => dataForBar.country != title));
     setTitlesSelected(titlesSelected.filter((data) => data !== title));
   };
 
@@ -101,6 +117,8 @@ const TrendMainPage = () => {
     setDataForNumNewVid([]);
     setDataForRank([]);
     setTitlesSelected([]);
+    setDataForAvgAccuComment([]);
+    setDataForAvgAccuView([]);
     titleSelected = {
       title: "",
       add: true,
@@ -126,7 +144,29 @@ const TrendMainPage = () => {
           id: title,
           color: "white",
           data: dataForChart.rank
-        }))
+        }));
+        setDataForAvgAccuComment(dataForAvgAccuComment.concat({
+          "id": title,
+          "label": title,
+          "value": dataForChart.avgAccuComment,
+          "color": "hsl(284, 70%, 50%)"
+        }));
+        let temp = {"country": title};
+        temp[datesForBar[0]] = dataForChart.avgNewViewForBar[0];
+        temp[datesForBar[0] + "Color"] = "white";
+        temp[datesForBar[1]] = dataForChart.avgNewViewForBar[1];
+        temp[datesForBar[1] + "Color"] = "white";
+        temp[datesForBar[2]] = dataForChart.avgNewViewForBar[2];
+        temp[datesForBar[2] + "Color"] = "white";
+        temp[datesForBar[3]] = dataForChart.avgNewViewForBar[3];
+        temp[datesForBar[3] + "Color"] = "white";
+        temp[datesForBar[4]] = dataForChart.avgNewViewForBar[4];
+        temp[datesForBar[4] + "Color"] = "white";
+        temp[datesForBar[5]] = dataForChart.avgNewViewForBar[5];
+        temp[datesForBar[5] + "Color"] = "white";
+        temp[datesForBar[6]] = dataForChart.avgNewViewForBar[6];
+        temp[datesForBar[6] + "Color"] = "white";
+        setDataForAvgAccuView(dataForAvgAccuView.concat(temp));
       });
   };
 
@@ -548,38 +588,7 @@ const TrendMainPage = () => {
           <div className="tmp_pieBox">
             <div className="tmp_BoxNameBar">평균 댓글 수</div>
             <ResponsivePie
-              data={[
-                {
-                  "id": "game1",
-                  "label": "game1",
-                  "value": 67,
-                  "color": "hsl(284, 70%, 50%)"
-                },
-                {
-                  "id": "game2",
-                  "label": "game2",
-                  "value": 201,
-                  "color": "hsl(110, 70%, 50%)"
-                },
-                {
-                  "id": "game3",
-                  "label": "game3",
-                  "value": 99,
-                  "color": "hsl(299, 70%, 50%)"
-                },
-                {
-                  "id": "game4",
-                  "label": "game4",
-                  "value": 329,
-                  "color": "hsl(182, 70%, 50%)"
-                },
-                {
-                  "id": "game5",
-                  "label": "game5",
-                  "value": 502,
-                  "color": "hsl(145, 70%, 50%)"
-                }
-              ]}
+              data={dataForAvgAccuComment}
               margin={{ top: 35, right: 80, bottom: 75, left: 80 }}
               sortByValue={true}
               innerRadius={0.6}
@@ -602,114 +611,8 @@ const TrendMainPage = () => {
           <div className="tmp_barBox">
             <div className="tmp_BoxNameBar">누적 조회수</div>
             <ResponsiveBar
-              data={[
-                {
-                  "country": "game1",
-                  "day1": 31,
-                  "day1Color": "hsl(252, 70%, 50%)",
-                  "day2": 172,
-                  "day2Color": "hsl(92, 70%, 50%)",
-                  "day3": 49,
-                  "day3Color": "hsl(113, 70%, 50%)",
-                  "day4": 185,
-                  "day4Color": "hsl(67, 70%, 50%)",
-                  "day5": 11,
-                  "day5Color": "hsl(310, 70%, 50%)",
-                  "day6": 60,
-                  "day6Color": "hsl(139, 70%, 50%)"
-                },
-                {
-                  "country": "game2",
-                  "day1": 10,
-                  "day1Color": "hsl(74, 70%, 50%)",
-                  "day2": 32,
-                  "day2Color": "hsl(315, 70%, 50%)",
-                  "day3": 198,
-                  "day3Color": "hsl(161, 70%, 50%)",
-                  "day4": 131,
-                  "day4Color": "hsl(345, 70%, 50%)",
-                  "day5": 41,
-                  "day5Color": "hsl(8, 70%, 50%)",
-                  "day6": 23,
-                  "day6Color": "hsl(252, 70%, 50%)"
-                },
-                {
-                  "country": "game3",
-                  "day1": 140,
-                  "day1Color": "hsl(347, 70%, 50%)",
-                  "day2": 43,
-                  "day2Color": "hsl(65, 70%, 50%)",
-                  "day3": 53,
-                  "day3Color": "hsl(89, 70%, 50%)",
-                  "day4": 20,
-                  "day4Color": "hsl(170, 70%, 50%)",
-                  "day5": 85,
-                  "day5Color": "hsl(293, 70%, 50%)",
-                  "day6": 113,
-                  "day6Color": "hsl(315, 70%, 50%)"
-                },
-                {
-                  "country": "game4",
-                  "day1": 94,
-                  "day1Color": "hsl(273, 70%, 50%)",
-                  "day2": 29,
-                  "day2Color": "hsl(300, 70%, 50%)",
-                  "day3": 130,
-                  "day3Color": "hsl(305, 70%, 50%)",
-                  "day4": 60,
-                  "day4Color": "hsl(155, 70%, 50%)",
-                  "day5": 160,
-                  "day5Color": "hsl(321, 70%, 50%)",
-                  "day6": 140,
-                  "day6Color": "hsl(21, 70%, 50%)"
-                },
-                {
-                  "country": "game5",
-                  "day1": 107,
-                  "day1Color": "hsl(235, 70%, 50%)",
-                  "day2": 55,
-                  "day2Color": "hsl(79, 70%, 50%)",
-                  "day3": 177,
-                  "day3Color": "hsl(9, 70%, 50%)",
-                  "day4": 30,
-                  "day4Color": "hsl(8, 70%, 50%)",
-                  "day5": 26,
-                  "day5Color": "hsl(205, 70%, 50%)",
-                  "day6": 114,
-                  "day6Color": "hsl(241, 70%, 50%)"
-                },
-                {
-                  "country": "game6",
-                  "day1": 180,
-                  "day1Color": "hsl(35, 70%, 50%)",
-                  "day2": 53,
-                  "day2Color": "hsl(7, 70%, 50%)",
-                  "day3": 30,
-                  "day3Color": "hsl(191, 70%, 50%)",
-                  "day4": 41,
-                  "day4Color": "hsl(133, 70%, 50%)",
-                  "day5": 53,
-                  "day5Color": "hsl(272, 70%, 50%)",
-                  "day6": 20,
-                  "day6Color": "hsl(91, 70%, 50%)"
-                },
-                {
-                  "country": "game7",
-                  "day1": 50,
-                  "day1Color": "hsl(3, 70%, 50%)",
-                  "day2": 117,
-                  "day2Color": "hsl(63, 70%, 50%)",
-                  "day3": 144,
-                  "day3Color": "hsl(50, 70%, 50%)",
-                  "day4": 78,
-                  "day4Color": "hsl(171, 70%, 50%)",
-                  "day5": 14,
-                  "day5Color": "hsl(175, 70%, 50%)",
-                  "day6": 25,
-                  "day6Color": "hsl(34, 70%, 50%)"
-                }
-              ]}
-              keys={['day1', 'day2', 'day3', 'day4', 'day5', 'day6']}
+              data={dataForAvgAccuView}
+              keys={datesForBar}
               indexBy="country"
               margin={{ top: 15, right: 20, bottom: 70, left: 45}}
               padding={0.4}
