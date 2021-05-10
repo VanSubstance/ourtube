@@ -7,9 +7,12 @@ import { Bar, Line, Radar } from "react-chartjs-2";
 import { withTheme } from '@material-ui/core';
 import transitions from '@material-ui/core/styles/transitions';
 import Chart from 'chart.js';
+import { ResponsiveRadar } from "@nivo/radar";
 
 
 const TrendResultPage = (props) => {
+    
+    let [keyword] = useState(props.match.params.keyword);
 
     useEffect(() => {
         getDatasetForDetails(props.match.params.keyword);
@@ -457,7 +460,100 @@ const TrendResultPage = (props) => {
                         </div>
                         <div
                             className="trp_RadarContainer">
-                            <Radar data={radarInfo.data} options={radarInfo.options} />
+                            <ResponsiveRadar
+                                data={[
+                                    {
+                                        "score": "트렌디",
+                                        "keyword": 37
+                                    },
+                                    {
+                                        "score": "롱런",
+                                        "keyword": 79
+                                    },
+                                    {
+                                        "score": "참여도",
+                                        "keyword": 57
+                                    },
+                                    {
+                                        "score": "충성도",
+                                        "keyword": 74
+                                    },
+                                    {
+                                        "score": "챌린지",
+                                        "keyword": 96
+                                    }
+                                ]}
+                                theme={{
+                                    textColor: "white",
+                                    axis: {
+                                        tickColor: "white",
+                                        ticks: {
+                                            line: {
+                                                stroke: "white"
+                                            },
+                                            text: {
+                                                fill: "white"
+                                            }
+                                        },
+                                        legend: {
+                                            text: {
+                                                fontSize: 10,
+                                                fill: "white"
+                                            }
+                                        }
+                                    },
+                                    grid: {
+                                        line: {
+                                            stroke: "white"
+                                        }
+                                    }
+                                }}
+                                keys={['keyword']}
+                                indexBy="score"
+                                maxValue="100"
+                                margin={{ top: 40, right: 30, bottom: 20, left: 30 }}
+                                curve="linearClosed"
+                                borderWidth={2}
+                                borderColor={{ from: 'color' }}
+                                gridLevels={5}
+                                gridShape="linear"
+                                gridLabelOffset={16}
+                                enableDots={true}
+                                dotSize={10}
+                                dotColor="#ffffff"
+                                dotBorderWidth={2}
+                                dotBorderColor={{ from: 'color' }}
+                                enableDotLabel={true}
+                                dotLabel="value"
+                                dotLabelYOffset={-12}
+                                colors={{ scheme: 'nivo' }}
+                                fillOpacity={0.8}
+                                blendMode="multiply"
+                                animate={true}
+                                motionConfig="wobbly"
+                                isInteractive={false}
+                                legends={[
+                                    {
+                                        anchor: 'top-left',
+                                        direction: 'column',
+                                        translateX: -15,
+                                        translateY: -25,
+                                        itemWidth: 80,
+                                        itemHeight: 20,
+                                        itemTextColor: '#999',
+                                        symbolSize: 12,
+                                        symbolShape: 'circle',
+                                        effects: [
+                                            {
+                                                on: 'hover',
+                                                style: {
+                                                    itemTextColor: 'rgba(255,255,255,0.8)'
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]}
+                            />
                         </div>
                     </div>
                     <div
