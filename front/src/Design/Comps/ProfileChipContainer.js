@@ -2,24 +2,15 @@ import React, { useState, useEffect } from "react";
 import "../Styles.css";
 import ProfileChip from "./ProfileChip";
 
-const ProfileChipContainer = (props) => {
-
-  const [titles, setTitles] = useState([]);
-
-  useEffect(() => {
-    setTitles(props.titles);
-  }, [props.titles]);
-
+const ProfileChipContainer = ({ titles, func }) => {
   return (
-    <div>
-      {titles.map((title) => {
-        return (
-          <ProfileChip
-            title = {title}
-            func={props.func1}
-          ></ProfileChip>
-        );
-      })}
+    <div
+      className="tmp_ProfileChipContainer">
+      {
+        titles.map((title) => (
+          <ProfileChip title={title} func={func}></ProfileChip>
+        ))
+      }
     </div>
   );
 };

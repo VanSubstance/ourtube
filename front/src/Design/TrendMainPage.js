@@ -7,6 +7,8 @@ import { ListFont } from "./Comps";
 import { ProfileChipContainer } from "./Comps";
 import { ResponsiveLine } from "@nivo/line";
 import { ResponsivePie } from "@nivo/pie";
+import { ResponsiveBar } from "@nivo/bar";
+import moment from "moment";
 
 const TrendMainPage = () => {
   const [url] = useState("http://222.232.15.205:8082");
@@ -45,6 +47,19 @@ const TrendMainPage = () => {
   const [dataForNumNewVid, setDataForNumNewVid] = useState([]);
   // rank 데이터
   const [dataForRank, setDataForRank] = useState([]);
+  // AccuComment 데이터
+  const [dataForAvgAccuComment, setDataForAvgAccuComment] = useState([]);
+  // NumAccuView 데이터
+  const [dataForAvgAccuView, setDataForAvgAccuView] = useState([]);
+  const datesForBar = [
+    moment().subtract(6, "days").format("MM/DD"),
+    moment().subtract(5, "days").format("MM/DD"),
+    moment().subtract(4, "days").format("MM/DD"),
+    moment().subtract(3, "days").format("MM/DD"),
+    moment().subtract(2, "days").format("MM/DD"),
+    moment().subtract(1, "days").format("MM/DD"),
+    moment().format("MM/DD")
+  ];
 
   // 새로고침 시에 일회성으로 작동하는 함수 -> useEffect(리엑트 훅) 검색해서 숙지
   useEffect(() => {
@@ -74,7 +89,6 @@ const TrendMainPage = () => {
         };
       }
     }
-    console.log(titleSelected);
     titleSelected.add === true
       ? addDataByGame(titleSelected.title)
       : deleteDataByGame(titleSelected.title);
@@ -87,11 +101,14 @@ const TrendMainPage = () => {
   };
 
   // 게임 선택 해제 = 해당 게임 데이터 삭제
-  // 후측 하단 컴포넌트에 게임 객체 삭제 -> ProfileChipContainer 안에 해당 ProfileChip 생성
+  // 후측 하단 컴포넌트에 게임 객체 삭제 -> ProfileChipContainer 안에 해당 ProfileChip 삭제
   const deleteDataByGame = (title) => {
     setDataForAvgNewView(dataForAvgNewView.filter((dataForLine) => dataForLine.id !== title));
     setDataForNumNewVid(dataForNumNewVid.filter((dataForLine) => dataForLine.id !== title));
     setDataForRank(dataForRank.filter((dataForLine) => dataForLine.id !== title));
+    setDataForAvgAccuComment(dataForAvgAccuComment.filter((dataForPie) => dataForPie.id !== title));
+    setDataForAvgAccuView(dataForAvgAccuView.filter((dataForBar) => dataForBar.country != title));
+    setTitlesSelected(titlesSelected.filter((data) => data !== title));
   };
 
   // 장르 변경 시 데이터 초기화
@@ -100,6 +117,8 @@ const TrendMainPage = () => {
     setDataForNumNewVid([]);
     setDataForRank([]);
     setTitlesSelected([]);
+    setDataForAvgAccuComment([]);
+    setDataForAvgAccuView([]);
     titleSelected = {
       title: "",
       add: true,
@@ -125,7 +144,29 @@ const TrendMainPage = () => {
           id: title,
           color: "white",
           data: dataForChart.rank
-        }))
+        }));
+        setDataForAvgAccuComment(dataForAvgAccuComment.concat({
+          "id": title,
+          "label": title,
+          "value": dataForChart.avgAccuComment,
+          "color": "hsl(284, 70%, 50%)"
+        }));
+        let temp = {"country": title};
+        temp[datesForBar[0]] = dataForChart.avgNewViewForBar[0];
+        temp[datesForBar[0] + "Color"] = "white";
+        temp[datesForBar[1]] = dataForChart.avgNewViewForBar[1];
+        temp[datesForBar[1] + "Color"] = "white";
+        temp[datesForBar[2]] = dataForChart.avgNewViewForBar[2];
+        temp[datesForBar[2] + "Color"] = "white";
+        temp[datesForBar[3]] = dataForChart.avgNewViewForBar[3];
+        temp[datesForBar[3] + "Color"] = "white";
+        temp[datesForBar[4]] = dataForChart.avgNewViewForBar[4];
+        temp[datesForBar[4] + "Color"] = "white";
+        temp[datesForBar[5]] = dataForChart.avgNewViewForBar[5];
+        temp[datesForBar[5] + "Color"] = "white";
+        temp[datesForBar[6]] = dataForChart.avgNewViewForBar[6];
+        temp[datesForBar[6] + "Color"] = "white";
+        setDataForAvgAccuView(dataForAvgAccuView.concat(temp));
       });
   };
 
@@ -201,14 +242,14 @@ const TrendMainPage = () => {
         let temp = [];
         games.forEach(async (element) => {
           await axios
-          .get(url + "/deploy/game/chart/today/" + element.title)
-          .then(({data}) => {
-            temp = temp.concat(data);
-            setKeywords(temp);
-          })
-          .catch((e) => {
-            console.error(e);
-          })
+            .get(url + "/deploy/game/chart/today/" + element.title)
+            .then(({ data }) => {
+              temp = temp.concat(data);
+              setKeywords(temp);
+            })
+            .catch((e) => {
+              console.error(e);
+            })
         });
       })
       .catch((e) => {
@@ -318,7 +359,7 @@ const TrendMainPage = () => {
             <ResponsiveLine
               className="tmp_ResponsiveLine"
               data={dataForRank}
-              margin={{ top: 5, right: 230, bottom: 75, left: 40 }}
+              margin={{ top: 5, right: 230, bottom: 70, left: 40 }}
               xScale={{ type: "point" }}
               yScale={{
                 type: "linear",
@@ -412,7 +453,7 @@ const TrendMainPage = () => {
             <div className="tmp_BoxNameBar">신규 조회수</div>
             <ResponsiveLine
               data={dataForAvgNewView}
-              margin={{ top: 15, right: 25, bottom: 75, left: 45 }}
+              margin={{ top: 15, right: 25, bottom: 70, left: 45 }}
               xScale={{ type: "point" }}
               yScale={{
                 type: "linear",
@@ -480,7 +521,7 @@ const TrendMainPage = () => {
             <div className="tmp_BoxNameBar">신규 동영상 수</div>
             <ResponsiveLine
               data={dataForNumNewVid}
-              margin={{ top: 15, right: 25, bottom: 75, left: 45 }}
+              margin={{ top: 15, right: 25, bottom: 70, left: 45 }}
               xScale={{ type: "point" }}
               yScale={{
                 type: "linear",
@@ -544,25 +585,103 @@ const TrendMainPage = () => {
               useMesh={true}
             />
           </div>
-          <div className="tmp_RankChangeBox">
-            <div className="tmp_BoxNameBar">키워드 별 검색량</div>
+          <div className="tmp_pieBox">
+            <div className="tmp_BoxNameBar">평균 댓글 수</div>
             <ResponsivePie
-              data={dataForAvgNewView}
-              margin={{ top: 15, right: 25, bottom: 75, left: 45 }}
-              innerRadius={0.5}
-              padAngle={0.7}
-              cornerRadius={3}
+              data={dataForAvgAccuComment}
+              margin={{ top: 35, right: 80, bottom: 75, left: 80 }}
+              sortByValue={true}
+              innerRadius={0.6}
+              cornerRadius={4}
+              isInteractive={true}
               activeOuterRadiusOffset={8}
               colors={{ scheme: 'nivo' }}
-              borderWidth={1}
+              borderWidth={2}
               borderColor={{ theme: 'background' }}
-              arcLinkLabelsSkipAngle={10}
-              arcLinkLabelsTextColor="#333333"
+              arcLinkLabelsTextColor="#ffffff"
+              arcLinkLabelsDiagonalLength={15}
+              arcLinkLabelsStraightLength={18}
               arcLinkLabelsThickness={2}
               arcLinkLabelsColor={{ from: 'color' }}
-              arcLabelsSkipAngle={10}
-              arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
+              arcLabel="value"
+              arcLabelsTextColor={{ from: 'color', modifiers: [['brighter', '3']] }}
               legends={[]}
+            />
+          </div>
+          <div className="tmp_barBox">
+            <div className="tmp_BoxNameBar">누적 조회수</div>
+            <ResponsiveBar
+              data={dataForAvgAccuView}
+              keys={datesForBar}
+              indexBy="country"
+              margin={{ top: 15, right: 20, bottom: 70, left: 45}}
+              padding={0.4}
+              valueScale={{ type: 'linear' }}
+              indexScale={{ type: 'band', round: true }}
+              colors={{ scheme: 'nivo' }}
+              fill={[
+                {
+                  match: {
+                    id: 'day5'
+                  },
+                  id: 'dots'
+                },
+                {
+                  match: {
+                    id: 'day3'
+                  },
+                  id: 'lines'
+                }
+              ]}
+              theme={{
+                textColor: "white",
+                axis: {
+                  tickColor: "white",
+                  ticks: {
+                    line: {
+                      stroke: "white"
+                    },
+                    text: {
+                      fill: "white"
+                    }
+                  },
+                  legend: {
+                    text: {
+                      fill: "white"
+                    }
+                  }
+                },
+                grid: {
+                  line: {
+                    stroke: "white"
+                  }
+                }
+              }}
+              borderColor={{ from: 'color', modifiers: [['brighter', '0']] }}
+              axisTop={null}
+              axisRight={null}
+              axisBottom={{
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: null,
+                legendPosition: 'middle',
+                legendOffset: 32
+              }}
+              axisLeft={{
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: null,
+                legendPosition: 'middle',
+                legendOffset: -40
+              }}
+              labelTextColor={{ from: 'color', modifiers: [['brighter', '3']] }}
+              labelSkipHeight={12}
+              legends={[]}
+              animate={true}
+              motionStiffness={90}
+              motionDamping={15}
             />
           </div>
         </div>
@@ -695,7 +814,7 @@ const TrendMainPage = () => {
             <button className="tmp_KeywordChipClearAllbutton" onClick={() => { clearTitlesSelected() }}>전부 지우기</button>
             <div
               className="tmp_KeywordChipScroll">
-              <ProfileChipContainer titles={titlesSelected} func1={selectGame}>
+              <ProfileChipContainer titles={titlesSelected} func={selectGame}>
               </ProfileChipContainer>
             </div>
           </div>
