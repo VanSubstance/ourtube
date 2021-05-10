@@ -7,6 +7,7 @@ import { ListFont } from "./Comps";
 import { ProfileChipContainer } from "./Comps";
 import { ResponsiveLine } from "@nivo/line";
 import { ResponsivePie } from "@nivo/pie";
+import { ResponsiveBar } from "@nivo/bar";
 
 const TrendMainPage = () => {
   const [url] = useState("http://222.232.15.205:8082");
@@ -201,14 +202,14 @@ const TrendMainPage = () => {
         let temp = [];
         games.forEach(async (element) => {
           await axios
-          .get(url + "/deploy/game/chart/today/" + element.title)
-          .then(({data}) => {
-            temp = temp.concat(data);
-            setKeywords(temp);
-          })
-          .catch((e) => {
-            console.error(e);
-          })
+            .get(url + "/deploy/game/chart/today/" + element.title)
+            .then(({ data }) => {
+              temp = temp.concat(data);
+              setKeywords(temp);
+            })
+            .catch((e) => {
+              console.error(e);
+            })
         });
       })
       .catch((e) => {
@@ -318,7 +319,7 @@ const TrendMainPage = () => {
             <ResponsiveLine
               className="tmp_ResponsiveLine"
               data={dataForRank}
-              margin={{ top: 5, right: 230, bottom: 75, left: 40 }}
+              margin={{ top: 5, right: 230, bottom: 70, left: 40 }}
               xScale={{ type: "point" }}
               yScale={{
                 type: "linear",
@@ -412,7 +413,7 @@ const TrendMainPage = () => {
             <div className="tmp_BoxNameBar">신규 조회수</div>
             <ResponsiveLine
               data={dataForAvgNewView}
-              margin={{ top: 15, right: 25, bottom: 75, left: 45 }}
+              margin={{ top: 15, right: 25, bottom: 70, left: 45 }}
               xScale={{ type: "point" }}
               yScale={{
                 type: "linear",
@@ -480,7 +481,7 @@ const TrendMainPage = () => {
             <div className="tmp_BoxNameBar">신규 동영상 수</div>
             <ResponsiveLine
               data={dataForNumNewVid}
-              margin={{ top: 15, right: 25, bottom: 75, left: 45 }}
+              margin={{ top: 15, right: 25, bottom: 70, left: 45 }}
               xScale={{ type: "point" }}
               yScale={{
                 type: "linear",
@@ -544,25 +545,240 @@ const TrendMainPage = () => {
               useMesh={true}
             />
           </div>
-          <div className="tmp_RankChangeBox">
-            <div className="tmp_BoxNameBar">키워드 별 검색량</div>
+          <div className="tmp_pieBox">
+            <div className="tmp_BoxNameBar">평균 댓글 수</div>
             <ResponsivePie
-              data={dataForAvgNewView}
-              margin={{ top: 15, right: 25, bottom: 75, left: 45 }}
-              innerRadius={0.5}
-              padAngle={0.7}
-              cornerRadius={3}
+              data={[
+                {
+                  "id": "game1",
+                  "label": "game1",
+                  "value": 67,
+                  "color": "hsl(284, 70%, 50%)"
+                },
+                {
+                  "id": "game2",
+                  "label": "game2",
+                  "value": 201,
+                  "color": "hsl(110, 70%, 50%)"
+                },
+                {
+                  "id": "game3",
+                  "label": "game3",
+                  "value": 99,
+                  "color": "hsl(299, 70%, 50%)"
+                },
+                {
+                  "id": "game4",
+                  "label": "game4",
+                  "value": 329,
+                  "color": "hsl(182, 70%, 50%)"
+                },
+                {
+                  "id": "game5",
+                  "label": "game5",
+                  "value": 502,
+                  "color": "hsl(145, 70%, 50%)"
+                }
+              ]}
+              margin={{ top: 35, right: 80, bottom: 75, left: 80 }}
+              sortByValue={true}
+              innerRadius={0.6}
+              cornerRadius={4}
+              isInteractive={true}
               activeOuterRadiusOffset={8}
               colors={{ scheme: 'nivo' }}
-              borderWidth={1}
+              borderWidth={2}
               borderColor={{ theme: 'background' }}
-              arcLinkLabelsSkipAngle={10}
-              arcLinkLabelsTextColor="#333333"
+              arcLinkLabelsTextColor="#ffffff"
+              arcLinkLabelsDiagonalLength={15}
+              arcLinkLabelsStraightLength={18}
               arcLinkLabelsThickness={2}
               arcLinkLabelsColor={{ from: 'color' }}
-              arcLabelsSkipAngle={10}
-              arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
+              arcLabel="value"
+              arcLabelsTextColor={{ from: 'color', modifiers: [['brighter', '3']] }}
               legends={[]}
+            />
+          </div>
+          <div className="tmp_barBox">
+            <div className="tmp_BoxNameBar">누적 조회수</div>
+            <ResponsiveBar
+              data={[
+                {
+                  "country": "game1",
+                  "day1": 31,
+                  "day1Color": "hsl(252, 70%, 50%)",
+                  "day2": 172,
+                  "day2Color": "hsl(92, 70%, 50%)",
+                  "day3": 49,
+                  "day3Color": "hsl(113, 70%, 50%)",
+                  "day4": 185,
+                  "day4Color": "hsl(67, 70%, 50%)",
+                  "day5": 11,
+                  "day5Color": "hsl(310, 70%, 50%)",
+                  "day6": 60,
+                  "day6Color": "hsl(139, 70%, 50%)"
+                },
+                {
+                  "country": "game2",
+                  "day1": 10,
+                  "day1Color": "hsl(74, 70%, 50%)",
+                  "day2": 32,
+                  "day2Color": "hsl(315, 70%, 50%)",
+                  "day3": 198,
+                  "day3Color": "hsl(161, 70%, 50%)",
+                  "day4": 131,
+                  "day4Color": "hsl(345, 70%, 50%)",
+                  "day5": 41,
+                  "day5Color": "hsl(8, 70%, 50%)",
+                  "day6": 23,
+                  "day6Color": "hsl(252, 70%, 50%)"
+                },
+                {
+                  "country": "game3",
+                  "day1": 140,
+                  "day1Color": "hsl(347, 70%, 50%)",
+                  "day2": 43,
+                  "day2Color": "hsl(65, 70%, 50%)",
+                  "day3": 53,
+                  "day3Color": "hsl(89, 70%, 50%)",
+                  "day4": 20,
+                  "day4Color": "hsl(170, 70%, 50%)",
+                  "day5": 85,
+                  "day5Color": "hsl(293, 70%, 50%)",
+                  "day6": 113,
+                  "day6Color": "hsl(315, 70%, 50%)"
+                },
+                {
+                  "country": "game4",
+                  "day1": 94,
+                  "day1Color": "hsl(273, 70%, 50%)",
+                  "day2": 29,
+                  "day2Color": "hsl(300, 70%, 50%)",
+                  "day3": 130,
+                  "day3Color": "hsl(305, 70%, 50%)",
+                  "day4": 60,
+                  "day4Color": "hsl(155, 70%, 50%)",
+                  "day5": 160,
+                  "day5Color": "hsl(321, 70%, 50%)",
+                  "day6": 140,
+                  "day6Color": "hsl(21, 70%, 50%)"
+                },
+                {
+                  "country": "game5",
+                  "day1": 107,
+                  "day1Color": "hsl(235, 70%, 50%)",
+                  "day2": 55,
+                  "day2Color": "hsl(79, 70%, 50%)",
+                  "day3": 177,
+                  "day3Color": "hsl(9, 70%, 50%)",
+                  "day4": 30,
+                  "day4Color": "hsl(8, 70%, 50%)",
+                  "day5": 26,
+                  "day5Color": "hsl(205, 70%, 50%)",
+                  "day6": 114,
+                  "day6Color": "hsl(241, 70%, 50%)"
+                },
+                {
+                  "country": "game6",
+                  "day1": 180,
+                  "day1Color": "hsl(35, 70%, 50%)",
+                  "day2": 53,
+                  "day2Color": "hsl(7, 70%, 50%)",
+                  "day3": 30,
+                  "day3Color": "hsl(191, 70%, 50%)",
+                  "day4": 41,
+                  "day4Color": "hsl(133, 70%, 50%)",
+                  "day5": 53,
+                  "day5Color": "hsl(272, 70%, 50%)",
+                  "day6": 20,
+                  "day6Color": "hsl(91, 70%, 50%)"
+                },
+                {
+                  "country": "game7",
+                  "day1": 50,
+                  "day1Color": "hsl(3, 70%, 50%)",
+                  "day2": 117,
+                  "day2Color": "hsl(63, 70%, 50%)",
+                  "day3": 144,
+                  "day3Color": "hsl(50, 70%, 50%)",
+                  "day4": 78,
+                  "day4Color": "hsl(171, 70%, 50%)",
+                  "day5": 14,
+                  "day5Color": "hsl(175, 70%, 50%)",
+                  "day6": 25,
+                  "day6Color": "hsl(34, 70%, 50%)"
+                }
+              ]}
+              keys={['day1', 'day2', 'day3', 'day4', 'day5', 'day6']}
+              indexBy="country"
+              margin={{ top: 15, right: 20, bottom: 70, left: 45}}
+              padding={0.4}
+              valueScale={{ type: 'linear' }}
+              indexScale={{ type: 'band', round: true }}
+              colors={{ scheme: 'nivo' }}
+              fill={[
+                {
+                  match: {
+                    id: 'day5'
+                  },
+                  id: 'dots'
+                },
+                {
+                  match: {
+                    id: 'day3'
+                  },
+                  id: 'lines'
+                }
+              ]}
+              theme={{
+                textColor: "white",
+                axis: {
+                  tickColor: "white",
+                  ticks: {
+                    line: {
+                      stroke: "white"
+                    },
+                    text: {
+                      fill: "white"
+                    }
+                  },
+                  legend: {
+                    text: {
+                      fill: "white"
+                    }
+                  }
+                },
+                grid: {
+                  line: {
+                    stroke: "white"
+                  }
+                }
+              }}
+              borderColor={{ from: 'color', modifiers: [['brighter', '0']] }}
+              axisTop={null}
+              axisRight={null}
+              axisBottom={{
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: null,
+                legendPosition: 'middle',
+                legendOffset: 32
+              }}
+              axisLeft={{
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: 0,
+                legend: null,
+                legendPosition: 'middle',
+                legendOffset: -40
+              }}
+              labelTextColor={{ from: 'color', modifiers: [['brighter', '3']] }}
+              labelSkipHeight={12}
+              legends={[]}
+              animate={true}
+              motionStiffness={90}
+              motionDamping={15}
             />
           </div>
         </div>

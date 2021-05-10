@@ -9,10 +9,10 @@ const ListFont = (props) => {
         <div className="tmp_KeywordRankHead">순위</div>
         <div className="tmp_KeywordNameHead">이름</div>
         <div className="tmp_KeywordScoreHead">아울스코어</div>
-        <div className="tmp_KeywordScoreHead">누적 조회수</div>
+        <div className="tmp_KeywordScoreHead">평균 조회수</div>
         <div className="tmp_KeywordScoreHead">누적 동영상</div>
-        <div className="tmp_KeywordScoreHead">누적 댓글수</div>
-        <div className="tmp_KeywordScoreHead">누적 좋싫비</div>
+        <div className="tmp_KeywordScoreHead">평균 댓글수</div>
+        <div className="tmp_KeywordScoreHead">평균 좋싫비</div>
       </div>
 
       <div id="scrollbitch">
