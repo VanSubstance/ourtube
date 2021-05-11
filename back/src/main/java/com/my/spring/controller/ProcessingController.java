@@ -171,4 +171,10 @@ public class ProcessingController {
 		System.out.println(title + " ==> ProfileChip에 필요한 데이터: " + requestedTime);
 		return serviceBasic.getProfileChipByTitle(title);
 	}
+	
+	// 게임 제목 -> 유사 게임 리스트 출력
+	@RequestMapping(value = "/game/relavant/{title}", method = RequestMethod.GET)
+	public List<String> getTitlesRelavantByTitle(@PathVariable String title) {
+		return serviceVideo.getTitlesRelavantByTitle(title);
+	}
 }

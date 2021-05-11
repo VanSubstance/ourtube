@@ -628,4 +628,9 @@ public class VideoServiceImpl implements VideoService {
 		return mapper.getTagNotParsedVideoIdsByTitle(title);
 	}
 	
+	@Override
+	public List<String> getTitlesRelavantByTitle(String title) {
+		return mapper.getTitlesRelavantByTitle(title);
+	}
+	
 }

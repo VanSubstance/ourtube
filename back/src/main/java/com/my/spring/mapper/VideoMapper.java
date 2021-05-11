@@ -37,4 +37,6 @@ public interface VideoMapper {
 	
 	public DateStatistic getVideoDataByTitleAndDate(@Param("title") String title, @Param("date") Date date);
 	public DateStatistic getTotalVideoDataByDate(@Param("date") Date date);
+	
+	public List<String> getTitlesRelavantByTitle(@Param("title") String title);
 }
