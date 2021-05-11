@@ -40,4 +40,6 @@ public interface VideoService {
 	
 	// 당일 게임 동영상 통계수치 추적 (10개 기본 수치)
 	public DateStatistic getVideoDataTodayByTitle (String title);
+	
+	public List<String> getTitlesRelavantByTitle(String title);
 }

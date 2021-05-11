@@ -294,4 +294,17 @@
 		    )
 		) d
 	</select>
+	
+	<select id="getTitlesRelavantByTitle" parameterType="String" resultType="String">
+		select title from gametopic
+		where topic in (
+		    select topic from gametopic
+		    where title = #{title}
+		)
+		<![CDATA[
+        and rownum <= 7
+		]]>
+		group by title
+		ORDER BY count(*) desc
+	</select>
 </mapper>
