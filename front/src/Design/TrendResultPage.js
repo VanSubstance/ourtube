@@ -461,7 +461,7 @@ const TrendResultPage = (props) => {
             </div>
           </div>
           <div className="trp_GraphBox_1">
-            <div className="trp_BoxNameBar">좋아요 싫어요 평균</div>
+            <div className="trp_BoxNameBar">연관 게임 평균 좋싫비</div>
             <div className="trp_BarGraphContainer">
               <ResponsiveBar
                 data={dataForAvgRatioByGenre}
@@ -542,7 +542,7 @@ const TrendResultPage = (props) => {
             </div>
           </div>
           <div className="trp_GraphBox_2">
-            <div className="trp_BoxNameBar">활동 비</div>
+            <div className="trp_BoxNameBar">연관 게임 평균 채널 수</div>
             <div className="trp_BarGraphContainer">
               <ResponsiveBar
                 data={dataForNumChannelVidByGenre}
@@ -623,7 +623,7 @@ const TrendResultPage = (props) => {
             </div>
           </div>
           <div className="trp_GraphBox_3">
-            <div className="trp_BoxNameBar">피드백 지수</div>
+            <div className="trp_BoxNameBar">채널당 평균 동영상 수</div>
             <div className="trp_BarGraphContainer">
               <ResponsiveBar
                 data={dataForAvgChannelVid}
