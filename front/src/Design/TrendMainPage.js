@@ -599,8 +599,8 @@ const TrendMainPage = () => {
               borderWidth={2}
               borderColor={{ theme: 'background' }}
               arcLinkLabelsTextColor="#ffffff"
-              arcLinkLabelsDiagonalLength={15}
-              arcLinkLabelsStraightLength={18}
+              arcLinkLabelsDiagonalLength={10}
+              arcLinkLabelsStraightLength={12}
               arcLinkLabelsThickness={2}
               arcLinkLabelsColor={{ from: 'color' }}
               arcLabel="value"
@@ -660,14 +660,15 @@ const TrendMainPage = () => {
               borderColor={{ from: 'color', modifiers: [['brighter', '0']] }}
               axisTop={null}
               axisRight={null}
-              axisBottom={{
-                tickSize: 5,
-                tickPadding: 5,
-                tickRotation: 0,
-                legend: null,
-                legendPosition: 'middle',
-                legendOffset: 32
-              }}
+              axisBottom={null}              
+              // axisBottom={{
+              //   tickSize: 5,
+              //   tickPadding: 5,
+              //   tickRotation: 0,
+              //   legend: null,
+              //   legendPosition: 'middle',
+              //   legendOffset: 32
+              // }}
               axisLeft={{
                 tickSize: 5,
                 tickPadding: 5,

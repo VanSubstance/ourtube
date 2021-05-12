@@ -7,3 +7,5 @@ export { default as Cloud } from './Cloud';
 export { default as ListFont } from './ListFont';
 export { default as ProfileChipContainer } from './ProfileChipContainer';
 export { default as ProfileChip } from './ProfileChip';
+export { default as CLChipContainer } from './CLChipContainer';
+export { default as CLChip } from './CLChip';
