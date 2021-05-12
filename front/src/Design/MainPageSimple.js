@@ -127,14 +127,14 @@ const MainPageSimple = (props) => {
         <div className="mainRightSection">
           <a
             className="chartLinkBox"
-            href="http://localhost:3012/chart">
+            href={"/chart"}>
             <div
               className="chartLink">
               Chart View
               </div>
           </a>
           <div className="mainBannerBox">
-            <a href="http://localhost:3012/" className="bannerMain">
+            <a href={""} className="bannerMain">
               <img className="bannerImage" src="/Ex/ourtubeLogoWhite.PNG"></img>
             </a>
           </div>
