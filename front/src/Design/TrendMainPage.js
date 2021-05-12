@@ -296,7 +296,7 @@ const TrendMainPage = () => {
 
       <div id="header">
         <div className="tmp_BannerBox">
-          <a className="tmp_BannerA" href={""}>
+          <a className="tmp_BannerA" href={window.location.origin}>
             <img
               className="tmp_BannerImage"
               src="/Ex/ourtubeLogoWhite.PNG"

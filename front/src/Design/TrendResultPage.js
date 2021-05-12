@@ -323,7 +323,7 @@ const TrendResultPage = (props) => {
 
       <div id="header">
         <div className="trp_BannerBox">
-          <a className="trp_BannerA" href={""}>
+          <a className="trp_BannerA" href={window.location.origin}>
             <img
               className="trp_BannerImage"
               src="/Ex/ourtubeLogoWhite.PNG"
