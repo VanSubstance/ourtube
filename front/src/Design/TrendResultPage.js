@@ -25,127 +25,22 @@ const TrendResultPage = (props) => {
   const [dataKeywordsRelavant, setDataKeywordsRelavant] = useState([]);
 
   useEffect(() => {
+    console.log(props.match.params.keyword);
     getDataKeyword(props.match.params.keyword);
     getDataKeywordsRelavant(props.match.params.keyword);
-    console.log(dataKeyword);
-    console.log(dataKeywordsRelavant);
+    getDataForLines(props.match.params.keyword);
   }, []);
 
   const [url] = useState("http://222.232.15.205:8082");
 
   // 신규 조회수 데이터
-  const [dataForAvgNewView, setDataForAvgNewView] = useState([
-    {
-      id: "japan",
-      color: "hsl(266, 70%, 50%)",
-      data: [
-        {
-          x: "day1",
-          y: 285,
-        },
-        {
-          x: "day2",
-          y: 197,
-        },
-        {
-          x: "day3",
-          y: 41,
-        },
-        {
-          x: "day4",
-          y: 236,
-        },
-        {
-          x: "day5",
-          y: 170,
-        },
-        {
-          x: "day6",
-          y: 86,
-        },
-        {
-          x: "day7",
-          y: 254,
-        },
-      ],
-    },
-  ]);
+  const [dataForAvgNewView, setDataForAvgNewView] = useState([]);
 
   // 일별 신규 비디오량 데이터
-  const [dataForNumNewVid, setDataForNumNewVid] = useState([
-    {
-      id: "japan",
-      color: "hsl(266, 70%, 50%)",
-      data: [
-        {
-          x: "day1",
-          y: 412,
-        },
-        {
-          x: "day2",
-          y: 53,
-        },
-        {
-          x: "day3",
-          y: 345,
-        },
-        {
-          x: "day4",
-          y: 168,
-        },
-        {
-          x: "day5",
-          y: 523,
-        },
-        {
-          x: "day6",
-          y: 423,
-        },
-        {
-          x: "day7",
-          y: 771,
-        },
-      ],
-    },
-  ]);
+  const [dataForNumNewVid, setDataForNumNewVid] = useState([]);
 
   // 랭크 데이터
-  const [dataForRank, setDataForRank] = useState([
-    {
-      id: "japan",
-      color: "hsl(266, 70%, 50%)",
-      data: [
-        {
-          x: "day1",
-          y: 9,
-        },
-        {
-          x: "day2",
-          y: 5,
-        },
-        {
-          x: "day3",
-          y: 4,
-        },
-        {
-          x: "day4",
-          y: 12,
-        },
-        {
-          x: "day5",
-          y: 15,
-        },
-        {
-          x: "day6",
-          y: 14,
-        },
-        {
-          x: "day7",
-          y: 8,
-        },
-      ],
-    },
-  ]);
+  const [dataForRank, setDataForRank] = useState([]);
 
   // 장르 별 평균 채널량 데이터
   const [dataForAvgChannelVid, setDataForAvgChannelVid] = useState([
@@ -316,6 +211,35 @@ const TrendResultPage = (props) => {
     },
   ]);
 
+  // 워드클라우드 데이터
+  const [wordCloudInfo, setWordCloudInfo] = useState({
+    data: [
+      { text: "Hey", value: 1000 },
+      { text: "lol", value: 200 },
+      { text: "first impression", value: 800 },
+      { text: "very cool", value: 14000 },
+      { text: "duck", value: 10 },
+      { text: "goeiedag", value: 492 },
+      { text: "mirdita", value: 332 },
+      { text: "1235", value: 33 },
+      { text: "tasg", value: 14 },
+      { text: "tbwae", value: 456 },
+      { text: "b31b", value: 894 },
+      { text: "asdfdg", value: 12132 },
+      { text: "wehda", value: 3242 },
+      { text: "65d4a8", value: 842 },
+      { text: "ubhasdg", value: 32110 },
+      { text: "7q48f3a1", value: 1955 },
+      { text: "asd", value: 235 },
+      { text: "gwe", value: 116 },
+      { text: "rqwree", value: 123 },
+      { text: "eqwty", value: 323 },
+      { text: "gasdf", value: 44 },
+      { text: "czxcbb", value: 56 },
+    ],
+    fontSizeMapper: (word) => Math.log2(word.value) * 5,
+  });
+
   // 우측 상단 데이터 연결
   const getDataKeyword = async (title) => {
     await axios
@@ -374,6 +298,30 @@ const TrendResultPage = (props) => {
     { text: "챌린지", value: 4 },
     { text: "충성도", value: 3 },
   ]);
+  const getDataForLines = async (title) => {
+    await axios
+      .get(url + "/deploy/game/chart/" + title)
+      .then(({ data }) => {
+        setDataForRank([{
+          id: title,
+          color: "red",
+          data: data.rank
+        }]);
+        setDataForAvgNewView([{
+          id: title,
+          color: "red",
+          data: data.avgNewView
+        }]);
+        setDataForNumNewVid([{
+          id: title,
+          color: "red",
+          data: data.numNewVid
+        }]);
+      })
+      .catch((e) => {
+        console.error(e);
+      })
+  };
 
   return (
     <div className="trp_MainWrapper">
