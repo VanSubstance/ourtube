@@ -20,6 +20,7 @@ import com.my.spring.domain.VideoStatDto;
 import com.my.spring.domain.deploy.DataForLine;
 import com.my.spring.domain.statistics.DateStatistic;
 import com.my.spring.domain.statistics.DateStatisticRelative;
+import com.my.spring.domain.statistics.GameStatisticResultBar;
 import com.my.spring.mapper.VideoMapper;
 import com.my.spring.service.VideoService;
 
@@ -631,6 +632,16 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	public List<String> getTitlesRelavantByTitle(String title) {
 		return mapper.getTitlesRelavantByTitle(title);
+	}
+
+	@Override
+	public GameStatisticResultBar getDataForResultBarByTopic(String topic) {
+		return mapper.getDataForResultBarByTopic(topic);
+	}
+
+	@Override
+	public GameStatisticResultBar getDataForResultBarByGame(String title) {
+		return mapper.getDataForResultBarByGame(title);
 	}
 	
 }

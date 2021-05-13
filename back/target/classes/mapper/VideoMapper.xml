@@ -2,6 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper
 	namespace = "com.my.spring.mapper.VideoMapper">
+	
+	<!-- 장르 별 평균 좋아요, 싫어요, 채널 수, 동영상 수 -->
+	<select id="getDataForResultBarByTopic" parameterType="String" resultType="com.my.spring.domain.statistics.GameStatisticResultBar">
+		select a.*, b.* from 
+		(
+		    select round(avg(likecount)) likecount, round(avg(dislikecount)) dislikecount, count(*) numVideo from videostatistics
+		    where id in (
+		        select id from videogame
+		        where game in (
+		            select title from gametopic
+		            where topic = #{topic}
+		        )
+		    )
+		    and infodate = to_date(sysdate, 'YY/MM/DD')
+		) a,
+		(
+		    select count(*) numChannel from channelgame
+		    where game in (
+		    select title from gametopic
+		    where topic = #{topic}
+		    )
+		) b
+	</select>
+	
+	<!-- 게임 별 평균 좋아요, 싫어요, 채널 수, 동영상 수 -->
+	<select id="getDataForResultBarByGame" parameterType="String" resultType="com.my.spring.domain.statistics.GameStatisticResultBar">
+		select a.*, b.* from 
+		(
+		    select round(avg(likecount)) likecount, round(avg(dislikecount)) dislikecount, count(*) numVideo from videostatistics
+		    where id in (
+		        select id from videogame
+		        where game = #{title}
+		    )
+		    and infodate = to_date(sysdate, 'YY/MM/DD')
+		) a,
+		(
+		    select count(*) numChannel from channelgame
+		    where game = #{title}
+		) b
+	</select>
+	
 	<select id="getVideoIdsByGame" parameterType="String" resultType="String">
 		select id from videogame
 		where game = #{game}

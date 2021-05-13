@@ -26,7 +26,6 @@ import com.my.spring.domain.ChannelStatDto;
 import com.my.spring.domain.CommentDto;
 import com.my.spring.domain.IdComplete;
 import com.my.spring.domain.TagDto;
-import com.my.spring.domain.TopicDto;
 import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
 import com.my.spring.domain.WordDto;
@@ -73,9 +72,9 @@ public class PatchController {
 	private void patchDaily() {
 		patchGameFromYoutube();
 		patchDataByGameFirst();
-		parseWords();
 		calcScore();
 		calcScoresForTopic();
+		parseWords();
 	}
 	
 	public void patchGameFromYoutube() {
@@ -115,6 +114,10 @@ public class PatchController {
 		}
 		System.out.println("당일 기준 동영상 게시일이 70일(10주)가 넘어가는 동영상 id들 삭제");
 		serviceBasic.deleteOldDatas();
+		System.out.println("당일 기준 수집일이 7일(1주)가 넘어가는 동영상 | 채널 통계수치들 삭제");
+		serviceBasic.deleteOldStatisticsVid();
+		serviceBasic.deleteOldStatisticsChan();
+		
 	}
 	
 	public void parseWords() {

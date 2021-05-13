@@ -134,5 +134,17 @@ public class BasicServiceImpl implements BasicService {
 	public TopicStatistic getTopicStatisticTodayByTopic(String topic) {
 		return mapper.getTopicStatisticTodayByTopic(topic);
 	}
+	
+	@Override
+	// 당일 기준 수집일이 7일(1주)가 넘어가는 동영상 통계수치들 삭제
+	public void deleteOldStatisticsVid() {
+		mapper.deleteOldStatisticsVid();
+	}
+	
+	@Override
+	// 당일 기준 수집일이 7일(1주)가 넘어가는 채널 통계수치들 삭제
+	public void deleteOldStatisticsChan() {
+		mapper.deleteOldStatisticsChan();
+	}
 
 }

@@ -17,6 +17,10 @@ import com.my.spring.domain.statistics.TopicStatistic;
 public interface BasicService {
 	// 당일 기준 동영상 게시일이 98일(14주)가 넘어가는 동영상 id들 삭제
 	public void deleteOldDatas();
+	// 당일 기준 수집일이 7일(1주)가 넘어가는 동영상 통계수치들 삭제
+	public void deleteOldStatisticsVid();
+	// 당일 기준 수집일이 7일(1주)가 넘어가는 채널 통계수치들 삭제
+	public void deleteOldStatisticsChan();
 	
 	public List<String> getGameQ();
 	public String getTitleByQ(String q);

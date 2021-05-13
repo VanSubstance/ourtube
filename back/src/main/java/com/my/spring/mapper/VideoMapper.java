@@ -10,6 +10,7 @@ import com.my.spring.domain.TagDto;
 import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
 import com.my.spring.domain.statistics.DateStatistic;
+import com.my.spring.domain.statistics.GameStatisticResultBar;
 
 public interface VideoMapper {
 	public List<String> getVideoIdsByGame(@Param("game") String game);
@@ -39,4 +40,10 @@ public interface VideoMapper {
 	public DateStatistic getTotalVideoDataByDate(@Param("date") Date date);
 	
 	public List<String> getTitlesRelavantByTitle(@Param("title") String title);
+	
+	// 장르 별 평균 좋아요, 싫어요, 채널 수, 동영상 수
+	public GameStatisticResultBar getDataForResultBarByTopic(@Param("topic") String topic);
+	
+	// 장르 별 평균 좋아요, 싫어요, 채널 수, 동영상 수
+	public GameStatisticResultBar getDataForResultBarByGame(@Param("title") String title);
 }
