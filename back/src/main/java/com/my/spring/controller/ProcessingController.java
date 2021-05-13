@@ -22,6 +22,7 @@ import com.my.spring.domain.TopicStatDto;
 import com.my.spring.domain.basics.Game;
 import com.my.spring.domain.statistics.DateStatistic;
 import com.my.spring.domain.statistics.GameDataForMain;
+import com.my.spring.domain.statistics.GameStatisticResultBar;
 import com.my.spring.domain.statistics.TopicStatistic;
 import com.my.spring.service.BasicService;
 import com.my.spring.service.ChannelService;
@@ -164,7 +165,7 @@ public class ProcessingController {
 	}
 	
 
-	// 게임 제목 ==> ProfileChip에 필요한 데이터
+	// 게임  ==> ProfileChip에 필요한 데이터
 	@RequestMapping(value = "/game/profile/{title}", method = RequestMethod.GET)
 	public GameProfileChip getProfileChipByTitle(@PathVariable String title) {
 		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
@@ -172,9 +173,27 @@ public class ProcessingController {
 		return serviceBasic.getProfileChipByTitle(title);
 	}
 	
-	// 게임 제목 -> 유사 게임 리스트 출력
+	// 게임  ==> 유사 게임 리스트 출력
 	@RequestMapping(value = "/game/relavant/{title}", method = RequestMethod.GET)
 	public List<String> getTitlesRelavantByTitle(@PathVariable String title) {
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println(title + " ==> 유사 게임 리스트 출력: " + requestedTime);
 		return serviceVideo.getTitlesRelavantByTitle(title);
+	}
+
+	// 게임 ==> 게임 별 평균 좋아요, 싫어요, 채널 수, 동영상 수
+	@RequestMapping(value = "/game/resultBar/{title}", method = RequestMethod.GET)
+	public GameStatisticResultBar getDataForResultBarByGame(@PathVariable String title) {
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println(title + " ==> 평균 좋아요, 싫어요, 채널 수, 동영상 수: " + requestedTime);
+		return serviceVideo.getDataForResultBarByGame(title);
+	}
+	
+	// 장르 ==> 장르 별 평균 좋아요, 싫어요, 채널 수, 동영상 수
+	@RequestMapping(value = "/topic/resultBar/{topic}", method = RequestMethod.GET)
+	public GameStatisticResultBar getDataForResultBarByTopic(@PathVariable String topic) {
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println(topic + " ==> 평균 좋아요, 싫어요, 채널 수, 동영상 수: " + requestedTime);
+		return serviceVideo.getDataForResultBarByTopic(topic);
 	}
 }

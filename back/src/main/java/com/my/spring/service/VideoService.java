@@ -9,6 +9,7 @@ import com.my.spring.domain.VideoDto;
 import com.my.spring.domain.VideoStatDto;
 import com.my.spring.domain.statistics.DateStatistic;
 import com.my.spring.domain.statistics.DateStatisticRelative;
+import com.my.spring.domain.statistics.GameStatisticResultBar;
 
 public interface VideoService {
 	public List<String> getVideoIdsByGame(String game);
@@ -40,6 +41,13 @@ public interface VideoService {
 	
 	// 당일 게임 동영상 통계수치 추적 (10개 기본 수치)
 	public DateStatistic getVideoDataTodayByTitle (String title);
-	
+
+	// 게임 제목 -> 유사 게임 리스트 출력
 	public List<String> getTitlesRelavantByTitle(String title);
+	
+	// 장르 별 평균 좋아요, 싫어요, 채널 수, 동영상 수
+	public GameStatisticResultBar getDataForResultBarByTopic(String topic);
+	
+	// 장르 별 평균 좋아요, 싫어요, 채널 수, 동영상 수
+	public GameStatisticResultBar getDataForResultBarByGame(String title);
 }

@@ -9,7 +9,23 @@
 		where publisheddate < TO_DATE(SYSDATE - 70, 'YY/MM/DD')
 		]]>
 	</delete>
+	
+	<!-- 당일 기준 수집일이 7일(1주)가 넘어가는 동영상 통계수치들 삭제 -->
+	<delete id="deleteOldStatisticsVid">
+		<![CDATA[
+		delete from videostatistics
+		where infodate < TO_DATE(SYSDATE - 7, 'YY/MM/DD')
+		]]>
+	</delete>
 
+	<!-- 당일 기준 수집일이 7일(1주)가 넘어가는 채널 통계수치들 삭제 -->
+	<delete id="deleteOldStatisticsChan">
+		<![CDATA[
+		delete from channelstatistics
+		where infodate < TO_DATE(SYSDATE - 7, 'YY/MM/DD')
+		]]>
+	</delete>
+	
 	<select id="getGameQ" resultType="String">
 		select Q from gamesearch 
 		where q is not null 
