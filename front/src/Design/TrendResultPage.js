@@ -67,6 +67,8 @@ const TrendResultPage = (props) => {
     genre1: "",
     genre2: "",
     genre3: "",
+    rank: 0,
+    ourScore: 0.0
   });
 
   // 우측 하단 데이터
@@ -96,6 +98,8 @@ const TrendResultPage = (props) => {
           genre1: data.genre1,
           genre2: data.genre2,
           genre2: data.genre3,
+          rank: data.rank,
+          ourScore: data.ourScore
         });
         getDataForBar(title, data.genre1, data.genre2, data.genre3);
       })
@@ -884,9 +888,9 @@ const TrendResultPage = (props) => {
               ></img>
             </div>
             <div className="trp_PFKeywordName">{dataKeyword.title}</div>
-            <div className="trp_PFKeywordYear">(순위 데이터)위</div>
+            <div className="trp_PFKeywordYear">{dataKeyword.rank}위</div>
             <div className="trp_PFKeywordCompony">
-              아워스코어 / (아워스코어)
+              아워스코어 | {dataKeyword.ourScore}
             </div>
           </div>
           <div className="trp_RadarBox">
