@@ -760,7 +760,7 @@ const TrendMainPage = () => {
               <div
                 className="tmp_PFKeywordInfoBox">
                 <div
-                  className="tmp_PFKeywordInfoTop">장르 아울스코어</div>
+                  className="tmp_PFKeywordInfoTop">장르 아워스코어</div>
                 <div
                   className="tmp_PFKeywordInfoBottom">
                   {
