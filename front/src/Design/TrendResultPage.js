@@ -752,13 +752,7 @@ const TrendResultPage = (props) => {
                       text: {
                         fill: "white",
                       },
-                    },
-                    legend: {
-                      text: {
-                        fontSize: 10,
-                        fill: "white",
-                      },
-                    },
+                    }
                   },
                   grid: {
                     line: {
