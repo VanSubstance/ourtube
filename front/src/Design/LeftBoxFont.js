@@ -45,7 +45,7 @@ const LeftBoxFont = (props) => {
             <span>없음</span>
           )}
         </div>
-        <div id="_glorystyle1">
+        {/* <div id="_glorystyle1">
           <span>이 주의 최고 조회수</span>
         </div>
         <img
@@ -65,7 +65,7 @@ const LeftBoxFont = (props) => {
         <img
           className="mp_GloryFlag3"
           src="/Ex/BadgeFlagBlue.png">
-        </img>
+        </img> */}
       </div>
       <div
         className="mp_LeftBoxBottom">

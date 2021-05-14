@@ -17,9 +17,9 @@ const KeywordList = (props) => {
                 spaceBetween={20}
                 slidesPerView={4.54}
                 slidesPerGroup={1}
-                navigation
+                navigation={false}
                 loop={false}
-                autoplay={false}
+                autoplay={true}
                 pagination={{ clickable: true }}
                 observer={true}
             >

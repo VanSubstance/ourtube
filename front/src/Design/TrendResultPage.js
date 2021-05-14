@@ -2,14 +2,15 @@ import React, { Component, useState, useEffect } from "react";
 import "./Styles.css";
 import "./Css/TrendResultPage.css";
 import axios from "axios";
-import { Bar, Line, Radar } from "react-chartjs-2";
-import Chart from "chart.js";
 import { ResponsiveBar } from "@nivo/bar";
 import { ResponsiveLine } from "@nivo/line";
 import { ResponsiveRadar } from "@nivo/radar";
 import { ProfileChipContainer } from "./Comps";
-import WordCloud from "react-d3-cloud";
+import ReactWordcloud from "react-wordcloud";
 import { CLChipContainer } from "./Comps";
+import { select } from "d3-selection";
+import "d3-transition";
+import { colors } from "@material-ui/core";
 
 const TrendResultPage = (props) => {
 
@@ -114,6 +115,85 @@ const TrendResultPage = (props) => {
         console.error(e);
       });
   };
+
+  // 워드클라우드 데이터
+  const [wordCloudInfo, setWordCloudInfo] = useState([
+    { text: "조회수", value: 1 },
+    { text: "클라우드", value: 2 },
+    { text: "순위내용빈도", value: 3 },
+    { text: "연관", value: 4 },
+    { text: "내용", value: 5 },
+    { text: "좋싫비", value: 6 },
+    { text: "게임 ", value: 7 },
+    { text: "일일 ", value: 8 },
+    { text: "조회 ", value: 9 },
+    { text: "수", value: 10 },
+    { text: "검색량", value: 8 },
+    { text: "동영상 ", value: 7 },
+    { text: "채널당 ", value: 6 },
+    { text: "평균", value: 5 },
+    { text: "골짜기", value: 4 },
+    { text: "신규", value: 3 },
+    { text: "채널", value: 9 },
+    { text: "주의", value: 2 },
+    { text: "abcd", value: 10 },
+    { text: "순위", value: 10 },
+    { text: "주별", value: 5 },
+    { text: "추천 ", value: 6 },
+    { text: "참여도", value: 7 },
+    { text: "롱런", value: 8 },
+    { text: "챌린지", value: 4 },
+    { text: "조회수", value: 1 },
+    { text: "클라우드", value: 2 },
+    { text: "순위내용빈도", value: 3 },
+    { text: "연관", value: 4 },
+    { text: "내용", value: 5 },
+    { text: "좋싫비", value: 6 },
+    { text: "게임 ", value: 7 },
+    { text: "일일 ", value: 8 },
+    { text: "조회 ", value: 9 },
+    { text: "수", value: 10 },
+    { text: "검색량", value: 8 },
+    { text: "동영상 ", value: 7 },
+    { text: "채널당 ", value: 6 },
+    { text: "평균", value: 5 },
+    { text: "골짜기", value: 4 },
+    { text: "신규", value: 3 },
+    { text: "채널", value: 9 },
+    { text: "주의", value: 2 },
+    { text: "abcd", value: 10 },
+    { text: "순위", value: 10 },
+    { text: "주별", value: 5 },
+    { text: "추천 ", value: 6 },
+    { text: "참여도", value: 7 },
+    { text: "롱런", value: 8 },
+    { text: "챌린지", value: 4 },
+    { text: "조회수", value: 1 },
+    { text: "클라우드", value: 2 },
+    { text: "순위내용빈도", value: 3 },
+    { text: "연관", value: 4 },
+    { text: "내용", value: 5 },
+    { text: "좋싫비", value: 6 },
+    { text: "게임 ", value: 7 },
+    { text: "일일 ", value: 8 },
+    { text: "조회 ", value: 9 },
+    { text: "수", value: 10 },
+    { text: "검색량", value: 8 },
+    { text: "동영상 ", value: 7 },
+    { text: "채널당 ", value: 6 },
+    { text: "평균", value: 5 },
+    { text: "골짜기", value: 4 },
+    { text: "신규", value: 3 },
+    { text: "채널", value: 9 },
+    { text: "주의", value: 2 },
+    { text: "abcd", value: 10 },
+    { text: "순위", value: 10 },
+    { text: "주별", value: 5 },
+    { text: "추천 ", value: 6 },
+    { text: "참여도", value: 7 },
+    { text: "롱런", value: 8 },
+    { text: "챌린지", value: 4 },
+  ]);
 
   // 선 그래프 데이터
   const getDataForLines = async (title) => {
@@ -241,6 +321,7 @@ const TrendResultPage = (props) => {
 
   return (
     <div className="trp_MainWrapper">
+      <link href='http://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'></link>
       <div className="trp_BackGroundPanel"></div>
       {/* <div
                 className="trp_BackGroundPanelLine">
@@ -267,7 +348,7 @@ const TrendResultPage = (props) => {
             ></img>
           </a>
         </div>
-        <div className="trp_InfoBar">
+        {/* <div className="trp_InfoBar">
           <div className="trp_BadgeBar">
             <div className="trp_BadgeChip">이 주의 조회수 1위</div>
             <div className="trp_BadgeChip">이 주의 신규 동영상 1위</div>
@@ -275,10 +356,7 @@ const TrendResultPage = (props) => {
             <div className="trp_BadgeChip">양승혁의 골짜기</div>
             <div className="trp_BadgeChip">양승혁의 골짜기</div>
           </div>
-          <div className="trp_CtgrChip">{dataKeyword.genre1}</div>
-          <div className="trp_CtgrChip">{dataKeyword.genre2}</div>
-          <div className="trp_CtgrChip">{dataKeyword.genre3}</div>
-        </div>
+        </div> */}
       </div>
 
       {/* 컨테이너 */}
@@ -288,6 +366,23 @@ const TrendResultPage = (props) => {
           <div className="trp_TextCloudBox">
             <div className="trp_BoxNameBar">텍스트 클라우드</div>
             <div className="trp_WordCloudContainer">
+              <ReactWordcloud
+                words={wordCloudInfo}
+                options={{
+                  colors: ["#e8c1a0", "#f47560", "#f1e15b", "#e8a838", "#61cdbb", "#97e3d5", "#b2df8a", "#a6cee3", "#fccde5"],
+                  scale: "sqrt",
+                  spiral: "archimedean",
+                  fontFamily: "Spoqa Han Sans Neo",
+                  fontStyle: "normal",
+                  fontWeight: "normal",
+                  rotations: 1,
+                  rotationAngles: [0, 90],
+                  spiral: "archimedean",
+                  transitionDuration: 1000,
+                  deterministic: false,
+                  enableTooltip: false,
+                }}
+              ></ReactWordcloud>
             </div>
           </div>
           <div className="trp_CommentListBox">
@@ -774,6 +869,9 @@ const TrendResultPage = (props) => {
           </div>
         </div>
         <div className="trp_RightBox">
+          <div className="trp_CtgrChip_A">{dataKeyword.genre1}</div>
+          <div className="trp_CtgrChip_B">{dataKeyword.genre2}</div>
+          <div className="trp_CtgrChip_B">{dataKeyword.genre3}</div>
           <div className="trp_PFBox">
             <div className="trp_PFThumbnailCircle">
               <img
@@ -781,7 +879,7 @@ const TrendResultPage = (props) => {
                 src={
                   dataKeyword.thumbnail !== null
                     ? dataKeyword.thumbnail
-                    : "/Ex/happy.jpg"
+                    : "/Ex/404_boxart-285x380.jpg"
                 }
               ></img>
             </div>
