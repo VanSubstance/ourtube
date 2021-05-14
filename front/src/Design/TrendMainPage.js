@@ -51,6 +51,7 @@ const TrendMainPage = () => {
   const [dataForAvgAccuComment, setDataForAvgAccuComment] = useState([]);
   // NumAccuView 데이터
   const [dataForAvgAccuView, setDataForAvgAccuView] = useState([]);
+  
   const datesForBar = [
     moment().subtract(6, "days").format("MM/DD"),
     moment().subtract(5, "days").format("MM/DD"),
@@ -614,7 +615,7 @@ const TrendMainPage = () => {
               data={dataForAvgAccuView}
               keys={datesForBar}
               indexBy="country"
-              margin={{ top: 15, right: 20, bottom: 70, left: 45 }}
+              margin={{ top: 15, right: 20, bottom: 60, left: 45 }}
               padding={0.4}
               valueScale={{ type: 'linear' }}
               indexScale={{ type: 'band', round: true }}
@@ -759,7 +760,7 @@ const TrendMainPage = () => {
               <div
                 className="tmp_PFKeywordInfoBox">
                 <div
-                  className="tmp_PFKeywordInfoTop">장르 아울스코어</div>
+                  className="tmp_PFKeywordInfoTop">장르 아워스코어</div>
                 <div
                   className="tmp_PFKeywordInfoBottom">
                   {
