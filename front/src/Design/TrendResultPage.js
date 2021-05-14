@@ -21,9 +21,6 @@ const TrendResultPage = (props) => {
   // 신규 조회수 데이터
   const [dataForAvgNewView, setDataForAvgNewView] = useState([]);
 
-  // 일별 신규 비디오량 데이터
-  const [dataForNumNewVid, setDataForNumNewVid] = useState([]);
-
   // 랭크 데이터
   const [dataForRank, setDataForRank] = useState([]);
 
@@ -151,11 +148,6 @@ const TrendResultPage = (props) => {
           id: title,
           color: "red",
           data: data.avgNewView
-        }]);
-        setDataForNumNewVid([{
-          id: title,
-          color: "red",
-          data: data.numNewVid
         }]);
       })
       .catch((e) => {
@@ -654,7 +646,7 @@ const TrendResultPage = (props) => {
             <div className="trp_BoxNameBar">일일 키워드 검색량</div>
             <ResponsiveLine
               className="tmp_ResponsiveLine"
-              data={dataForNumNewVid}
+              data={[]}
               margin={{ top: 10, right: 25, bottom: 70, left: 50 }}
               xScale={{ type: "point" }}
               yScale={{
