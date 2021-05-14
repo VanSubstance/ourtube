@@ -161,88 +161,88 @@ const TrendResultPage = (props) => {
     let tempForAvgChannel = [];
     let tempForNumChannelVidByGenre = [];
     await axios.get(url + "/deploy/game/resultBar/" + title)
-      .then(({data}) => {
+      .then(({ data }) => {
         tempForAvgRatio = tempForAvgRatio.concat({
-          country: "해당 게임",
-          "좋아요" : data.likeCount,
+          country: title,
+          "좋아요": data.likeCount,
           "좋아요Color": "hsl(297, 70%, 50%)",
           "싫어요": data.dislikeCount,
           "싫어요Color": "hsl(297, 70%, 50%)"
         });
         tempForAvgChannel = tempForAvgChannel.concat({
-          country: "해당 게임",
-          "count" : data.numChannel,
+          country: title,
+          "count": data.numChannel,
           "countColor": "hsl(297, 70%, 50%)"
         });
         tempForNumChannelVidByGenre = tempForNumChannelVidByGenre.concat({
-          country: "해당 게임",
-          "count" : data.numVideo,
+          country: title,
+          "count": data.numVideo,
           "countColor": "hsl(297, 70%, 50%)"
         });
       }).catch((e) => {
         console.error(e);
       });
     await axios.get(url + "/deploy/topic/resultBar/" + topic1)
-      .then(({data}) => {
+      .then(({ data }) => {
         tempForAvgRatio = tempForAvgRatio.concat({
           country: topic1,
-          "좋아요" : data.likeCount,
+          "좋아요": data.likeCount,
           "좋아요Color": "hsl(297, 70%, 50%)",
           "싫어요": data.dislikeCount,
           "싫어요Color": "hsl(297, 70%, 50%)"
         });
         tempForAvgChannel = tempForAvgChannel.concat({
           country: topic1,
-          "count" : data.numChannel,
+          "count": data.numChannel,
           "countColor": "hsl(297, 70%, 50%)"
         });
         tempForNumChannelVidByGenre = tempForNumChannelVidByGenre.concat({
           country: topic1,
-          "count" : data.numVideo,
+          "count": data.numVideo,
           "countColor": "hsl(297, 70%, 50%)"
         });
       }).catch((e) => {
         console.error(e);
       });
     await axios.get(url + "/deploy/topic/resultBar/" + topic2)
-      .then(({data}) => {
+      .then(({ data }) => {
         tempForAvgRatio = tempForAvgRatio.concat({
           country: topic2,
-          "좋아요" : data.likeCount,
+          "좋아요": data.likeCount,
           "좋아요Color": "hsl(297, 70%, 50%)",
           "싫어요": data.dislikeCount,
           "싫어요Color": "hsl(297, 70%, 50%)"
         });
         tempForAvgChannel = tempForAvgChannel.concat({
           country: topic2,
-          "count" : data.numChannel,
+          "count": data.numChannel,
           "countColor": "hsl(297, 70%, 50%)"
         });
         tempForNumChannelVidByGenre = tempForNumChannelVidByGenre.concat({
           country: topic2,
-          "count" : data.numVideo,
+          "count": data.numVideo,
           "countColor": "hsl(297, 70%, 50%)"
         });
       }).catch((e) => {
         console.error(e);
       });
     await axios.get(url + "/deploy/topic/resultBar/" + topic3)
-      .then(({data}) => {
+      .then(({ data }) => {
         tempForAvgRatio = tempForAvgRatio.concat({
           country: topic3,
-          "좋아요" : data.likeCount,
+          "좋아요": data.likeCount,
           "좋아요Color": "hsl(297, 70%, 50%)",
           "싫어요": data.dislikeCount,
           "싫어요Color": "hsl(297, 70%, 50%)"
         });
         tempForAvgChannel = tempForAvgChannel.concat({
           country: topic3,
-          "count" : data.numChannel,
+          "count": data.numChannel,
           "countColor": "hsl(297, 70%, 50%)"
         });
         tempForNumChannelVidByGenre = tempForNumChannelVidByGenre.concat({
           country: topic3,
-          "count" : data.numVideo,
+          "count": data.numVideo,
           "countColor": "hsl(297, 70%, 50%)"
         });
       }).catch((e) => {
@@ -329,8 +329,8 @@ const TrendResultPage = (props) => {
               <CLChipContainer words = {wordCloudInfo}></CLChipContainer>
             </div>
           </div>
-          <div className="trp_GraphBox_1">
-            <div className="trp_BoxNameBar">연관 게임 평균 좋싫비</div>
+          <div className="trp_GraphBox_4">
+            <div className="trp_BoxNameBar">연관 장르 평균 좋싫비</div>
             <div className="trp_BarGraphContainer">
               <ResponsiveBar
                 data={dataForAvgRatio}
@@ -410,8 +410,8 @@ const TrendResultPage = (props) => {
               />
             </div>
           </div>
-          <div className="trp_GraphBox_2">
-            <div className="trp_BoxNameBar">연관 게임 평균 count</div>
+          <div className="trp_GraphBox_5">
+            <div className="trp_BoxNameBar">연관 장르 평균 count</div>
             <div className="trp_BarGraphContainer">
               <ResponsiveBar
                 data={dataForNumChannelVidByGenre}
@@ -491,7 +491,7 @@ const TrendResultPage = (props) => {
               />
             </div>
           </div>
-          <div className="trp_GraphBox_3">
+          <div className="trp_GraphBox_4">
             <div className="trp_BoxNameBar">채널당 평균 동영상 수</div>
             <div className="trp_BarGraphContainer">
               <ResponsiveBar
@@ -572,7 +572,7 @@ const TrendResultPage = (props) => {
               />
             </div>
           </div>
-          <div className="trp_GraphBox_4">
+          <div className="trp_GraphBox_5">
             <div className="trp_BoxNameBar">일일 키워드 조회 수</div>
             <ResponsiveLine
               className="tmp_ResponsiveLine"
@@ -642,78 +642,8 @@ const TrendResultPage = (props) => {
               legends={[]}
             />
           </div>
-          <div className="trp_GraphBox_5">
-            <div className="trp_BoxNameBar">일일 키워드 검색량</div>
-            <ResponsiveLine
-              className="tmp_ResponsiveLine"
-              data={[]}
-              margin={{ top: 10, right: 25, bottom: 70, left: 50 }}
-              xScale={{ type: "point" }}
-              yScale={{
-                type: "linear",
-                min: "0",
-                max: "auto",
-                stacked: false,
-                reverse: false,
-              }}
-              yFormat=" >-.2f"
-              curve="monotoneX"
-              axisTop={null}
-              axisRight={null}
-              axisBottom={{
-                orient: "bottom",
-                tickSize: 5,
-                tickPadding: 5,
-                tickRotation: 0,
-                legend: null,
-                legendOffset: 36,
-                legendPosition: "middle",
-              }}
-              axisLeft={{
-                orient: "left",
-                tickSize: 5,
-                tickPadding: 5,
-                tickRotation: 0,
-                legend: null,
-                legendOffset: -40,
-                legendPosition: "middle",
-              }}
-              theme={{
-                textColor: "white",
-                axis: {
-                  tickColor: "white",
-                  ticks: {
-                    line: {
-                      stroke: "white",
-                    },
-                    text: {
-                      fill: "white",
-                    },
-                  },
-                  legend: {
-                    text: {
-                      fontSize: 10,
-                      fill: "white",
-                    },
-                  },
-                },
-                grid: {
-                  line: {
-                    stroke: "white",
-                  },
-                },
-              }}
-              pointSize={4}
-              pointColor={{ theme: "background" }}
-              pointBorderWidth={2}
-              pointBorderColor={{ from: "serieColor" }}
-              pointLabelYOffset={-12}
-              useMesh={true}
-              legends={[]}
-            />
-          </div>
           <div className="trp_GraphBox_6">
-            <div className="trp_BoxNameBar">주별 순위</div>
+            <div className="trp_BoxNameBar">일일 순위</div>
             <ResponsiveLine
               className="tmp_ResponsiveLine"
               data={dataForRank}
@@ -852,6 +782,7 @@ const TrendResultPage = (props) => {
                 animate={true}
                 motionConfig="wobbly"
                 isInteractive={false}
+                legends={[]}
               />
             </div>
           </div>
