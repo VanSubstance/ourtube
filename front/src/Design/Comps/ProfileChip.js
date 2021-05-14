@@ -7,7 +7,7 @@ const ProfileChip = (props) => {
   // 데이터
   const [data, setData] = useState({
     title: "",
-    thumbnail: "/Ex/happy.jpg",
+    thumbnail: "/Ex/404_boxart-285x380.jpg",
     genre1: "",
     genre2: "",
   });

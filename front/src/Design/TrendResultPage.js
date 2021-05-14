@@ -16,7 +16,7 @@ const TrendResultPage = (props) => {
   // 우측 상단 데이터
   const [dataKeyword, setDataKeyword] = useState({
     title: "",
-    thumbnail: "/Ex/happy.jpg",
+    thumbnail: "/Ex/404_boxart-285x380.jpg",
     genre1: "",
     genre2: "",
     genre3: "",
@@ -936,7 +936,7 @@ const TrendResultPage = (props) => {
                 src={
                   dataKeyword.thumbnail !== null
                     ? dataKeyword.thumbnail
-                    : "/Ex/happy.jpg"
+                    : "/Ex/404_boxart-285x380.jpg"
                 }
               ></img>
             </div>
