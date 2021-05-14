@@ -890,7 +890,7 @@ const TrendResultPage = (props) => {
             <div className="trp_PFKeywordName">{dataKeyword.title}</div>
             <div className="trp_PFKeywordYear">{dataKeyword.rank}위</div>
             <div className="trp_PFKeywordCompony">
-              아워스코어 | {dataKeyword.ourScore}
+              아워스코어 | {(100 * (dataKeyword.ourScore)).toFixed(1)}
             </div>
           </div>
           <div className="trp_RadarBox">
