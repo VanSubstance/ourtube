@@ -12,25 +12,9 @@ import WordCloud from "react-d3-cloud";
 import { CLChipContainer } from "./Comps";
 
 const TrendResultPage = (props) => {
-  // 우측 상단 데이터
-  const [dataKeyword, setDataKeyword] = useState({
-    title: "",
-    thumbnail: "/Ex/happy.jpg",
-    genre1: "",
-    genre2: "",
-    genre3: "",
-  });
 
-  // 우측 하단 데이터
-  const [dataKeywordsRelavant, setDataKeywordsRelavant] = useState([]);
-
-  useEffect(() => {
-    console.log(props.match.params.keyword);
-    getDataKeyword(props.match.params.keyword);
-    getDataKeywordsRelavant(props.match.params.keyword);
-    getDataForLines(props.match.params.keyword);
-  }, []);
-
+  // 데이터 호출 판단 변수
+  const [complete, setComplete] = useState(false);
   const [url] = useState("http://222.232.15.205:8082");
 
   // 신규 조회수 데이터
@@ -43,148 +27,13 @@ const TrendResultPage = (props) => {
   const [dataForRank, setDataForRank] = useState([]);
 
   // 장르 별 평균 채널량 데이터
-  const [dataForAvgChannelVid, setDataForAvgChannelVid] = useState([
-    {
-      country: "AD",
-      "hot dog": 103,
-      "hot dogColor": "hsl(121, 70%, 50%)",
-      burger: 181,
-      burgerColor: "hsl(350, 70%, 50%)",
-      sandwich: 194,
-      sandwichColor: "hsl(129, 70%, 50%)",
-      kebab: 21,
-      kebabColor: "hsl(4, 70%, 50%)",
-    },
-    {
-      country: "AE",
-      "hot dog": 6,
-      "hot dogColor": "hsl(325, 70%, 50%)",
-      burger: 155,
-      burgerColor: "hsl(151, 70%, 50%)",
-      sandwich: 192,
-      sandwichColor: "hsl(56, 70%, 50%)",
-      kebab: 138,
-      kebabColor: "hsl(254, 70%, 50%)",
-    },
-    {
-      country: "AF",
-      "hot dog": 154,
-      "hot dogColor": "hsl(297, 70%, 50%)",
-      burger: 55,
-      burgerColor: "hsl(25, 70%, 50%)",
-      sandwich: 1,
-      sandwichColor: "hsl(65, 70%, 50%)",
-      kebab: 196,
-      kebabColor: "hsl(85, 70%, 50%)",
-    },
-    {
-      country: "AG",
-      "hot dog": 1,
-      "hot dogColor": "hsl(195, 70%, 50%)",
-      burger: 177,
-      burgerColor: "hsl(350, 70%, 50%)",
-      sandwich: 48,
-      sandwichColor: "hsl(49, 70%, 50%)",
-      kebab: 46,
-      kebabColor: "hsl(126, 70%, 50%)",
-    },
-  ]);
+  const [dataForAvgChannel, setDataForAvgChannel] = useState([]);
 
   // 장르별 평균 채널 당 비디오량 데이터
-  const [dataForNumChannelVidByGenre, setDataForNumChannelVidByGenre] = useState([
-    {
-      country: "AD",
-      "hot dog": 103,
-      "hot dogColor": "hsl(121, 70%, 50%)",
-      burger: 181,
-      burgerColor: "hsl(350, 70%, 50%)",
-      sandwich: 194,
-      sandwichColor: "hsl(129, 70%, 50%)",
-      kebab: 21,
-      kebabColor: "hsl(4, 70%, 50%)",
-    },
-    {
-      country: "AE",
-      "hot dog": 6,
-      "hot dogColor": "hsl(325, 70%, 50%)",
-      burger: 155,
-      burgerColor: "hsl(151, 70%, 50%)",
-      sandwich: 192,
-      sandwichColor: "hsl(56, 70%, 50%)",
-      kebab: 138,
-      kebabColor: "hsl(254, 70%, 50%)",
-    },
-    {
-      country: "AF",
-      "hot dog": 154,
-      "hot dogColor": "hsl(297, 70%, 50%)",
-      burger: 55,
-      burgerColor: "hsl(25, 70%, 50%)",
-      sandwich: 1,
-      sandwichColor: "hsl(65, 70%, 50%)",
-      kebab: 196,
-      kebabColor: "hsl(85, 70%, 50%)",
-    },
-    {
-      country: "AG",
-      "hot dog": 1,
-      "hot dogColor": "hsl(195, 70%, 50%)",
-      burger: 177,
-      burgerColor: "hsl(350, 70%, 50%)",
-      sandwich: 48,
-      sandwichColor: "hsl(49, 70%, 50%)",
-      kebab: 46,
-      kebabColor: "hsl(126, 70%, 50%)",
-    },
-  ]);
+  const [dataForNumChannelVidByGenre, setDataForNumChannelVidByGenre] = useState([]);
 
   // 좋싫비 데이터
-  const [dataForAvgRatioByGenre, setDataForAvgRatioByGenre] = useState([
-    {
-      country: "AD",
-      "hot dog": 103,
-      "hot dogColor": "hsl(121, 70%, 50%)",
-      burger: 181,
-      burgerColor: "hsl(350, 70%, 50%)",
-      sandwich: 194,
-      sandwichColor: "hsl(129, 70%, 50%)",
-      kebab: 21,
-      kebabColor: "hsl(4, 70%, 50%)",
-    },
-    {
-      country: "AE",
-      "hot dog": 6,
-      "hot dogColor": "hsl(325, 70%, 50%)",
-      burger: 155,
-      burgerColor: "hsl(151, 70%, 50%)",
-      sandwich: 192,
-      sandwichColor: "hsl(56, 70%, 50%)",
-      kebab: 138,
-      kebabColor: "hsl(254, 70%, 50%)",
-    },
-    {
-      country: "AF",
-      "hot dog": 154,
-      "hot dogColor": "hsl(297, 70%, 50%)",
-      burger: 55,
-      burgerColor: "hsl(25, 70%, 50%)",
-      sandwich: 1,
-      sandwichColor: "hsl(65, 70%, 50%)",
-      kebab: 196,
-      kebabColor: "hsl(85, 70%, 50%)",
-    },
-    {
-      country: "AG",
-      "hot dog": 1,
-      "hot dogColor": "hsl(195, 70%, 50%)",
-      burger: 177,
-      burgerColor: "hsl(350, 70%, 50%)",
-      sandwich: 48,
-      sandwichColor: "hsl(49, 70%, 50%)",
-      kebab: 46,
-      kebabColor: "hsl(126, 70%, 50%)",
-    },
-  ]);
+  const [dataForAvgRatio, setDataForAvgRatio] = useState([]);
 
   // 레이더 데이터
   const [dataForRadar, setDataForRadar] = useState([
@@ -210,34 +59,30 @@ const TrendResultPage = (props) => {
     },
   ]);
 
-  // 워드클라우드 데이터
-  const [wordCloudInfo, setWordCloudInfo] = useState({
-    data: [
-      { text: "Hey", value: 1000 },
-      { text: "lol", value: 200 },
-      { text: "first impression", value: 800 },
-      { text: "very cool", value: 14000 },
-      { text: "duck", value: 10 },
-      { text: "goeiedag", value: 492 },
-      { text: "mirdita", value: 332 },
-      { text: "1235", value: 33 },
-      { text: "tasg", value: 14 },
-      { text: "tbwae", value: 456 },
-      { text: "b31b", value: 894 },
-      { text: "asdfdg", value: 12132 },
-      { text: "wehda", value: 3242 },
-      { text: "65d4a8", value: 842 },
-      { text: "ubhasdg", value: 32110 },
-      { text: "7q48f3a1", value: 1955 },
-      { text: "asd", value: 235 },
-      { text: "gwe", value: 116 },
-      { text: "rqwree", value: 123 },
-      { text: "eqwty", value: 323 },
-      { text: "gasdf", value: 44 },
-      { text: "czxcbb", value: 56 },
-    ],
-    fontSizeMapper: (word) => Math.log2(word.value) * 5,
+  // 우측 상단 데이터
+  const [dataKeyword, setDataKeyword] = useState({
+    title: "",
+    thumbnail: "/Ex/happy.jpg",
+    genre1: "",
+    genre2: "",
+    genre3: "",
   });
+
+  // 우측 하단 데이터
+  const [dataKeywordsRelavant, setDataKeywordsRelavant] = useState([]);
+
+  useEffect(() => {
+    console.log(props.match.params.keyword);
+    getDataKeyword(props.match.params.keyword);
+    getDataKeywordsRelavant(props.match.params.keyword);
+    getDataForLines(props.match.params.keyword);
+  }, []);
+
+  useEffect(() => {
+    console.log("1: ", dataForAvgRatio);
+    console.log("2: ", dataForAvgChannel);
+    console.log("3: ", dataForNumChannelVidByGenre);
+  }, [dataForNumChannelVidByGenre]);
 
   // 우측 상단 데이터 연결
   const getDataKeyword = async (title) => {
@@ -251,6 +96,7 @@ const TrendResultPage = (props) => {
           genre2: data.genre2,
           genre2: data.genre3,
         });
+        getDataForBar(title, data.genre1, data.genre2, data.genre3);
       })
       .catch((e) => {
         console.error(e);
@@ -269,6 +115,7 @@ const TrendResultPage = (props) => {
       });
   };
 
+  // 선 그래프 데이터
   const getDataForLines = async (title) => {
     await axios
       .get(url + "/deploy/game/chart/" + title)
@@ -291,8 +138,106 @@ const TrendResultPage = (props) => {
       })
       .catch((e) => {
         console.error(e);
-      })
+      });
   };
+
+  // 막대 그래프 데이터
+  const getDataForBar = async (title, topic1, topic2, topic3) => {
+    let tempForAvgRatio = [];
+    let tempForAvgChannel = [];
+    let tempForNumChannelVidByGenre = [];
+    await axios.get(url + "/deploy/game/resultBar/" + title)
+      .then(({data}) => {
+        tempForAvgRatio = tempForAvgRatio.concat({
+          country: title,
+          "좋아요" : data.likeCount,
+          "좋아요Color": "hsl(297, 70%, 50%)",
+          "싫어요": data.dislikeCount,
+          "싫어요Color": "hsl(297, 70%, 50%)"
+        });
+        tempForAvgChannel = tempForAvgChannel.concat({
+          country: title,
+          "count" : data.numChannel,
+          "countColor": "hsl(297, 70%, 50%)"
+        });
+        tempForNumChannelVidByGenre = tempForNumChannelVidByGenre.concat({
+          country: title,
+          "count" : data.numVideo,
+          "countColor": "hsl(297, 70%, 50%)"
+        });
+      }).catch((e) => {
+        console.error(e);
+      });
+    await axios.get(url + "/deploy/topic/resultBar/" + topic1)
+      .then(({data}) => {
+        tempForAvgRatio = tempForAvgRatio.concat({
+          country: topic1,
+          "좋아요" : data.likeCount,
+          "좋아요Color": "hsl(297, 70%, 50%)",
+          "싫어요": data.dislikeCount,
+          "싫어요Color": "hsl(297, 70%, 50%)"
+        });
+        tempForAvgChannel = tempForAvgChannel.concat({
+          country: topic1,
+          "count" : data.numChannel,
+          "countColor": "hsl(297, 70%, 50%)"
+        });
+        tempForNumChannelVidByGenre = tempForNumChannelVidByGenre.concat({
+          country: topic1,
+          "count" : data.numVideo,
+          "countColor": "hsl(297, 70%, 50%)"
+        });
+      }).catch((e) => {
+        console.error(e);
+      });
+    await axios.get(url + "/deploy/topic/resultBar/" + topic2)
+      .then(({data}) => {
+        tempForAvgRatio = tempForAvgRatio.concat({
+          country: topic2,
+          "좋아요" : data.likeCount,
+          "좋아요Color": "hsl(297, 70%, 50%)",
+          "싫어요": data.dislikeCount,
+          "싫어요Color": "hsl(297, 70%, 50%)"
+        });
+        tempForAvgChannel = tempForAvgChannel.concat({
+          country: topic2,
+          "count" : data.numChannel,
+          "countColor": "hsl(297, 70%, 50%)"
+        });
+        tempForNumChannelVidByGenre = tempForNumChannelVidByGenre.concat({
+          country: topic2,
+          "count" : data.numVideo,
+          "countColor": "hsl(297, 70%, 50%)"
+        });
+      }).catch((e) => {
+        console.error(e);
+      });
+    await axios.get(url + "/deploy/topic/resultBar/" + topic3)
+      .then(({data}) => {
+        tempForAvgRatio = tempForAvgRatio.concat({
+          country: topic3,
+          "좋아요" : data.likeCount,
+          "좋아요Color": "hsl(297, 70%, 50%)",
+          "싫어요": data.dislikeCount,
+          "싫어요Color": "hsl(297, 70%, 50%)"
+        });
+        tempForAvgChannel = tempForAvgChannel.concat({
+          country: topic3,
+          "count" : data.numChannel,
+          "countColor": "hsl(297, 70%, 50%)"
+        });
+        tempForNumChannelVidByGenre = tempForNumChannelVidByGenre.concat({
+          country: topic3,
+          "count" : data.numVideo,
+          "countColor": "hsl(297, 70%, 50%)"
+        });
+      }).catch((e) => {
+        console.error(e);
+      });
+    setDataForAvgRatio(tempForAvgRatio);
+    setDataForAvgChannel(tempForAvgChannel);
+    setDataForNumChannelVidByGenre(tempForNumChannelVidByGenre);
+  }
 
   return (
     <div className="trp_MainWrapper">
@@ -343,13 +288,6 @@ const TrendResultPage = (props) => {
           <div className="trp_TextCloudBox">
             <div className="trp_BoxNameBar">텍스트 클라우드</div>
             <div className="trp_WordCloudContainer">
-              <WordCloud
-                width={675}
-                height={300}
-                data={wordCloudInfo.data}
-                fontSizeMapper={wordCloudInfo.fontSizeMapper}
-                font="impact"
-              ></WordCloud>
             </div>
           </div>
           <div className="trp_CommentListBox">
@@ -385,8 +323,8 @@ const TrendResultPage = (props) => {
             <div className="trp_BoxNameBar">연관 게임 평균 좋싫비</div>
             <div className="trp_BarGraphContainer">
               <ResponsiveBar
-                data={dataForAvgRatioByGenre}
-                keys={["hot dog", "burger", "sandwich", "kebab"]}
+                data={dataForAvgRatio}
+                keys={["좋아요", "싫어요"]}
                 indexBy="country"
                 margin={{ top: 15, right: 20, bottom: 30, left: 45 }}
                 padding={0.4}
@@ -463,11 +401,11 @@ const TrendResultPage = (props) => {
             </div>
           </div>
           <div className="trp_GraphBox_2">
-            <div className="trp_BoxNameBar">연관 게임 평균 채널 수</div>
+            <div className="trp_BoxNameBar">연관 게임 평균 count</div>
             <div className="trp_BarGraphContainer">
               <ResponsiveBar
                 data={dataForNumChannelVidByGenre}
-                keys={["hot dog", "burger", "sandwich", "kebab"]}
+                keys={["count"]}
                 indexBy="country"
                 margin={{ top: 15, right: 20, bottom: 30, left: 45 }}
                 padding={0.4}
@@ -547,8 +485,8 @@ const TrendResultPage = (props) => {
             <div className="trp_BoxNameBar">채널당 평균 동영상 수</div>
             <div className="trp_BarGraphContainer">
               <ResponsiveBar
-                data={dataForAvgChannelVid}
-                keys={["hot dog", "burger", "sandwich", "kebab"]}
+                data={dataForAvgChannel}
+                keys={["count"]}
                 indexBy="country"
                 margin={{ top: 15, right: 20, bottom: 30, left: 45 }}
                 padding={0.4}

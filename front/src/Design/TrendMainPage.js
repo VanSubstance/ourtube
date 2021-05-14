@@ -51,6 +51,7 @@ const TrendMainPage = () => {
   const [dataForAvgAccuComment, setDataForAvgAccuComment] = useState([]);
   // NumAccuView 데이터
   const [dataForAvgAccuView, setDataForAvgAccuView] = useState([]);
+  
   const datesForBar = [
     moment().subtract(6, "days").format("MM/DD"),
     moment().subtract(5, "days").format("MM/DD"),
