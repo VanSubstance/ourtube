@@ -2,14 +2,14 @@ import React, { Component, useState, useEffect } from "react";
 import "./Styles.css";
 import "./Css/TrendResultPage.css";
 import axios from "axios";
-import { Bar, Line, Radar } from "react-chartjs-2";
-import Chart from "chart.js";
 import { ResponsiveBar } from "@nivo/bar";
 import { ResponsiveLine } from "@nivo/line";
 import { ResponsiveRadar } from "@nivo/radar";
 import { ProfileChipContainer } from "./Comps";
-import WordCloud from "react-d3-cloud";
+import ReactWordcloud from "react-wordcloud";
 import { CLChipContainer } from "./Comps";
+import { select } from "d3-selection";
+import "d3-transition";
 
 const TrendResultPage = (props) => {
   // 우측 상단 데이터
@@ -25,127 +25,22 @@ const TrendResultPage = (props) => {
   const [dataKeywordsRelavant, setDataKeywordsRelavant] = useState([]);
 
   useEffect(() => {
+    console.log(props.match.params.keyword);
     getDataKeyword(props.match.params.keyword);
     getDataKeywordsRelavant(props.match.params.keyword);
-    console.log(dataKeyword);
-    console.log(dataKeywordsRelavant);
+    getDataForLines(props.match.params.keyword);
   }, []);
 
   const [url] = useState("http://222.232.15.205:8082");
 
   // 신규 조회수 데이터
-  const [dataForAvgNewView, setDataForAvgNewView] = useState([
-    {
-      id: "japan",
-      color: "hsl(266, 70%, 50%)",
-      data: [
-        {
-          x: "day1",
-          y: 285,
-        },
-        {
-          x: "day2",
-          y: 197,
-        },
-        {
-          x: "day3",
-          y: 41,
-        },
-        {
-          x: "day4",
-          y: 236,
-        },
-        {
-          x: "day5",
-          y: 170,
-        },
-        {
-          x: "day6",
-          y: 86,
-        },
-        {
-          x: "day7",
-          y: 254,
-        },
-      ],
-    },
-  ]);
+  const [dataForAvgNewView, setDataForAvgNewView] = useState([]);
 
   // 일별 신규 비디오량 데이터
-  const [dataForNumNewVid, setDataForNumNewVid] = useState([
-    {
-      id: "japan",
-      color: "hsl(266, 70%, 50%)",
-      data: [
-        {
-          x: "day1",
-          y: 412,
-        },
-        {
-          x: "day2",
-          y: 53,
-        },
-        {
-          x: "day3",
-          y: 345,
-        },
-        {
-          x: "day4",
-          y: 168,
-        },
-        {
-          x: "day5",
-          y: 523,
-        },
-        {
-          x: "day6",
-          y: 423,
-        },
-        {
-          x: "day7",
-          y: 771,
-        },
-      ],
-    },
-  ]);
+  const [dataForNumNewVid, setDataForNumNewVid] = useState([]);
 
   // 랭크 데이터
-  const [dataForRank, setDataForRank] = useState([
-    {
-      id: "japan",
-      color: "hsl(266, 70%, 50%)",
-      data: [
-        {
-          x: "day1",
-          y: 9,
-        },
-        {
-          x: "day2",
-          y: 5,
-        },
-        {
-          x: "day3",
-          y: 4,
-        },
-        {
-          x: "day4",
-          y: 12,
-        },
-        {
-          x: "day5",
-          y: 15,
-        },
-        {
-          x: "day6",
-          y: 14,
-        },
-        {
-          x: "day7",
-          y: 8,
-        },
-      ],
-    },
-  ]);
+  const [dataForRank, setDataForRank] = useState([]);
 
   // 장르 별 평균 채널량 데이터
   const [dataForAvgChannelVid, setDataForAvgChannelVid] = useState([
@@ -196,52 +91,53 @@ const TrendResultPage = (props) => {
   ]);
 
   // 장르별 평균 채널 당 비디오량 데이터
-  const [dataForNumChannelVidByGenre, setDataForNumChannelVidByGenre] = useState([
-    {
-      country: "AD",
-      "hot dog": 103,
-      "hot dogColor": "hsl(121, 70%, 50%)",
-      burger: 181,
-      burgerColor: "hsl(350, 70%, 50%)",
-      sandwich: 194,
-      sandwichColor: "hsl(129, 70%, 50%)",
-      kebab: 21,
-      kebabColor: "hsl(4, 70%, 50%)",
-    },
-    {
-      country: "AE",
-      "hot dog": 6,
-      "hot dogColor": "hsl(325, 70%, 50%)",
-      burger: 155,
-      burgerColor: "hsl(151, 70%, 50%)",
-      sandwich: 192,
-      sandwichColor: "hsl(56, 70%, 50%)",
-      kebab: 138,
-      kebabColor: "hsl(254, 70%, 50%)",
-    },
-    {
-      country: "AF",
-      "hot dog": 154,
-      "hot dogColor": "hsl(297, 70%, 50%)",
-      burger: 55,
-      burgerColor: "hsl(25, 70%, 50%)",
-      sandwich: 1,
-      sandwichColor: "hsl(65, 70%, 50%)",
-      kebab: 196,
-      kebabColor: "hsl(85, 70%, 50%)",
-    },
-    {
-      country: "AG",
-      "hot dog": 1,
-      "hot dogColor": "hsl(195, 70%, 50%)",
-      burger: 177,
-      burgerColor: "hsl(350, 70%, 50%)",
-      sandwich: 48,
-      sandwichColor: "hsl(49, 70%, 50%)",
-      kebab: 46,
-      kebabColor: "hsl(126, 70%, 50%)",
-    },
-  ]);
+  const [dataForNumChannelVidByGenre, setDataForNumChannelVidByGenre] =
+    useState([
+      {
+        country: "AD",
+        "hot dog": 103,
+        "hot dogColor": "hsl(121, 70%, 50%)",
+        burger: 181,
+        burgerColor: "hsl(350, 70%, 50%)",
+        sandwich: 194,
+        sandwichColor: "hsl(129, 70%, 50%)",
+        kebab: 21,
+        kebabColor: "hsl(4, 70%, 50%)",
+      },
+      {
+        country: "AE",
+        "hot dog": 6,
+        "hot dogColor": "hsl(325, 70%, 50%)",
+        burger: 155,
+        burgerColor: "hsl(151, 70%, 50%)",
+        sandwich: 192,
+        sandwichColor: "hsl(56, 70%, 50%)",
+        kebab: 138,
+        kebabColor: "hsl(254, 70%, 50%)",
+      },
+      {
+        country: "AF",
+        "hot dog": 154,
+        "hot dogColor": "hsl(297, 70%, 50%)",
+        burger: 55,
+        burgerColor: "hsl(25, 70%, 50%)",
+        sandwich: 1,
+        sandwichColor: "hsl(65, 70%, 50%)",
+        kebab: 196,
+        kebabColor: "hsl(85, 70%, 50%)",
+      },
+      {
+        country: "AG",
+        "hot dog": 1,
+        "hot dogColor": "hsl(195, 70%, 50%)",
+        burger: 177,
+        burgerColor: "hsl(350, 70%, 50%)",
+        sandwich: 48,
+        sandwichColor: "hsl(49, 70%, 50%)",
+        kebab: 46,
+        kebabColor: "hsl(126, 70%, 50%)",
+      },
+    ]);
 
   // 좋싫비 데이터
   const [dataForAvgRatioByGenre, setDataForAvgRatioByGenre] = useState([
@@ -315,6 +211,35 @@ const TrendResultPage = (props) => {
     },
   ]);
 
+  // 워드클라우드 데이터
+  const [wordCloudInfo, setWordCloudInfo] = useState({
+    data: [
+      { text: "Hey", value: 1000 },
+      { text: "lol", value: 200 },
+      { text: "first impression", value: 800 },
+      { text: "very cool", value: 14000 },
+      { text: "duck", value: 10 },
+      { text: "goeiedag", value: 492 },
+      { text: "mirdita", value: 332 },
+      { text: "1235", value: 33 },
+      { text: "tasg", value: 14 },
+      { text: "tbwae", value: 456 },
+      { text: "b31b", value: 894 },
+      { text: "asdfdg", value: 12132 },
+      { text: "wehda", value: 3242 },
+      { text: "65d4a8", value: 842 },
+      { text: "ubhasdg", value: 32110 },
+      { text: "7q48f3a1", value: 1955 },
+      { text: "asd", value: 235 },
+      { text: "gwe", value: 116 },
+      { text: "rqwree", value: 123 },
+      { text: "eqwty", value: 323 },
+      { text: "gasdf", value: 44 },
+      { text: "czxcbb", value: 56 },
+    ],
+    fontSizeMapper: (word) => Math.log2(word.value) * 5,
+  });
+
   // 우측 상단 데이터 연결
   const getDataKeyword = async (title) => {
     await axios
@@ -345,33 +270,58 @@ const TrendResultPage = (props) => {
       });
   };
 
-  const [wordCloudInfo, setWordCloudInfo] = useState({
-    data: [
-      { text: "Hey", value: 1000 },
-      { text: "lol", value: 200 },
-      { text: "first impression", value: 800 },
-      { text: "very cool", value: 14000 },
-      { text: "duck", value: 10 },
-      { text: "goeiedag", value: 492 },
-      { text: "mirdita", value: 332 },
-      { text: "1235", value: 33 },
-      { text: "tasg", value: 14 },
-      { text: "tbwae", value: 456 },
-      { text: "b31b", value: 894 },
-      { text: "asdfdg", value: 12132 },
-      { text: "wehda", value: 3242 },
-      { text: "65d4a8", value: 842 },
-      { text: "ubhasdg", value: 32110 },
-      { text: "7q48f3a1", value: 1955 },
-      { text: "asd", value: 235 },
-      { text: "gwe", value: 116 },
-      { text: "rqwree", value: 123 },
-      { text: "eqwty", value: 323 },
-      { text: "gasdf", value: 44 },
-      { text: "czxcbb", value: 56 },
-    ],
-    fontSizeMapper: (word) => Math.log2(word.value) * 5,
-  });
+  const [wordCloudInfo, setWordCloudInfo] = useState([
+    { text: "조회수", value: 1 },
+    { text: "클라우드", value: 2 },
+    { text: "순위내용빈도", value: 3 },
+    { text: "연관", value: 4 },
+    { text: "내용", value: 5 },
+    { text: "좋싫비", value: 6 },
+    { text: "게임 ", value: 7 },
+    { text: "일일 ", value: 8 },
+    { text: "조회 ", value: 9 },
+    { text: "수", value: 10 },
+    { text: "검색량", value: 8 },
+    { text: "동영상 ", value: 7 },
+    { text: "채널당 ", value: 6 },
+    { text: "평균", value: 5 },
+    { text: "골짜기", value: 4 },
+    { text: "신규", value: 3 },
+    { text: "채널", value: 9 },
+    { text: "주의", value: 2 },
+    { text: "abcd", value: 10 },
+    { text: "순위", value: 10 },
+    { text: "주별", value: 5 },
+    { text: "추천 ", value: 6 },
+    { text: "참여도", value: 7 },
+    { text: "롱런", value: 8 },
+    { text: "챌린지", value: 4 },
+    { text: "충성도", value: 3 },
+  ]);
+  const getDataForLines = async (title) => {
+    await axios
+      .get(url + "/deploy/game/chart/" + title)
+      .then(({ data }) => {
+        setDataForRank([{
+          id: title,
+          color: "red",
+          data: data.rank
+        }]);
+        setDataForAvgNewView([{
+          id: title,
+          color: "red",
+          data: data.avgNewView
+        }]);
+        setDataForNumNewVid([{
+          id: title,
+          color: "red",
+          data: data.numNewVid
+        }]);
+      })
+      .catch((e) => {
+        console.error(e);
+      })
+  };
 
   return (
     <div className="trp_MainWrapper">
@@ -419,13 +369,23 @@ const TrendResultPage = (props) => {
           <div className="trp_TextCloudBox">
             <div className="trp_BoxNameBar">텍스트 클라우드</div>
             <div className="trp_WordCloudContainer">
-              <WordCloud
-                width={675}
-                height={300}
-                data={wordCloudInfo.data}
-                fontSizeMapper={wordCloudInfo.fontSizeMapper}
-                font="impact"
-              ></WordCloud>
+              <ReactWordcloud
+                words={wordCloudInfo}
+                options={{
+                  scale: "sqrt",
+                  spiral: "archimedean",
+                  fontFamily: "sans-serif",
+                  fontStyle: "normal",
+                  fontWeight: "normal",
+                  rotations: 1,
+                  rotationAngles: [0, 90],
+                  spiral: "archimedean",
+                  transitionDuration: 1000,
+                  deterministic: false,
+                  enableTooltip: true,
+
+                }}
+              ></ReactWordcloud>
             </div>
           </div>
           <div className="trp_CommentListBox">
