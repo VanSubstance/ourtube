@@ -820,13 +820,7 @@ const TrendResultPage = (props) => {
                       text: {
                         fill: "white",
                       },
-                    },
-                    legend: {
-                      text: {
-                        fontSize: 10,
-                        fill: "white",
-                      },
-                    },
+                    }
                   },
                   grid: {
                     line: {
@@ -858,27 +852,6 @@ const TrendResultPage = (props) => {
                 animate={true}
                 motionConfig="wobbly"
                 isInteractive={false}
-                legends={[
-                  {
-                    anchor: "top-left",
-                    direction: "column",
-                    translateX: -15,
-                    translateY: -25,
-                    itemWidth: 80,
-                    itemHeight: 20,
-                    itemTextColor: "#999",
-                    symbolSize: 12,
-                    symbolShape: "circle",
-                    effects: [
-                      {
-                        on: "hover",
-                        style: {
-                          itemTextColor: "rgba(255,255,255,0.8)",
-                        },
-                      },
-                    ],
-                  },
-                ]}
               />
             </div>
           </div>
