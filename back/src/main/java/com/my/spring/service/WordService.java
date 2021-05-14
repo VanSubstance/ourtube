@@ -1,9 +1,9 @@
 package com.my.spring.service;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.my.spring.domain.WordDto;
+import com.my.spring.domain.WordDtoForCloud;
 import com.my.spring.domain.chains.WordChain;
 import com.my.spring.domain.words.NounDto;
 
@@ -38,4 +38,5 @@ public interface WordService {
 	public List<WordChain> buildWordChainByVideo(String videoId);
 	public List<WordChain> buildWordChainByChannel(String channelId);
 	public void setWordChainsById();
+	public List<WordDtoForCloud> getWordDtoByGame(String title);
 }

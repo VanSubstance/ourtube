@@ -125,7 +125,7 @@ public class BasicServiceImpl implements BasicService {
 		for (int i = 0; i < data.size(); i++) {
 			if (i == 0) result = data.get(i);
 			if (i == 1) result.setGenre2(data.get(i).getGenre1());
-			if (i == 1) result.setGenre3(data.get(i).getGenre1());
+			if (i == 2) result.setGenre3(data.get(i).getGenre1());
 		}
 		return result;
 	}

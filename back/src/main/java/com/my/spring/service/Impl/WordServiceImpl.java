@@ -1,12 +1,12 @@
 package com.my.spring.service.Impl;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.my.spring.domain.WordDto;
+import com.my.spring.domain.WordDtoForCloud;
 import com.my.spring.domain.chains.WordChain;
 import com.my.spring.domain.words.NounDto;
 import com.my.spring.mapper.WordMapper;
@@ -141,6 +141,11 @@ public class WordServiceImpl implements WordService {
 	@Override
 	public List<NounDto> getWordsByGame(String game) {
 		return mapper.getWordsByGame(game);
+	}
+
+	@Override
+	public List<WordDtoForCloud> getWordDtoByGame(String title) {
+		return mapper.getWordDtoByGame(title);
 	}
 
 }
