@@ -401,7 +401,7 @@ const TrendResultPage = (props) => {
             ></img>
           </a>
         </div>
-        <div className="trp_InfoBar">
+        {/* <div className="trp_InfoBar">
           <div className="trp_BadgeBar">
             <div className="trp_BadgeChip">이 주의 조회수 1위</div>
             <div className="trp_BadgeChip">이 주의 신규 동영상 1위</div>
@@ -409,10 +409,7 @@ const TrendResultPage = (props) => {
             <div className="trp_BadgeChip">양승혁의 골짜기</div>
             <div className="trp_BadgeChip">양승혁의 골짜기</div>
           </div>
-          <div className="trp_CtgrChip">{dataKeyword.genre1}</div>
-          <div className="trp_CtgrChip">{dataKeyword.genre2}</div>
-          <div className="trp_CtgrChip">{dataKeyword.genre3}</div>
-        </div>
+        </div> */}
       </div>
 
       {/* 컨테이너 */}
@@ -915,6 +912,9 @@ const TrendResultPage = (props) => {
           </div>
         </div>
         <div className="trp_RightBox">
+          <div className="trp_CtgrChip_A">{dataKeyword.genre1}</div>
+          <div className="trp_CtgrChip_B">{dataKeyword.genre2}</div>
+          <div className="trp_CtgrChip_B">{dataKeyword.genre3}</div>
           <div className="trp_PFBox">
             <div className="trp_PFThumbnailCircle">
               <img

@@ -614,7 +614,7 @@ const TrendMainPage = () => {
               data={dataForAvgAccuView}
               keys={datesForBar}
               indexBy="country"
-              margin={{ top: 15, right: 20, bottom: 70, left: 45 }}
+              margin={{ top: 15, right: 20, bottom: 60, left: 45 }}
               padding={0.4}
               valueScale={{ type: 'linear' }}
               indexScale={{ type: 'band', round: true }}
