@@ -146,4 +146,19 @@
 		where word1 = #{item.sord1} and word2 = #{item.word2}
 	</update>
 	
+	<select id="getWordDtoByGame" parameterType="String" resultType="com.my.spring.domain.WordDtoForCloud">
+			select * from (
+			    select word text, sum(count) value from videoword
+			    where id in (
+			        select id from videogame
+			        where game = #{title}
+			    )
+			    group by word
+			    order by sum(count) desc
+			)
+			<![CDATA[
+			where rownum <= 80
+			]]>
+	</select>
+	
 </mapper>

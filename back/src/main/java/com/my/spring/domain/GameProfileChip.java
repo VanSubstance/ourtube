@@ -10,4 +10,6 @@ public class GameProfileChip {
 	private String genre1;
 	private String genre2;
 	private String genre3;
+	private Integer rank;
+	private Double ourScore;
 }

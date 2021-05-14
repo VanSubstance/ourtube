@@ -1,11 +1,11 @@
 package com.my.spring.mapper;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.my.spring.domain.WordDto;
+import com.my.spring.domain.WordDtoForCloud;
 import com.my.spring.domain.chains.WordChain;
 import com.my.spring.domain.words.NounDto;
 
@@ -42,4 +42,5 @@ public interface WordMapper {
 	public List<WordChain> buildWordChainByChannel(@Param("channelId") String channelId);
 	
 	public void setWordChainsById();
+	public List<WordDtoForCloud> getWordDtoByGame(@Param("title") String title);
 }

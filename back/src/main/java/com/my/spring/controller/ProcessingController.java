@@ -2,7 +2,6 @@ package com.my.spring.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.my.spring.domain.GameProfileChip;
 import com.my.spring.domain.TopicStatDto;
+import com.my.spring.domain.WordDtoForCloud;
 import com.my.spring.domain.basics.Game;
 import com.my.spring.domain.statistics.DateStatistic;
 import com.my.spring.domain.statistics.GameDataForMain;
@@ -83,45 +83,6 @@ public class ProcessingController {
 	    System.out.println(topic + " : " + requestedTime);
 		return serviceBasic.getGamesByTopic(topic);
 	}
-	
-//	
-//	@RequestMapping(value = "/keyword/{keyword}", method = RequestMethod.GET)
-//	public HashMap<String, Object> getDataForWordcloudByKeyword(@PathVariable String keyword) {
-//		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
-//		System.out.println("워드 클라우드 데이터 반환: " + keyword + " : " + requestedTime);
-//		HashMap<String, Object> result = new HashMap<String, Object>();
-//		List<NounDto> words = serviceWord.getWordsByGame(keyword);
-//		VideoStatDto avg = serviceVideo.getAvgVideoStatisticsByGame(keyword);
-//		List<Integer> views = serviceVideo.getTotalViewsByGame(keyword);
-//		result.put("words", words);
-//		result.put("likeCount", avg.getLikeCount());
-//		result.put("dislikeCount", avg.getDislikeCount());
-//		result.put("commentCount", avg.getCommentCount());
-//		result.put("viewCounts", views);
-//		return result;
-//	}
-	
-	
-//	@RequestMapping(value = "/chart/{topic}", method = RequestMethod.GET)
-//	public HashMap<String, HashMap<String, Object>> getDataForChartViewByTopic(@PathVariable String topic) {
-//		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
-//		System.out.println("차트 데이터 반환: " + topic + " : " + requestedTime);
-//		HashMap<String, HashMap<String, Object>> result = new HashMap<String, HashMap<String, Object>>();
-//		List<String> topics = serviceBasic.getTopicsByTopic(topic);
-//		for (String topicRel : topics) {
-//			HashMap<String, Object> value = new HashMap<String, Object>();
-//			VideoStatDto resultVideo = serviceVideo.getTotalVideoStatisticsByTopic(topicRel);
-//			MaxAvgMedian maxAvgMedian = serviceChannel.getChannelMaxAvgMedianByTopic(topicRel);
-//			value.put("viewCount", resultVideo.getViewCount());
-//			value.put("dislikeCount", resultVideo.getDislikeCount());
-//			value.put("commentCount", resultVideo.getCommentCount());
-//			value.put("max", maxAvgMedian.getMax());
-//			value.put("avg", maxAvgMedian.getAvg());
-//			value.put("median", maxAvgMedian.getMedian());
-//			result.put(topicRel, value);
-//		}
-//		return result;
-//	}
 	
 	@RequestMapping(value = "/game/main/{title}", method = RequestMethod.GET)
 	public HashMap<String, GameDataForMain> getDatasForGame(@PathVariable String title) {
@@ -195,5 +156,13 @@ public class ProcessingController {
 		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
 		System.out.println(topic + " ==> 평균 좋아요, 싫어요, 채널 수, 동영상 수: " + requestedTime);
 		return serviceVideo.getDataForResultBarByTopic(topic);
+	}
+	
+	// 게임 ==> 댓글 명사 데이터 리스트
+	@RequestMapping(value = "/game/word/{title}", method = RequestMethod.GET)
+	public List<WordDtoForCloud> getWordDtoByGame(@PathVariable String title) {
+		requestedTime = dateFormat.format(Calendar.getInstance().getTime());
+		System.out.println(title + " ==> 게임 ==> 댓글 명사 데이터 리스트: " + requestedTime);
+		return serviceWord.getWordDtoByGame(title);
 	}
 }

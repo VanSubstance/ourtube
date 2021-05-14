@@ -67,7 +67,7 @@ public class PatchController {
 	
 	private final int hour = 0;
 	
-	@Scheduled(cron = "1 0 " + hour + " * * *")
+	@Scheduled(cron = "1 3 " + hour + " * * *")
 	@RequestMapping("/daily")
 	private void patchDaily() {
 		patchGameFromYoutube();

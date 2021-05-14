@@ -175,9 +175,11 @@
 	</insert>
 	
 	<select id="getProfileChipByTitle" parameterType="String" resultType="com.my.spring.domain.GameProfileChip">
-		select #{title} title, a.thumbnail, b.topic genre1 from game a, gametopic b
+		select #{title} title, a.thumbnail, b.topic genre1, c.rank, c.ourscore from game a, gametopic b, gamestatistics c
 		where a.title = b.title
+        and c.title = b.title
 		and a.title = #{title}
+        and c.infodate = to_date(sysdate, 'YY/MM/DD')
 	</select>
 	
 </mapper>
