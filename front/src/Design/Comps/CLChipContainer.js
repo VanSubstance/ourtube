@@ -2,11 +2,17 @@ import React, { useState, useEffect } from "react";
 import "../Styles.css";
 import CLChip from "./CLChip";
 
-const ProfileChipContainer = () => {
+const ProfileChipContainer = (props) => {
+  let rank = 0;
   return (
     <div
       className="tmp_ChipContainer">
-      <CLChip></CLChip>
+        {props.words.map((word) => {
+          rank += 1;
+          return (
+            <CLChip word = {word} rank = {rank}></CLChip>
+          );
+        })}
     </div>
   );
 };

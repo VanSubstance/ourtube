@@ -21,9 +21,6 @@ const TrendResultPage = (props) => {
   // 신규 조회수 데이터
   const [dataForAvgNewView, setDataForAvgNewView] = useState([]);
 
-  // 일별 신규 비디오량 데이터
-  const [dataForNumNewVid, setDataForNumNewVid] = useState([]);
-
   // 랭크 데이터
   const [dataForRank, setDataForRank] = useState([]);
 
@@ -35,6 +32,9 @@ const TrendResultPage = (props) => {
 
   // 좋싫비 데이터
   const [dataForAvgRatio, setDataForAvgRatio] = useState([]);
+
+  // 워드클라우드 데이터
+  const [wordCloudInfo, setWordCloudInfo] = useState([]);
 
   // 레이더 데이터
   const [dataForRadar, setDataForRadar] = useState([
@@ -79,6 +79,7 @@ const TrendResultPage = (props) => {
     getDataKeyword(props.match.params.keyword);
     getDataKeywordsRelavant(props.match.params.keyword);
     getDataForLines(props.match.params.keyword);
+    getDataForWordCloud(props.match.params.keyword);
   }, []);
 
   useEffect(() => {
@@ -120,84 +121,18 @@ const TrendResultPage = (props) => {
       });
   };
 
-  // 워드클라우드 데이터
-  const [wordCloudInfo, setWordCloudInfo] = useState([
-    { text: "조회수", value: 1 },
-    { text: "클라우드", value: 2 },
-    { text: "순위내용빈도", value: 3 },
-    { text: "연관", value: 4 },
-    { text: "내용", value: 5 },
-    { text: "좋싫비", value: 6 },
-    { text: "게임 ", value: 7 },
-    { text: "일일 ", value: 8 },
-    { text: "조회 ", value: 9 },
-    { text: "수", value: 10 },
-    { text: "검색량", value: 8 },
-    { text: "동영상 ", value: 7 },
-    { text: "채널당 ", value: 6 },
-    { text: "평균", value: 5 },
-    { text: "골짜기", value: 4 },
-    { text: "신규", value: 3 },
-    { text: "채널", value: 9 },
-    { text: "주의", value: 2 },
-    { text: "abcd", value: 10 },
-    { text: "순위", value: 10 },
-    { text: "주별", value: 5 },
-    { text: "추천 ", value: 6 },
-    { text: "참여도", value: 7 },
-    { text: "롱런", value: 8 },
-    { text: "챌린지", value: 4 },
-    { text: "조회수", value: 1 },
-    { text: "클라우드", value: 2 },
-    { text: "순위내용빈도", value: 3 },
-    { text: "연관", value: 4 },
-    { text: "내용", value: 5 },
-    { text: "좋싫비", value: 6 },
-    { text: "게임 ", value: 7 },
-    { text: "일일 ", value: 8 },
-    { text: "조회 ", value: 9 },
-    { text: "수", value: 10 },
-    { text: "검색량", value: 8 },
-    { text: "동영상 ", value: 7 },
-    { text: "채널당 ", value: 6 },
-    { text: "평균", value: 5 },
-    { text: "골짜기", value: 4 },
-    { text: "신규", value: 3 },
-    { text: "채널", value: 9 },
-    { text: "주의", value: 2 },
-    { text: "abcd", value: 10 },
-    { text: "순위", value: 10 },
-    { text: "주별", value: 5 },
-    { text: "추천 ", value: 6 },
-    { text: "참여도", value: 7 },
-    { text: "롱런", value: 8 },
-    { text: "챌린지", value: 4 },
-    { text: "조회수", value: 1 },
-    { text: "클라우드", value: 2 },
-    { text: "순위내용빈도", value: 3 },
-    { text: "연관", value: 4 },
-    { text: "내용", value: 5 },
-    { text: "좋싫비", value: 6 },
-    { text: "게임 ", value: 7 },
-    { text: "일일 ", value: 8 },
-    { text: "조회 ", value: 9 },
-    { text: "수", value: 10 },
-    { text: "검색량", value: 8 },
-    { text: "동영상 ", value: 7 },
-    { text: "채널당 ", value: 6 },
-    { text: "평균", value: 5 },
-    { text: "골짜기", value: 4 },
-    { text: "신규", value: 3 },
-    { text: "채널", value: 9 },
-    { text: "주의", value: 2 },
-    { text: "abcd", value: 10 },
-    { text: "순위", value: 10 },
-    { text: "주별", value: 5 },
-    { text: "추천 ", value: 6 },
-    { text: "참여도", value: 7 },
-    { text: "롱런", value: 8 },
-    { text: "챌린지", value: 4 },
-  ]);
+
+  // 워드 클라우드 데이터
+  const getDataForWordCloud = async (title) => {
+    await axios
+      .get(url + "/deploy/game/word/" + title)
+      .then(({ data }) => {
+        setWordCloudInfo(data);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
 
   // 선 그래프 데이터
   const getDataForLines = async (title) => {
@@ -213,11 +148,6 @@ const TrendResultPage = (props) => {
           id: title,
           color: "red",
           data: data.avgNewView
-        }]);
-        setDataForNumNewVid([{
-          id: title,
-          color: "red",
-          data: data.numNewVid
         }]);
       })
       .catch((e) => {
@@ -396,26 +326,7 @@ const TrendResultPage = (props) => {
               <div className="trp_CLChip_R">빈도</div>
             </div>
             <div className="trp_CommentList">
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
-              <CLChipContainer></CLChipContainer>
+              <CLChipContainer words = {wordCloudInfo}></CLChipContainer>
             </div>
           </div>
           <div className="trp_GraphBox_4">
