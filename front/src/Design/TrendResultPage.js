@@ -8,14 +8,10 @@ import { ResponsiveRadar } from "@nivo/radar";
 import { ProfileChipContainer } from "./Comps";
 import ReactWordcloud from "react-wordcloud";
 import { CLChipContainer } from "./Comps";
-import { select } from "d3-selection";
 import "d3-transition";
-import { colors } from "@material-ui/core";
 
 const TrendResultPage = (props) => {
 
-  // 데이터 호출 판단 변수
-  const [complete, setComplete] = useState(false);
   const [url] = useState("http://222.232.15.205:8082");
 
   // 신규 조회수 데이터
@@ -411,7 +407,7 @@ const TrendResultPage = (props) => {
             </div>
           </div>
           <div className="trp_GraphBox_5">
-            <div className="trp_BoxNameBar">연관 장르 평균 count</div>
+            <div className="trp_BoxNameBar">연관 장르 평균 채널 수</div>
             <div className="trp_BarGraphContainer">
               <ResponsiveBar
                 data={dataForNumChannelVidByGenre}
