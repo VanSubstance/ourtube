@@ -269,7 +269,8 @@
 }
 
 .trp_CommentList {
-    overflow: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
     float: right;
     width: 240px;
     height: 320px;

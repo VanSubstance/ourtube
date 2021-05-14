@@ -298,12 +298,14 @@ const TrendResultPage = (props) => {
             <div className="trp_WordCloudContainer">
               <ReactWordcloud
                 words={wordCloudInfo}
+                maxWords= {80}
                 options={{
                   colors: ["#e8c1a0", "#f47560", "#f1e15b", "#e8a838", "#61cdbb", "#97e3d5", "#b2df8a", "#a6cee3", "#fccde5"],
                   scale: "sqrt",
                   spiral: "archimedean",
                   fontFamily: "Spoqa Han Sans Neo",
                   fontStyle: "normal",
+                  fontSizes: [10,50],
                   fontWeight: "normal",
                   rotations: 1,
                   rotationAngles: [0, 90],
