@@ -10,6 +10,7 @@ import ReactWordcloud from "react-wordcloud";
 import { CLChipContainer } from "./Comps";
 import { select } from "d3-selection";
 import "d3-transition";
+import { colors } from "@material-ui/core";
 
 const TrendResultPage = (props) => {
   // 우측 상단 데이터
@@ -212,33 +213,33 @@ const TrendResultPage = (props) => {
   ]);
 
   // 워드클라우드 데이터
-  const [wordCloudInfo, setWordCloudInfo] = useState({
-    data: [
-      { text: "Hey", value: 1000 },
-      { text: "lol", value: 200 },
-      { text: "first impression", value: 800 },
-      { text: "very cool", value: 14000 },
-      { text: "duck", value: 10 },
-      { text: "goeiedag", value: 492 },
-      { text: "mirdita", value: 332 },
-      { text: "1235", value: 33 },
-      { text: "tasg", value: 14 },
-      { text: "tbwae", value: 456 },
-      { text: "b31b", value: 894 },
-      { text: "asdfdg", value: 12132 },
-      { text: "wehda", value: 3242 },
-      { text: "65d4a8", value: 842 },
-      { text: "ubhasdg", value: 32110 },
-      { text: "7q48f3a1", value: 1955 },
-      { text: "asd", value: 235 },
-      { text: "gwe", value: 116 },
-      { text: "rqwree", value: 123 },
-      { text: "eqwty", value: 323 },
-      { text: "gasdf", value: 44 },
-      { text: "czxcbb", value: 56 },
-    ],
-    fontSizeMapper: (word) => Math.log2(word.value) * 5,
-  });
+  // const [wordCloudInfo, setWordCloudInfo] = useState({
+  //   data: [
+  //     { text: "Hey", value: 1000 },
+  //     { text: "lol", value: 200 },
+  //     { text: "first impression", value: 800 },
+  //     { text: "very cool", value: 14000 },
+  //     { text: "duck", value: 10 },
+  //     { text: "goeiedag", value: 492 },
+  //     { text: "mirdita", value: 332 },
+  //     { text: "1235", value: 33 },
+  //     { text: "tasg", value: 14 },
+  //     { text: "tbwae", value: 456 },
+  //     { text: "b31b", value: 894 },
+  //     { text: "asdfdg", value: 12132 },
+  //     { text: "wehda", value: 3242 },
+  //     { text: "65d4a8", value: 842 },
+  //     { text: "ubhasdg", value: 32110 },
+  //     { text: "7q48f3a1", value: 1955 },
+  //     { text: "asd", value: 235 },
+  //     { text: "gwe", value: 116 },
+  //     { text: "rqwree", value: 123 },
+  //     { text: "eqwty", value: 323 },
+  //     { text: "gasdf", value: 44 },
+  //     { text: "czxcbb", value: 56 },
+  //   ],
+  //   fontSizeMapper: (word) => Math.log2(word.value) * 5,
+  // });
 
   // 우측 상단 데이터 연결
   const getDataKeyword = async (title) => {
@@ -270,6 +271,8 @@ const TrendResultPage = (props) => {
       });
   };
 
+  // 워드클라우드 데이터
+
   const [wordCloudInfo, setWordCloudInfo] = useState([
     { text: "조회수", value: 1 },
     { text: "클라우드", value: 2 },
@@ -296,8 +299,58 @@ const TrendResultPage = (props) => {
     { text: "참여도", value: 7 },
     { text: "롱런", value: 8 },
     { text: "챌린지", value: 4 },
-    { text: "충성도", value: 3 },
+    { text: "조회수", value: 1 },
+    { text: "클라우드", value: 2 },
+    { text: "순위내용빈도", value: 3 },
+    { text: "연관", value: 4 },
+    { text: "내용", value: 5 },
+    { text: "좋싫비", value: 6 },
+    { text: "게임 ", value: 7 },
+    { text: "일일 ", value: 8 },
+    { text: "조회 ", value: 9 },
+    { text: "수", value: 10 },
+    { text: "검색량", value: 8 },
+    { text: "동영상 ", value: 7 },
+    { text: "채널당 ", value: 6 },
+    { text: "평균", value: 5 },
+    { text: "골짜기", value: 4 },
+    { text: "신규", value: 3 },
+    { text: "채널", value: 9 },
+    { text: "주의", value: 2 },
+    { text: "abcd", value: 10 },
+    { text: "순위", value: 10 },
+    { text: "주별", value: 5 },
+    { text: "추천 ", value: 6 },
+    { text: "참여도", value: 7 },
+    { text: "롱런", value: 8 },
+    { text: "챌린지", value: 4 },
+    { text: "조회수", value: 1 },
+    { text: "클라우드", value: 2 },
+    { text: "순위내용빈도", value: 3 },
+    { text: "연관", value: 4 },
+    { text: "내용", value: 5 },
+    { text: "좋싫비", value: 6 },
+    { text: "게임 ", value: 7 },
+    { text: "일일 ", value: 8 },
+    { text: "조회 ", value: 9 },
+    { text: "수", value: 10 },
+    { text: "검색량", value: 8 },
+    { text: "동영상 ", value: 7 },
+    { text: "채널당 ", value: 6 },
+    { text: "평균", value: 5 },
+    { text: "골짜기", value: 4 },
+    { text: "신규", value: 3 },
+    { text: "채널", value: 9 },
+    { text: "주의", value: 2 },
+    { text: "abcd", value: 10 },
+    { text: "순위", value: 10 },
+    { text: "주별", value: 5 },
+    { text: "추천 ", value: 6 },
+    { text: "참여도", value: 7 },
+    { text: "롱런", value: 8 },
+    { text: "챌린지", value: 4 },
   ]);
+
   const getDataForLines = async (title) => {
     await axios
       .get(url + "/deploy/game/chart/" + title)
@@ -325,6 +378,7 @@ const TrendResultPage = (props) => {
 
   return (
     <div className="trp_MainWrapper">
+      <link href='http://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'></link>
       <div className="trp_BackGroundPanel"></div>
       {/* <div
                 className="trp_BackGroundPanelLine">
@@ -372,9 +426,10 @@ const TrendResultPage = (props) => {
               <ReactWordcloud
                 words={wordCloudInfo}
                 options={{
+                  colors: ["#e8c1a0", "#f47560", "#f1e15b", "#e8a838", "#61cdbb", "#97e3d5", "#b2df8a", "#a6cee3", "#fccde5"],
                   scale: "sqrt",
                   spiral: "archimedean",
-                  fontFamily: "sans-serif",
+                  fontFamily: "Spoqa Han Sans Neo",
                   fontStyle: "normal",
                   fontWeight: "normal",
                   rotations: 1,
@@ -382,8 +437,7 @@ const TrendResultPage = (props) => {
                   spiral: "archimedean",
                   transitionDuration: 1000,
                   deterministic: false,
-                  enableTooltip: true,
-
+                  enableTooltip: false,
                 }}
               ></ReactWordcloud>
             </div>
