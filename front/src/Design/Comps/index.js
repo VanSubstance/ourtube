@@ -3,7 +3,6 @@ export { default as KeywordItemVertical } from './KeywordItemVertical';
 export { default as KeywordList } from './KeywordList';
 export { default as KeywordListVertical } from './KeywordListVertical';
 export { default as KeywordThumbnai } from './KeywordThumbnail';
-export { default as Cloud } from './Cloud';
 export { default as ListFont } from './ListFont';
 export { default as ProfileChipContainer } from './ProfileChipContainer';
 export { default as ProfileChip } from './ProfileChip';
