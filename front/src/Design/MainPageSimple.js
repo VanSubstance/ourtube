@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { KeywordList } from "./Comps";
 import axios from "axios";
-import { BrowserRouter as Link } from "react-router-dom";
 import Chip from "@material-ui/core/Chip";
 import "./Css/styles.css";
 import LeftBox from "./LeftBox";
@@ -121,17 +120,12 @@ const MainPageSimple = (props) => {
             clickEvent={props.clickEvent}
             keyword={selectedKeyword}
             ctgr={selectedCtgr}
-            data={dataLeft}>
-          </LeftBox>
+            data={dataLeft}
+          ></LeftBox>
         </div>
         <div className="mainRightSection">
-          <a
-            className="chartLinkBox"
-            href={"/chart"}>
-            <div
-              className="chartLink">
-              Chart View
-              </div>
+          <a className="chartLinkBox" href={"/chart"}>
+            <div className="chartLink">Chart View</div>
           </a>
           <div className="mainBannerBox">
             <a href={""} className="bannerMain">
@@ -174,8 +168,8 @@ const MainPageSimple = (props) => {
                     onClick={() => {
                       getDatasetForKeyword(element);
                     }}
-                    component="button">
-                  </Chip>
+                    component="button"
+                  ></Chip>
                 );
               })}
             </div>

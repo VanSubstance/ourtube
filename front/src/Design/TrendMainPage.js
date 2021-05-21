@@ -68,9 +68,6 @@ const TrendMainPage = () => {
     getDatasetForKeyword(searchVal);
   }, []);
 
-  useEffect(() => {
-  }, [titlesSelected]);
-
   // method: 0 -> 추가, 1 -> 삭제
   const selectGame = (title, method) => {
     if (!titlesSelected.includes(title)) {
