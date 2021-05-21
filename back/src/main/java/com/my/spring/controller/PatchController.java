@@ -65,13 +65,13 @@ public class PatchController {
 	@Autowired
 	private CrawlerService serviceCrawler;
 	
-	private final int hour = 0;
+	private final int hour = 17;
 	
-	@Scheduled(cron = "1 3 " + hour + " * * *")
+	@Scheduled(cron = "1 22 " + hour + " * * *")
 	@RequestMapping("/daily")
 	private void patchDaily() {
-		patchGameFromYoutube();
-		patchDataByGameFirst();
+//		patchGameFromYoutube();
+//		patchDataByGameFirst();
 		calcScore();
 		calcScoresForTopic();
 		parseWords();
