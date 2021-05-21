@@ -307,18 +307,56 @@ public class VideoServiceImpl implements VideoService {
 		System.out.print("실 측정값 계산 시작 ------------- ");
 		for (String title : titles) {
 			DateStatistic dateStatistic =  mapper.getVideoDataByTitleAndDate(title, Date.valueOf(date));
-			numNewVids.add(dateStatistic.getNumNewVid());
-			avgNewViews.add(dateStatistic.getAvgNewView());
-			avgNewComments.add(dateStatistic.getAvgNewComment());
-			numAccuVids.add(dateStatistic.getNumAccuVid());
-			avgAccuViews.add(dateStatistic.getAvgAccuView());
-			avgAccuComments.add(dateStatistic.getAvgAccuComment());
+			if (dateStatistic.getNumNewVid() != null) {
+				numNewVids.add(dateStatistic.getNumNewVid());
+			} else {
+				numNewVids.add(0);
+			}
+			if (dateStatistic.getAvgNewView() != null) {
+				avgNewViews.add(dateStatistic.getAvgNewView());
+			} else {
+				avgNewViews.add(0);
+			}
+			if (dateStatistic.getAvgNewComment() != null) {
+				avgNewComments.add(dateStatistic.getAvgNewComment());
+			} else {
+				avgNewComments.add(0);
+			}
+			if (dateStatistic.getNumAccuVid() != null) {
+				numAccuVids.add(dateStatistic.getNumAccuVid());
+			} else {
+				numAccuVids.add(0);
+			}
+			if (dateStatistic.getAvgAccuView() != null) {
+				avgAccuViews.add(dateStatistic.getAvgAccuView());
+			} else {
+				avgAccuViews.add(0);
+			}
+			if (dateStatistic.getAvgAccuComment() != null) {
+				avgAccuComments.add(dateStatistic.getAvgAccuComment());
+			} else {
+				avgAccuComments.add(0);
+			}
 		}
 		DateStatistic avg = mapper.getTotalVideoDataByDate(Date.valueOf(date));
-		
-		List<Double> scoreNumNewVid = formulaBByInteger(numNewVids, avg.getNumNewVid(), 0.03);
-		List<Double> scoreAvgNewView = formulaBByInteger(avgNewViews, avg.getAvgNewView(), 0.0225);
-		List<Double> scoreAvgNewComment = formulaBByInteger(avgNewComments, avg.getAvgNewComment(), 0.0225);
+		List<Double> scoreNumNewVid = new ArrayList<Double>();
+		if (avg.getNumNewVid() != null) {
+			scoreNumNewVid = formulaBByInteger(numNewVids, avg.getNumNewVid(), 0.03);
+		} else {
+			scoreNumNewVid = formulaBByInteger(numNewVids, 0, 0.03);
+		}
+		List<Double> scoreAvgNewView = new ArrayList<Double>();
+		if (avg.getAvgNewView() != null) {
+			scoreAvgNewView = formulaBByInteger(avgNewViews, avg.getAvgNewView(), 0.03);
+		} else {
+			scoreAvgNewView = formulaBByInteger(avgNewViews, 0, 0.03);
+		}
+		List<Double> scoreAvgNewComment = new ArrayList<Double>();
+		if (avg.getAvgNewComment() != null) {
+			scoreAvgNewComment = formulaBByInteger(avgNewComments, avg.getAvgNewComment(), 0.0225);
+		} else {
+			scoreAvgNewComment = formulaBByInteger(avgNewComments, 0, 0.03);
+		}
 		List<Double> scoreNumAccuVid = formulaAByInteger(numAccuVids, 0.03);
 		List<Double> scoreAvgAccuView = formulaAByInteger(avgAccuViews, 0.0225);
 		List<Double> scoreAvgAccuComment = formulaAByInteger(avgAccuComments, 0.0225);
