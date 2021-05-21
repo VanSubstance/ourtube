@@ -78,12 +78,6 @@ const TrendResultPage = (props) => {
     getDataForWordCloud(props.match.params.keyword);
   }, []);
 
-  useEffect(() => {
-    console.log("1: ", dataForAvgRatio);
-    console.log("2: ", dataForAvgChannel);
-    console.log("3: ", dataForNumChannelVidByGenre);
-  }, [dataForNumChannelVidByGenre]);
-
   // 우측 상단 데이터 연결
   const getDataKeyword = async (title) => {
     await axios
