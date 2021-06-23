@@ -11,7 +11,7 @@ import { ResponsiveBar } from "@nivo/bar";
 import moment from "moment";
 
 const TrendMainPage = () => {
-  const [url] = useState("http://222.232.15.205:8082");
+  const [url] = useState("http://localhost:8082");
 
   // 검색어
   let [searchVal] = useState("FPS");

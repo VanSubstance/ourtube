@@ -6,7 +6,7 @@ import "./Css/styles.css";
 import LeftBox from "./LeftBox";
 
 const MainPageSimple = (props) => {
-  const [url] = useState("http://222.232.15.205:8082");
+  const [url] = useState("http://localhost:8082");
 
   let [searchVal] = useState("FPS");
 
@@ -35,6 +35,7 @@ const MainPageSimple = (props) => {
   const selectKeyword = async (keyword) => {
     selectedKeyword = keyword;
     await setSelectedKeyword(keyword);
+    selectedKeyword&&
     getDatasetForLeftByGame(selectedKeyword.title);
   };
 

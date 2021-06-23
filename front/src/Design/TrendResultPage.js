@@ -12,7 +12,7 @@ import "d3-transition";
 
 const TrendResultPage = (props) => {
 
-  const [url] = useState("http://222.232.15.205:8082");
+  const [url] = useState("http://localhost:8082");
 
   // 신규 조회수 데이터
   const [dataForAvgNewView, setDataForAvgNewView] = useState([]);

@@ -9,7 +9,7 @@ import moment from 'moment'
 class Home extends Component {
 
     state = {
-        ip: "http://222.232.15.205:8082",
+        ip: "http://localhost:8082",
         number: 0,
         trialList: [],
         trialList2: [],

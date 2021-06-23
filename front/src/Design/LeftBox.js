@@ -24,6 +24,7 @@ const LeftBox = (props) => {
         ctgr={props.ctgr}
         clickEvent={props.clickEvent}>
       </LeftBoxFont>
+      {props.keyword&&
       <a
         className="mp_lookWellBox"
         href={/game/ + props.keyword.title}>
@@ -32,6 +33,7 @@ const LeftBox = (props) => {
           자세히 보기
         </div>
       </a>
+      }
     </div>
   );
 };
